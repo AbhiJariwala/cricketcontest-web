@@ -37,7 +37,7 @@ class Footer extends React.Component {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Abhi Jariwala
+              Abhi Jariwala footer
             </a>.
           </div>
         </Container>
