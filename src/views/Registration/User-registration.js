@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody, Row, Col, Label, CardFooter, Button, Form, 
 import { PanelHeader } from "components";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
+import { Link } from 'react-router-dom';
 
 import * as registerAction from '../../action/registrationAction';
 
@@ -153,6 +154,11 @@ class UserRegistration extends Component {
                                 </CardBody>
                                 <CardFooter>
                                     <Button style={{ "float": "right", "marginBottom": "10px", width: "100%" }} color="info" onClick={this.btnRegisterClick.bind(this)} disabled={!this.state.formValid} >Register</Button>
+                                </CardFooter>
+                                <br />
+                                <hr />
+                                <CardFooter>
+                                    <center>Already have an account? <Link to="/login" path="/login">Login</Link></center>
                                 </CardFooter>
                             </Card>
                         </Col>
