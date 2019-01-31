@@ -3,13 +3,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Table, Button } from 'reactstrap';
 import { Input, ButtonGroup } from 'reactstrap';
-
 import * as TournamentAction from '../../action/Tournament';
 import AddTournament from '../tournament/AddTournament/addTournament'
 import { PanelHeader } from "components";
 
-const img1 = require('../../Image/asc.png');
-const img2 = require('../../Image/desc.png')
 class tournament extends Component {
   constructor(props) {
     super(props);
@@ -17,53 +14,66 @@ class tournament extends Component {
       modal: false,
       sort: false,
       pageno: 0,
-      parpageRecord: "",
+      parpageRecord: 5,
       sorting: "",
-      Editdataid: []
+      Editdataid: [],
+      sortingValueName:"id",
+      sortingValue:"desc"   
     };
     this.toggle = this.toggle.bind(this);
   }
-  componentDidMount = () => {
-    const parpageRecord = 5, sorting = "asc", pageno = 0
-    this.setState({ sorting: sorting, pageno: pageno, parpageRecord: parpageRecord })
-    this.props.action.Tournament.SelectTournamentAction(pageno, parpageRecord, sorting);
+  componentWillMount = () => {
+    this.props.action.Tournament.SelectTournamentAction(this.state.pageno,this.state.parpageRecord, this.state.sortingValue,this.state.sortingValueName);
   }
-  sortingdata = (Event) => {
-    console.log(Event.target.value)
-    this.setState({ sort: !this.state.sort })
+  sortingdata = (Event) => {  
+    const sortingValueName = Event.target.childNodes[0].data;
+    if(sortingValueName!=="Action"){
+    let sortingValue = "asc";
+    if(!this.state.sortingValueName){
+      this.setState({ sortingValueName:sortingValueName})      
+    }else if(this.state.sortingValueName===sortingValueName){
+      if(this.state.sortingValue==="asc"){
+        sortingValue="desc"
+      }else{
+        sortingValue="asc"
+      }
+      this.setState({sortingValueName:sortingValueName,sortingValue:sortingValue})
+      
+    }else{
+      this.setState({ sortingValueName:sortingValueName,sortingValue:"asc"})
+    }    
+    
+    this.props.action.Tournament.SelectTournamentAction(this.state.pageno,this.state.parpageRecord, sortingValue,sortingValueName);
   }
-  parpage = (Event) => {
-    const parpage = Event.target.value;
+  }
+  parpage = (Event) => {  
+    const parpage = parseInt(Event.target.value,10);
     this.setState({ parpageRecord: parpage })
-    this.props.action.Tournament.SelectTournamentAction(this.state.pageno, parpage, this.state.sorting);
+    this.props.action.Tournament.SelectTournamentAction(this.state.pageno, parpage, this.state.sortingValue,this.state.sortingValueName);
   }
-  changeRecord = (Event) => {
+  changeRecord = (Event) => {  
     let datachangeprevNext = Event.target.value;
     let pageno = 0
     if (datachangeprevNext === "Next") {
       this.setState({ pageno: this.state.pageno + 5 })
       if (this.state.pageno === 0) {
-        this.setState({ pageno: 5 })
-        pageno = 5
+        this.setState({ pageno: this.state.parpageRecord })
+        pageno = this.state.parpageRecord
       } else {
-        pageno = this.state.pageno + 5
+        pageno = this.state.pageno + this.state.parpageRecord
       }
     }
     else if (datachangeprevNext === "Prev") {
-      this.setState({ pageno: this.state.pageno - 5 })
-      pageno = this.state.pageno - 5
+      this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
+      pageno = this.state.pageno - this.state.parpageRecord
     }
-    this.props.action.Tournament.SelectTournamentAction(pageno, this.state.parpageRecord, this.state.sorting);
+    this.props.action.Tournament.SelectTournamentAction(pageno, this.state.parpageRecord, this.state.sortingValue,this.state.sortingValueName);
   }
   toggle(Event) {
     this.setState({
       modal: !this.state.modal,
       Editdataid: null
     });
-    if (Event.target.value === "Edit") {
-      console.log(Event.target.value);
-    } else {
-    }
   }
   Edittoggle = (data) => {
     if (!data) {
@@ -81,9 +91,11 @@ class tournament extends Component {
     }
   }
   render() {
+    let notNext=0;
     let data = ""
     if (this.props.ShowTornament) {
       data = this.props.ShowTornament.map((data, key) => {
+        notNext=key+1
         return <tr key={key}>
           <td>{data.tournamentName}</td>
           <td>{data.tournamentDescription}</td>
@@ -93,34 +105,31 @@ class tournament extends Component {
     }
     return (
       <div>
+        
         <PanelHeader size="sm" />
-        <div style={{ marginLeft: "20px" }}>
+        <div  className="content"  >        
           <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournament>
-          <div style={{ width: "10%", margin: "25px" }}>
-            <div>
+          <div style={{marginTop:"50px"}}>
+          <div style={{float:"right" }}>            
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
+                <option>5</option>
                 <option>10</option>
                 <option>25</option>
                 <option>50</option>
                 <option>100</option>
-              </Input></div>
-          </div>
-          <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+              </Input>
+              </div>
+              <div style={{float:"left"}}>
+                  <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+              </div>
+              </div>
+         {data? 
+              <div className="table-responsive">
           <Table>
-            <thead>
-              <tr>
-                <th>
-                  Tournament Name
-              <div style={{ marginLeft: "215px", marginTop: "-27px" }}>
-                    <div>
-                      <img alt="true" src={img1} style={{ height: "10px", width: "10px", marginTop: "-18px", marginRight: "-11px" }} name="ascending" onClick={this.sortingdata.bind(Event)} value="Asc" ></img>
-                      <img src={img2} alt="true" style={{ height: "10px", width: "10px" }} value="desc" onClick={this.sortingdata.bind(Event)}></img>
-                    </div>
-                  </div></th>
-                <th>Tournament Description<div style={{ marginLeft: "300px", marginTop: "-27px" }}><div>
-                  <img src={img1} alt="true" style={{ height: "10px", width: "10px", marginTop: "-18px", marginRight: "-11px" }} name="ascending" onClick={this.sortingdata.bind(this)} ></img>
-                  <img src={img2} alt="true" style={{ height: "10px", width: "10px" }}></img>
-                </div></div></th>
+            <thead >
+              <tr onClick={this.sortingdata.bind(Event)}>
+                <th>tournamentName</th>
+                <th>tournamentDescription</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -128,12 +137,15 @@ class tournament extends Component {
               {data}
             </tbody>
           </Table>
+          </div>
+         :""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button>
-              : ""}
-            &nbsp;
-        <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button>
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
+              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  disabled>Prev</Button>}
+            &nbsp;                       
+            {notNext>=this.state.parpageRecord?
+        <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button>:<Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
           </ButtonGroup>
         </div>
       </div>

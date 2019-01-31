@@ -12,17 +12,18 @@ const enhancer = composeEnhancer(
 
 const token = localStorage.getItem("token");
 const userId = localStorage.getItem("userId");
-
+const Role = localStorage.getItem("role");
 const INITIAL_STATE = {
     auth: {
         token: "",
-        error_msg: "",
-        userId: ""
+        Role:'',
+        userId: '',
     }
 }
 if (token && userId) {
     INITIAL_STATE.auth.token = token;
     INITIAL_STATE.auth.userId = userId;
+    INITIAL_STATE.auth.Role = Role;
 }
 
 export default createStore(rootReducer, INITIAL_STATE, enhancer);

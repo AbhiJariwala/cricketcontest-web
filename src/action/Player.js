@@ -6,7 +6,6 @@ export const selectPlayerAction = () => {
     return (dispatch) => {
         authService.Player().then((response) => {
             if (response.status === 200) {
-                debugger
                 dispatch(
                     {
                         type: Fetch_Data,

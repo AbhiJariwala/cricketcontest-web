@@ -24,11 +24,10 @@ class Player extends Component {
     });
   }
     render() {  
-      debugger
       let data=""
       if(this.props.ShowPlayer){    
         data= this.props.ShowPlayer.map(data=>{
-           return <tr>
+           return <tr key={data.id}>
              <td>{data.image}</td>
                <td>{data.firstName}</td>
                <td>{data.lastName}</td>
@@ -53,6 +52,7 @@ class Player extends Component {
           </Input></div>  
       </div>
       <Button color="info" onClick={this.toggle} style={{width:"62px"}}>Add </Button>
+      {data?
         <Table>
         <thead>
         <tr>
@@ -69,6 +69,7 @@ class Player extends Component {
           {data}
         </tbody>
       </Table>
+      :""}
       <ButtonGroup>
         <Button color="info">Prev</Button> &nbsp;       
         <Button color="info">Next</Button>

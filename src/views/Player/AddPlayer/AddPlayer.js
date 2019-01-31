@@ -12,11 +12,9 @@ class AddPlayer extends Component {
     playerDescription: ""
   }
 
-  componentDidUpdate = () => {
-    //  console.log(this.props.isOpen)    
+  componentDidUpdate = () => {  
   }
   AddDataData = () => {
-    // this.props.action.Player.AddPlayerAction(this.state);
     this.props.toggle();
   }
   render() {

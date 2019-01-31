@@ -16,8 +16,6 @@ class AddTeamPlayer extends Component {
             modal: !this.state.modal
         });
     }
-
-
     render() {
         return (
             <Container>

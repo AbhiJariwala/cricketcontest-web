@@ -10,7 +10,6 @@ import { PanelHeader } from "components";
 
 class tournament extends Component {
   componentDidMount=()=>{
-    this.props.action.Tournament.SelectTournamentAction();
   }
   constructor(props) {
     super(props);

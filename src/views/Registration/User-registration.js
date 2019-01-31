@@ -97,7 +97,6 @@ class UserRegistration extends Component {
 
 
     render() {
-        console.log(this.props.err_msg);
         return (
 
             <div>
