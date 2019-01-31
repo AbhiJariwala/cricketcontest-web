@@ -5,7 +5,7 @@ import { Table, Button } from 'reactstrap';
 import { Input, ButtonGroup } from 'reactstrap';
 
 import * as PlayerAction from '../../action/Player';
-// import AddPlayer from '../Player/AddPlayer/AddPlayer';
+import AddPlayer from '../Player/AddPlayer/AddPlayer';
 import { PanelHeader } from "components";
 class Player extends Component {
   componentDidMount = () => {
