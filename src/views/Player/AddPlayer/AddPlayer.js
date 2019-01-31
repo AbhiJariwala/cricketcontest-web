@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import * as PlayerAction from '../../../../Action/Player';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as PlayerAction from '../../../action/Player';
 import { Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 class AddPlayer extends Component {
   state = {
@@ -9,13 +9,14 @@ class AddPlayer extends Component {
     lastName: "",
     dob: "",
     gender: "",
-    playerDescription: ""
+    playerDescription: "",
+    image: ""
   }
 
   componentDidUpdate = () => {
     //  console.log(this.props.isOpen)    
   }
-  AddDataData = () => {
+  addTeamPlayer = () => {
     // this.props.action.Player.AddPlayerAction(this.state);
     this.props.toggle();
   }
@@ -43,19 +44,22 @@ class AddPlayer extends Component {
                   <Label>Gender</Label>
                   <FormGroup check>
                     <Label check>
-                      <Input type="radio" name="radio1" />{' '}Male &nbsp; &nbsp; &nbsp; &nbsp;<Input type="radio" name="radio1" />{' '}
-                      Female
-            </Label>
+                      <Input type="radio" name="gender" />Male
+                  </Label>
+                    <Label check>
+                      <Input type="radio" name="gender" />Female
+                  </Label>
                   </FormGroup>
                 </FormGroup>
                 <FormGroup>
                   <Label for="description">Player Description</Label>
                   <Input type="textarea" name="playerDescription" id="playerDescription" onChange={(Event) => this.setState({ playerDescription: Event.target.value })} />
                 </FormGroup>
+
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="info" onClick={this.AddDataData.bind(this)}>Submit</Button>{' '}
+              <Button color="info" onClick={this.addTeamPlayer.bind(this)}>Submit</Button>
               <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
             </ModalFooter>
           </Modal>
@@ -65,17 +69,15 @@ class AddPlayer extends Component {
     );
   }
 }
-//   const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
+  return {
+    ShowPlayer: state.Player.PlayerData,
+  }
+};
 
-//     return {
-//       ShowPlayer: state.Player.PlayerData,
-//     }
-// };
-
-// const mapDispatchToProps = dispatch => ({
-//     action: {
-//         Player: bindActionCreators(PlayerAction, dispatch)
-//     }
-// });
-// export default connect(mapStateToProps, mapDispatchToProps)(AddPlayer)
-export default AddPlayer
+const mapDispatchToProps = dispatch => ({
+  action: {
+    Player: bindActionCreators(PlayerAction, dispatch)
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(AddPlayer)

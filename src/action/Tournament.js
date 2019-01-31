@@ -24,8 +24,7 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting) => {
 export const AddTournamentAction = (data) => {
     return (dispatch) => {
         authService.TournamentAdd(data).then((response) => {
-            if (response.status === 200) {   
-                debugger
+            if (response.status === 200) {                   
                 dispatch(
                     {
                         type: Add_Data,
@@ -63,8 +62,7 @@ export const FetchSingleTournamentAction = (id) => {
 export const UpdateTournamentAction = (id,data) => {
     return (dispatch) => {
         authService.UpdateTournamentdata(id,data).then((response) => {
-            if (response.status === 200) {
-                debugger
+            if (response.status === 200) {          
                 console.log(data)
                 dispatch(
                     {
