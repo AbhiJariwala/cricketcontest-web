@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody, Row, Col, Label, CardFooter, Button, Form, 
 import { PanelHeader } from "components";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
+import { Link } from 'react-router-dom';
 
 import * as registerAction from '../../action/registrationAction';
 
@@ -87,18 +88,15 @@ class UserRegistration extends Component {
     }
 
     btnRegisterClick() {
-
         this.props.action.register.RegisterUser(this.state);
-
-
-        // this.props.history.push("/login");
     }
 
-
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps.err_msg);
+    }
+    
     render() {
-        console.log(this.props.err_msg);
         return (
-
             <div>
                 <hr />
                 <PanelHeader size="sm" ><h1 style={{ color: "white", marginTop: "-35px", textAlign: "center" }}>Cricket Contest</h1></PanelHeader>
@@ -153,6 +151,11 @@ class UserRegistration extends Component {
                                 </CardBody>
                                 <CardFooter>
                                     <Button style={{ "float": "right", "marginBottom": "10px", width: "100%" }} color="info" onClick={this.btnRegisterClick.bind(this)} disabled={!this.state.formValid} >Register</Button>
+                                </CardFooter>
+                                <br />
+                                <hr />
+                                <CardFooter>
+                                    <center>Already have an account? <Link to="/login" path="/login">Login</Link></center>
                                 </CardFooter>
                             </Card>
                         </Col>

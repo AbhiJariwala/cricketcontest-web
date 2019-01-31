@@ -9,21 +9,21 @@ class CRoute extends Component {
     render() {
         const rest = this.getExtractedJson(this.props);
         const isUserLoggedIn = this.props.auth.token ? this.props.auth.token !== "" : false;
-        const userCurrentRole = this.props.auth.role;
+        const userCurrentRole = this.props.auth.Role;
         const { component, cprivate, crole } = this.props;
         const Component = component;
-
         let redirectTo = undefined;
-        if (isUserLoggedIn && rest.path === "/login")
+        // console.log(rest.path)
+         if (isUserLoggedIn && rest.path === "/login" )
             redirectTo = "/";
-        if (isUserLoggedIn && rest.path === "/registration")
+         if (isUserLoggedIn && rest.path === "/registration")
             redirectTo = "/";
         else if (!isUserLoggedIn && cprivate)
             redirectTo = "/login";
         else if (isUserLoggedIn && cprivate && crole && crole.filter((item) => item === userCurrentRole).length === 0)
             redirectTo = "/unauthorized-access";
         else if (!isUserLoggedIn && rest.path === "*")
-            redirectTo = "/login";
+            redirectTo = "/login";            
         return (
             <Route
                 {...rest}

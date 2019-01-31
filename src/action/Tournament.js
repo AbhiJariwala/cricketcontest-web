@@ -1,10 +1,9 @@
-//import Service
 import * as authService from '../service/Tournament'
 
-import { Fetch_Data, INVALID_DATA, Add_Data, FetchSingleTournament ,updatetournamentdata} from '../reducer/Tournament';
-export const SelectTournamentAction = (pageno, parpageRecord, sorting) => {
+import { Fetch_Data, INVALID_DATA, FetchSingleTournament ,updatetournamentdata,Add_Tournament_Data} from '../reducer/Tournament';
+export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName) => {
     return (dispatch) => {
-        authService.Tournament(pageno, parpageRecord, sorting).then((response) => {
+        authService.Tournament(pageno, parpageRecord, sorting,filedName).then((response) => {
             if (response.status === 200) {
                 dispatch(
                     {
@@ -25,10 +24,9 @@ export const AddTournamentAction = (data) => {
     return (dispatch) => {
         authService.TournamentAdd(data).then((response) => {
             if (response.status === 200) {   
-                debugger
                 dispatch(
                     {
-                        type: Add_Data,
+                        type: Add_Tournament_Data,
                         TournamentAddData: response.data
                     }
                 );
@@ -64,8 +62,6 @@ export const UpdateTournamentAction = (id,data) => {
     return (dispatch) => {
         authService.UpdateTournamentdata(id,data).then((response) => {
             if (response.status === 200) {
-                debugger
-                console.log(data)
                 dispatch(
                     {
                         type: updatetournamentdata,

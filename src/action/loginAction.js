@@ -8,15 +8,15 @@ export const loginUser = (credentials) => {
                 if (response.status === 200) {
                     localStorage.setItem("token", response.data.user.token)
                     localStorage.setItem("userId", response.data.user.id)
+                    localStorage.setItem("role", response.data.user.role)
                     dispatch({
                         type: LOGIN_SUCCESSFUL,
-                        data: { token: response.data.user.token, userId: response.data.user.id }
+                        data: { token: response.data.user.token, userId: response.data.user.id,Role:response.data.user.role }
                     });
                 }
             })
             .catch((error) => {
                 if (error) {
-                    // console.log(error.response.data.error);
                     dispatch({ type: FAILED, data: { error_msg: error.response.data.error } });
                 }
             });

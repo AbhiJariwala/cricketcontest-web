@@ -56,7 +56,7 @@ class AddTeam extends Component {
   }
   AddDataData = (Event) => {
     Event.preventDefault();
-    this.props.action.Tournament.AddTeamAction(this.state)
+    this.props.action.Team.AddTeamAction(this.state);
     this.props.toggle(Event);
   }
   render() {
@@ -66,11 +66,11 @@ class AddTeam extends Component {
           <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} >
             <ModalHeader toggle={this.props.toggle} >{this.props.dataid ? " Update Tournament" : "Tournament"} </ModalHeader>
             <ModalBody>
-              <Form >
+              <Form method="post">
                 <FormGroup>
                   <Label for="teamName">Team Name</Label>
-                  <Input type="text" name="teamName" id="teamName" defaultValue={this.props.dataid ? this.props.dataid.teamName : ""} placeholder="teamName" onChange={this.inputChangeHandler.bind(this)} />
-                  <span style={{ color: "red" }}>{this.state.fieldsErrors?this.state.fieldsErrors.teamName:""}</span>
+                  <Input type="text" name="teamName" id="teamName" placeholder="Team Name" defaultValue={this.props.dataid ? this.props.dataid.teamName : ""} onChange={this.inputChangeHandler.bind(this)} />
+                  <span style={{ color: "red" }}>{this.state.fieldsErrors.teamName}</span>
                 </FormGroup>
                 {/* <FormGroup>
                   <Label for="tournamentDescription">Tournament Description</Label>
@@ -80,7 +80,7 @@ class AddTeam extends Component {
               </Form>
             </ModalBody>
             <ModalFooter>
-              {this.props.dataid ?
+              {this.props.dataid && this.props.dataid.length !== 0?
                 <Button color="info" onClick={this.UpdateDataData.bind(this)}>Update</Button>
                 : <Button color="info" onClick={this.AddDataData.bind(this)}>Submit</Button>}
               <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
