@@ -8,6 +8,7 @@ import * as TeamAction from '../../action/Team';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
 class Team extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,79 +24,12 @@ class Team extends Component {
     this.toggle = this.toggle.bind(this);
   }
   componentDidMount = () => {
-    this.props.action.Team.SelectTeamAction(this.state.pageno,this.state.parpageRecord, this.state.sortingValue,this.state.sortingValueName);
+    this.props.action.Team.selectTeamAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
-  sortingdata = (Event) => {
-  
-    const sortingValueName = Event.target.childNodes[0].data;
-    if(sortingValueName!=="Action"){
-    let sortingValue = "asc";
-    if(!this.state.sortingValueName){
-      this.setState({ sortingValueName:sortingValueName})      
-    }else if(this.state.sortingValueName===sortingValueName){
-      if(this.state.sortingValue==="asc"){
-        sortingValue="desc"
-      }else{
-        sortingValue="asc"
-      }
-      this.setState({sortingValueName:sortingValueName,sortingValue:sortingValue})
-      
-    }else{
-      this.setState({ sortingValueName:sortingValueName,sortingValue:"asc"})
-    }    
-    
-    this.props.action.Team.SelectTeamAction(this.state.pageno,this.state.parpageRecord, sortingValue,sortingValueName);
-  }
-  }
-  parpage = (Event) => {
-  
-    const parpage = parseInt(Event.target.value,10);
-    this.setState({ parpageRecord: parpage })
-    this.props.action.Team.SelectTeamAction(this.state.pageno, parpage, this.state.sortingValue,this.state.sortingValueName);
-  }
-  changeRecord = (Event) => {
-  
-    let datachangeprevNext = Event.target.value;
-    let pageno = 0
-    if (datachangeprevNext === "Next") {
-      this.setState({ pageno: this.state.pageno + 5 })
-      if (this.state.pageno === 0) {
-        this.setState({ pageno: this.state.parpageRecord })
-        pageno = this.state.parpageRecord
-      } else {
-        pageno = this.state.pageno + this.state.parpageRecord
-      }
-    }
-    else if (datachangeprevNext === "Prev") {
-      this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
-      pageno = this.state.pageno - this.state.parpageRecord
-    }
-    this.props.action.Team.SelectTeamAction(pageno, this.state.parpageRecord, this.state.sortingValue,this.state.sortingValueName);
-  }
-  toggle(Event) {
+  toggle() {
     this.setState({
-      modal: !this.state.modal,
-      Editdataid: null
+      modal: !this.state.modal
     });
-    if (Event.target.value === "Edit") {
-      
-    } else {
-    }
-  }
-  Edittoggle = (data) => {
-    if (!data) {
-      alert("no data");
-    } else {
-      const tObject = {
-        id: data.id,
-        teamName: data.teamName,
-        
-      }
-      this.setState({
-        modal: !this.state.modal,
-        Editdataid: tObject
-      });
-    }
   }
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);

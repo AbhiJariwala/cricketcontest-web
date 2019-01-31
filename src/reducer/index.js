@@ -5,6 +5,6 @@ import Tournament from './Tournament'
 import Team from './Team'
 import Player from './Player'
 import teamPlayer from './teamPlayer'
+import MatchPlayerScore from './matchPlayerScore'
 
-
-export default combineReducers({ auth, Tournament, Team, Player, teamPlayer });
+export default combineReducers({ auth, Tournament, Team, Player, teamPlayer, MatchPlayerScore });

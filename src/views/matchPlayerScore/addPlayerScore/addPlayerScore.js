@@ -28,7 +28,7 @@ class AddPlayerScore extends Component {
         this.changeHandler = this.changeHandler.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.action.getMatchPlayerScore.getTournaments();
     }
 
