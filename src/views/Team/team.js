@@ -119,8 +119,8 @@ class Team extends Component {
             </div>
           </div>
           {data?  <div className="table-responsive">
-          <Table>
-            <thead>
+          <Table bordered hover>
+            <thead className="thead-dark">
               <tr onClick={this.sortingdata.bind(Event)}>
                 <th>teamName</th>
                 <th>Action</th>

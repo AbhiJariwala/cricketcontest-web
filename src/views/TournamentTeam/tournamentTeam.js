@@ -39,8 +39,8 @@ class tournament extends Component {
               </Input></div>
           </div>
           <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
-          <Table>
-            <thead>
+          <Table bordered hover>
+            <thead className="thead-dark">
               <tr>
                 <th>Tournament Name</th>
                 <th>Tournament Team</th>

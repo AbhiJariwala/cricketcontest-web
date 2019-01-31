@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table,  Button, Input, ButtonGroup } from "reactstrap";
+import { Table, Button, Input, ButtonGroup } from "reactstrap";
 
 import { PanelHeader } from "components";
 
@@ -29,7 +29,7 @@ class TeamPlayer extends Component {
             <div>
                 <PanelHeader size="sm" />
                 <div className="content">
-                    {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null }
+                    {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null}
                     <div style={{ marginTop: "50px" }}>
                         <div style={{ float: "right" }}>
                             Show entries
@@ -45,8 +45,8 @@ class TeamPlayer extends Component {
                             <Button color="info" onClick={this.toggle}>Add </Button>
                         </div>
                     </div>
-                    <Table>
-                        <thead>
+                    <Table bordered hover>
+                        <thead className="thead-dark">
                             <tr>
                                 <th>#</th>
                                 <th>First Name</th>
