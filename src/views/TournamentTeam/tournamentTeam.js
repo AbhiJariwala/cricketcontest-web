@@ -9,8 +9,7 @@ import AddTournamentTeam from '../TournamentTeam/AddTournament/addTournamentTeam
 import { PanelHeader } from "components";
 
 class tournament extends Component {
-  componentDidMount = () => {
-    this.props.action.Tournament.SelectTournamentAction();
+  componentDidMount=()=>{
   }
   constructor(props) {
     super(props);

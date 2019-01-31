@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 class AddTournament extends Component {
   
   componentDidUpdate=()=>{
-   console.log(this.props.isOpen)    
+    
   }
   AddDataData=()=>{
-    console.log("hello");
+  
     this.props.toggle();
   }
 

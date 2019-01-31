@@ -13,11 +13,9 @@ class AddPlayer extends Component {
     image: ""
   }
 
-  componentDidUpdate = () => {
-    //  console.log(this.props.isOpen)    
+  componentDidUpdate = () => {  
   }
-  addTeamPlayer = () => {
-    // this.props.action.Player.AddPlayerAction(this.state);
+  AddDataData = () => {
     this.props.toggle();
   }
   render() {

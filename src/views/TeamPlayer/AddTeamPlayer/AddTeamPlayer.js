@@ -61,9 +61,6 @@ class AddTeamPlayer extends Component {
         this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
         this.props.toggle(e);
     }
-
-
-
     render() {
         let tournamentOption = "";
         let tournamentTeamOption = "";
