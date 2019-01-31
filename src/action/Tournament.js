@@ -1,5 +1,6 @@
 import * as authService from '../service/Tournament'
 
+import { Get_Data} from '../reducer/Tournament';
 import { Fetch_Data, INVALID_DATA, FetchSingleTournament ,updatetournamentdata,Add_Tournament_Data} from '../reducer/Tournament';
 export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName) => {
     return (dispatch) => {
@@ -66,6 +67,26 @@ export const UpdateTournamentAction = (id,data) => {
                     {
                         type: updatetournamentdata,
                         updateTournamentData: data
+                    }
+                );
+            }
+        })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
+                }
+            })
+    }
+};
+
+export const fetchTournamentAction = () => {
+    return (dispatch) => {
+        authService.AllTournamentData().then((response) => {
+            if (response.status === 200) {
+                dispatch(
+                    {
+                        type: Get_Data,
+                        TournamentData: response.data
                     }
                 );
             }

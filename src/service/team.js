@@ -10,3 +10,11 @@ export function TeamAdd(data){
 export function UpdateTeamdata(id,data){
     return baseService.put('./api/team/'+id,data);
 }
+
+export function selectTeam(id) {
+    return baseService.get(`./api/team/${id}`)
+}
+
+export function GetTeams() {
+    return baseService.get('./api/team');
+}

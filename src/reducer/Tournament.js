@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     TournamentData: [],
     TournamentAddData: [],
+    Tournaments:[],
     FetchSingleTournamentData: [],
     updateTournamentData: [],
     error_msg: "",
@@ -10,6 +11,9 @@ export const updatetournamentdata = "updatetournamentdata";
 export const FetchSingleTournament = "FetchSingleTournament";
 export const Add_Tournament_Data = "Add_Tournament_Data";
 export const INVALID_DATA = "INVALID_DATA";
+export const Get_Data = "Get_Data";
+export const Add_New_Data = "Add_New_Data";
+export const Add_New_Team = "Add_New_Team";
 
 export default (state = INITIAL_STATE, action) => {  
     switch (action.type) {
@@ -31,6 +35,20 @@ export default (state = INITIAL_STATE, action) => {
             state.TournamentData.unshift(action.TournamentAddData)
             return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
         }
+        case Get_Data: {
+            return Object.assign({}, state, { Tournaments: action.TournamentData });
+        }
+        case Add_New_Team: 
+            const tournaments = state.Tournaments;
+            let id = action.TournamentTeamAddData.tournamentId;
+            let i = tournaments.findIndex(tournament=>{
+                return tournament.id===id;
+            })
+            // const t = tournaments.filter(tournament=>{
+            //     return tournament.id===id;
+            // });
+            tournaments[i].Teams.push(action.newTeam);
+            return Object.assign({}, state, { Tournaments: tournaments });
         case INVALID_DATA: {
             return Object.assign({}, state, { error_msg: action.error_msg });
         }
