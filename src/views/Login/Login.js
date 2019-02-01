@@ -62,7 +62,7 @@ class Login extends Component {
     btnLoginClick(e) {
         e.preventDefault();
         this.props.action.auth.loginUser(this.state);
-        // if (this.props.err_msg !== "") {
+                    // if (this.props.err_msg !== "") {
         //     this.setState({ err_msg: this.props.err_msg });
         // }
     }

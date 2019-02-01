@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
         case Add_Team_Data: {            
             state.TeamData.unshift(action.TeamAddData)
             return Object.assign({}, state, {
-                TeamData:state.TeamData.concat(action.TeamAddData)
+                TeamData:state.TeamData.splice(action.TeamAddData)
              });             
         }        
         case INVALID_DATA: {
