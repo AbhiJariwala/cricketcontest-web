@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Container, Button, Input, ButtonGroup } from "reactstrap";
+import { Table, Button, Input, ButtonGroup } from "reactstrap";
 
 import { PanelHeader } from "components";
 
@@ -28,83 +28,50 @@ class TeamPlayer extends Component {
         return (
             <div>
                 <PanelHeader size="sm" />
-                <Container>
-                    <AddTeamPlayer />
-                    {/* <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                        <ModalHeader toggle={this.toggle}>Tournament</ModalHeader>
-                        <ModalBody>
-                            <Form>
-                                <FormGroup>
-                                    <Label for="tournamentName">Tournament Name:</Label>
-                                    <Input type="select" name="select" id="tournamentName">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="teamName">Team Name</Label>
-                                    <Input type="select" name="teamName" id="teamName">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="Players">Players</Label>
-                                    <Input type="select" name="Players" id="Players" multiple>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </Input>
-                                </FormGroup>
-                            </Form>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" onClick={this.toggle}>Submit</Button>{' '}
-                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                        </ModalFooter>
-                    </Modal> */}
-                    <div style={{ width: "10%", margin: "25px" }}>
-                        <div>
-                            Show entries<Input type="select" name="select" id="exampleSelect">
+                <div className="content">
+                    {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null}
+                    <div style={{ marginTop: "50px" }}>
+                        <div style={{ float: "right" }}>
+                            Show entries
+                            <Input type="select" name="select" id="exampleSelect">
                                 <option>10</option>
                                 <option>25</option>
                                 <option>50</option>
                                 <option>100</option>
-                            </Input></div>
+                            </Input>
+                        </div>
+
+                        <div style={{ float: "left" }}>
+                            <Button color="info" onClick={this.toggle}>Add </Button>
+                        </div>
                     </div>
-                    <Table>
-                        <thead>
-                            <tr>
+                    <Table responsive bordered hover>
+                        <thead className="thead-dark">
+                            <tr style={{ textAlign: "center" }}>
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th>Tournament</th>
+                                <th>Team</th>
+                                <th>Players</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr style={{ textAlign: "center" }}>
                                 <th scope="row">3</th>
                                 <td>Larry</td>
                                 <td>the Bird</td>
-                                <td>@twitter</td>
-                                <td> <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Edit</Button>{' '}</td>
+                                <td>twitter</td>
+                                <td><Button color="info" onClick={this.toggle} style={{ width: "70px" }}>Edit</Button>{' '}
+                                    <Button onClick={this.toggle} style={{ width: "70px", backgroundColor: "#FF0000" }}>Delete</Button>
+                                </td>
                             </tr>
                         </tbody>
                     </Table>
                     <ButtonGroup>
-                        <Button>Prev</Button> &nbsp;
-                    <Button>Next</Button>
+                        <Button color="info">Prev</Button>&nbsp;
+                        <Button color="info">Next</Button>
                     </ButtonGroup>
-                </Container>
-
+                </div>
             </div>
         );
     }

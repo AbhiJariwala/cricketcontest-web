@@ -88,17 +88,11 @@ class UserRegistration extends Component {
     }
 
     btnRegisterClick() {
-
         this.props.action.register.RegisterUser(this.state);
-
-
-        // this.props.history.push("/login");
     }
-
-
+    
     render() {
         return (
-
             <div>
                 <hr />
                 <PanelHeader size="sm" ><h1 style={{ color: "white", marginTop: "-35px", textAlign: "center" }}>Cricket Contest</h1></PanelHeader>

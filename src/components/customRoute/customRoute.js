@@ -40,8 +40,7 @@ class CRoute extends Component {
             redirectTo = "/unauthorized-access";
         else if (!isUserLoggedIn && rest.path === "*"){
             redirectTo = "/login";  
-        }
-        console.log(redirectTo)           
+        }       
             
         return (
             <Route

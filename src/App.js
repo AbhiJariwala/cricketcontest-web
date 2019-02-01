@@ -6,7 +6,7 @@ import CRoute from './components/customRoute/customRoute'
 import UserRegistration from './views/Registration/User-registration'
 import Login from './views/Login/Login'
 import indexRoutes from './routes/index'
-import userDashBoard from './views/userDashBoard/userDashBoard'
+import userDashBoard from './views/userDashBoard/userDashBoard';
 class App extends Component {
     render() {
         return (

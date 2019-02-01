@@ -1,42 +1,104 @@
-//import Service
-import * as authService from '../service/Player';
 
-import { Fetch_Data, INVALID_DATA, Add_Data } from '../reducer/Player';
-export const selectPlayerAction = () => {
+import * as playerService from '../service/Player';
+
+import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER, DELETE_PLAYER } from '../reducer/Player';
+
+export const getPlayer = () => {
     return (dispatch) => {
-        authService.Player().then((response) => {
+        playerService.getPlayer().then((response) => {
             if (response.status === 200) {
-                dispatch(
-                    {
-                        type: Fetch_Data,
-                        PlayerData: response.data
-                    }
-                );
+                dispatch({
+                    type: FETCH_PLAYER,
+                    PlayerData: response.data
+                });
+            }
+        }).catch((error) => {
+            if (error.response) {
+                dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
             }
         })
-            .catch((error) => {
-                if (error.response) {
-                    dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
-                }
-            })
     }
 };
-export const AddPlayerAction = (data) => {
+export const addPlayer = (player) => {
     return (dispatch) => {
-        authService.PlayerAdd(data).then((response) => {
+        playerService.addPlayer(player).then((response) => {
             if (response.status === 200) {
-                dispatch(
-                    {
-                        type: Add_Data,
-                        PlayerAddData: response.data
-                    }
-                );
+                dispatch({
+                    type: ADD_PLAYER,
+                    PlayerAddData: response.data
+                });
+            }
+        }).catch((error) => {
+            if (error.response) {
+                dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
             }
         })
-            .catch((error) => {
-                if (error.response) {
-                    dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
-                }
-            })
     }
 };
+
+export const updatePlayer = (id, player) => {
+    let playerObj = {};
+    for (var pair of player.entries()) {
+        if (pair[0] === "id") {
+            pair[1] = parseInt(pair[1], 10);
+        }
+        playerObj = { ...playerObj, [pair[0]]: pair[1] };
+    }
+
+    return (dispatch) => {
+        playerService.updatePlayer(id, player).then((response) => {
+            if (response.status === 200) {
+                dispatch({
+                    type: UPDATE_PLAYER,
+                    PlayerUpdateData: {
+                        ...playerObj,
+                        playerImage: response.data.playerImage
+                    }
+                });
+            }
+        }).catch((error) => {
+
+            if (error.response) {
+                dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
+            }
+        })
+    }
+};
+
+export const deletePlayer = (id) => {
+    return (dispatch) => {
+        playerService.deletePlayer(id).then((response) => {
+            if (response.status === 200) {
+                dispatch({
+                    type: DELETE_PLAYER,
+                    PlayerDeletedId: id
+                });
+            }
+        }).catch((error) => {
+
+            if (error.response) {
+                dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
+            }
+        })
+    }
+};
+
+
+
+// export const getPlayerByID = (id) => {
+//     return (dispatch) => {
+//         playerService.getPlayerByID(id).then((response) => {
+//             debugger
+//             if (response.status === 200) {
+//                 dispatch({
+//                     type: GET_PLAYERBYID,
+//                     Player: response.data
+//                 });
+//             }
+//         }).catch((error) => {
+//             if (error.response) {
+//                 dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
+//             }
+//         })
+//     }
+// };
