@@ -1,6 +1,6 @@
 import * as authService from '../service/TournamentTeam';
 
-import { INVALID_DATA} from '../reducer/TournamentTeam';
+import { INVALID_DATA } from '../reducer/TournamentTeam';
 import {Add_New_Team} from '../reducer/Tournament';
 export const AddTournamentTeamAction = (data,team) => {
     return (dispatch) => {

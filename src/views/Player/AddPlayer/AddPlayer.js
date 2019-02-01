@@ -56,7 +56,6 @@ class AddPlayer extends Component {
 
   inputChangedHandler(e) {
     if (e.target.name === "gender") {
-      console.log(e.target.value);
       this.genderChangeHandler(e);
     }
     else {
@@ -80,7 +79,6 @@ class AddPlayer extends Component {
 
   btnSubmitClick = (e) => {
     e.preventDefault();
-
     let formdata = new FormData();
     formdata.append("firstName", this.state.Player.firstName);
     formdata.append("lastName", this.state.Player.lastName);
@@ -92,23 +90,25 @@ class AddPlayer extends Component {
     } else {
       formdata.append("playerImage", this.state.Player.playerImage);
     }
-   
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
 
+    let loginUserId = this.props.auth.userId;
     if (!this.props.data.Edit) {
+      formdata.append("createdBy", loginUserId);
       this.props.action.Player.addPlayer(formdata, config);
     }
     else {
-      formdata.append("id", this.state.Player.id);
-      this.props.action.Player.updatePlayer(this.state.Player.id, formdata, config)
+      let playerId = this.state.Player.id;
+      formdata.append("id", playerId);
+      formdata.append("updatedBy", loginUserId);
+      this.props.action.Player.updatePlayer(playerId, formdata, config)
     }
     this.props.toggle();
   }
-
   render() {
     return (
       <div>
@@ -173,9 +173,9 @@ class AddPlayer extends Component {
   }
 }
 const mapStateToProps = (state) => {
-
+  const { auth } = state
   return {
-    ShowPlayer: state.Player.PlayerData,
+    auth: auth
   }
 };
 

@@ -26,6 +26,7 @@ class TournamentTeam extends Component {
     });
   }
   callback=(key)=> {
+//console.log(key);
   }
 
   handleDelete=(id)=>{

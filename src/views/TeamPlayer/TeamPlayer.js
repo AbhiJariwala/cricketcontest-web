@@ -45,23 +45,25 @@ class TeamPlayer extends Component {
                             <Button color="info" onClick={this.toggle}>Add </Button>
                         </div>
                     </div>
-                    <Table bordered hover>
+                    <Table responsive bordered hover>
                         <thead className="thead-dark">
-                            <tr>
+                            <tr style={{ textAlign: "center" }}>
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th>Tournament</th>
+                                <th>Team</th>
+                                <th>Players</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr style={{ textAlign: "center" }}>
                                 <th scope="row">3</th>
                                 <td>Larry</td>
                                 <td>the Bird</td>
-                                <td>@twitter</td>
-                                <td> <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Edit</Button>{' '}</td>
+                                <td>twitter</td>
+                                <td><Button color="info" onClick={this.toggle} style={{ width: "70px" }}>Edit</Button>{' '}
+                                    <Button onClick={this.toggle} style={{ width: "70px", backgroundColor: "#FF0000" }}>Delete</Button>
+                                </td>
                             </tr>
                         </tbody>
                     </Table>

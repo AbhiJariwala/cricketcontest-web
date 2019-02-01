@@ -2,6 +2,7 @@ import * as authService from '../service/Tournament'
 
 import { Get_Data} from '../reducer/Tournament';
 import { Fetch_Data, INVALID_DATA, FetchSingleTournament ,updatetournamentdata,Add_Tournament_Data} from '../reducer/Tournament';
+
 export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName) => {
     return (dispatch) => {
         authService.Tournament(pageno, parpageRecord, sorting,filedName).then((response) => {

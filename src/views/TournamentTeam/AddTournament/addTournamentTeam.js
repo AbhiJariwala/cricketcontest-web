@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
-//import { Select } from 'antd';
 import * as TournamentAction from '../../../action/Tournament';
 import * as TeamAction from '../../../action/Team';
 import * as TournamentTeamAction from '../../../action/TournamentTeam';
@@ -22,12 +21,8 @@ class AddTournament extends Component {
     this.props.action.Tournament.fetchTournamentAction();
   }
 
-  componentDidUpdate = () => {
-
-  }
   AddData = () => {
     const { tournamentId, teamId } = this.state;
-    console.log(tournamentId, teamId);
     this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId, teamId }, this.props.Team);
     this.props.toggle();
   }
@@ -39,11 +34,7 @@ class AddTournament extends Component {
       this.setState({ [e.target.name]: e.target.value });
       this.props.action.Team.fetchTeamAction();
       let teams = this.props.ShowTornamentAll.map((tournament) => {
-
-        if (tournament.id === id) {
-          return tournament.Teams;
-        }
-        
+        return (tournament.id === parseInt(id, 10)) ? tournament.Teams : undefined;
       })
       let filteredteams = teams.filter((team) => {
         return team !== undefined;
@@ -53,7 +44,6 @@ class AddTournament extends Component {
     if (e.target.name === "teamId") {
       let teamId = e.target.value;
       this.props.action.Team.getTeamAction(teamId);
-      console.log("teamId: ", e.target.value);
       this.setState({ [e.target.name]: e.target.value });
     }
 

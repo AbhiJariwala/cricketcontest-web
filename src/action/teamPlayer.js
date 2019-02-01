@@ -9,7 +9,7 @@ export const getTournaments = () => {
                 if (response.status === 200) {
                     dispatch({
                         type: GET_TOURNAMENT,
-                        data: response.data
+                        data: response.data                        
                     })
                 }
             })

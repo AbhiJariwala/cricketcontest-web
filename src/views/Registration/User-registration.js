@@ -90,10 +90,6 @@ class UserRegistration extends Component {
     btnRegisterClick() {
         this.props.action.register.RegisterUser(this.state);
     }
-
-    componentWillReceiveProps(nextProps){
-        console.log(nextProps.err_msg);
-    }
     
     render() {
         return (

@@ -45,7 +45,7 @@ class MatchPlayerScore extends Component {
                         </div>
                     </div>
 
-                    <Table responsive bordered hover>
+                    <Table responsive hover>
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }}>
                                 <th>Tournament</th>
@@ -73,7 +73,9 @@ class MatchPlayerScore extends Component {
                                 <td>5</td>
                                 <td>5</td>
                                 <td>5</td>
-                                <td><Button color="info" onClick={this.toggle} style={{ width: "70px" }}>Edit</Button>{' '}</td>
+                                <td><Button color="info" onClick={this.toggle} style={{ width: "70px" }}>Edit</Button>{'  '} 
+                                    <Button style={{ width: "70px", backgroundColor:"#FF0000" }}>Delete</Button>
+                                </td>
                             </tr>
                             {/*data*/}
                         </tbody>

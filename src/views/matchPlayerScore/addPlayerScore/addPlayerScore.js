@@ -34,12 +34,12 @@ class AddPlayerScore extends Component {
 
     tournamentNameChangedHandler(e) {
         this.props.action.getMatchPlayerScore.getTournamentMatchesByTournamentId(e.target.value);
-        this.setState({[e.target.name]:e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     tournamentMatchNameChangedHandler(e) {
         this.props.action.getMatchPlayerScore.getplayersByTournamentMatchId(e.target.value);
-        this.setState({[e.target.name]:e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     addTournamentMatchPlayerScore(e) {
@@ -48,8 +48,8 @@ class AddPlayerScore extends Component {
         this.props.toggle();
     }
 
-    changeHandler(e){
-        this.setState({[e.target.name]:e.target.value});
+    changeHandler(e) {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     render() {
@@ -88,7 +88,6 @@ class AddPlayerScore extends Component {
                         <ModalBody>
 
                             <Form>
-
                                 <FormGroup>
                                     <Label for="tournamentName">Select Tournament Name</Label>
                                     <Input
@@ -96,7 +95,7 @@ class AddPlayerScore extends Component {
                                         name="tournamentId"
                                         id="tournamentName"
                                         onChange={this.tournamentNameChangedHandler}>
-                                        <option>Select Tournament</option>
+                                        <option value="" disabled="" selected="" style={{ display: "none" }}>Select Tournament</option>
                                         {tournamentNameOption}
                                     </Input>
                                 </FormGroup>
@@ -108,7 +107,7 @@ class AddPlayerScore extends Component {
                                         name="tournamentMatchId"
                                         id="tournamentMatchName"
                                         onChange={this.tournamentMatchNameChangedHandler}>
-                                        <option>Select Tournament Match</option>
+                                        <option value="" disabled="" selected="" style={{ display: "none" }}>Select Tournament Match</option>
                                         {tournamentMatchesNameOption}
                                     </Input>
                                 </FormGroup>
@@ -116,16 +115,15 @@ class AddPlayerScore extends Component {
                                 <FormGroup>
                                     <Label for="playerName">Select Player Name</Label>
                                     <Input type="select" name="playerId" id="playerName" onChange={this.changeHandler}>
-                                        <option>Select Player</option>
+                                        <option value="" disabled="" selected="" style={{ display: "none" }}>Select Player</option>
                                         {tournamentMatchPlayers1}
                                         {tournamentMatchPlayers2}
                                     </Input>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="wicket">Wicket</Label>
                                     <Input type="select" name="wicket" id="wicket" onChange={this.changeHandler}>
-                                        <option>Select Wicket</option>
+                                        <option value="" disabled="" selected="" style={{ display: "none" }}>Select Wicket</option>
                                         <option>0</option>
                                         <option>1</option>
                                         <option>2</option>
@@ -139,17 +137,15 @@ class AddPlayerScore extends Component {
                                         <option>10</option>
                                     </Input>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="run">Run</Label>
-                                    <Input type="number" name="run" id="run" placeholder="Runs" onChange={this.changeHandler}/>
+                                    <Input type="number" name="run" id="run" placeholder="Runs" onChange={this.changeHandler} />
                                     <span style={{ color: "red" }}></span>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="catch">Catch</Label>
                                     <Input type="select" name="catch" id="catch" onChange={this.changeHandler}>
-                                        <option>Select Catch</option>
+                                        <option value="" disabled="" selected="" style={{ display: "none" }}>Select Catch</option>
                                         <option>0</option>
                                         <option>1</option>
                                         <option>2</option>
@@ -163,23 +159,20 @@ class AddPlayerScore extends Component {
                                         <option>10</option>
                                     </Input>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="six">Six</Label>
-                                    <Input type="number" name="six" id="six" placeholder="Sixes" onChange={this.changeHandler}/>
+                                    <Input type="number" name="six" id="six" placeholder="Sixes" onChange={this.changeHandler} />
                                     <span style={{ color: "red" }}></span>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="four">Four</Label>
-                                    <Input type="number" name="four" id="four" placeholder="Fours" onChange={this.changeHandler}/>
+                                    <Input type="number" name="four" id="four" placeholder="Fours" onChange={this.changeHandler} />
                                     <span style={{ color: "red" }}></span>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="stumping">Stumping</Label>
                                     <Input type="select" name="stumping" id="stumping" onChange={this.changeHandler}>
-                                        <option>Select Stumping</option>
+                                        <option value="" disabled="" selected="" style={{ display: "none" }}>Select Stumping</option>
                                         <option>0</option>
                                         <option>1</option>
                                         <option>2</option>
