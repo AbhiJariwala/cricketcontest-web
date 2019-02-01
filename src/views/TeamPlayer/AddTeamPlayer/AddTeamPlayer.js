@@ -61,8 +61,9 @@ class AddTeamPlayer extends Component {
         this.props.toggle(e);
     }
     render() {
-       // let playerData = "";
-        //let playertournamentId = this.state.tournamentId;
+        let playerData = "";
+        let selectedPlayers = [];
+        let playertournamentId = this.state.tournamentId;
         let tournamentOption = "";
         let tournamentTeamOption = "";
         let teamPlayersOption = "";
@@ -79,17 +80,27 @@ class AddTeamPlayer extends Component {
             })
         }
 
-
         if (this.props.players) {
-            // playerData = this.props.tournaments.filter((tournamentplayer) => {
-            //     return (tournamentplayer.id === parseInt(playertournamentId, 10));
-            // })
-           
+            playerData = this.props.tournaments.filter((tournamentplayer) => {
+                return (tournamentplayer.id === parseInt(playertournamentId, 10));
+            })
+
+            if (playerData[0]) {
+                selectedPlayers = playerData[0].Players.map(player => {
+                    return player.id;
+                });
+            }
+
             teamPlayersOption = this.props.players.map((player) => {
-                return (<Option key={player.id}>{player.firstName + " " + player.lastName}</Option>)
+                if (selectedPlayers.includes(parseInt(player.id, 10))) {
+                    return "";
+                }
+                else {
+                    return <Option key={player.id}>{player.firstName + " " + player.lastName}</Option>
+                }
             })
         }
-       // console.log(playerData[0]);
+
 
         return (
             <Container>
