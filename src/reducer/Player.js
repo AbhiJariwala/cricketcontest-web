@@ -15,13 +15,15 @@ export default (state = INITIAL_STATE, action) => {
         case FETCH_PLAYER: {
             return Object.assign({}, state, { PlayerData: action.PlayerData });
         }
-        case ADD_PLAYER: {
+        case ADD_PLAYER: { 
             action.PlayerAddData.gender = parseInt(action.PlayerAddData.gender, 10);
-            action.PlayerAddData.dob = action.PlayerAddData.dob.slice(0, 10);
+            action.PlayerAddData.dob = action.PlayerAddData.dob.slice(0,10);
+            console.log(action.PlayerAddData);
             return Object.assign({}, state, {
                 PlayerAddData: action.PlayerAddData,
                 PlayerData: state.PlayerData.concat(action.PlayerAddData)
             });
+
         }
         case UPDATE_PLAYER: {
             var uid = parseInt(action.PlayerUpdateData.id, 10);
@@ -31,6 +33,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 PlayerData: updatedData
             })
+
         }
         case DELETE_PLAYER: {
             var did = parseInt(action.PlayerDeletedId, 10);

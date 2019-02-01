@@ -14,10 +14,12 @@ class AddPlayer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Player: { id: "", firstName: "", lastName: "", dob: "", gender: 0, description: "", playerImage: [], showimage: true }
+      Player: { id: "", firstName: "", lastName: "", dob: "", gender: 1, description: "", playerImage: [], showimage: true },
+      fieldsErrors: { firstName: '', lastName: '', age: '', playerImage: '', description: '' },
+      fieldsValid: { firstName: false, lastName: false, age: false, playerImage: "false", description: false },
+      formValid: false,
     }
   }
-
   componentWillReceiveProps(nextProps) {
     let Player = nextProps.data.Player;
     if (nextProps.data.Player) {
@@ -26,22 +28,15 @@ class AddPlayer extends Component {
       })
     }
   }
-
   genderChangeHandler(e) {
-    let gender = 0;
     if (e.target.checked) {
       if (e.target.value === "Female") {
-        gender = 2;
+        this.setState({
+          Player: {
+            gender: 2
+          }
+        })
       }
-      else {
-        gender = 1;
-      }
-      this.setState({
-        Player: {
-          ...this.state.Player,
-          gender: gender
-        }
-      })
     }
   }
 
@@ -52,29 +47,85 @@ class AddPlayer extends Component {
         playerImage: image
       }
     })
+    this.validateField("playerImage", "true");
   }
 
   inputChangedHandler(e) {
-    if (e.target.name === "gender") {
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name === "gender") {
       this.genderChangeHandler(e);
     }
-    else {
-      this.setState({
-        Player: {
-          ...this.state.Player,
-          [e.target.name]: e.target.value
-        }
-      })
-    }
+    this.setState({ [name]: value }, () => { this.validateField(name, value) })
   }
 
-  cancelImageClick() {
+  cancelImageClick(e) {
+    e.preventDefault();
+    this.validateField("playerImage", "false");
     this.setState({
       Player: {
         ...this.state.Player,
         showimage: false
       }
     })
+
+  }
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.fieldsErrors;
+    let fieldValidation = this.state.fieldsValid;
+
+    switch (fieldName) {
+      case 'firstName':
+        fieldValidation.firstName = value.match(/^[a-zA-Z]+$/i);
+        fieldValidationErrors.firstName = fieldValidation.firstName ? '' : ' Only Alphabets Allow'
+        break;
+
+      case 'lastName':
+        fieldValidation.lastName = value.match(/^[a-zA-Z]+$/i);
+        fieldValidationErrors.lastName = fieldValidation.lastName ? '' : ' Only Alphabets Allow'
+        break;
+
+      case 'dob':
+        fieldValidation.age = (this.calculateAge(value) > 18);
+        console.log(fieldValidation.age)
+        fieldValidationErrors.age = fieldValidation.age ? '' : "Player is not eligible(required 18+)"
+        break;
+
+      case 'description':
+        fieldValidation.description = (value.length > 0)
+        fieldValidationErrors.description = fieldValidation.description ? '' : "Required"
+        break;
+
+      case 'playerImage':
+        fieldValidation.playerImage = value;
+        fieldValidationErrors.playerImage = fieldValidation.playerImage === "true" ? '' : "Must select player image"
+        break;
+
+      default:
+        break;
+    }
+    this.setState({
+      fieldsErrors: fieldValidationErrors,
+      fieldsValid: fieldValidation
+    }, this.validateForm);
+  }
+
+  validateForm() {
+    this.setState({
+      formValid: this.state.fieldsValid.firstName &&
+        this.state.fieldsValid.lastName &&
+        this.state.fieldsValid.age &&
+        // (this.state.fieldsValid.playerImage === "true") &&
+        this.state.fieldsValid.description
+    });
+  }
+
+  calculateAge(dobString) {
+    var dob = new Date(dobString);
+    var ageDifMs = Date.now() - dob.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   btnSubmitClick = (e) => {
@@ -85,9 +136,10 @@ class AddPlayer extends Component {
     formdata.append("dob", this.state.Player.dob);
     formdata.append("gender", this.state.Player.gender);
     formdata.append("description", this.state.Player.description);
-    if (this.state.Player.playerImage[0]) {
+    if (!this.state.Player.showimage) {
       formdata.append("playerImage", this.state.Player.playerImage[0]);
-    } else {
+    }
+    else {
       formdata.append("playerImage", this.state.Player.playerImage);
     }
     const config = {
@@ -105,10 +157,11 @@ class AddPlayer extends Component {
       let playerId = this.state.Player.id;
       formdata.append("id", playerId);
       formdata.append("updatedBy", loginUserId);
-      this.props.action.Player.updatePlayer(playerId, formdata, config)
+      // this.props.action.Player.updatePlayer(this.state.Player, formdata, config)
     }
     this.props.toggle();
   }
+
   render() {
     return (
       <div>
@@ -120,14 +173,18 @@ class AddPlayer extends Component {
                 <FormGroup>
                   <Label for="firstName">First Name</Label>
                   <Input type="text" name="firstName" id="firstName" placeholder="First Name" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.firstName} />
+                  <span style={{ color: "red" }}>{this.state.fieldsErrors.firstName}</span>
                 </FormGroup>
                 <FormGroup>
                   <Label for="lastName">Last Name</Label>
                   <Input type="text" name="lastName" id="lastName" placeholder="Last Name" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.lastName} />
+                  <span style={{ color: "red" }}>{this.state.fieldsErrors.lastName}</span>
+
                 </FormGroup>
                 <FormGroup>
                   <Label for="dob">Date Of Birth</Label>
                   <Input type="date" name="dob" id="dob" placeholder="Date Of Birth" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.dob} />
+                  <span style={{ color: "red" }}>{this.state.fieldsErrors.age}</span>
                 </FormGroup>
                 <FormGroup tag="fieldset">
                   <Label>Gender</Label>
@@ -149,7 +206,7 @@ class AddPlayer extends Component {
                     <img src={path + this.state.Player.playerImage} height="100px" width="100px" alt="" />
                     <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
                   </div>
-                  : <ImageUploader
+                  : (<div><ImageUploader
                     withIcon={true}
                     buttonText="Select Images"
                     imgExtension={['.jpg', '.gif', '.png', '.gif']}
@@ -158,11 +215,13 @@ class AddPlayer extends Component {
                     maxFileSize={5242880}
                     withLabel={false}
                     singleImage={true}
-                    accept={"image/*"} />}
+                    accept={"image/*"} />
+                    <center><span style={{ color: "red" }}>{this.state.fieldsErrors.playerImage}</span></center></div>)
+                }
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="info" onClick={this.btnSubmitClick.bind(this)}>Submit</Button>
+              <Button color="info" onClick={this.btnSubmitClick.bind(this)} disabled={!this.state.formValid}>Submit</Button>
               <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
             </ModalFooter>
           </Modal>
@@ -178,7 +237,6 @@ const mapStateToProps = (state) => {
     auth: auth
   }
 };
-
 const mapDispatchToProps = dispatch => ({
   action: {
     Player: bindActionCreators(PlayerAction, dispatch)

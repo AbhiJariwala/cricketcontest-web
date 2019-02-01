@@ -7,7 +7,6 @@ class CRoute extends Component {
         return rest;
     }
     render() {
-        debugger
         const rest = this.getExtractedJson(this.props);
         const isUserLoggedIn = this.props.auth.token ? this.props.auth.token !== "" : false;
         const userCurrentRole = parseInt(this.props.auth.Role,10);

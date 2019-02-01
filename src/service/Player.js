@@ -1,6 +1,6 @@
 import baseService from './baseService';
-export function getPlayer() {
-    return baseService.get('/api/player/0/100/id/ASC');
+export function getPlayer(start ,end) {
+    return baseService.get('/api/player/'+start + '/' + end + '/id/ASC');
 }
 export function addPlayer(data) {
     return baseService.post('/api/player', data);
