@@ -6,7 +6,6 @@ import { Input, ButtonGroup } from 'reactstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
-
 import * as PlayerAction from '../../action/Player';
 import AddPlayer from '../Player/AddPlayer/AddPlayer';
 import { PanelHeader } from "components";
