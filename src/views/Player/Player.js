@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Table, Button } from 'reactstrap';
 import { Input, ButtonGroup } from 'reactstrap';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
+
 
 import * as PlayerAction from '../../action/Player';
 import AddPlayer from '../Player/AddPlayer/AddPlayer';
@@ -75,7 +78,19 @@ class Player extends Component {
   }
 
   btnDeleteClick(id) {
-    this.props.action.Player.deletePlayer(id);
+    confirmAlert({
+      title: 'Delete player',
+      message: 'Are you sure you want to delete player?.',
+      buttons: [{
+        label: 'Yes',
+        onClick: () => { this.props.action.Player.deletePlayer(id); }
+      },
+      {
+        label: 'No',
+        onClick: () => { }
+      }
+      ]
+    })
   }
 
   render() {
@@ -89,8 +104,8 @@ class Player extends Component {
           <td>{this.calculateAge(player.dob).toString()}</td>
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
-          <td><Button color="info" onClick={() => this.btnEditClick(player)} style={{ width: "62px" }} >Edit</Button></td>
-          <td><Button color="danger" onClick={() => this.btnDeleteClick(player.id)} >Delete</Button></td>
+          <td><Button color="info" onClick={() => this.btnEditClick(player)} style={{ width: "62px" }} >Edit</Button>&nbsp;
+          <Button color="danger" onClick={() => this.btnDeleteClick(player.id)} >Delete</Button></td>
         </tr>
       })
     } else { return <tr>No Player Found</tr> }
@@ -100,17 +115,22 @@ class Player extends Component {
         <PanelHeader size="sm" />
         <div style={{ marginLeft: "15px" }}>
           <AddPlayer isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state}> </AddPlayer>
-          <div style={{ width: "10%", margin: "25px" }}>
-            <div>
-              Show entries<Input type="select" name="select" id="exampleSelect">
+          <div style={{ marginTop: "50px" }}>
+            <div style={{ float: "right" }}>
+              Show entries
+              <Input type="select" name="select">
+                <option>5</option>
                 <option>10</option>
                 <option>25</option>
                 <option>50</option>
                 <option>100</option>
               </Input>
             </div>
+            <div style={{ float: "left" }}>
+              <Button color="info" onClick={this.toggle} style={{ width: "100%" }}>Add Player</Button>
+            </div>
           </div>
-          <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add</Button>
+
           <Table responsive hover>
             <thead className="thead-dark">
               <tr style={{ textAlign: "center" }}>
@@ -120,7 +140,7 @@ class Player extends Component {
                 <th>Age</th>
                 <th>Gender</th>
                 <th>Description</th>
-                <th colSpan="2">Action</th>          
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>

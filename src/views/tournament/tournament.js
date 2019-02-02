@@ -125,8 +125,8 @@ class tournament extends Component {
               </div>
          {data? 
               <div className="table-responsive">
-          <Table>
-            <thead >
+          <Table bordered hover>
+            <thead className="thead-dark">
               <tr onClick={this.sortingdata.bind(Event)}>
                 <th>tournamentName</th>
                 <th>tournamentDescription</th>

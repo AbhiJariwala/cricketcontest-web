@@ -23,6 +23,7 @@
     "perfect-scrollbar": "1.4.0",
     "react": "16.4.2",
     "react-chartjs-2": "2.7.4",
+    "react-confirm-alert": "^2.1.0",
     "react-dom": "16.4.2",
     "react-dropdown-select": "^1.6.0",
     "react-google-maps": "9.4.5",

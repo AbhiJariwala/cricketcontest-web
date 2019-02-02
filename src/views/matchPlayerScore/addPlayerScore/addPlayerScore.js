@@ -107,7 +107,6 @@ class AddPlayerScore extends Component {
                         <ModalBody>
 
                             <Form>
-
                                 <FormGroup>
                                     <Label for="tournamentName">Select Tournament Name</Label>
                                     <Input
@@ -144,7 +143,6 @@ class AddPlayerScore extends Component {
                                         {tournamentMatchPlayers2}
                                     </Input>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="wicket">Wicket</Label>
                                     <Input type="select" name="wicket" id="wicket"
@@ -164,7 +162,6 @@ class AddPlayerScore extends Component {
                                         <option>10</option>
                                     </Input>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="run">Run</Label>
                                     <Input type="number" name="run" id="run" placeholder="Runs"
@@ -172,7 +169,6 @@ class AddPlayerScore extends Component {
                                         onChange={this.changeHandler} />
                                     <span style={{ color: "red" }}></span>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="catch">Catch</Label>
                                     <Input type="select" name="catch" id="catch"
@@ -192,7 +188,6 @@ class AddPlayerScore extends Component {
                                         <option>10</option>
                                     </Input>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="six">Six</Label>
                                     <Input type="number" name="six" id="six" placeholder="Sixes"
@@ -200,7 +195,6 @@ class AddPlayerScore extends Component {
                                         onChange={this.changeHandler} />
                                     <span style={{ color: "red" }}></span>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="four">Four</Label>
                                     <Input type="number" name="four" id="four" placeholder="Fours"
@@ -208,7 +202,6 @@ class AddPlayerScore extends Component {
                                         onChange={this.changeHandler} />
                                     <span style={{ color: "red" }}></span>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <Label for="stumping">Stumping</Label>
                                     <Input type="select" name="stumping" id="stumping"

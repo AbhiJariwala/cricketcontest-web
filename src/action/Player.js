@@ -1,7 +1,7 @@
 
 import * as playerService from '../service/Player';
 
-import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER,DELETE_PLAYER } from '../reducer/Player';
+import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER, DELETE_PLAYER } from '../reducer/Player';
 
 export const getPlayer = () => {
     return (dispatch) => {
@@ -39,18 +39,20 @@ export const addPlayer = (player) => {
 export const updatePlayer = (id, player) => {
     let playerObj = {};
     for (var pair of player.entries()) {
-            playerObj = { ...playerObj, [pair[0]]: pair[1] };
+        if (pair[0] === "id") {
+            pair[1] = parseInt(pair[1], 10);
         }
+        playerObj = { ...playerObj, [pair[0]]: pair[1] };
+    }
 
     return (dispatch) => {
         playerService.updatePlayer(id, player).then((response) => {
-            console.log(response.data.playerImage);
             if (response.status === 200) {
                 dispatch({
                     type: UPDATE_PLAYER,
                     PlayerUpdateData: {
                         ...playerObj,
-                        playerImage : response.data.playerImage
+                        playerImage: response.data.playerImage
                     }
                 });
             }
@@ -66,9 +68,7 @@ export const updatePlayer = (id, player) => {
 export const deletePlayer = (id) => {
     return (dispatch) => {
         playerService.deletePlayer(id).then((response) => {
-            console.log(response);
             if (response.status === 200) {
-                console.log(response);
                 dispatch({
                     type: DELETE_PLAYER,
                     PlayerDeletedId: id

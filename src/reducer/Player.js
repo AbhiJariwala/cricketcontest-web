@@ -16,12 +16,14 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { PlayerData: action.PlayerData });
         }
         case ADD_PLAYER: {
+            action.PlayerAddData.gender = parseInt(action.PlayerAddData.gender, 10);
+            action.PlayerAddData.dob = action.PlayerAddData.dob.slice(0, 10);
             return Object.assign({}, state, {
                 PlayerAddData: action.PlayerAddData,
                 PlayerData: state.PlayerData.concat(action.PlayerAddData)
             });
         }
-        case UPDATE_PLAYER: {           
+        case UPDATE_PLAYER: {
             var uid = parseInt(action.PlayerUpdateData.id, 10);
             var updatedData = state.PlayerData.map(player => {
                 return player.id === uid ? action.PlayerUpdateData : player

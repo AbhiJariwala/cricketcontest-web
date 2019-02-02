@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table,  Button, Input, ButtonGroup } from "reactstrap";
+import { Table, Button, Input, ButtonGroup } from "reactstrap";
 
 import { PanelHeader } from "components";
 
@@ -29,7 +29,7 @@ class TeamPlayer extends Component {
             <div>
                 <PanelHeader size="sm" />
                 <div className="content">
-                    {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null }
+                    {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null}
                     <div style={{ marginTop: "50px" }}>
                         <div style={{ float: "right" }}>
                             Show entries
@@ -45,23 +45,25 @@ class TeamPlayer extends Component {
                             <Button color="info" onClick={this.toggle}>Add </Button>
                         </div>
                     </div>
-                    <Table>
-                        <thead>
-                            <tr>
+                    <Table responsive bordered hover>
+                        <thead className="thead-dark">
+                            <tr style={{ textAlign: "center" }}>
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th>Tournament</th>
+                                <th>Team</th>
+                                <th>Players</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr style={{ textAlign: "center" }}>
                                 <th scope="row">3</th>
                                 <td>Larry</td>
                                 <td>the Bird</td>
-                                <td>@twitter</td>
-                                <td> <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Edit</Button>{' '}</td>
+                                <td>twitter</td>
+                                <td><Button color="info" onClick={this.toggle} style={{ width: "70px" }}>Edit</Button>{' '}
+                                    <Button onClick={this.toggle} style={{ width: "70px", backgroundColor: "#FF0000" }}>Delete</Button>
+                                </td>
                             </tr>
                         </tbody>
                     </Table>

@@ -7,23 +7,41 @@ class CRoute extends Component {
         return rest;
     }
     render() {
+        debugger
         const rest = this.getExtractedJson(this.props);
         const isUserLoggedIn = this.props.auth.token ? this.props.auth.token !== "" : false;
-        const userCurrentRole = this.props.auth.Role;
+        const userCurrentRole = parseInt(this.props.auth.Role,10);
         const { component, cprivate, crole } = this.props;
         const Component = component;
         let redirectTo = undefined;
-        // console.log(rest.path)
-         if (isUserLoggedIn && rest.path === "/login" )
+        if(isUserLoggedIn && rest.path === "/userDashBoard" && userCurrentRole ===1  ){
+            redirectTo= "/"
+        }       
+        else if(isUserLoggedIn && rest.path === "/login" && userCurrentRole ===2 ){
+            redirectTo= "/userDashBoard"
+        }
+        else if(isUserLoggedIn && rest.path === "/" && userCurrentRole ===2  ){
+            redirectTo= "/userDashBoard"
+        }
+        else if(!isUserLoggedIn && rest.path === "/userDashBoard" ){
+            redirectTo= "/login"
+        }        
+        else if(isUserLoggedIn && rest.path === "/login" && userCurrentRole ===1 && cprivate ){
+            redirectTo= "/"
+        }
+    
+        else if (isUserLoggedIn && rest.path === "/login" )
             redirectTo = "/";
-         if (isUserLoggedIn && rest.path === "/registration")
+        else if (isUserLoggedIn && rest.path === "/registration")
             redirectTo = "/";
         else if (!isUserLoggedIn && cprivate)
             redirectTo = "/login";
         else if (isUserLoggedIn && cprivate && crole && crole.filter((item) => item === userCurrentRole).length === 0)
             redirectTo = "/unauthorized-access";
-        else if (!isUserLoggedIn && rest.path === "*")
-            redirectTo = "/login";            
+        else if (!isUserLoggedIn && rest.path === "*"){
+            redirectTo = "/login";  
+        }       
+            
         return (
             <Route
                 {...rest}

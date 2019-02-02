@@ -57,15 +57,15 @@ class AddTeamPlayer extends Component {
             teamId: parseInt(this.state.teamId, 10),
             selectedPlayers: result
         }
-        console.log(teamplayerdata);
         this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
         this.props.toggle(e);
     }
     render() {
+       // let playerData = "";
+        //let playertournamentId = this.state.tournamentId;
         let tournamentOption = "";
         let tournamentTeamOption = "";
         let teamPlayersOption = "";
-        // var playersExists = []
         if (this.props.tournaments) {
             tournamentOption = this.props.tournaments.map((tournament) => {
                 return (<option key={tournament.id} value={tournament.id}>{tournament.tournamentName}</option>)
@@ -81,10 +81,15 @@ class AddTeamPlayer extends Component {
 
 
         if (this.props.players) {
+            // playerData = this.props.tournaments.filter((tournamentplayer) => {
+            //     return (tournamentplayer.id === parseInt(playertournamentId, 10));
+            // })
+           
             teamPlayersOption = this.props.players.map((player) => {
                 return (<Option key={player.id}>{player.firstName + " " + player.lastName}</Option>)
             })
         }
+       // console.log(playerData[0]);
 
         return (
             <Container>
@@ -96,14 +101,14 @@ class AddTeamPlayer extends Component {
                                 <FormGroup>
                                     <Label for="tournamentName">Tournament Name:</Label>
                                     <Input type="select" name="select" onChange={this.tournamentNameChangeHandler} id="tournamentName">
-                                        <option key="tournament" >Select Tournament</option>
+                                        <option key="tournament" value="" disabled="" style={{ display: "none" }} >Select Tournament</option>
                                         {tournamentOption}
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="teamName">Team Name</Label>
                                     <Input type="select" name="teamName" id="teamName" onChange={this.teamNameChangeHandler}>
-                                        <option key="team">Select Team</option>
+                                        <option key="team" value="" disabled="" style={{ display: "none" }}>Select Team</option>
                                         {tournamentTeamOption}
                                     </Input>
                                 </FormGroup>
@@ -135,7 +140,8 @@ const mapStateToProps = (state) => {
     return {
         tournaments: state.teamPlayer.tournaments,
         teams: state.teamPlayer.teams,
-        players: state.teamPlayer.players
+        players: state.teamPlayer.players,
+        tournamentplayer: state.teamPlayer.tournamentplayer
     }
 }
 
