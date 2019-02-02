@@ -15,8 +15,8 @@ class AddPlayer extends Component {
     super(props);
     this.state = {
       Player: { id: "", firstName: "", lastName: "", dob: "", gender: 1, description: "", playerImage: [], showimage: true },
-      fieldsErrors: { firstName: '', lastName: '', age: '', playerImage: '', description: '' },
-      fieldsValid: { firstName: false, lastName: false, age: false, playerImage: "false", description: false },
+      fieldsErrors: { firstName: '', lastName: '', dob: '', playerImage: '', description: '' },
+      fieldsValid: { firstName: false, lastName: false, dob: false, playerImage: "false", description: false },
       formValid: false,
     }
   }
@@ -29,14 +29,15 @@ class AddPlayer extends Component {
     }
   }
   genderChangeHandler(e) {
+    let gender = 0;
     if (e.target.checked) {
-      if (e.target.value === "Female") {
-        this.setState({
-          Player: {
-            gender: 2
-          }
-        })
-      }
+      (e.target.value === "Female") ? gender = 2 : gender = 1;
+      this.setState({
+        Player: {
+          ...this.state.Player,
+          gender: gender
+        }
+      })
     }
   }
 
@@ -56,22 +57,30 @@ class AddPlayer extends Component {
     if (name === "gender") {
       this.genderChangeHandler(e);
     }
-    this.setState({ [name]: value }, () => { this.validateField(name, value) })
+    else {
+      this.setState({
+        Player: {
+          ...this.state.Player,
+          [name]: value
+        }
+      }, () => { this.validateField(name, value) })
+    }
   }
 
   cancelImageClick(e) {
     e.preventDefault();
-    this.validateField("playerImage", "false");
     this.setState({
       Player: {
         ...this.state.Player,
         showimage: false
       }
     })
+    this.validateField("playerImage", "false");
 
   }
 
   validateField(fieldName, value) {
+    console.log(fieldName, value);
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
 
@@ -116,19 +125,20 @@ class AddPlayer extends Component {
       formValid: this.state.fieldsValid.firstName &&
         this.state.fieldsValid.lastName &&
         this.state.fieldsValid.age &&
-        // (this.state.fieldsValid.playerImage === "true") &&
-        this.state.fieldsValid.description
+        this.state.fieldsValid.description &&
+        (this.state.fieldsValid.playerImage === "true")
     });
   }
 
   calculateAge(dobString) {
     var dob = new Date(dobString);
     var ageDifMs = Date.now() - dob.getTime();
-    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    var ageDate = new Date(ageDifMs); // miliseconds 
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   btnSubmitClick = (e) => {
+    console.log(this.state);
     e.preventDefault();
     let formdata = new FormData();
     formdata.append("firstName", this.state.Player.firstName);
@@ -157,7 +167,7 @@ class AddPlayer extends Component {
       let playerId = this.state.Player.id;
       formdata.append("id", playerId);
       formdata.append("updatedBy", loginUserId);
-      // this.props.action.Player.updatePlayer(this.state.Player, formdata, config)
+      this.props.action.Player.updatePlayer(this.state.Player, formdata, config)
     }
     this.props.toggle();
   }

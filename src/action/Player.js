@@ -3,10 +3,11 @@ import * as playerService from '../service/Player';
 
 import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER, DELETE_PLAYER } from '../reducer/Player';
 
-export const getPlayer = (start,end) => {
+export const getPlayer = (start,end,sortFiled,sortType) => {
     return (dispatch) => {
-        playerService.getPlayer(start,end).then((response) => {
+        playerService.getPlayer(start,end,sortFiled,sortType).then((response) => {
             if (response.status === 200) {
+                console.log(response)
                 dispatch({
                     type: FETCH_PLAYER,
                     PlayerData: response.data
