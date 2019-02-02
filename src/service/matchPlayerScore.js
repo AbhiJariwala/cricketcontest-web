@@ -12,6 +12,10 @@ export const getplayersByTournamentMatchId = (tournamentMatchId) => {
     return BaseService.get("/api/tournamentmatch/" + tournamentMatchId);
 }
 
+export const getTournamentMatchPlayerScore = (offset, perPageRecord, fieldName, order) => {
+    return BaseService.get("api/tournamentmatchplayerscore/" + offset + '/' + perPageRecord + '/' + fieldName + '/' + order);
+}
+
 export const addTournamentMatchPlayerScore = (tournamentMatchPlayerScore) => {
-    return BaseService.post("api/tournamentmatchplayerscore",tournamentMatchPlayerScore);
+    return BaseService.post("api/tournamentmatchplayerscore", tournamentMatchPlayerScore);
 }
