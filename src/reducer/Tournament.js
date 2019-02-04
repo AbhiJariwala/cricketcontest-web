@@ -36,6 +36,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { Tournaments: action.TournamentData });
         }
         case Add_Tournament_Data: {
+            state.TournamentData.splice(-1,1)
             state.TournamentData.unshift(action.TournamentAddData)
             return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
         }
