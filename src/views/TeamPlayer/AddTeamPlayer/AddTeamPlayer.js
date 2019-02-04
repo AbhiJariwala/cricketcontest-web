@@ -73,7 +73,6 @@ class AddTeamPlayer extends Component {
             })
         }
 
-
         if (this.props.teams.Teams) {
             tournamentTeamOption = this.props.teams.Teams.map((team) => {
                 return (<option key={team.id} value={team.id}>{team.teamName}</option>)
@@ -125,7 +124,6 @@ class AddTeamPlayer extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="Players">Players</Label>
-
                                     <Select
                                         mode="multiple"
                                         style={{ width: '100%' }}

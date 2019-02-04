@@ -19,7 +19,10 @@ class TeamPlayer extends Component {
             modal: false,
             showTeamModal: false,
             tournamentId: 0,
-            tournamentTeamPlayer: []
+            teamId: 0,
+            tournamentTeamPlayer: [],
+            pageNo: 0,
+            recordPerPage: 5,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -42,11 +45,24 @@ class TeamPlayer extends Component {
         this.props.action.getTeamPlayerData.getTournaments();
     }
 
-    showTeamHandler(id) {
-        this.TeamModaltoggle();
-        this.props.action.getTeamPlayerData.getTeamByTournamanetId(id);
+
+    CollapseChangeHandler(teamId) {
+        this.setState({ teamId: teamId });
+        this.props.action.getTeamPlayerData.getPlayerOfTeam(this.state.tournamentId, teamId);
+
+        // if (this.props.playerofteam) {
+        //     this.props.playerofteam.map((team) => {
+        //         return (team.id === teamId) ? this.setState({ tournamentTeamPlayer: team.Players }) : null
+        //     })
+        // }
     }
 
+    prevHandler(e) {
+
+    }
+    nextHandler(e) {
+        console.log(e);
+    }
 
     renderTable(teamplayer) {
         return (
@@ -55,29 +71,46 @@ class TeamPlayer extends Component {
                     <td>{teamplayer.tournamentName}</td>
                     <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} style={{ width: "100px" }}>Show Teams</Button></td>
                 </tr>
-
             </tbody>
         );
     }
 
-    CollapseChangeHandler(key) {
-        if (this.props.teams.Teams) {
-            this.props.teams.Teams.map((team) => {
-                return (team.id === key) ?
-                    this.setState({
-                        tournamentTeamPlayer: team.player
-                    }) : null
-            })
+    showTeamHandler(tournamentId) {
+        this.TeamModaltoggle();
+        this.setState({ tournamentId: tournamentId });
+        this.props.action.getTeamPlayerData.getTeamByTournamanetId(tournamentId);
+    }
+
+    rendershowTeamsModal() {
+        debugger
+        let player = [];
+        if (this.props.playerofteam) {
+            this.props.playerofteam.map(playerdata => {
+                return player.push(playerdata.Players.map(p => {
+                    return <ul key={p.id}><li>{p.firstName}</li></ul>
+                }))
+
+            });
         }
+        return (
+            <Modal isOpen={this.state.showTeamModal} toggle={this.TeamModaltoggle} className={this.props.className} >
+                <ModalHeader toggle={this.TeamModaltoggle}>Teams</ModalHeader>
+                <ModalBody>
+                    {(this.props.teams.Teams) ?
+                        this.props.teams.Teams.map((data) => {
+                            return (<Collapse key={data.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
+                                <Panel header={data.teamName} key={data.id} >
+                                    {player}
+                                </Panel>
+                            </Collapse>)
+                        }) : <p>No Teams</p>
+                    }
+                </ModalBody>
+            </Modal>
+        );
     }
 
     render() {
-        let player = "";
-        if (this.state.tournamentTeamPlayer) {
-            player = this.state.tournamentTeamPlayer.map(p => {
-                return <ul key={p.id}><li>{p.firstName}</li></ul>;
-            });
-        }
         let teamplayerdetails = "";
         if (this.props.tournaments) {
             teamplayerdetails = this.props.tournaments.map((teamplayer) => this.renderTable(teamplayer))
@@ -90,7 +123,8 @@ class TeamPlayer extends Component {
                     <div style={{ marginTop: "50px" }}>
                         <div style={{ float: "right" }}>
                             Show entries
-                            <Input type="select" name="select" id="exampleSelect">
+                            <Input type="select" name="noOfEntries" id="noOfEntries">
+                                <option>5</option>
                                 <option>10</option>
                                 <option>25</option>
                                 <option>50</option>
@@ -109,34 +143,15 @@ class TeamPlayer extends Component {
                                 <th>Team</th>
                             </tr>
                         </thead>
-
                         {teamplayerdetails}
-
                     </Table>
                     <ButtonGroup>
-                        <Button color="info">Prev</Button>&nbsp;
-                        <Button color="info">Next</Button>
+                        <Button color="info" onClick={this.prevHandler.bind(this)}>Prev</Button>&nbsp;
+                        <Button color="info" onClick={this.nextHandler.bind(this)}>Next</Button>
                     </ButtonGroup>
                 </div>
+                {this.rendershowTeamsModal()}
 
-                <Modal isOpen={this.state.showTeamModal} toggle={this.TeamModaltoggle} className={this.props.className}>
-                    <ModalHeader toggle={this.TeamModaltoggle}>Teams</ModalHeader>
-                    <ModalBody>
-                        {(this.props.teams.Teams) ?
-                            this.props.teams.Teams.map((data) => {
-                                return <Collapse key={data.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
-                                    <Panel header={data.teamName} key={data.id} >
-                                        {player}
-                                    </Panel>
-                                </Collapse>
-                            })
-                            : <p>No Teams</p>
-                        }
-
-
-                        {/* <p>{this.state.tournamentId}</p> */}
-                    </ModalBody>
-                </Modal>
             </div>
         );
     }
@@ -145,7 +160,9 @@ class TeamPlayer extends Component {
 const mapStateToProps = (state) => {
     return {
         tournaments: state.teamPlayer.tournaments,
-        teams: state.teamPlayer.teams
+        teams: state.teamPlayer.teams,
+        teamplayers: state.teamPlayer.teamplayers,
+        playerofteam: state.teamPlayer.playerofteam
     }
 }
 

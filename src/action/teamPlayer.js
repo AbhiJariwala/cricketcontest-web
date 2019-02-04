@@ -1,5 +1,5 @@
 import * as teamPlayerService from '../service/teamPlayerService';
-import { GET_TOURNAMENT, GET_TEAM, GET_PLAYER,ADD_TEAM_PLAYER, FAILED } from '../reducer/teamPlayer';
+import { GET_TOURNAMENT, GET_TEAM, GET_PLAYER, ADD_TEAM_PLAYER, GET_TEAM_PLAYER, GET_PLAYER_OF_TEAM, FAILED } from '../reducer/teamPlayer';
 
 
 export const getTournaments = () => {
@@ -9,7 +9,7 @@ export const getTournaments = () => {
                 if (response.status === 200) {
                     dispatch({
                         type: GET_TOURNAMENT,
-                        data: response.data                        
+                        data: response.data
                     })
                 }
             })
@@ -69,6 +69,46 @@ export const AddTeamPlayer = (data) => {
                 if (response.status === 200) {
                     dispatch({
                         type: ADD_TEAM_PLAYER,
+                        data: response.data
+                    })
+                }
+            })
+            .catch((error) => {
+                dispatch({
+                    type: FAILED,
+                    data: error.response.data.error
+                })
+            })
+    }
+}
+
+export const getTeamPlayer = () => {
+    return dispatch => {
+        teamPlayerService.getTeamPlayer()
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch({
+                        type: GET_TEAM_PLAYER,
+                        data: response.data
+                    })
+                }
+            })
+            .catch((error) => {
+                dispatch({
+                    type: FAILED,
+                    data: error.response.data.error
+                })
+            })
+    }
+}
+
+export const getPlayerOfTeam = (tournamentId, teamId) => {
+    return dispatch => {
+        teamPlayerService.getPlayerOfTeam(tournamentId, teamId)
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch({
+                        type: GET_PLAYER_OF_TEAM,
                         data: response.data
                     })
                 }

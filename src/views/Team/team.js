@@ -104,7 +104,7 @@ class Team extends Component {
       <div>
         <PanelHeader size="sm" />
         <div className="content">
-          <AddTeam isOpen={this.state.modal} toggle={this.toggle}  dataid={this.state.Editdataid}>  </AddTeam>
+          <AddTeam isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid}>  </AddTeam>
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "right" }}>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
@@ -118,19 +118,19 @@ class Team extends Component {
               <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
             </div>
           </div>
-          {data?  <div className="table-responsive">
-          <Table bordered hover>
-            <thead className="thead-dark">
-              <tr onClick={this.sortingdata.bind(Event)}>
-                <th>teamName</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data}
-            </tbody>
-          </Table>
-         </div> :""}
+          {data ? <div className="table-responsive">
+            <Table responsive hover>
+              <thead className="thead-dark">
+                <tr onClick={this.sortingdata.bind(Event)}>
+                  <th>teamName</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data}
+              </tbody>
+            </Table>
+          </div> : ""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
@@ -139,7 +139,7 @@ class Team extends Component {
             {notNext >= this.state.parpageRecord ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
           </ButtonGroup>
-        </div>
+        </div>++
       </div>
     );
   }

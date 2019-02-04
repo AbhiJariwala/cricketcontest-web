@@ -17,41 +17,46 @@ class tournament extends Component {
       parpageRecord: 5,
       sorting: "",
       Editdataid: [],
-      sortingValueName:"id",
-      sortingValue:"desc"   
+      sortingValueName: "id",
+      sortingValue: "desc"
     };
     this.toggle = this.toggle.bind(this);
   }
+
   componentWillMount = () => {
-    this.props.action.Tournament.SelectTournamentAction(this.state.pageno,this.state.parpageRecord, this.state.sortingValue,this.state.sortingValueName);
+    this.props.action.Tournament.SelectTournamentAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
-  sortingdata = (Event) => {  
+
+  sortingdata = (Event) => {
     const sortingValueName = Event.target.childNodes[0].data;
-    if(sortingValueName!=="Action"){
-    let sortingValue = "asc";
-    if(!this.state.sortingValueName){
-      this.setState({ sortingValueName:sortingValueName})      
-    }else if(this.state.sortingValueName===sortingValueName){
-      if(this.state.sortingValue==="asc"){
-        sortingValue="desc"
-      }else{
-        sortingValue="asc"
+    if (sortingValueName !== "Action") {
+      let sortingValue = "asc";
+      if (!this.state.sortingValueName) {
+        this.setState({ sortingValueName: sortingValueName })
       }
-      this.setState({sortingValueName:sortingValueName,sortingValue:sortingValue})
-      
-    }else{
-      this.setState({ sortingValueName:sortingValueName,sortingValue:"asc"})
-    }    
-    
-    this.props.action.Tournament.SelectTournamentAction(this.state.pageno,this.state.parpageRecord, sortingValue,sortingValueName);
+      else if (this.state.sortingValueName === sortingValueName) {
+        if (this.state.sortingValue === "asc") {
+          sortingValue = "desc"
+        } else {
+          sortingValue = "asc"
+        }
+        this.setState({ sortingValueName: sortingValueName, sortingValue: sortingValue })
+      }
+      else {
+        this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
+      }
+
+      this.props.action.Tournament.SelectTournamentAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
+    }
   }
-  }
-  parpage = (Event) => {  
-    const parpage = parseInt(Event.target.value,10);
+
+  parpage = (Event) => {
+    const parpage = parseInt(Event.target.value, 10);
     this.setState({ parpageRecord: parpage })
-    this.props.action.Tournament.SelectTournamentAction(this.state.pageno, parpage, this.state.sortingValue,this.state.sortingValueName);
+    this.props.action.Tournament.SelectTournamentAction(this.state.pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
-  changeRecord = (Event) => {  
+
+  changeRecord = (Event) => {
     let datachangeprevNext = Event.target.value;
     let pageno = 0
     if (datachangeprevNext === "Next") {
@@ -67,14 +72,16 @@ class tournament extends Component {
       this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
       pageno = this.state.pageno - this.state.parpageRecord
     }
-    this.props.action.Tournament.SelectTournamentAction(pageno, this.state.parpageRecord, this.state.sortingValue,this.state.sortingValueName);
+    this.props.action.Tournament.SelectTournamentAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
+
   toggle(Event) {
     this.setState({
       modal: !this.state.modal,
       Editdataid: null
     });
   }
+
   Edittoggle = (data) => {
     if (!data) {
       alert("no data");
@@ -90,12 +97,13 @@ class tournament extends Component {
       });
     }
   }
+
   render() {
-    let notNext=0;
+    let notNext = 0;
     let data = ""
     if (this.props.ShowTornament) {
       data = this.props.ShowTornament.map((data, key) => {
-        notNext=key+1
+        notNext = key + 1
         return <tr key={key}>
           <td>{data.tournamentName}</td>
           <td>{data.tournamentDescription}</td>
@@ -105,12 +113,11 @@ class tournament extends Component {
     }
     return (
       <div>
-        
         <PanelHeader size="sm" />
-        <div  className="content"  >        
+        <div className="content"  >
           <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournament>
-          <div style={{marginTop:"50px"}}>
-          <div style={{float:"right" }}>            
+          <div style={{ marginTop: "50px" }}>
+            <div style={{ float: "right" }}>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
                 <option>5</option>
                 <option>10</option>
@@ -118,42 +125,43 @@ class tournament extends Component {
                 <option>50</option>
                 <option>100</option>
               </Input>
-              </div>
-              <div style={{float:"left"}}>
-                  <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
-              </div>
-              </div>
-         {data? 
-              <div className="table-responsive">
-          <Table bordered hover>
-            <thead className="thead-dark">
-              <tr onClick={this.sortingdata.bind(Event)}>
-                <th>tournamentName</th>
-                <th>tournamentDescription</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data}
-            </tbody>
-          </Table>
+            </div>
+            <div style={{ float: "left" }}>
+              <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+            </div>
           </div>
-         :""}
+          {data ?
+            <div className="table-responsive">
+              <Table bordered hover>
+                <thead className="thead-dark">
+                  <tr onClick={this.sortingdata.bind(Event)}>
+                    <th>tournamentName</th>
+                    <th>tournamentDescription</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data}
+                </tbody>
+              </Table>
+            </div>
+            : ""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
-              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  disabled>Prev</Button>}
-            &nbsp;                       
-            {notNext>=this.state.parpageRecord?
-        <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button>:<Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
+              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled>Prev</Button>}
+            &nbsp;
+            {notNext >= this.state.parpageRecord ?
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
           </ButtonGroup>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
 
+const mapStateToProps = (state) => {
   return {
     ShowTornament: state.Tournament.TournamentData,
   }
