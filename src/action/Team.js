@@ -1,4 +1,3 @@
-//import Service
 import * as authService from '../service/team';
 
 import { Get_Team_By_Id } from '../reducer/Team';

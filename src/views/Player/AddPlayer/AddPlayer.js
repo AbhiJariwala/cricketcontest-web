@@ -189,7 +189,6 @@ class AddPlayer extends Component {
                   <Label for="lastName">Last Name</Label>
                   <Input type="text" name="lastName" id="lastName" placeholder="Last Name" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.lastName} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.lastName}</span>
-
                 </FormGroup>
                 <FormGroup>
                   <Label for="dob">Date Of Birth</Label>
@@ -236,7 +235,6 @@ class AddPlayer extends Component {
             </ModalFooter>
           </Modal>
         </div>
-
       </div>
     );
   }

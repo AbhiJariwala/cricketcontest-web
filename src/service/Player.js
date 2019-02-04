@@ -11,5 +11,3 @@ export function updatePlayer(id, data) {
 export function deletePlayer(id) {
     return baseService.delete('/api/player/' + id);
 }
-
-

@@ -3,10 +3,11 @@ import * as playerService from '../service/Player';
 
 import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER, DELETE_PLAYER } from '../reducer/Player';
 
-export const getPlayer = () => {
+export const getPlayer = (start, end, sortFiled, sortType) => {
     return (dispatch) => {
-        playerService.getPlayer().then((response) => {
+        playerService.getPlayer(start, end, sortFiled, sortType).then((response) => {
             if (response.status === 200) {
+                console.log(response)
                 dispatch({
                     type: FETCH_PLAYER,
                     PlayerData: response.data
@@ -36,28 +37,23 @@ export const addPlayer = (player) => {
     }
 };
 
-export const updatePlayer = (id, player) => {
-    let playerObj = {};
-    for (var pair of player.entries()) {
-        if (pair[0] === "id") {
-            pair[1] = parseInt(pair[1], 10);
-        }
-        playerObj = { ...playerObj, [pair[0]]: pair[1] };
-    }
-
+export const updatePlayer = (player, playerFormData) => {
     return (dispatch) => {
-        playerService.updatePlayer(id, player).then((response) => {
+        playerService.updatePlayer(player.id, playerFormData).then((response) => {
+            let playerImage = "";
+            (response.data.playerImage) ? playerImage = response.data.playerImage
+                : playerImage = player.playerImage
+
             if (response.status === 200) {
                 dispatch({
                     type: UPDATE_PLAYER,
                     PlayerUpdateData: {
-                        ...playerObj,
-                        playerImage: response.data.playerImage
+                        ...player,
+                        playerImage: playerImage
                     }
                 });
             }
         }).catch((error) => {
-
             if (error.response) {
                 dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
             }
@@ -68,7 +64,9 @@ export const updatePlayer = (id, player) => {
 export const deletePlayer = (id) => {
     return (dispatch) => {
         playerService.deletePlayer(id).then((response) => {
+            console.log(response);
             if (response.status === 200) {
+                console.log(response);
                 dispatch({
                     type: DELETE_PLAYER,
                     PlayerDeletedId: id
@@ -82,23 +80,3 @@ export const deletePlayer = (id) => {
         })
     }
 };
-
-
-
-// export const getPlayerByID = (id) => {
-//     return (dispatch) => {
-//         playerService.getPlayerByID(id).then((response) => {
-//             debugger
-//             if (response.status === 200) {
-//                 dispatch({
-//                     type: GET_PLAYERBYID,
-//                     Player: response.data
-//                 });
-//             }
-//         }).catch((error) => {
-//             if (error.response) {
-//                 dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
-//             }
-//         })
-//     }
-// };

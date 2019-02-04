@@ -1,7 +1,7 @@
 import * as authService from '../service/Tournament'
 
 import { Get_Data} from '../reducer/Tournament';
-import { Fetch_Data, INVALID_DATA, FetchSingleTournament ,updatetournamentdata,Add_Tournament_Data} from '../reducer/Tournament';
+import { Fetch_Data, INVALID_DATA, FetchSingleTournament ,updatetournamentdata,Add_Tournament_Data , Get_Tournament_Data} from '../reducer/Tournament';
 
 export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName) => {
     return (dispatch) => {
@@ -80,13 +80,33 @@ export const UpdateTournamentAction = (id,data) => {
     }
 };
 
-export const fetchTournamentAction = () => {
+export const fetchTournamentAction = (pageno, parpageRecord, sorting,filedName) => {
     return (dispatch) => {
-        authService.AllTournamentData().then((response) => {
+        authService.AllTournamentData(pageno, parpageRecord, sorting,filedName).then((response) => {
             if (response.status === 200) {
                 dispatch(
                     {
                         type: Get_Data,
+                        TournamentData: response.data
+                    }
+                );
+            }
+        })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
+                }
+            })
+    }
+};
+
+export const fetchTournamentDataAction = () => {
+    return (dispatch) => {
+        authService.TournamentData().then((response) => {
+            if (response.status === 200) {
+                dispatch(
+                    {
+                        type: Get_Tournament_Data,
                         TournamentData: response.data
                     }
                 );

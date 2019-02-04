@@ -11,6 +11,9 @@ export function fetchSingleTournamentdata(id) {
 export function UpdateTournamentdata(id,data){
     return baseService.put('./api/tournament/'+id,data);
 }
-export function AllTournamentData(){
+export function AllTournamentData(pageno,parpageRecord,sorting,filedName){
+    return baseService.get('./api/tournament/'+pageno+'/'+parpageRecord+'/'+ filedName+'/'+sorting);
+}
+export function TournamentData(){
     return baseService.get('./api/tournament');
 }
