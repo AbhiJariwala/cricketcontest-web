@@ -10,13 +10,18 @@ class AddTournament extends Component {
     tournamentName: "",
     tournamentDescription: "",
     notcallnext: 0,
-    id: 0,
+    createdBy:0,
+    updatedBy:0,
+    id:0,
     fieldsErrors: { tournamentName: '', tournamentDescription: '' },
     fieldsValid: { tournamentName: false, tournamentDescription: false },
   }
-  componentWillUpdate = () => {
-
-    if (this.props.dataid !== null && !this.state.notcallnext) {
+  componentWillMount=()=>{
+    const userId = localStorage.getItem("userId");
+    this.setState({createdBy:userId,updatedBy:userId});
+  }
+  componentWillUpdate = () => {    
+     if (this.props.dataid !== null && !this.state.notcallnext) {
       this.setState({
         tournamentName: this.props.dataid.tournamentName,
         tournamentDescription: this.props.dataid.tournamentDescription,
@@ -51,13 +56,24 @@ class AddTournament extends Component {
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
   }
   UpdateDataData = (Event) => {
+    const data ={
+      id:this.state.id,
+      tournamentName:this.state.tournamentName,      
+      tournamentDescription:this.state.tournamentDescription,
+      updatedBy:parseInt(this.state.updatedBy,10)
+    }
     Event.preventDefault();
-    this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, this.state)
+    this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, data)
     this.props.toggle(Event);
   }
   AddDataData = (Event) => {
-    Event.preventDefault();
-    this.props.action.Tournament.AddTournamentAction(this.state)
+    const data ={
+      tournamentName:this.state.tournamentName,      
+      tournamentDescription:this.state.tournamentDescription,
+      createdBy:parseInt(this.state.createdBy,10)
+    }
+    Event.preventDefault();    
+    this.props.action.Tournament.AddTournamentAction(data)
     this.props.toggle(Event);
   }
   render() {
@@ -98,7 +114,8 @@ class AddTournament extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  return {
+  return {   
+    auth:state.auth
   }
 };
 const mapDispatchToProps = dispatch => ({

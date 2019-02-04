@@ -48,6 +48,11 @@ export default (state = INITIAL_STATE, action) => {
                 TournamentData: newstate
             });
         }
+
+        case Add_Tournament_Data: {
+            state.TournamentData.unshift(action.TournamentAddData)
+            return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
+        }
         case Add_New_Team: {
     
             let tournaments = state.Tournaments;

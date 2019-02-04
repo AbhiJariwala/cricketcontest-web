@@ -5,7 +5,7 @@ import Team from "../views/Team/team";
 import Player from "../views//Player/Player";
 import TeamPlayer from '../views/TeamPlayer/TeamPlayer'
 import MatchPlayerScore from '../views/matchPlayerScore/matchPlayerScore'
-
+import TournamentPoint from '../views/tornamentPoints/tournamentPoint'
 var dashRoutes = [
   {
     path: "/dashboard",
@@ -43,7 +43,12 @@ var dashRoutes = [
     icon: "sport_trophy",
     component: TeamPlayer
   },
-
+  {
+    path: "/TournamentPoint",
+    name: "TournamentPoint",
+    icon: "sport_trophy",
+    component: TournamentPoint
+  },
   {
     path: "/matchPlayerScore",
     name: "Match Player Score",
