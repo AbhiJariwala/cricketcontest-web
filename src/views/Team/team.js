@@ -118,7 +118,7 @@ class Team extends Component {
               <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
             </div>
           </div>
-          {data ? <div className="table-responsive">
+          {data ?
             <Table responsive hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)}>
@@ -130,7 +130,7 @@ class Team extends Component {
                 {data}
               </tbody>
             </Table>
-          </div> : ""}
+            : ""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
@@ -139,7 +139,7 @@ class Team extends Component {
             {notNext >= this.state.parpageRecord ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
           </ButtonGroup>
-        </div>++
+        </div>
       </div>
     );
   }

@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import '../tournamentTeam.css';
 
 class AddTournament extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +25,7 @@ class AddTournament extends Component {
   AddData = () => {
     const { tournamentId, teamId } = this.state;
     this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId, teamId }, this.props.Team);
+    this.setState({ tournamentId: '', teamId: '' });
     this.props.toggle();
   }
 

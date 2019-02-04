@@ -66,8 +66,7 @@ class MatchPlayerScore extends Component {
     }
 
     editData(data, tournamentName, matchName, playerName) {
-        data = { ...data, tournamentName, matchName, playerName };
-        // console.log(data);
+        data = { ...data, tournamentName, matchName, playerName };        
         this.setState({
             modal: !this.state.modal,
             editData: data

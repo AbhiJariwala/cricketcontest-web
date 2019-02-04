@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Button, Input, ButtonGroup, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Table, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { PanelHeader } from "components";
@@ -26,7 +26,11 @@ class TeamPlayer extends Component {
         };
 
         this.toggle = this.toggle.bind(this);
-        this.TeamModaltoggle = this.TeamModaltoggle.bind(this);
+        this.ShowTeamModaltoggle = this.ShowTeamModaltoggle.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.action.getTeamPlayerData.getTournaments();
     }
 
     toggle() {
@@ -35,36 +39,25 @@ class TeamPlayer extends Component {
         });
     }
 
-    TeamModaltoggle() {
+    ShowTeamModaltoggle() {
         this.setState({
             showTeamModal: !this.state.showTeamModal
         });
     }
 
-    componentDidMount() {
-        this.props.action.getTeamPlayerData.getTournaments();
-    }
-
-
     CollapseChangeHandler(teamId) {
         this.setState({ teamId: teamId });
         this.props.action.getTeamPlayerData.getPlayerOfTeam(this.state.tournamentId, teamId);
-
-        // if (this.props.playerofteam) {
-        //     this.props.playerofteam.map((team) => {
-        //         return (team.id === teamId) ? this.setState({ tournamentTeamPlayer: team.Players }) : null
-        //     })
-        // }
     }
 
-    prevHandler(e) {
+    // prevHandler(e) {
 
-    }
-    nextHandler(e) {
-        console.log(e);
-    }
+    // }
+    // nextHandler(e) {
+    // }
 
     renderTable(teamplayer) {
+
         return (
             <tbody key={teamplayer.id}>
                 <tr style={{ textAlign: "center" }} >
@@ -76,24 +69,25 @@ class TeamPlayer extends Component {
     }
 
     showTeamHandler(tournamentId) {
-        this.TeamModaltoggle();
+        this.ShowTeamModaltoggle();
         this.setState({ tournamentId: tournamentId });
         this.props.action.getTeamPlayerData.getTeamByTournamanetId(tournamentId);
     }
 
     rendershowTeamsModal() {
+        debugger
         let player = [];
         if (this.props.playerofteam) {
             this.props.playerofteam.map(playerdata => {
                 return player.push(playerdata.Players.map(p => {
-                    return <ul key={p.id}><li>{p.firstName}</li></ul>
+                    return <ul key={p.id}><li>{p.firstName}{' '}{p.lastName}</li></ul>
                 }))
 
             });
         }
         return (
-            <Modal isOpen={this.state.showTeamModal} toggle={this.TeamModaltoggle} className={this.props.className} >
-                <ModalHeader toggle={this.TeamModaltoggle}>Teams</ModalHeader>
+            <Modal isOpen={this.state.showTeamModal} toggle={this.ShowTeamModaltoggle} className={this.props.className} >
+                <ModalHeader toggle={this.ShowTeamModaltoggle}>Teams</ModalHeader>
                 <ModalBody>
                     {(this.props.teams.Teams) ?
                         this.props.teams.Teams.map((data) => {
@@ -110,6 +104,7 @@ class TeamPlayer extends Component {
     }
 
     render() {
+        debugger
         let teamplayerdetails = "";
         if (this.props.tournaments) {
             teamplayerdetails = this.props.tournaments.map((teamplayer) => this.renderTable(teamplayer))
@@ -120,7 +115,7 @@ class TeamPlayer extends Component {
                 <div className="content">
                     {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null}
                     <div style={{ marginTop: "50px" }}>
-                        <div style={{ float: "right" }}>
+                        {/* <div style={{ float: "right" }}>
                             Show entries
                             <Input type="select" name="noOfEntries" id="noOfEntries">
                                 <option>5</option>
@@ -129,7 +124,7 @@ class TeamPlayer extends Component {
                                 <option>50</option>
                                 <option>100</option>
                             </Input>
-                        </div>
+                        </div> */}
 
                         <div style={{ float: "left" }}>
                             <Button color="info" onClick={this.toggle}>Add </Button>
@@ -144,10 +139,10 @@ class TeamPlayer extends Component {
                         </thead>
                         {teamplayerdetails}
                     </Table>
-                    <ButtonGroup>
+                    {/* <ButtonGroup>
                         <Button color="info" onClick={this.prevHandler.bind(this)}>Prev</Button>&nbsp;
                         <Button color="info" onClick={this.nextHandler.bind(this)}>Next</Button>
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                 </div>
                 {this.rendershowTeamsModal()}
 

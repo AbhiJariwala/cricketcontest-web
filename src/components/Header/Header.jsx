@@ -6,16 +6,8 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input
+  NavItem, 
+  Container, 
 } from "reactstrap";
 
 import dashboardRoutes from "routes/dashboard.jsx";
@@ -119,7 +111,7 @@ class Header extends React.Component {
   logoutClick() {
     this.props.action.logout.logoutUser();
   }
-  
+
   render() {
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
@@ -161,44 +153,8 @@ class Header extends React.Component {
           <Collapse
             isOpen={this.state.isOpen}
             navbar
-            className="justify-content-end"
-          >
-            <form>
-              <InputGroup className="no-border">
-                <Input placeholder="Search..." />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    <i className="now-ui-icons ui-1_zoom-bold" />
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </form>
+            className="justify-content-end">
             <Nav navbar>
-              <NavItem>
-                <Link to="#pablo" className="nav-link">
-                  <i className="now-ui-icons media-2_sound-wave" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </Link>
-              </NavItem>
-              <Dropdown
-                nav
-                isOpen={this.state.dropdownOpen}
-                toggle={e => this.dropdownToggle(e)}
-              >
-                <DropdownToggle caret nav>
-                  <i className="now-ui-icons location_world" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem tag="a">Action</DropdownItem>
-                  <DropdownItem tag="a">Another Action</DropdownItem>
-                  <DropdownItem tag="a">Something else here</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
               <NavItem>
                 <Link to="/login" className="nav-link">
                   <i className="now-ui-icons users_single-02" onClick={this.logoutClick.bind(this)} />

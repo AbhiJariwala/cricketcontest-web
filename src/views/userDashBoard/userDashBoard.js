@@ -11,8 +11,7 @@ class userDashBoard extends Component {
 
         return (
             <div>
-<UserPanel></UserPanel>
-                {/* <PanelHeader size="sm"> <h1 style={{ color: "white", marginTop: "-35px", textAlign: "center" }}>Cricket Contest</h1></PanelHeader> */}
+                <UserPanel></UserPanel>
                 <h1>Welcome user</h1>
 
             </div>

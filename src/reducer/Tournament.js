@@ -67,17 +67,6 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
         }
 
-        case Add_New_Team: {
-
-            let tournaments = state.Tournaments;
-            let id = action.TournamentTeamAddData.tournamentId;
-            let i = tournaments.findIndex(tournament => {
-                return tournament.id === parseInt(id, 10);
-            })
-            tournaments[i].Teams = [...tournaments[i].Teams, action.newTeam]
-            return Object.assign({}, state, { Tournaments: [...tournaments] });
-        }
-
         case Delete_Team: {
             let tournamentss = state.Tournaments;
             let teamId = action.teamId;
@@ -96,6 +85,21 @@ export default (state = INITIAL_STATE, action) => {
 
         case INVALID_DATA: {
             return Object.assign({}, state, { error_msg: action.error_msg });
+        }
+
+        case Add_New_Team: {
+            let tournamentssData = state.Tournamentss;
+            let tournaments = state.Tournaments;
+            let id = action.TournamentTeamAddData.tournamentId;
+            let i = tournaments.findIndex(tournament => {
+                return tournament.id === parseInt(id, 10);
+            })
+            let j = tournamentssData.findIndex(tournament => {
+                return tournament.id === parseInt(id, 10);
+            })
+            tournamentssData[j].Teams = [...tournamentssData[j].Teams, action.newTeam];
+            tournaments[i].Teams = [...tournaments[i].Teams, action.newTeam]
+            return Object.assign({}, state, { Tournaments: [...tournaments], Tournamentss: [...tournamentssData] });
         }
 
         default:

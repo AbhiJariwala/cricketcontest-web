@@ -79,8 +79,7 @@ class AddPlayer extends Component {
 
   }
 
-  validateField(fieldName, value) {
-    console.log(fieldName, value);
+  validateField(fieldName, value) {    
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
 
@@ -96,8 +95,7 @@ class AddPlayer extends Component {
         break;
 
       case 'dob':
-        fieldValidation.age = (this.calculateAge(value) > 18);
-        console.log(fieldValidation.age)
+        fieldValidation.age = (this.calculateAge(value) > 18);        
         fieldValidationErrors.age = fieldValidation.age ? '' : "Player is not eligible(required 18+)"
         break;
 
@@ -138,7 +136,6 @@ class AddPlayer extends Component {
   }
 
   btnSubmitClick = (e) => {
-    console.log(this.state);
     e.preventDefault();
     let formdata = new FormData();
     formdata.append("firstName", this.state.Player.firstName);

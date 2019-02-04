@@ -56,16 +56,8 @@ class TournamentPoint extends React.Component {
             errors: e,
             finalObject: data
         })
-
-        //console.log(this.state.finalObject)
-        //console.log(this.state.finalObject);
-        //console.log("final :",this.state.myadta );
-        // let values = [...this.state.values];
-        // values[i] = event.target.value;
-        // this.setState({ values });
     }
     addClick() {
-        //console.log(this.state.finalObject);
         this.setState(prevState => ({ values: [...prevState.values, this.state.finalObject] }))
 
     }
@@ -77,8 +69,6 @@ class TournamentPoint extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state.finalObject);
-
         event.preventDefault();
         alert('A name was submitted: ' + this.state.values.join(', '));
     }

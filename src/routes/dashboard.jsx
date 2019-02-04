@@ -3,15 +3,22 @@ import Tournament from "../views/tournament/tournament";
 import TournamentTeam from "../views/TournamentTeam/tournamentTeam";
 import Team from "../views/Team/team";
 import Player from "../views//Player/Player";
-import TeamPlayer from '../views/TeamPlayer/TeamPlayer'
-import MatchPlayerScore from '../views/matchPlayerScore/matchPlayerScore'
-import TournamentPoint from '../views/tornamentPoints/tournamentPoint'
+import TeamPlayer from '../views/TeamPlayer/TeamPlayer';
+// import MatchPlayerScore from '../views/matchPlayerScore/matchPlayerScore'
+import TournamentPoint from '../views/tornamentPoints/tournamentPoint';
+
 var dashRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
     icon: "design_app",
     component: Dashboard
+  },
+  {
+    path: "/tournament",
+    name: "Tournament",
+    icon: "sport_trophy",
+    component: Tournament
   },
   {
     path: "/Team",
@@ -25,12 +32,7 @@ var dashRoutes = [
     icon: "sport_user-run",
     component: Player
   },
-  {
-    path: "/tournament",
-    name: "Tournament",
-    icon: "sport_trophy",
-    component: Tournament
-  },
+
   {
     path: "/TournamentTeam",
     name: "Tournament Team",
@@ -40,7 +42,7 @@ var dashRoutes = [
   {
     path: "/teamplayer",
     name: "TeamPlayer",
-    icon: "sport_trophy",
+    icon: "sport_user-run",
     component: TeamPlayer
   },
   {
@@ -49,13 +51,13 @@ var dashRoutes = [
     icon: "sport_trophy",
     component: TournamentPoint
   },
-  {
-    path: "/matchPlayerScore",
-    name: "Match Player Score",
-    icon: "sport_trophy",
-    component: MatchPlayerScore
-  },
-  
+  // {
+  //   path: "/matchPlayerScore",
+  //   name: "Match Player Score",
+  //   icon: "sport_trophy",
+  //   component: MatchPlayerScore
+  // },
+
   { redirect: true, path: "/", pathTo: "/dashboard", name: "Dashboard" }
 ];
 export default dashRoutes;

@@ -6,8 +6,7 @@ import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER, DELETE_PLAYER } 
 export const getPlayer = (start, end, sortFiled, sortType) => {
     return (dispatch) => {
         playerService.getPlayer(start, end, sortFiled, sortType).then((response) => {
-            if (response.status === 200) {
-                console.log(response)
+            if (response.status === 200) {                
                 dispatch({
                     type: FETCH_PLAYER,
                     PlayerData: response.data
@@ -63,10 +62,8 @@ export const updatePlayer = (player, playerFormData) => {
 
 export const deletePlayer = (id) => {
     return (dispatch) => {
-        playerService.deletePlayer(id).then((response) => {
-            console.log(response);
-            if (response.status === 200) {
-                console.log(response);
+        playerService.deletePlayer(id).then((response) => {         
+            if (response.status === 200) {             
                 dispatch({
                     type: DELETE_PLAYER,
                     PlayerDeletedId: id

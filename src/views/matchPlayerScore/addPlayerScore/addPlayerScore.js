@@ -59,18 +59,10 @@ class AddPlayerScore extends Component {
     }
 
     addTournamentMatchPlayerScore(e) {
-        e.preventDefault();
-        // console.log(this.state);
+        e.preventDefault();      
         this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore(this.state);
         this.props.toggle();
-    }
-
-    // updateTournamentMatchPlayerScore(e) {
-    //     e.preventDefault();
-    //     // console.log(this.state);
-    //     this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore(this.state);
-    //     this.props.toggle();
-    // }
+    } 
 
     render() {
         let tournamentNameOption = "";

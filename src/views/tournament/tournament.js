@@ -131,20 +131,18 @@ class tournament extends Component {
             </div>
           </div>
           {data ?
-            <div className="table-responsive">
-              <Table bordered hover>
-                <thead className="thead-dark">
-                  <tr onClick={this.sortingdata.bind(Event)}>
-                    <th>tournamentName</th>
-                    <th>tournamentDescription</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data}
-                </tbody>
-              </Table>
-            </div>
+            <Table responsive hover>
+              <thead className="thead-dark">
+                <tr onClick={this.sortingdata.bind(Event)}>
+                  <th>tournamentName</th>
+                  <th>tournamentDescription</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data}
+              </tbody>
+            </Table>
             : ""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
