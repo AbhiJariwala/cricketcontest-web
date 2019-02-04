@@ -35,12 +35,9 @@ export default (state = INITIAL_STATE, action) => {
         case Get_Data: {
             return Object.assign({}, state, { Tournaments: action.TournamentData });
         }
-        case Add_Data: {
-            const newstate = state.TournamentData.concat(action.TournamentAddData);
-            return Object.assign({}, state, {
-                TournamentAddData: action.TournamentAddData,
-                TournamentData: newstate
-            });
+        case Add_Tournament_Data: {
+            state.TournamentData.unshift(action.TournamentAddData)
+            return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
         }
         case Add_New_Team: {
             const tournaments = state.Tournaments;

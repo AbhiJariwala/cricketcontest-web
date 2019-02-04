@@ -13,27 +13,25 @@ export const Get_Data = "Get_Data";
 export const Get_Team_By_Id = 'Get_Team_By_Id';
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        
         case update_Team_data: { 
-            let id = parseInt(action.updateTeamData.id, 10);          
+            let id = parseInt(action.updateTeamData.id, 10);  
+            
             return Object.assign({}, state, {
-                TeamData: state.TeamData.map(item => {
+               TeamData: state.TeamData.map(item => {;
                     return item.id === id ? action.updateTeamData : item;
                 })
             });
         }
         case Fetch_Data: {
             return Object.assign({}, state, {TeamData:action.TeamData });
-        }
-          
+        }          
         case Add_Team_Data: {            
             state.TeamData.unshift(action.TeamAddData)
             return Object.assign({}, state, {
                 TeamData:state.TeamData.concat(action.TeamAddData)
-
-             });
-             
-        }     
-        
+             });             
+        }             
         case Get_Data: {
             return Object.assign({}, state, {TeamData:action.TeamData });
         }  

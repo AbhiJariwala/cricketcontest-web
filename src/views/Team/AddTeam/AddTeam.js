@@ -9,8 +9,14 @@ class AddTeam extends Component {
   state = {
     teamName: "",
     id: 0,
+    createdBy:0,
+    updatedBy:0,
     fieldsErrors: { teamName: '' },
     fieldsValid: { teamName: false },
+  }
+  componentWillMount=()=>{
+    const userId = localStorage.getItem("userId");
+    this.setState({createdBy:userId,updatedBy:userId});
   }
   componentWillUpdate = () => {
     if (this.props.dataid.length !== 0 && this.props.dataid !== null && !this.state.notcallnext) {
@@ -24,7 +30,7 @@ class AddTeam extends Component {
   inputChangeHandler(e) {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({ [name]: value }, () => { this.validateField(name, value) })
+    this.setState({ [name]: value }, () => { this.validateField(name, value) })   
   }
 
   validateField(fieldName, value) {
@@ -45,13 +51,22 @@ class AddTeam extends Component {
   }
 
   UpdateDataData = (Event) => {
-    Event.preventDefault();
-    this.props.action.Team.UpdateTournamentAction(this.props.dataid.id, this.state)
+    const data ={
+      teamName:this.state.teamName,
+      updatedBy:parseInt(this.state.updatedBy,10),
+      id:this.state.id
+    }
+    Event.preventDefault();    
+    this.props.action.Team.UpdateTournamentAction(this.props.dataid.id, data)
     this.props.toggle(Event);
   }
-  AddDataData = (Event) => {
+  AddDataData = (Event) => {  
+      const data ={
+        teamName:this.state.teamName,
+        createdBy:parseInt(this.state.createdBy,10)
+      }
     Event.preventDefault();
-    this.props.action.Team.AddTeamAction(this.state);
+    this.props.action.Team.AddTeamAction(data);
     this.props.toggle(Event);
   }
   render() {
@@ -77,7 +92,6 @@ class AddTeam extends Component {
             </ModalFooter>
           </Modal>
         </div>
-
       </Container>
     );
   }
@@ -86,6 +100,7 @@ const mapStateToProps = (state) => {
 
   return {
     ShowTeam: state.Team.TeamData,
+    auth:state.auth
   }
 };
 
