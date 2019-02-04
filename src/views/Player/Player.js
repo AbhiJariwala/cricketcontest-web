@@ -82,7 +82,6 @@ class Player extends Component {
   }
 
   sortingChangedHandler(e) {
-    debugger
     let sortingField = e.target.childNodes[0].data;
     let sortType = "ASC";
     if (sortingField !== "Avtar" && sortingField !== "Action") {

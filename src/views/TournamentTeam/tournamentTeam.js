@@ -50,9 +50,9 @@ class TournamentTeam extends Component {
     })
   }
 
-  handleDelete = (id) => {
+  handleDelete = (tournamnetId, teamId) => {
     message.success("successfully deleted");
-    this.props.action.TournamentTeam.DeleteTournamentTeamAction(id);
+    this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId, teamId);
   }
 
   parpage = (Event) => {
@@ -96,7 +96,7 @@ class TournamentTeam extends Component {
               <div key={i}>
                 <div className="divTeam">
                   <p className="pTeam">{team.teamName}</p>
-                  <Popconfirm title="Are you sure delete this team?" onConfirm={() => this.handleDelete(team.id)} okText="Yes" cancelText="No">
+                  <Popconfirm title="Are you sure delete this team?" onConfirm={() => this.handleDelete(tournament.id, team.id)} okText="Yes" cancelText="No">
                     <Button type="danger" style={{ marginRight: "auto", left: "88%", position: "sticky" }} icon="delete" />
                   </Popconfirm>
                 </div>
