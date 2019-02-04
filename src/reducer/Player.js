@@ -21,11 +21,10 @@ export default (state = INITIAL_STATE, action) => {
 
             state.PlayerData.splice(-1, 1);
             state.PlayerData.unshift(action.PlayerAddData);
-
+            debugger    
             return Object.assign({}, state, {
                 PlayerData: state.PlayerData
             });
-
         }
         case UPDATE_PLAYER: {
             var uid = parseInt(action.PlayerUpdateData.id, 10);
@@ -35,18 +34,19 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 PlayerData: updatedData
             })
-
         }
-        case DELETE_PLAYER: {
-            var did = parseInt(action.PlayerDeletedId, 10);
-            var index = state.PlayerData.indexOf(did);
-            state.PlayerData.splice(index, 1);
-            
+        case DELETE_PLAYER: {           
+            var pid = parseInt(action.PlayerDeletedId, 10);
+            const newState1 = state.PlayerData.filter((val) => val.id !== pid);
+            console.log(newState1);
+            debugger
+            // var index = state.PlayerData.indexOf(did);
+            // state.PlayerData.splice(index, 1);
+
             return Object.assign({}, state, {
                 PlayerData: state.PlayerData
             })
         }
-
         case INVALID_DATA: {
             return Object.assign({}, state, { error_msg: action.error_msg });
         }

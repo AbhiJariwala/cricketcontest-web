@@ -16,7 +16,7 @@ class AddPlayer extends Component {
     this.state = {
       Player: { id: "", firstName: "", lastName: "", dob: "", gender: 1, description: "", playerImage: [], showimage: true },
       fieldsErrors: { firstName: '', lastName: '', dob: '', playerImage: '', description: '' },
-      fieldsValid: { firstName: false, lastName: false, dob: false, playerImage: "false", description: false },
+      fieldsValid: { firstName: false, lastName: false, dob: false, playerImage: "false" },
       formValid: false,
     }
   }
@@ -24,7 +24,7 @@ class AddPlayer extends Component {
     let Player = nextProps.data.Player;
     if (nextProps.data.Player) {
       this.setState({
-        Player: Player
+        Player: Player,
       })
     }
   }
@@ -76,34 +76,30 @@ class AddPlayer extends Component {
       }
     })
     this.validateField("playerImage", "false");
-
   }
 
   validateField(fieldName, value) {
-    console.log(fieldName, value);
-    let fieldValidationErrors = this.state.fieldsErrors;
-    let fieldValidation = this.state.fieldsValid;
+
+    var fieldValidationErrors = this.state.fieldsErrors;
+    var fieldValidation = this.state.fieldsValid;
 
     switch (fieldName) {
       case 'firstName':
-        fieldValidation.firstName = value.match(/^[a-zA-Z]+$/i);
-        fieldValidationErrors.firstName = fieldValidation.firstName ? '' : ' Only Alphabets Allow'
+        // debugger
+        fieldValidation.firstName = /^[a-zA-Z 0-9]+$/.test(value);
+        console.log(fieldValidation.firstName);
+        fieldValidationErrors.firstName = fieldValidation.firstName ? '' : ' Only Alphabets Allow';
         break;
 
       case 'lastName':
-        fieldValidation.lastName = value.match(/^[a-zA-Z]+$/i);
+        fieldValidation.lastName = /^[a-zA-Z 0-9]+$/.test(value);
+        console.log(fieldValidation.lastName);
         fieldValidationErrors.lastName = fieldValidation.lastName ? '' : ' Only Alphabets Allow'
         break;
 
       case 'dob':
-        fieldValidation.age = (this.calculateAge(value) > 18);
-        console.log(fieldValidation.age)
-        fieldValidationErrors.age = fieldValidation.age ? '' : "Player is not eligible(required 18+)"
-        break;
-
-      case 'description':
-        fieldValidation.description = (value.length > 0)
-        fieldValidationErrors.description = fieldValidation.description ? '' : "Required"
+        fieldValidation.age = (this.calculateAge(value) > 5);
+        fieldValidationErrors.age = !fieldValidation.age ? "Player is not eligible(required 5+)" : ''
         break;
 
       case 'playerImage':
@@ -121,11 +117,11 @@ class AddPlayer extends Component {
   }
 
   validateForm() {
+
     this.setState({
       formValid: this.state.fieldsValid.firstName &&
         this.state.fieldsValid.lastName &&
         this.state.fieldsValid.age &&
-        this.state.fieldsValid.description &&
         (this.state.fieldsValid.playerImage === "true")
     });
   }
@@ -138,40 +134,38 @@ class AddPlayer extends Component {
   }
 
   btnSubmitClick = (e) => {
-    console.log(this.state);
     e.preventDefault();
-    let formdata = new FormData();
-    formdata.append("firstName", this.state.Player.firstName);
-    formdata.append("lastName", this.state.Player.lastName);
-    formdata.append("dob", this.state.Player.dob);
-    formdata.append("gender", this.state.Player.gender);
-    formdata.append("description", this.state.Player.description);
-    if (!this.state.Player.showimage) {
-      formdata.append("playerImage", this.state.Player.playerImage[0]);
-    }
-    else {
-      formdata.append("playerImage", this.state.Player.playerImage);
-    }
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
+    if (this.state.formValid) {
+      let formdata = new FormData();
+      formdata.append("firstName", this.state.Player.firstName);
+      formdata.append("lastName", this.state.Player.lastName);
+      formdata.append("dob", this.state.Player.dob);
+      formdata.append("gender", this.state.Player.gender);
+      formdata.append("description", this.state.Player.description);
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
       }
-    }
 
-    let loginUserId = this.props.auth.userId;
-    if (!this.props.data.Edit) {
-      formdata.append("createdBy", loginUserId);
-      this.props.action.Player.addPlayer(formdata, config);
+      let loginUserId = this.props.auth.userId;
+      if (!this.props.data.Edit) {
+        formdata.append("playerImage", this.state.Player.playerImage[0]);
+        formdata.append("createdBy", loginUserId);
+        this.props.action.Player.addPlayer(formdata, config);
+      }
+      else {
+        let playerId = this.state.Player.id;
+        if (!this.state.Player.showimage) {
+          formdata.append("playerImage", this.state.Player.playerImage[0]);
+        }
+        formdata.append("id", playerId);
+        formdata.append("updatedBy", loginUserId);
+        this.props.action.Player.updatePlayer(this.state.Player, formdata, config)
+      }
+      this.props.toggle();
     }
-    else {
-      let playerId = this.state.Player.id;
-      formdata.append("id", playerId);
-      formdata.append("updatedBy", loginUserId);
-      this.props.action.Player.updatePlayer(this.state.Player, formdata, config)
-    }
-    this.props.toggle();
   }
-
   render() {
     return (
       <div>
@@ -218,7 +212,7 @@ class AddPlayer extends Component {
                   : (<div><ImageUploader
                     withIcon={true}
                     buttonText="Select Images"
-                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                    imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
                     withPreview={true}
                     onChange={this.imageChangedHandler.bind(this)}
                     maxFileSize={5242880}
@@ -230,7 +224,7 @@ class AddPlayer extends Component {
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="info" onClick={this.btnSubmitClick.bind(this)} disabled={!this.state.formValid}>Submit</Button>
+              <Button color="info" onClick={this.btnSubmitClick.bind(this)}>Submit</Button>
               <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
             </ModalFooter>
           </Modal>
