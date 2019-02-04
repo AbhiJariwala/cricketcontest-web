@@ -26,7 +26,7 @@ class AddTournament extends Component {
         tournamentName: this.props.dataid.tournamentName,
         tournamentDescription: this.props.dataid.tournamentDescription,
         notcallnext: 1,
-        id:this.props.dataid.id,        
+        id: this.props.dataid.id,
       })
     }
   }
@@ -34,27 +34,27 @@ class AddTournament extends Component {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
     switch (fieldName) {
-        case 'tournamentName':
-            fieldValidation.tournamentName = value.match(/^[a-zA-Z0-9_ ]+$/i);
-            fieldValidationErrors.tournamentName = fieldValidation.tournamentName ? '' : ' Only Alphabets Allow'
-            break;
-        case 'tournamentDescription':
-            fieldValidation.tournamentDescription = value.match(/^[~`!@#$%^&*()-=+a-zA-Z0-9_ ]+$/i);
-            fieldValidationErrors.tournamentDescription = fieldValidation.tournamentDescription ? '' : ' Only Alphabets Allow'
-            break;
-        default:
-            break;
+      case 'tournamentName':
+        fieldValidation.tournamentName = value.match(/^[a-zA-Z0-9_ ]+$/i);
+        fieldValidationErrors.tournamentName = fieldValidation.tournamentName ? '' : ' Only Alphabets Allow'
+        break;
+      case 'tournamentDescription':
+        fieldValidation.tournamentDescription = value.match(/^[~`!@#$%^&*()-=+a-zA-Z0-9_ ]+$/i);
+        fieldValidationErrors.tournamentDescription = fieldValidation.tournamentDescription ? '' : ' Only Alphabets Allow'
+        break;
+      default:
+        break;
     }
     this.setState({
-        fieldsErrors: fieldValidationErrors,
-        fieldsValid: fieldValidation
+      fieldsErrors: fieldValidationErrors,
+      fieldsValid: fieldValidation
     }, this.validateForm);
-}
+  }
   inputChangeHandler(e) {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
-}
+  }
   UpdateDataData = (Event) => {
     const data ={
       id:this.state.id,
@@ -87,16 +87,16 @@ class AddTournament extends Component {
                 <FormGroup>
                   <Label for="tournamentName">Tournament Name</Label>
                   <Input type="text"
-                   name="tournamentName" 
-                   id="tournamentName" 
-                   defaultValue={this.props.dataid ? this.props.dataid.tournamentName : ""}
-                    placeholder="tournamentName" 
+                    name="tournamentName"
+                    id="tournamentName"
+                    defaultValue={this.props.dataid ? this.props.dataid.tournamentName : ""}
+                    placeholder="tournamentName"
                     onChange={this.inputChangeHandler.bind(this)} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentName}</span>
                 </FormGroup>
                 <FormGroup>
                   <Label for="tournamentDescription">Tournament Description</Label>
-                  <Input type="textarea" name="tournamentDescription" id="tournamentDescription" placeholder="tournamentDescription" defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""}  onChange={this.inputChangeHandler.bind(this)}/>
+                  <Input type="textarea" name="tournamentDescription" id="tournamentDescription" placeholder="tournamentDescription" defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""} onChange={this.inputChangeHandler.bind(this)} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentDescription}</span>
                 </FormGroup>
               </Form>
