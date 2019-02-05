@@ -55,7 +55,10 @@ class Team extends Component {
     this.props.action.Team.selectTeamAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
   sortingdata = (Event) => {
-    const sortingValueName = Event.target.childNodes[0].data;
+    let sortingValueName ;
+    if(Event.target.childNodes[0].data==="Team Name"){
+      sortingValueName="teamName"
+    }
     if (sortingValueName !== "Action") {
       let sortingValue = "asc";
       if (!this.state.sortingValueName) {
@@ -94,7 +97,7 @@ class Team extends Component {
     if (this.props.ShowTeam) {
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
-        return <tr key={key}>
+        return <tr key={key} style={{textAlign:"center"}} >
           <td>{data.teamName}</td>
           <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
         </tr>
@@ -121,8 +124,8 @@ class Team extends Component {
           {data ?
             <Table responsive hover>
               <thead className="thead-dark">
-                <tr onClick={this.sortingdata.bind(Event)}>
-                  <th>teamName</th>
+                <tr onClick={this.sortingdata.bind(Event)} style={{textAlign:"center"}}>
+                  <th style={{cursor:"pointer"}}>Team Name</th>
                   <th>Action</th>
                 </tr>
               </thead>

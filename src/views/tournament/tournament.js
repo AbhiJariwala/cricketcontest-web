@@ -28,7 +28,13 @@ class tournament extends Component {
   }
 
   sortingdata = (Event) => {
-    const sortingValueName = Event.target.childNodes[0].data;
+    let sortingValueName=""
+    if(Event.target.childNodes[0].data==="Tournament"){
+       sortingValueName = "tournamentName"  
+    }else if(Event.target.childNodes[0].data==="Description"){
+       sortingValueName = "tournamentDescription";
+    }
+    // const sortingValueName = Event.target.childNodes[0].data;
     if (sortingValueName !== "Action") {
       let sortingValue = "asc";
       if (!this.state.sortingValueName) {
@@ -104,7 +110,7 @@ class tournament extends Component {
     if (this.props.ShowTornament) {
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
-        return <tr key={key}>
+        return <tr key={key} style={{ textAlign: "center" }}>
           <td>{data.tournamentName}</td>
           <td>{data.tournamentDescription}</td>
           <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
@@ -133,9 +139,9 @@ class tournament extends Component {
           {data ?
             <Table responsive hover>
               <thead className="thead-dark">
-                <tr onClick={this.sortingdata.bind(Event)}>
-                  <th>tournamentName</th>
-                  <th>tournamentDescription</th>
+                <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
+                  <th style={{cursor:"pointer"}}>Tournament</th>
+                  <th style={{cursor:"pointer"}}>Description</th>
                   <th>Action</th>
                 </tr>
               </thead>
