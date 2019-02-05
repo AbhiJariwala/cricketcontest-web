@@ -41,13 +41,13 @@ var dashRoutes = [
   },
   {
     path: "/teamplayer",
-    name: "TeamPlayer",
+    name: "Tournament Team Player",
     icon: "sport_user-run",
     component: TeamPlayer
   },
   {
     path: "/TournamentPoint",
-    name: "TournamentPoint",
+    name: "Tournament Point",
     icon: "sport_trophy",
     component: TournamentPoint
   },
