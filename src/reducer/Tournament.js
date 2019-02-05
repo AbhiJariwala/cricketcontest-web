@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
     TournamentData: [],
+    DeleteTournaments: "",
     Tournaments: [],
     TournamentAddData: [],
     FetchSingleTournamentData: [],
@@ -7,6 +8,7 @@ const INITIAL_STATE = {
     error_msg: "",
     Tournamentss: []
 }
+export const deletetournamentdata = "deletetournamentdata";
 export const Fetch_Data = "Fetch_Data";
 export const updatetournamentdata = "updatetournamentdata";
 export const FetchSingleTournament = "FetchSingleTournament";
@@ -20,6 +22,11 @@ export const Delete_Team = "Delete_Team";
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case deletetournamentdata: {
+            return Object.assign({}, state, {
+                TournamentData: action.TournamentAddData
+            });
+        }
         case updatetournamentdata: {
             let id = parseInt(action.updateTournamentData.id, 10);
             var newState = state.TournamentData.map(item => {
@@ -63,7 +70,7 @@ export default (state = INITIAL_STATE, action) => {
         }
 
         case Add_Tournament_Data: {
-            state.TournamentData.splice(-1,1)
+            state.TournamentData.splice(-1, 1)
             state.TournamentData.unshift(action.TournamentAddData)
             return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
         }

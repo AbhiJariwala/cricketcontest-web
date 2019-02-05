@@ -53,9 +53,9 @@ class AddTournament extends Component {
   render() {
     let teamNames = "";
     if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
-      
+      let teamId
       if(this.state.tournamentTeams.length!==0){
-      let teamId = this.state.tournamentTeams[0].map((team) => {
+      teamId = this.state.tournamentTeams[0].map((team) => {
         return team.id;
       })}
       let teamsdata = this.props.ShowTeamAll.filter((team) => {
