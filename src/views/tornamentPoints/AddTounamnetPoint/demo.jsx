@@ -64,7 +64,7 @@ class ModalExample extends React.Component {
         this.setState({
             Runs: {
                 ...this.state.Runs,
-                [e.target.name]: e.target.value
+                [e.target.name]: [].concat(e.target.value)
             }
         })
     }
@@ -72,10 +72,9 @@ class ModalExample extends React.Component {
         this.setState({
             modal: !this.state.modal
         });
+        
     }
     render() {
-        
-        console.log(this.state);
         let pagination = [], renderPageNumbers;
         for (let i = 0; i < this.state.lengthOfRunsBox; i++) {
             pagination.push(i);

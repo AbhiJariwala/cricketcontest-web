@@ -6,6 +6,10 @@ import { Input, ButtonGroup } from 'reactstrap';
 import * as TournamentAction from '../../action/Tournament';
 import AddTournament from '../tournament/AddTournament/addTournament'
 import { PanelHeader } from "components";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import path from '../../path';
+const abc = require('../../Image/delete.jpg');
 
 class tournament extends Component {
   constructor(props) {
@@ -28,7 +32,12 @@ class tournament extends Component {
   }
 
   sortingdata = (Event) => {
-    const sortingValueName = Event.target.childNodes[0].data;
+    let sortingValueName=""
+    if(Event.target.childNodes[0].data==="Tournament"){
+       sortingValueName = "tournamentName"  
+    }else if(Event.target.childNodes[0].data==="Description"){
+       sortingValueName = "tournamentDescription";
+    }
     if (sortingValueName !== "Action") {
       let sortingValue = "asc";
       if (!this.state.sortingValueName) {
@@ -45,7 +54,6 @@ class tournament extends Component {
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
       }
-
       this.props.action.Tournament.SelectTournamentAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
     }
   }
@@ -89,12 +97,33 @@ class tournament extends Component {
       const tObject = {
         id: data.id,
         tournamentName: data.tournamentName,
-        tournamentDescription: data.tournamentDescription
+        tournamentDescription: data.tournamentDescription,
+        tournamentBanner:data.tournamentBanner,
+        imagebanner:true
       }
       this.setState({
         modal: !this.state.modal,
         Editdataid: tObject
       });
+    }
+  }
+  btnDeleteClick = (id) => {
+    if (!id) {
+      alert("no data");
+    } else {
+      confirmAlert({
+        title: 'Delete Tournament',
+        message: 'Are you sure you want to delete Tournament?.',
+        buttons: [{
+          label: 'Yes',          
+          onClick: () => { this.props.action.Tournament.DeleteTournamentAction(id,this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName)}
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+        ]
+      })      
     }
   }
 
@@ -104,10 +133,12 @@ class tournament extends Component {
     if (this.props.ShowTornament) {
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
-        return <tr key={key}>
+        return <tr key={key} style={{ textAlign: "center" }}>
+          <td><img src={path+ data.tournamentBanner} style={{width:"50px",height:"50px"}}></img></td>
           <td>{data.tournamentName}</td>
-          <td>{data.tournamentDescription}</td>
-          <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
+          <td>{data.tournamentDescription}</td>          
+          <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>
+          &nbsp;<Button color="danger" onClick={() => this.btnDeleteClick(data.id)} >Delete</Button></td>
         </tr>
       })
     }
@@ -131,11 +162,12 @@ class tournament extends Component {
             </div>
           </div>
           {data ?
-            <Table responsive hover>
+            <Table  hover>
               <thead className="thead-dark">
-                <tr onClick={this.sortingdata.bind(Event)}>
-                  <th>tournamentName</th>
-                  <th>tournamentDescription</th>
+                <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
+                <th style={{cursor:"pointer"}}>Banner</th>
+                  <th style={{cursor:"pointer"}}>Tournament</th>
+                  <th style={{cursor:"pointer"}}>Description</th>                  
                   <th>Action</th>
                 </tr>
               </thead>
@@ -147,11 +179,11 @@ class tournament extends Component {
           <ButtonGroup>
             {this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
-              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled>Prev</Button>}
+              :""}
             &nbsp;
             {notNext >= this.state.parpageRecord ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
+              ""}
           </ButtonGroup>
         </div>
       </div>

@@ -42,7 +42,6 @@ export const updatePlayer = (player, playerFormData) => {
             let playerImage = "";
             (response.data.playerImage) ? playerImage = response.data.playerImage
                 : playerImage = player.playerImage
-
             if (response.status === 200) {
                 dispatch({
                     type: UPDATE_PLAYER,
