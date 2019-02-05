@@ -18,12 +18,10 @@ export default (state = INITIAL_STATE, action) => {
         case ADD_PLAYER: {
             action.PlayerAddData.gender = parseInt(action.PlayerAddData.gender, 10);
             action.PlayerAddData.dob = action.PlayerAddData.dob.slice(0, 10);
-
             state.PlayerData.splice(-1, 1);
             state.PlayerData.unshift(action.PlayerAddData);
-            debugger    
             return Object.assign({}, state, {
-                PlayerData: state.PlayerData
+                PlayerData: state.PlayerData.splice(action.PlayerAddData)
             });
         }
         case UPDATE_PLAYER: {
@@ -35,16 +33,9 @@ export default (state = INITIAL_STATE, action) => {
                 PlayerData: updatedData
             })
         }
-        case DELETE_PLAYER: {           
-            var pid = parseInt(action.PlayerDeletedId, 10);
-            const newState1 = state.PlayerData.filter((val) => val.id !== pid);
-            console.log(newState1);
-            debugger
-            // var index = state.PlayerData.indexOf(did);
-            // state.PlayerData.splice(index, 1);
-
+        case DELETE_PLAYER: {        
             return Object.assign({}, state, {
-                PlayerData: state.PlayerData
+                PlayerData: action.PlayerData
             })
         }
         case INVALID_DATA: {
