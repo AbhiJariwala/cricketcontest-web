@@ -72,10 +72,7 @@ class ModalExample extends React.Component {
         this.setState({
             modal: !this.state.modal
         });
-        if(this.state.Runs){
-        this.state.Runs.map(data=>{
-            console.log(data);
-        })}
+        
     }
     render() {
         let pagination = [], renderPageNumbers;
