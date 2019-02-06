@@ -75,7 +75,6 @@ class TeamPlayer extends Component {
     }
 
     rendershowTeamsModal() {
-        debugger
         let player = [];
         if (this.props.playerofteam) {
             this.props.playerofteam.map(playerdata => {
@@ -104,7 +103,6 @@ class TeamPlayer extends Component {
     }
 
     render() {
-        debugger
         let teamplayerdetails = "";
         if (this.props.tournaments) {
             teamplayerdetails = this.props.tournaments.map((teamplayer) => this.renderTable(teamplayer))
