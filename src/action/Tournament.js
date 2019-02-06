@@ -7,6 +7,7 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName)
     return (dispatch) => {
         authService.Tournament(pageno, parpageRecord, sorting,filedName).then((response) => {
             if (response.status === 200) {
+                debugger
                 dispatch(
                     {
                         type: Fetch_Data,
@@ -16,6 +17,7 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName)
             }
         })
             .catch((error) => {
+                debugger;
                 if (error.response) {
                     dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
                 }
