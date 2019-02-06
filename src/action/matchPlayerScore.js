@@ -1,5 +1,5 @@
 import * as MatchPlayerService from '../service/matchPlayerScore';
-import { GET_PLAYER, GET_TEAM, GET_TOURNAMENT, FAILED, ADD_SCORE } from '../reducer/matchPlayerScore';
+import { GET_PLAYER, GET_TEAM, GET_TOURNAMENT, FAILED, ADD_SCORE, GET_TOURNAMENT_MATCHPLAYER_SCORE } from '../reducer/matchPlayerScore';
 
 export const getTournaments = () => {
     return dispatch => {
@@ -75,6 +75,28 @@ export const addTournamentMatchPlayerScore = (tournamentMatchPlayerScore) => {
                 if (response.status === 200) {
                     dispatch({
                         type: ADD_SCORE,
+                        data: response.data
+                    })
+                }
+            })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({
+                        type: FAILED,
+                        data: error.response.data.error
+                    })
+                }
+            })
+    }
+}
+
+export const getTournamentMatchPlayerScore = (offset, perPageRecord, fieldName, order) => {
+    return dispatch => {
+        MatchPlayerService.getTournamentMatchPlayerScore(offset, perPageRecord, fieldName, order)
+            .then((response) => {            
+                if (response.status === 200) {
+                    dispatch({
+                        type: GET_TOURNAMENT_MATCHPLAYER_SCORE,
                         data: response.data
                     })
                 }

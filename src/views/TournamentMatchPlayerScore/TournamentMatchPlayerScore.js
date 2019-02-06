@@ -17,12 +17,12 @@ class TournamenMatchPlayerScore extends Component {
     }
 
     render() {
-        console.log(this.props.MatchPlayerScore.tournamentsMatchPlayerScore);
+        console.log(this.props.MatchPlayerScore.tournamentMatchPlayerScore);
         let matchPlayerScore = '';
         let start = 0;
-        if (this.props.MatchPlayerScore.tournamentsMatchPlayerScore) {
+        if (this.props.MatchPlayerScore.tournamentMatchPlayerScore) {
             start = 0;
-            matchPlayerScore = this.props.MatchPlayerScore.tournamentsMatchPlayerScore.map((tournamenMatchPlayerScore, key) => {
+            matchPlayerScore = this.props.MatchPlayerScore.tournamentMatchPlayerScore.map((tournamenMatchPlayerScore, key) => {
                 return <tr key={key} style={{ textAlign: "center" }} >
                     <td>{start++}</td>
                     <td>{tournamenMatchPlayerScore.Tournaments[0].tournamentName}</td>
