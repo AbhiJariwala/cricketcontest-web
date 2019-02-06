@@ -12,6 +12,9 @@ class TournamenMatchPlayerScore extends Component {
         this.getMatchPlayerScore(1, 100, "id", "DESC");
     }
 
+    getTournamentMatch(){
+        
+    }
     getMatchPlayerScore(offset, perPageRecord, fieldName, order) {
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(offset, perPageRecord, fieldName, order);
     }
