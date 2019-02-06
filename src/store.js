@@ -20,7 +20,8 @@ const INITIAL_STATE = {
         userId: '',
     }
 }
-if (token && userId) {
+
+if (token && userId && Role) {
     INITIAL_STATE.auth.token = token;
     INITIAL_STATE.auth.userId = userId;
     INITIAL_STATE.auth.Role = Role;
