@@ -1,4 +1,5 @@
 import baseService from './baseService';
-export function TournamentMatch(pageno,parpageRecord,sorting,filedName){
-    return baseService.get('/api/tournamentMatch/'+pageno+'/'+parpageRecord+'/'+ filedName+'/'+sorting);
+
+export function getTournamentMatch(pageno,parpageRecord,filedName,sortType){
+    return baseService.get('/api/tournamentmatch/'+pageno+'/'+parpageRecord+'/'+ filedName+'/'+sortType);
 }
