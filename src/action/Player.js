@@ -1,4 +1,3 @@
-
 import * as playerService from '../service/Player';
 
 import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER, DELETE_PLAYER } from '../reducer/Player';
@@ -6,7 +5,7 @@ import { FETCH_PLAYER, INVALID_DATA, ADD_PLAYER, UPDATE_PLAYER, DELETE_PLAYER } 
 export const getPlayer = (start, end, sortFiled, sortType) => {
     return (dispatch) => {
         playerService.getPlayer(start, end, sortFiled, sortType).then((response) => {
-            if (response.status === 200) {                
+            if (response.status === 200) {            
                 dispatch({
                     type: FETCH_PLAYER,
                     PlayerData: response.data
@@ -42,7 +41,6 @@ export const updatePlayer = (player, playerFormData) => {
             let playerImage = "";
             (response.data.playerImage) ? playerImage = response.data.playerImage
                 : playerImage = player.playerImage
-
             if (response.status === 200) {
                 dispatch({
                     type: UPDATE_PLAYER,
@@ -60,17 +58,20 @@ export const updatePlayer = (player, playerFormData) => {
     }
 };
 
-export const deletePlayer = (id) => {
+export const deletePlayer = (id, start, end, sortFiled, sortType) => {
     return (dispatch) => {
-        playerService.deletePlayer(id).then((response) => {         
-            if (response.status === 200) {             
-                dispatch({
-                    type: DELETE_PLAYER,
-                    PlayerDeletedId: id
-                });
+        playerService.deletePlayer(id).then((res) => {
+            if (res.status === 200) {
+                playerService.getPlayer(start, end, sortFiled, sortType).then((response) => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: DELETE_PLAYER,
+                            PlayerData: response.data
+                        });
+                    }
+                })
             }
         }).catch((error) => {
-
             if (error.response) {
                 dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
             }

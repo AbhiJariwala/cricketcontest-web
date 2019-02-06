@@ -1,7 +1,7 @@
 import BaseService from './baseService';
 
-export function getTournament() {
-    return BaseService.get('/api/tournament/0/100/id/asc');
+export function getTournament(pageno, parpageRecord, sorting, fieldName) {
+    return BaseService.get('/api/tournament/' + pageno + '/' + parpageRecord + '/' + fieldName + '/' + sorting);
 }
 
 export function getTeamByTournamanetId(tournamanetId) {
@@ -22,4 +22,8 @@ export function getPlayerOfTeam(tournamentId, teamId) {
 
 export function getTeamPlayer() {
     return BaseService.get('/api/teamplayer/0/500/id/asc');
+}
+
+export function deleteTeamPlayer(teamplayerId) {
+    return BaseService.delete('/api/teamplayer/' + teamplayerId)
 }

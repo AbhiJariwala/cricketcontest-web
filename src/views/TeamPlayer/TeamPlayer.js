@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import { Table, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Table, Input, Button, ButtonGroup } from "reactstrap";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { PanelHeader } from "components";
-import { Collapse } from 'antd';
+import { Collapse, Button as AntButton, Modal as AntModal, Popconfirm } from 'antd';
 import 'antd/dist/antd.css';
 
 import * as teamPlayerAction from '../../action/teamPlayer';
 import AddTeamPlayer from './AddTeamPlayer/AddTeamPlayer';
 
 const Panel = Collapse.Panel;
+let notNext = 0;
 
 class TeamPlayer extends Component {
 
@@ -17,20 +18,37 @@ class TeamPlayer extends Component {
         super(props);
         this.state = {
             modal: false,
-            showTeamModal: false,
+            visible: false,
             tournamentId: 0,
             teamId: 0,
-            tournamentTeamPlayer: [],
-            pageNo: 0,
-            recordPerPage: 5,
+
+            sort: false,
+            pageno: 0,
+            parpageRecord: 5,
+            sorting: "",
+            Editdataid: [],
+            sortingValueName: "tournamentName",
+            sortingValue: "desc"
         };
 
         this.toggle = this.toggle.bind(this);
-        this.ShowTeamModaltoggle = this.ShowTeamModaltoggle.bind(this);
+        this.showTeamModal = this.showTeamModal.bind(this);
     }
 
     componentDidMount() {
-        this.props.action.getTeamPlayerData.getTournaments();
+        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+    }
+
+    showTeamModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+
+    handleCancel = (e) => {
+        this.setState({
+            visible: false,
+        });
     }
 
     toggle() {
@@ -39,10 +57,55 @@ class TeamPlayer extends Component {
         });
     }
 
-    ShowTeamModaltoggle() {
-        this.setState({
-            showTeamModal: !this.state.showTeamModal
-        });
+    sortingdata = (Event) => {
+        let sortingValueName = Event.target.childNodes[0].data;
+        if (sortingValueName === "Tournament") {
+            sortingValueName = "tournamentName";
+        }
+        if (sortingValueName !== "Team") {
+            let sortingValue = "asc";
+            if (!this.state.sortingValueName) {
+                this.setState({ sortingValueName: sortingValueName })
+            }
+            else if (this.state.sortingValueName === sortingValueName) {
+                if (this.state.sortingValue === "asc") {
+                    sortingValue = "desc"
+                } else {
+                    sortingValue = "asc"
+                }
+                this.setState({ sortingValueName: sortingValueName, sortingValue: sortingValue })
+            }
+            else {
+                this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
+            }
+
+            this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
+        }
+    }
+
+    parpage = (Event) => {
+        const parpage = parseInt(Event.target.value, 10);
+        this.setState({ parpageRecord: parpage })
+        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
+    }
+
+    changeRecord = (Event) => {
+        let datachangeprevNext = Event.target.value;
+        let pageno = 0;
+        if (datachangeprevNext === "Next") {
+            this.setState({ pageno: this.state.pageno + 5 })
+            if (this.state.pageno === 0) {
+                this.setState({ pageno: this.state.parpageRecord })
+                pageno = this.state.parpageRecord
+            } else {
+                pageno = this.state.pageno + this.state.parpageRecord
+            }
+        }
+        else if (datachangeprevNext === "Prev") {
+            this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
+            pageno = this.state.pageno - this.state.parpageRecord
+        }
+        this.props.action.getTeamPlayerData.getTournaments(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
     }
 
     CollapseChangeHandler(teamId) {
@@ -50,17 +113,11 @@ class TeamPlayer extends Component {
         this.props.action.getTeamPlayerData.getPlayerOfTeam(this.state.tournamentId, teamId);
     }
 
-    // prevHandler(e) {
-
-    // }
-    // nextHandler(e) {
-    // }
-
-    renderTable(teamplayer) {
-
+    renderTable(teamplayer, key) {
+        notNext = key + 1
         return (
             <tbody key={teamplayer.id}>
-                <tr style={{ textAlign: "center" }} >
+                <tr style={{ textAlign: "center" }}  >
                     <td>{teamplayer.tournamentName}</td>
                     <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} style={{ width: "100px" }}>Show Teams</Button></td>
                 </tr>
@@ -69,45 +126,60 @@ class TeamPlayer extends Component {
     }
 
     showTeamHandler(tournamentId) {
-        this.ShowTeamModaltoggle();
+        this.showTeamModal();
         this.setState({ tournamentId: tournamentId });
         this.props.action.getTeamPlayerData.getTeamByTournamanetId(tournamentId);
     }
 
+    DeleteHandler(teamplayerid) {
+        this.props.action.getTeamPlayerData.deleteTeamPlayer(teamplayerid);
+    }
+
     rendershowTeamsModal() {
-        debugger
         let player = [];
         if (this.props.playerofteam) {
             this.props.playerofteam.map(playerdata => {
                 return player.push(playerdata.Players.map(p => {
-                    return <ul key={p.id}><li>{p.firstName}{' '}{p.lastName}</li></ul>
+                    return <ul key={p.id}><li>{p.firstName}{' '}{p.lastName}
+                        <Popconfirm title="Are you sure remove this player from this team?" okText="Yes" cancelText="No" onConfirm={this.DeleteHandler.bind(this, playerdata.id)}>
+                            <AntButton style={{ left: "90%", position: "sticky" }} type="danger" icon="delete" />
+                        </Popconfirm>
+                    </li>
+                    </ul>
                 }))
-
             });
         }
         return (
-            <Modal isOpen={this.state.showTeamModal} toggle={this.ShowTeamModaltoggle} className={this.props.className} >
-                <ModalHeader toggle={this.ShowTeamModaltoggle}>Teams</ModalHeader>
-                <ModalBody>
-                    {(this.props.teams.Teams) ?
-                        this.props.teams.Teams.map((data) => {
-                            return (<Collapse key={data.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
-                                <Panel header={data.teamName} key={data.id} >
-                                    {player}
-                                </Panel>
-                            </Collapse>)
-                        }) : <p>No Teams</p>
-                    }
-                </ModalBody>
-            </Modal>
+            <AntModal
+                title="Team"
+                visible={this.state.visible}
+                onCancel={this.handleCancel}
+                footer={
+                    <AntButton type="primary" onClick={this.handleCancel}>Ok</AntButton>
+                }>
+                {(this.props.teams.Teams) ?
+                    this.props.teams.Teams.map((data) => {
+                        if (data.TournamentTeam) {
+                            if (data.TournamentTeam.isDelete === 0) {
+                                return (<Collapse key={data.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
+                                    <Panel header={data.teamName} key={data.id} >
+                                        {player}
+                                    </Panel>
+                                </Collapse>)
+                            }
+                        }
+                        return "";
+
+                    }) : <p>No Teams</p>
+                }
+            </AntModal>
         );
     }
 
     render() {
-        debugger
         let teamplayerdetails = "";
         if (this.props.tournaments) {
-            teamplayerdetails = this.props.tournaments.map((teamplayer) => this.renderTable(teamplayer))
+            teamplayerdetails = this.props.tournaments.map((teamplayer, key) => this.renderTable(teamplayer, key))
         }
         return (
             <div>
@@ -115,16 +187,16 @@ class TeamPlayer extends Component {
                 <div className="content">
                     {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null}
                     <div style={{ marginTop: "50px" }}>
-                        {/* <div style={{ float: "right" }}>
+                        <div style={{ float: "right" }}>
                             Show entries
-                            <Input type="select" name="noOfEntries" id="noOfEntries">
+                            <Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
                                 <option>5</option>
                                 <option>10</option>
                                 <option>25</option>
                                 <option>50</option>
                                 <option>100</option>
                             </Input>
-                        </div> */}
+                        </div>
 
                         <div style={{ float: "left" }}>
                             <Button color="info" onClick={this.toggle}>Add </Button>
@@ -132,17 +204,20 @@ class TeamPlayer extends Component {
                     </div>
                     <Table responsive hover>
                         <thead className="thead-dark">
-                            <tr style={{ textAlign: "center" }}>
-                                <th>Tournament</th>
+                            <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
+                                <th style={{ cursor: "pointer" }}>Tournament</th>
                                 <th>Team</th>
                             </tr>
                         </thead>
                         {teamplayerdetails}
                     </Table>
-                    {/* <ButtonGroup>
-                        <Button color="info" onClick={this.prevHandler.bind(this)}>Prev</Button>&nbsp;
-                        <Button color="info" onClick={this.nextHandler.bind(this)}>Next</Button>
-                    </ButtonGroup> */}
+                    <ButtonGroup>
+                        {this.state.pageno !== 0 ?
+                            <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : null}
+                        &nbsp;
+                        {notNext >= this.state.parpageRecord ?
+                            <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : null}
+                    </ButtonGroup>
                 </div>
                 {this.rendershowTeamsModal()}
 
@@ -155,7 +230,6 @@ const mapStateToProps = (state) => {
     return {
         tournaments: state.teamPlayer.tournaments,
         teams: state.teamPlayer.teams,
-        teamplayers: state.teamPlayer.teamplayers,
         playerofteam: state.teamPlayer.playerofteam
     }
 }

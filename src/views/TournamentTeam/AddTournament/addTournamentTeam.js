@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import {Select} from 'antd';
 import * as TournamentAction from '../../../action/Tournament';
 import * as TeamAction from '../../../action/Team';
 import * as TournamentTeamAction from '../../../action/TournamentTeam';
@@ -13,7 +14,7 @@ class AddTournament extends Component {
     super(props);
     this.state = {
       tournamentId: "",
-      teamId: "",
+      teams: [],
       tournamentTeams: []
     }
   }
@@ -23,16 +24,20 @@ class AddTournament extends Component {
   }
 
   AddData = () => {
-    const { tournamentId, teamId } = this.state;
-    this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId, teamId }, this.props.Team);
-    this.setState({ tournamentId: '', teamId: '' });
-    this.props.toggle();
+    // const { tournamentId, teams } = this.state;
+    // console.log(teams);
+    // // let teamS = teams.map((teamId)=>{
+    // //   this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId, teamId });
+    // //   return true;
+    // // });
+   
+    // this.setState({ tournamentId: '', teamId: '' });
+    // this.props.toggle();
   }
 
   handleChange = (e) => {
     if (e.target.name === "tournamentId") {
       let id = e.target.value;
-
       this.setState({ [e.target.name]: e.target.value });
       this.props.action.Team.fetchTeamAction();
       let teams = this.props.ShowTornamentAll.map((tournament) => {
@@ -44,29 +49,31 @@ class AddTournament extends Component {
       });
       this.setState({ tournamentTeams: filteredteams });
     }
-    if (e.target.name === "teamId") {
-      let teamId = e.target.value;
-      this.props.action.Team.getTeamAction(teamId);
-      this.setState({ [e.target.name]: e.target.value });
-    }
+  }
+
+  handleSelect = (e) => {
+    this.setState({ teams: e});
   }
 
   render() {
+    const Option = Select.Option;
     let teamNames = "";
     if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
-      let teamId = this.state.tournamentTeams[0].map((team) => {
+      let teamId
+      if(this.state.tournamentTeams.length!==0){
+      teamId = this.state.tournamentTeams[0].map((team) => {
         return team.id;
-      })
+      })}
       let teamsdata = this.props.ShowTeamAll.filter((team) => {
         return !teamId.includes(team.id);
       })
 
       teamNames = teamsdata.map((team) => {
-        return <option value={team.id} id={team.id} key={team.id}>{team.teamName}</option>
+        return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
       })
     }
 
-    const { tournamentId, teamId } = this.state;
+    const { tournamentId} = this.state;
     let data = "";
     if (this.props.ShowTornamentAll && this.props.ShowTornamentAll.length > 0) {
       data = this.props.ShowTornamentAll.map((tournament) => {
@@ -81,7 +88,7 @@ class AddTournament extends Component {
     return (
       <Container>
         <div className="containerDiv">
-          <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} >
+          <Modal isOpen={this.props.isOpen} >
             <ModalHeader toggle={this.props.toggle} >Tournament</ModalHeader>
             <ModalBody>
               <Form>
@@ -92,19 +99,20 @@ class AddTournament extends Component {
                     type="select"
                     name="tournamentId"
                     value={tournamentId}>
-                    <option>select</option>
+                    <option hidden>select</option>
                     {data}
                   </Input>
                 </FormGroup>
                 <FormGroup>
                   <Label for="exampleSelect">Select team Name</Label>
-                  <Input onChange={this.handleChange}
-                    type="select"
+                  <Select
+                    mode="multiple"
                     name="teamId"
-                    value={teamId}>
-                    <option>select</option>
-                    {teamNames}
-                  </Input>
+                    style={{ width: '100%' }}
+                    placeholder="Select Players"
+                    value={this.state.teams}
+                    onChange={this.handleSelect}
+                  >{teamNames}</Select>
                 </FormGroup>
               </Form>
             </ModalBody>

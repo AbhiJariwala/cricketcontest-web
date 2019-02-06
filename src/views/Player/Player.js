@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Button } from 'reactstrap';
-import { Input, ButtonGroup } from 'reactstrap';
+import { Table, Button, Input, ButtonGroup } from 'reactstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
@@ -84,10 +83,11 @@ class Player extends Component {
   sortingChangedHandler(e) {
     let sortingField = e.target.childNodes[0].data;
     let sortType = "ASC";
-    if (sortingField !== "Avtar" && sortingField !== "Action") {
-      if (sortingField === "age") {
-        sortingField = "dob"
-      }
+
+    if (sortingField !== "Avtar" && sortingField !== "Action" && sortingField !== "Description") {
+      if (sortingField === "Age") sortingField = "dob"
+      if (sortingField === "Name") sortingField = "firstName";
+      if (sortingField === "Gender") sortingField = "gender";
       if (this.state.sortFiled === sortingField) {
         if (this.state.sortType === sortType) {
           sortType = 'DESC'
@@ -118,7 +118,9 @@ class Player extends Component {
         playerImage: [],
         showimage: false
       },
-      Edit: false
+      Edit: false,
+      // fieldsValid: { firstName: false, lastName: false, dob: false, playerImage: "false" },
+      // formValid: false
     })
     this.toggle();
   }
@@ -129,7 +131,9 @@ class Player extends Component {
         ...player,
         showimage: true
       },
-      Edit: true
+      Edit: true,
+      // formValid: true,
+      // fieldsValid: { firstName: true, lastName: true, dob: true, playerImage: "true" },
     })
     this.toggle();
   }
@@ -140,7 +144,9 @@ class Player extends Component {
       message: 'Are you sure you want to delete player?.',
       buttons: [{
         label: 'Yes',
-        onClick: () => { this.props.action.Player.deletePlayer(id); }
+        onClick: () => {
+          this.props.action.Player.deletePlayer(id, this.state.pageRecord, this.state.noOfRecords, this.state.sortFiled, this.state.sortType);
+        }
       },
       {
         label: 'No',
@@ -159,8 +165,7 @@ class Player extends Component {
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
           <td><img src={path + player.playerImage} height="70px" width="70px" alt="playerImage" /></td>
-          <td>{player.firstName}</td>
-          <td>{player.lastName}</td>
+          <td>{player.firstName}&nbsp;{player.lastName}</td>
           <td>{this.calculateAge(player.dob).toString()}</td>
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
@@ -190,16 +195,15 @@ class Player extends Component {
             </div>
           </div>
 
-          <Table responsive hover>
+          <Table hover>
             <thead className="thead-dark">
               <tr style={{ textAlign: "center" }} onClick={this.sortingChangedHandler.bind(this)}>
                 <th>#</th>
                 <th>Avtar</th>
-                <th>firstName</th>
-                <th>lastName</th>
-                <th>age</th>
-                <th>gender</th>
-                <th>description</th>
+                <th style={{ cursor: "pointer" }}>Name</th>
+                <th style={{ cursor: "pointer" }}>Age</th>
+                <th style={{ cursor: "pointer" }}>Gender</th>
+                <th>Description</th>
                 <th>Action</th>
               </tr>
             </thead>

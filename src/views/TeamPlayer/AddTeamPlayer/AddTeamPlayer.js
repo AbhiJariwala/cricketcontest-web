@@ -25,7 +25,7 @@ class AddTeamPlayer extends Component {
     }
 
     componentDidMount() {
-        this.props.action.getTeamPlayerData.getTournaments();
+        this.props.action.getTeamPlayerData.getTournaments(0, 100, "desc", "tournamentName");
         this.props.action.getTeamPlayerData.getPlayers();
     }
 
@@ -75,7 +75,12 @@ class AddTeamPlayer extends Component {
 
         if (this.props.teams.Teams) {
             tournamentTeamOption = this.props.teams.Teams.map((team) => {
-                return (<option key={team.id} value={team.id}>{team.teamName}</option>)
+                if (team.TournamentTeam) {
+                    if (team.TournamentTeam.isDelete === 0) {
+                        return (<option key={team.id} value={team.id}>{team.teamName}</option>)
+                    }
+                }
+                return "";
             })
         }
 
@@ -86,7 +91,12 @@ class AddTeamPlayer extends Component {
 
             if (playerData[0]) {
                 selectedPlayers = playerData[0].Players.map(player => {
-                    return player.id;
+                    if (player.TeamPlayer) {
+                        if (player.TeamPlayer.isDelete === 0) {
+                            return player.id;
+                        }
+                    }
+                    return "";
                 });
             }
 
