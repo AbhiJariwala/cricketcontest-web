@@ -26,8 +26,9 @@ class TournamenMatchPlayerScore extends Component {
                 return <tr key={key} style={{ textAlign: "center" }} >
                     <td>{start++}</td>
                     <td>{tournamenMatchPlayerScore.Tournaments[0].tournamentName}</td>
-                    <td>{tournamenMatchPlayerScore.Tournaments[0].TournamentMatches[0].Team1[0].teamName + " "}<b>VS</b>
-                        {" " + tournamenMatchPlayerScore.Tournaments[0].TournamentMatches[0].Team2[0].teamName}</td>
+                    <td><Button className="info">{tournamenMatchPlayerScore.Tournaments[0].TournamentMatches[0].Team1[0].teamName}</Button>&nbsp;
+                    <b>VS</b>&nbsp;
+                     <Button className="info">{tournamenMatchPlayerScore.Tournaments[0].TournamentMatches[0].Team2[0].teamName}</Button></td>
                     {/* <td>{tournamenMatchPlayerScore.Tournaments[0].TournamentMatches.}</td> */}
                     <td><Button color="info" style={{ width: "62px" }} >Edit</Button>&nbsp;
                 <Button color="danger"  >Delete</Button></td>
@@ -59,10 +60,9 @@ class TournamenMatchPlayerScore extends Component {
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }}>
                                 <th>#</th>
-                                <th>Avtar</th>
-                                <th style={{  }}>Tournament Name</th>
+                                <th style={{ cursor: "pointer" }}>Tournament</th>
                                 <th style={{ cursor: "pointer" }}>Match</th>
-                                <th style={{ cursor: "pointer" }}>Team Name</th>
+                                {/* <th style={{ cursor: "pointer" }}>Team Name</th>
                                 <th style={{ cursor: "pointer" }}>Player Name</th>
                                 <th style={{ cursor: "pointer" }}>Wicket</th>
                                 <th style={{ cursor: "pointer" }}>Run</th>
@@ -70,7 +70,7 @@ class TournamenMatchPlayerScore extends Component {
                                 <th style={{ cursor: "pointer" }}>Six</th>
                                 <th style={{ cursor: "pointer" }}>Four</th>
                                 <th style={{ cursor: "pointer" }}>Stumping</th>
-                                <th style={{ cursor: "pointer" }}>Score</th>
+                                <th style={{ cursor: "pointer" }}>Score</th> */}
                                 <th>Action</th>
                             </tr>
                         </thead>
