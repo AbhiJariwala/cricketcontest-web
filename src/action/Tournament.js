@@ -1,11 +1,11 @@
 import * as authService from '../service/Tournament'
 
-import { Get_Data} from '../reducer/Tournament';
-import { Fetch_Data, INVALID_DATA, FetchSingleTournament ,updatetournamentdata,Add_Tournament_Data , Get_Tournament_Data} from '../reducer/Tournament';
+import { Get_Data } from '../reducer/Tournament';
+import { Fetch_Data, deletetournamentdata, INVALID_DATA, FetchSingleTournament, updatetournamentdata, Add_Tournament_Data, Get_Tournament_Data } from '../reducer/Tournament';
 
-export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName) => {
+export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName) => {
     return (dispatch) => {
-        authService.Tournament(pageno, parpageRecord, sorting,filedName).then((response) => {
+        authService.Tournament(pageno, parpageRecord, sorting, filedName).then((response) => {
             if (response.status === 200) {
                 dispatch(
                     {
@@ -25,13 +25,36 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting,filedName)
 export const AddTournamentAction = (data) => {
     return (dispatch) => {
         authService.TournamentAdd(data).then((response) => {
-            if (response.status === 200) {   
+            if (response.status === 200) {
                 dispatch(
                     {
                         type: Add_Tournament_Data,
                         TournamentAddData: response.data
                     }
                 );
+            }
+        })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
+                }
+            })
+    }
+};
+export const DeleteTournamentAction = (id, pageno, parpageRecord, sorting, filedName) => {
+    return (dispatch) => {
+        authService.DeleteTournament(id).then((response) => {
+            if (response.status === 200) {
+                authService.Tournament(pageno, parpageRecord, sorting, filedName).then(data => {
+                    if (data.status === 200) {
+                        dispatch(
+                            {
+                                type: deletetournamentdata,
+                                TournamentAddData: data.data
+                            }
+                        );
+                    }
+                })
             }
         })
             .catch((error) => {
@@ -60,14 +83,22 @@ export const FetchSingleTournamentAction = (id) => {
             })
     }
 };
-export const UpdateTournamentAction = (id,data) => {
+export const UpdateTournamentAction = (id, tornament, data) => {
     return (dispatch) => {
-        authService.UpdateTournamentdata(id,data).then((response) => {
+
+        console.log(tornament);
+        authService.UpdateTournamentdata(id, data).then((response) => {
+            let tournamentBanner = "";
+            (response.data.tournamentBanner) ? tournamentBanner = response.data.tournamentBanner
+                : tournamentBanner = tornament.tournamentBanner
             if (response.status === 200) {
                 dispatch(
                     {
                         type: updatetournamentdata,
-                        updateTournamentData: data
+                        updateTournamentData: {
+                            ...tornament,
+                            tournamentBanner
+                        }
                     }
                 );
             }
@@ -80,9 +111,9 @@ export const UpdateTournamentAction = (id,data) => {
     }
 };
 
-export const fetchTournamentAction = (pageno, parpageRecord, sorting,filedName) => {
+export const fetchTournamentAction = (pageno, parpageRecord, sorting, filedName) => {
     return (dispatch) => {
-        authService.AllTournamentData(pageno, parpageRecord, sorting,filedName).then((response) => {
+        authService.AllTournamentData(pageno, parpageRecord, sorting, filedName).then((response) => {
             if (response.status === 200) {
                 dispatch(
                     {

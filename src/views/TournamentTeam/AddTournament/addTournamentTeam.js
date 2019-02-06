@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import '../tournamentTeam.css';
 
 class AddTournament extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -26,13 +25,13 @@ class AddTournament extends Component {
   AddData = () => {
     const { tournamentId, teamId } = this.state;
     this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId, teamId }, this.props.Team);
+    this.setState({ tournamentId: '', teamId: '' });
     this.props.toggle();
   }
 
   handleChange = (e) => {
     if (e.target.name === "tournamentId") {
       let id = e.target.value;
-
       this.setState({ [e.target.name]: e.target.value });
       this.props.action.Team.fetchTeamAction();
       let teams = this.props.ShowTornamentAll.map((tournament) => {
@@ -54,9 +53,11 @@ class AddTournament extends Component {
   render() {
     let teamNames = "";
     if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
-      let teamId = this.state.tournamentTeams[0].map((team) => {
+      let teamId
+      if(this.state.tournamentTeams.length!==0){
+      teamId = this.state.tournamentTeams[0].map((team) => {
         return team.id;
-      })
+      })}
       let teamsdata = this.props.ShowTeamAll.filter((team) => {
         return !teamId.includes(team.id);
       })

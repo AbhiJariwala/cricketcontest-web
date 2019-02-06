@@ -15,6 +15,12 @@ var dashRoutes = [
     component: Dashboard
   },
   {
+    path: "/tournament",
+    name: "Tournament",
+    icon: "sport_trophy",
+    component: Tournament
+  },
+  {
     path: "/Team",
     name: "Team",
     icon: "sport_trophy",
@@ -26,12 +32,7 @@ var dashRoutes = [
     icon: "sport_user-run",
     component: Player
   },
-  {
-    path: "/tournament",
-    name: "Tournament",
-    icon: "sport_trophy",
-    component: Tournament
-  },
+
   {
     path: "/TournamentTeam",
     name: "Tournament Team",
@@ -40,13 +41,13 @@ var dashRoutes = [
   },
   {
     path: "/teamplayer",
-    name: "TeamPlayer",
-    icon: "sport_trophy",
+    name: "Tournament Team Player",
+    icon: "sport_user-run",
     component: TeamPlayer
   },
   {
     path: "/TournamentPoint",
-    name: "TournamentPoint",
+    name: "Tournament Point",
     icon: "sport_trophy",
     component: TournamentPoint
   },

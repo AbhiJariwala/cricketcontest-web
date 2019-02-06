@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Container, ButtonGroup, Input, Button as ReactButton } from 'reactstrap';
+import { ButtonGroup, Input, Button as ReactButton } from 'reactstrap';
 import { Collapse, Popconfirm, Button, message } from 'antd';
 import * as TournamentAction from '../../action/Tournament';
 import * as TournamentTeamAction from '../../action/TournamentTeam';
@@ -114,7 +114,7 @@ class TournamentTeam extends Component {
       })
     }
     return (
-      <Container>
+      <div>
         <PanelHeader size="sm" />
         <AddTournamentTeam isOpen={this.state.modal} toggle={this.toggle} />
         <div className="headerDiv">
@@ -143,7 +143,7 @@ class TournamentTeam extends Component {
             {notNext >= this.state.parpageRecord ?
             <ReactButton color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</ReactButton> : <ReactButton color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</ReactButton>}
         </ButtonGroup>
-      </Container>
+      </div>
     );
   }
 }
