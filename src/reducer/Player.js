@@ -18,14 +18,11 @@ export default (state = INITIAL_STATE, action) => {
         case ADD_PLAYER: {
             action.PlayerAddData.gender = parseInt(action.PlayerAddData.gender, 10);
             action.PlayerAddData.dob = action.PlayerAddData.dob.slice(0, 10);
-
             state.PlayerData.splice(-1, 1);
             state.PlayerData.unshift(action.PlayerAddData);
-
             return Object.assign({}, state, {
-                PlayerData: state.PlayerData
+                PlayerData: state.PlayerData.splice(action.PlayerAddData)
             });
-
         }
         case UPDATE_PLAYER: {
             var uid = parseInt(action.PlayerUpdateData.id, 10);
@@ -35,18 +32,12 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 PlayerData: updatedData
             })
-
         }
-        case DELETE_PLAYER: {
-            var did = parseInt(action.PlayerDeletedId, 10);
-            var index = state.PlayerData.indexOf(did);
-            state.PlayerData.splice(index, 1);
-            
+        case DELETE_PLAYER: {        
             return Object.assign({}, state, {
-                PlayerData: state.PlayerData
+                PlayerData: action.PlayerData
             })
         }
-
         case INVALID_DATA: {
             return Object.assign({}, state, { error_msg: action.error_msg });
         }

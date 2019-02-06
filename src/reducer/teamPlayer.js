@@ -4,7 +4,6 @@ const INITIAL_STATE = {
     players: [],
     addteamplayer: [],
     errors: "",
-    teamplayers: [],
     playerofteam: []
 }
 
@@ -13,8 +12,8 @@ export const GET_TEAM = "GET_TEAM";
 export const GET_PLAYER = "GET_PLAYER";
 export const FAILED = "FAILED";
 export const ADD_TEAM_PLAYER = "ADD_TEAM_PLAYER";
-export const GET_TEAM_PLAYER = 'GET_TEAM_PLAYER';
 export const GET_PLAYER_OF_TEAM = 'GET_PLAYER_OF_TEAM';
+export const DELETE_TEAM_PLAYER = 'DELETE_TEAM_PLAYER';
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -34,12 +33,12 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state)
         }
 
-        case GET_TEAM_PLAYER: {
-            return Object.assign({}, state, { teamplayers: action.data })
-        }
-
         case GET_PLAYER_OF_TEAM: {
             return Object.assign({}, state, { playerofteam: action.data });
+        }
+
+        case DELETE_TEAM_PLAYER: {                         
+            return Object.assign({}, state, { playerofteam: [...state.playerofteam.filter(playerofteam => playerofteam.id !== action.teamplayerId)] });
         }
 
         case FAILED: {

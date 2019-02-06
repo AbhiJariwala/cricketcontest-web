@@ -17,3 +17,6 @@ export function AllTournamentData(pageno,parpageRecord,sorting,filedName){
 export function TournamentData(){
     return baseService.get('./api/tournament');
 }
+export function DeleteTournament(id){
+    return baseService.delete('./api/tournament/'+id);
+}

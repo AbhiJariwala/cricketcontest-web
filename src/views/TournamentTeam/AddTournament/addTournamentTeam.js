@@ -38,7 +38,6 @@ class AddTournament extends Component {
   handleChange = (e) => {
     if (e.target.name === "tournamentId") {
       let id = e.target.value;
-
       this.setState({ [e.target.name]: e.target.value });
       this.props.action.Team.fetchTeamAction();
       let teams = this.props.ShowTornamentAll.map((tournament) => {
@@ -60,9 +59,11 @@ class AddTournament extends Component {
     const Option = Select.Option;
     let teamNames = "";
     if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
-      let teamId = this.state.tournamentTeams[0].map((team) => {
+      let teamId
+      if(this.state.tournamentTeams.length!==0){
+      teamId = this.state.tournamentTeams[0].map((team) => {
         return team.id;
-      })
+      })}
       let teamsdata = this.props.ShowTeamAll.filter((team) => {
         return !teamId.includes(team.id);
       })

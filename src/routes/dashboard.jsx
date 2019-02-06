@@ -3,10 +3,10 @@ import Tournament from "../views/tournament/tournament";
 import TournamentTeam from "../views/TournamentTeam/tournamentTeam";
 import Team from "../views/Team/team";
 import Player from "../views//Player/Player";
-import TeamPlayer from '../views/TeamPlayer/TeamPlayer';
+import TeamPlayer from '../views/TeamPlayer/TeamPlayer'
 // import MatchPlayerScore from '../views/matchPlayerScore/matchPlayerScore'
-import TournamentPoint from '../views/tornamentPoints/tournamentPoint';
-
+import TournamentMatchPlayerScore from '../views/TournamentMatchPlayerScore/TournamentMatchPlayerScore'
+import TournamentPoint from '../views/tornamentPoints/tournamentPoint'
 var dashRoutes = [
   {
     path: "/dashboard",
@@ -41,13 +41,13 @@ var dashRoutes = [
   },
   {
     path: "/teamplayer",
-    name: "TeamPlayer",
+    name: "Tournament Team Player",
     icon: "sport_user-run",
     component: TeamPlayer
   },
   {
     path: "/TournamentPoint",
-    name: "TournamentPoint",
+    name: "Tournament Point",
     icon: "sport_trophy",
     component: TournamentPoint
   },
@@ -58,6 +58,13 @@ var dashRoutes = [
   //   component: MatchPlayerScore
   // },
 
+  {
+    path: "/TournamentMatchPlayerScore",
+    name: "MatchPlayerScore",
+    icon: "sport_trophy",
+    component: TournamentMatchPlayerScore
+  },
+  
   { redirect: true, path: "/", pathTo: "/dashboard", name: "Dashboard" }
 ];
 export default dashRoutes;
