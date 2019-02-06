@@ -29,7 +29,8 @@ export const logoutUser = () => {
             type: LOGOUT
         });
         localStorage.removeItem("token");
-        localStorage.removeItem("userId")
+        localStorage.removeItem("userId");
+        localStorage.removeItem("role");
     }
 };
 
