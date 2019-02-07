@@ -4,11 +4,11 @@ import { bindActionCreators } from "redux";
 import { Table, Button, Input, ButtonGroup } from 'reactstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
-
 import * as PlayerAction from '../../action/Player';
 import AddPlayer from '../Player/AddPlayer/AddPlayer';
 import { PanelHeader } from "components";
 import path from '../../path';
+
 
 class Player extends Component {
 
@@ -164,13 +164,15 @@ class Player extends Component {
       player = this.props.Player.PlayerData.map((player, key) => {
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
-          <td><img src={path + player.playerImage} height="70px" width="70px" alt="playerImage" /></td>
+          <td><img src={path + player.playerImage} height="50px" width="50px" alt="playerImage" /></td>
           <td>{player.firstName}&nbsp;{player.lastName}</td>
           <td>{this.calculateAge(player.dob).toString()}</td>
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
-          <td><Button color="info" onClick={() => this.btnEditClick(player)} style={{ width: "62px" }} >Edit</Button>&nbsp;
-            <Button color="danger" onClick={() => this.btnDeleteClick(player.id)} >Delete</Button></td>
+          <td>
+          <img src={path+"edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
+          <img src={path+"delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
+            </td>
         </tr>
       })
     } else { return <tr>No Player Found</tr> }
@@ -191,10 +193,9 @@ class Player extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} style={{ width: "100%" }}>Add Player</Button>
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
             </div>
           </div>
-
           <Table hover>
             <thead className="thead-dark">
               <tr style={{ textAlign: "center" }} onClick={this.sortingChangedHandler.bind(this)}>

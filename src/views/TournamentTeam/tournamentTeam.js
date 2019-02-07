@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Button } from 'reactstrap';
-import {Modal, message} from 'antd';
-import { Input, ButtonGroup } from 'reactstrap';
+
+import { message } from 'antd';
+import { Input, ButtonGroup, Table, Button } from 'reactstrap';
+import { PanelHeader } from "components";
+import 'antd/dist/antd.css';
+
 import * as TournamentAction from '../../action/Tournament';
 import * as TournamentTeamAction from '../../action/TournamentTeam';
 import AddTournamentTeam from '../TournamentTeam/AddTournament/addTournamentTeam'
-import { PanelHeader } from "components";
-import 'antd/dist/antd.css';
+
 import ShowTeams from './showTeams';
+import path from '../../path';
 
 class TournamentTeam extends Component {
   constructor(props) {
@@ -17,28 +20,32 @@ class TournamentTeam extends Component {
     this.state = {
       addModal: false,
       teamModal: false,
-      visible:false,
+      visible: false,
       sort: false,
       pageno: 0,
       parpageRecord: 5,
       sorting: "",
-      tournament:{},
+      tournament: {},
       sortingValueName: "id",
       sortingValue: "desc",
-      teamid:"",
-      tournamentid:""
+      teamid: "",
+      tournamentid: "",
+      updatedBy: ""
     };
     this.toggle = this.toggle.bind(this);
   }
 
   componentWillMount = () => {
     this.props.action.Tournament.fetchTournamentAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+    const userId = localStorage.getItem("userId");
+    this.setState({ updatedBy: userId });
   }
 
   sortingdata = (Event) => {
     const sortingValueName = Event.target.id;
     if (sortingValueName !== "Action") {
       let sortingValue = "asc";
+
       if (!this.state.sortingValueName) {
         this.setState({ sortingValueName: sortingValueName })
       }
@@ -69,6 +76,7 @@ class TournamentTeam extends Component {
     let pageno = 0
     if (datachangeprevNext === "Next") {
       this.setState({ pageno: this.state.pageno + 5 })
+
       if (this.state.pageno === 0) {
         this.setState({ pageno: this.state.parpageRecord })
         pageno = this.state.parpageRecord
@@ -83,50 +91,52 @@ class TournamentTeam extends Component {
     this.props.action.Tournament.fetchTournamentAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
 
-  toggle(){
+  toggle() {
     this.setState({
       addModal: !this.state.addModal,
-      Editdataid: null
+      Editdataid: null,
     });
   }
-  toggleTeam=()=>{
+
+  toggleTeam = () => {
     this.setState({
       visible: !this.state.visible
-  });
+    });
   }
 
   ShowTeam = (tournament) => {
-    if (!tournament.Teams||tournament.Teams===[]) {
+    if (!tournament.Teams || tournament.Teams === []) {
       alert("no teams in tournament");
     } else {
       this.setState(
         {
-          tournament:tournament,
+          tournament: tournament,
           visible: true
         })
-      }
     }
+  }
 
-    handleDelete = (tournamnetId,teamId) => {
-      message.success("successfully deleted");
-      this.toggleTeam();
-      this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId,teamId);
-    }
-
+  handleDelete = (tournamnetId, team) => {
+    message.success("successfully deleted");
+    this.toggleTeam();
+    let updatedBy = parseInt(this.state.updatedBy, 10);
+    team.map(teamId => {
+      this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId, teamId, updatedBy);
+      return teamId;
+    })
+  }
 
   render() {
-
-    console.log("tournament........",this.state.tournamentid);
-    console.log("tournament........",this.state.teamid);
     let notNext = 0;
-    let data = ""
-    if (this.props.ShowTournamentAll && this.props.ShowTournamentAll.length>0) {
+    let data = "";
+    if (this.props.ShowTournamentAll && this.props.ShowTournamentAll.length > 0) {
       data = this.props.ShowTournamentAll.map((tournament, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }}>
+          <td><img src={path + tournament.tournamentBanner} alt="Banner" style={{ width: "150px", height: "80px" }}></img></td>
           <td>{tournament.tournamentName}</td>
           <td>
-          <Button color="info" onClick={()=>this.ShowTeam(tournament)}>Show Teams</Button>           
+            <Button color="info" onClick={() => this.ShowTeam(tournament)}>Show Teams</Button>
           </td>
         </tr>
       })
@@ -135,17 +145,19 @@ class TournamentTeam extends Component {
       <div>
         <PanelHeader size="sm" />
         <div className="content"  >
-        <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle}/>
-          <Modal  title={this.state.tournament.tournamentName} 
-                  visible={this.state.visible}
-                  onCancel={this.toggleTeam}
-                  footer={null}>
-                  <ShowTeams tournament={this.state.tournament} teamid={this.state.teamid} tournamentid={this.state.tournamentid} deleteClick={this.handleDelete} visible={this.state.visible}/>
-              
-          </Modal>
+          <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle} />
+
+          <ShowTeams tournament={this.state.tournament}
+            teamid={this.state.teamid}
+            tournamentid={this.state.tournamentid}
+            deleteClick={this.handleDelete}
+            visible={this.state.visible}
+            toggleTeam={this.toggleTeam}
+          />
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "right" }}>
-              Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
+              Show entries
+                <Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
                 <option>5</option>
                 <option>10</option>
                 <option>25</option>
@@ -161,7 +173,8 @@ class TournamentTeam extends Component {
             <Table responsive hover>
               <thead className="thead-dark">
                 <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
-                  <th id="tournamentName">Tournament</th>
+                  <th>Banner</th>
+                  <th id="tournamentName" style={{ cursor: "pointer" }}>Tournament</th>
                   <th>Team</th>
                 </tr>
               </thead>
@@ -172,12 +185,12 @@ class TournamentTeam extends Component {
             : ""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
-              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled>Prev</Button>}
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled> Prev </Button>
+            }
             &nbsp;
             {notNext >= this.state.parpageRecord ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
+              ""}
           </ButtonGroup>
         </div>
       </div>

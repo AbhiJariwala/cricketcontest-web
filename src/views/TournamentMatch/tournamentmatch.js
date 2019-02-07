@@ -105,7 +105,7 @@ class TournamentMatch extends Component {
     }
   }
 
-  render() {    
+  render() {
     let notNext = 0;
     let data = ""
     if (this.props.TournamentMatchs) {
