@@ -9,7 +9,6 @@ import { PanelHeader } from "components";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import path from '../../path';
-// const abc = require('../../Image/delete.jpg');
 
 class tournament extends Component {
   constructor(props) {
@@ -137,8 +136,11 @@ class tournament extends Component {
           <td><img src={path + data.tournamentBanner} alt="" style={{ width: "50px", height: "50px" }}></img></td>
           <td>{data.tournamentName}</td>
           <td>{data.tournamentDescription}</td>
-          <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>
-            &nbsp;<Button color="danger" onClick={() => this.btnDeleteClick(data.id)} >Delete</Button></td>
+          <td><img src={path+"edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
+          <img src={path+"delete1.jpg"} alt="Edit"  onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
+            {/* <Button color="info" onClick={() => this.Edittoggle(data)} value={data.id}>Edit</Button> */}
+            {/* &nbsp;<Button color="danger" onClick={() => this.btnDeleteClick(data.id)} >Delete</Button></td> */}
+            </td>
         </tr>
       })
     }
@@ -157,8 +159,8 @@ class tournament extends Component {
                 <option>100</option>
               </Input>
             </div>
-            <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+            <div style={{ float: "left", borderRadius: "50%" }}>
+              <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
             </div>
           </div>
           {data ?
