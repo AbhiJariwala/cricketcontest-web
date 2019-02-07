@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, ButtonGroup } from 'reactstrap';
-import { Input } from 'reactstrap';
+import { Table, Button, Input, ButtonGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -20,7 +19,6 @@ class MatchPlayerScore extends Component {
             perPageRecord: 5,
             orderByName: "id",
             orderBy: "desc"
-
         };
         this.toggle = this.toggle.bind(this);
         this.editData = this.editData.bind(this);
@@ -66,7 +64,7 @@ class MatchPlayerScore extends Component {
     }
 
     editData(data, tournamentName, matchName, playerName) {
-        data = { ...data, tournamentName, matchName, playerName };        
+        data = { ...data, tournamentName, matchName, playerName };
         this.setState({
             modal: !this.state.modal,
             editData: data

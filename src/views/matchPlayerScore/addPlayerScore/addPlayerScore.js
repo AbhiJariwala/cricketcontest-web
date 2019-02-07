@@ -91,7 +91,7 @@ class AddPlayerScore extends Component {
 
         return (
             <Container>
-                <div style={{ float: "right", margin: "15px" }}>
+                <div>
                     <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} >
 
                         <ModalHeader toggle={this.props.toggle} >{this.props.data ? " Update Match Player Score" : "Match Player Score"} </ModalHeader>
