@@ -3,7 +3,7 @@ import React from "react";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import { Header, Footer, Sidebar } from "components";
+import { Header, Sidebar } from "components";
 
 import dashboardRoutes from "routes/dashboard.jsx";
 
@@ -54,7 +54,7 @@ class Dashboard extends React.Component {
               );
             })}
           </Switch>
-          <Footer fluid />
+          {/* <Footer fluid /> */}
         </div>
       </div>
     );

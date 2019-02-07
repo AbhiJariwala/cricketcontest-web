@@ -84,7 +84,6 @@ class UserRegistration extends Component {
     }
 
     btnRegisterClick() {
-        debugger
         this.props.action.register.RegisterUser(this.state);
         if (!this.props.err_msg && !this.props.err_msg === undefined) {
             this.props.history.push('/login');

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import {Modal, message} from 'antd';
+import {message} from 'antd';
 import { Input, ButtonGroup, Table, Button } from 'reactstrap';
 import { PanelHeader } from "components";
 import 'antd/dist/antd.css';
@@ -12,7 +12,6 @@ import * as TournamentTeamAction from '../../action/TournamentTeam';
 import AddTournamentTeam from '../TournamentTeam/AddTournament/addTournamentTeam'
 
 import ShowTeams from './showTeams';
-import path from '../../path.js'
 
 class TournamentTeam extends Component {
   constructor(props) {
@@ -29,13 +28,16 @@ class TournamentTeam extends Component {
       sortingValueName: "id",
       sortingValue: "desc",
       teamid:"",
-      tournamentid:""
+      tournamentid:"",
+      updatedBy:""
     };
     this.toggle = this.toggle.bind(this);
   }
 
   componentWillMount = () => {
     this.props.action.Tournament.fetchTournamentAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+    const userId = localStorage.getItem("userId");
+    this.setState({ updatedBy: userId });
   }
 
   sortingdata = (Event) => {
@@ -91,7 +93,7 @@ class TournamentTeam extends Component {
   toggle(){
     this.setState({
       addModal: !this.state.addModal,
-      Editdataid: null
+      Editdataid: null,
     });
   }
   
@@ -116,8 +118,9 @@ class TournamentTeam extends Component {
   handleDelete = (tournamnetId,team) => {
     message.success("successfully deleted");
     this.toggleTeam();
+    let updatedBy=parseInt(this.state.updatedBy,10);
     team.map(teamId=>{
-      this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId,teamId);
+      this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId,teamId,updatedBy);
       return teamId;
       })
   }
@@ -141,12 +144,14 @@ class TournamentTeam extends Component {
         <PanelHeader size="sm" />
         <div className="content"  >
           <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle}/>
-            <Modal  title={this.state.tournament.tournamentName} 
-                    visible={this.state.visible}
-                    onCancel={this.toggleTeam}
-                    footer={null}>
-                    <ShowTeams tournament={this.state.tournament} teamid={this.state.teamid} tournamentid={this.state.tournamentid} deleteClick={this.handleDelete} visible={this.state.visible}/>
-            </Modal>
+            
+                     <ShowTeams tournament={this.state.tournament} 
+                                teamid={this.state.teamid} 
+                                tournamentid={this.state.tournamentid} 
+                                deleteClick={this.handleDelete} 
+                                visible={this.state.visible}
+                                toggleTeam={this.toggleTeam}
+                                />
             <div style={{ marginTop: "50px" }}>
               <div style={{ float: "right" }}>
                 Show entries

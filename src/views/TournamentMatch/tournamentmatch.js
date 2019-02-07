@@ -26,7 +26,6 @@ class TournamentMatch extends Component {
   }
 
   componentWillMount = () => {
-      debugger;
     this.props.action.TournamentAction.fetchTournamentDataAction();
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
@@ -107,7 +106,6 @@ class TournamentMatch extends Component {
   }
 
   render() {
-    debugger;
     let notNext = 0;
     let data = ""
     if (this.props.TournamentMatchs) {
@@ -123,7 +121,6 @@ class TournamentMatch extends Component {
         var hours=Math.floor((t%(1000*60*60*24))/(1000*60*60));
         var minutes=Math.floor((t%(1000*60*60))/(1000*60));
         var seconds=Math.floor((t%(1000*60))/1000);
-        debugger;
         return <tr key={key}>
           <td><img src={path + data.Team1[0].teamLogo} height="70px" width="70px" alt="Team Image"/></td>  
           <td>{data.Team1[0].teamName} / {data.Team2[0].teamName}</td>
