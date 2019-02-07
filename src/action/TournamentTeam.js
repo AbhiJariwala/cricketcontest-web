@@ -9,10 +9,10 @@ export const AddTournamentTeamAction = (data, team) => {
             if (response.status === 200) {
                 dispatch(
                     {
-
                         type: Add_New_Team,
                         TournamentTeamAddData: data,
-                        newTeam: team
+                        newTeam: team,
+                        tournamentTeamm: response.data
                     }
                 );
             }

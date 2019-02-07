@@ -60,7 +60,6 @@ class ModalExample extends React.Component {
         }
     }    
     datachangehandle = (e) => {
-        console.log(e.target.name);
         this.setState({
             Runs: {
                 ...this.state.Runs,

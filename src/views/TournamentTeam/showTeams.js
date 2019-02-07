@@ -1,62 +1,100 @@
 import React, { Component } from 'react';
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {  Button, Popconfirm} from 'antd';
+
+import { Checkbox, Col, Row, Button, Popconfirm, Icon } from 'antd';
 import './tournamentTeam.css'
 import 'antd/dist/antd.css';
 
 import * as TournamentTeamAction from '../../action/TournamentTeam';
 
 class ShowTeams extends Component {
-    constructor(props){
-        super(props);
-       this.state = {
-            visible:false,
-            toggle:this.props.toggle,
-            tournament:{}
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      toggle: this.props.toggle,
+      tournament: {},
+      team: [],
+      indeterminate: true,
+      checkAll: false,
+    }
+  }
+
+  deleteClick = (d, d2) => {
+    this.props.deleteClick(d, d2)
+  }
+
+  Change = (e) => {
+    this.setState({ team: e });
+    e.length === this.props.tournament.Teams.length ? this.setState({ checkAll: true, indeterminate: false }) : this.setState({ checkAll: false, indeterminate: e.length === 0 ? false : true })
+  }
+
+  onCheckAllChange = (e) => {
+    let teams = this.props.tournament.Teams.map(team => {
+      return team.id
+    });
+    this.setState({
+      team: e.target.checked ? teams : [], indeterminate: false,
+      checkAll: e.target.checked
+    })
+  }
+
+  render() {
+
+    let { tournament } = this.props;
+    let teamNames = '';
+    if (tournament.Teams && tournament.Teams.length > 0) {
+      teamNames = tournament.Teams.map((team, i) => {
+        return  <Row key={i} className="divTeam">
+                  <Col span={8}>
+                    <Checkbox value={team.id}>
+                      {team.teamName}
+                    </Checkbox>
+                  </Col>
+                </Row>
+        })
     }
 
-    componentWillMount()
-    {
-        let{tournament}=this.props;
-        this.setState({tournament:tournament});
-    }
-  
-    componentWillReceiveProps = (nextProps,nextState) => {
-        if (this.props.tournament !== nextProps.tournament)
-        {
-            this.setState({tournament:{...nextState.tournament}})
-        }
-      }
-      
-    deleteClick=(d,d2)=>{
-        this.props.deleteClick(d,d2)
-    }
-
-    render() {
-        let {tournament} = this.state;
-        return (
-            (tournament.Teams && tournament.Teams.length>0) ?
-            tournament.Teams.map((team, i) => {
-               return (
-                 <div key={i}>
-                   <div className="divTeam">
-                     <p className="pTeam">{team.teamName}</p>
-                     <Popconfirm title="Are you sure delete this team?" onConfirm={()=>this.deleteClick(tournament.id,team.id)} okText="Yes" cancelText="No">
-                       <Button type="danger" style={{marginRight: "auto",left: "88%",position: "sticky"}} icon="delete" />
-                     </Popconfirm>
-                   </div>
-                 </div>
-               )
-             }) :null 
-        );
-    }
+    return (
+      <div>
+        <div style={{marginBottom:'9px',marginLeft:'10px'}}>
+          <Checkbox indeterminate={this.state.indeterminate}
+                    checked={this.state.checkAll}
+                    onChange={this.onCheckAllChange}>
+                    Check all
+          </Checkbox>
+        </div>
+          
+          <Checkbox.Group style={{ width: '100%' }} onChange={this.Change} value={this.state.team}>
+            {teamNames}
+          </Checkbox.Group>
+          
+          <Popconfirm title="Are you sure delete this team?" 
+                      onConfirm={() => this.deleteClick(tournament.id, this.state.team)} okText="Yes" cancelText="No">
+                      <Button hidden={this.state.team.length > 0 ? false : true} 
+                              type="danger">
+                              Delete
+                              <span style={{ paddingLeft: "5px" }}>
+                                <Icon type='delete' 
+                                      style={{ verticalAlign: "text-bottom", paddingBottom: "2px" }}/>
+                              </span>
+                      </Button>
+          </Popconfirm>
+      </div>
+    );
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
-    action: {
-      TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch)
-    }
-  });
-  export default connect(null, mapDispatchToProps)(ShowTeams)
+  action: {
+            TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch)
+          }
+});
+export default connect(null, mapDispatchToProps)(ShowTeams)
+
+
+
+
+

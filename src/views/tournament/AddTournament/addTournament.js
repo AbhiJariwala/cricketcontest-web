@@ -79,7 +79,7 @@ class AddTournament extends Component {
       }
     }
     const data = {
-      "id":this.state.id,
+    "id":this.state.id,
     "tournamentName":this.state.tournamentName,
     "tournamentDescription": this.state.tournamentDescription,
     "tournamentBanner":this.state.tournamentBanner[0],    
