@@ -37,14 +37,7 @@ class TournamenMatchPlayerScore extends Component {
         });
     }
 
-<<<<<<< HEAD
     render() {
-<<<<<<< HEAD
-=======
-=======
-    getTournamentMatchPlayerScoreByMatch(tournamentId, tournamentMatchId, teamName) {
->>>>>>> 6124d53229f374bb68b2a94028a100cdbe3ebe44
->>>>>>> 50fd3db6bf5747078f571e3d65c22737d2d01005
         let matchPlayerScore = '';
         if (this.props.MatchPlayerScore.tournamentMatchPlayerScore) {
             matchPlayerScore = this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(matchplayerscore => {
