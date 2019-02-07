@@ -161,11 +161,13 @@ class TeamPlayer extends Component {
                     this.props.teams.Teams.map((data) => {
                         if (data.TournamentTeam) {
                             if (data.TournamentTeam.isDelete === 0) {
-                                return (<Collapse key={data.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
-                                    <Panel header={data.teamName} key={data.id} >
-                                        {player}
-                                    </Panel>
-                                </Collapse>)
+                                return (
+                                    <Collapse key={data.TournamentTeam.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
+                                        <Panel header={data.teamName} key={data.TournamentTeam.id}>
+                                            {player}
+                                        </Panel>
+                                    </Collapse>
+                                );
                             }
                         }
                         return "";

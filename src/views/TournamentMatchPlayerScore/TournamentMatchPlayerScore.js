@@ -17,7 +17,6 @@ class TournamenMatchPlayerScore extends Component {
     }
 
     render() {
-        console.log(this.props.MatchPlayerScore.tournamentMatchPlayerScore);
         let matchPlayerScore = '';
         let start = 0;
         if (this.props.MatchPlayerScore.tournamentMatchPlayerScore) {

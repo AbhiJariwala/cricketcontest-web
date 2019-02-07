@@ -134,7 +134,7 @@ class tournament extends Component {
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }}>
-          <td><img src={path + data.tournamentBanner} alt="" style={{ width: "50px", height: "50px" }}></img></td>
+          <td><img src={path + data.tournamentBanner} alt="" style={{ width: "150px", height: "80px" }}></img></td>
           <td>{data.tournamentName}</td>
           <td>{data.tournamentDescription}</td>
           <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>
