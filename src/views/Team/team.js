@@ -7,6 +7,7 @@ import { Input, ButtonGroup } from 'reactstrap';
 import * as TeamAction from '../../action/Team';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
+import path from '../../path';
 class Team extends Component {
 
   constructor(props) {
@@ -99,7 +100,9 @@ class Team extends Component {
         notNext = key + 1
         return <tr key={key} style={{textAlign:"center"}} >
           <td>{data.teamName}</td>
-          <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
+          <td> 
+          <img src={path+"edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>                      
+          </td>
         </tr>
       })
     }
@@ -118,7 +121,7 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
             </div>
           </div>
           {data ?
@@ -137,10 +140,10 @@ class Team extends Component {
           <ButtonGroup>
             {this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
-              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled>Prev</Button>}
+              : ""}
             &nbsp;
             {notNext >= this.state.parpageRecord ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :""}
           </ButtonGroup>
         </div>
       </div>

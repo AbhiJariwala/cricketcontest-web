@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { PanelHeader } from "components";
 import { Collapse, Button as AntButton, Modal as AntModal, Popconfirm } from 'antd';
 import 'antd/dist/antd.css';
+import path from '../../path';
 
 import * as teamPlayerAction from '../../action/teamPlayer';
 import AddTeamPlayer from './AddTeamPlayer/AddTeamPlayer';
@@ -119,7 +120,7 @@ class TeamPlayer extends Component {
             <tbody key={teamplayer.id}>
                 <tr style={{ textAlign: "center" }}  >
                     <td>{teamplayer.tournamentName}</td>
-                    <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} style={{ width: "100px" }}>Show Teams</Button></td>
+                    <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} >Show Teams</Button></td>
                 </tr>
             </tbody>
         );
@@ -201,7 +202,7 @@ class TeamPlayer extends Component {
                         </div>
 
                         <div style={{ float: "left" }}>
-                            <Button color="info" onClick={this.toggle}>Add </Button>
+                        <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
                         </div>
                     </div>
                     <Table responsive hover>

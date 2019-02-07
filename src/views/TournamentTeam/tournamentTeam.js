@@ -10,6 +10,7 @@ import AddTournamentTeam from '../TournamentTeam/AddTournament/addTournamentTeam
 import { PanelHeader } from "components";
 import 'antd/dist/antd.css';
 import ShowTeams from './showTeams';
+import path from '../../path.js'
 
 class TournamentTeam extends Component {
   constructor(props) {
@@ -154,7 +155,8 @@ class TournamentTeam extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+              {/* <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button> */}
             </div>
           </div>
           {data ?
@@ -173,11 +175,11 @@ class TournamentTeam extends Component {
           <ButtonGroup>
             {this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
-              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled>Prev</Button>}
+              : ""}
             &nbsp;
             {notNext >= this.state.parpageRecord ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
+            ""}
           </ButtonGroup>
         </div>
       </div>
