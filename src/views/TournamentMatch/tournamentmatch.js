@@ -105,7 +105,7 @@ class TournamentMatch extends Component {
     }
   }
 
-  render() {    
+  render() {
     let notNext = 0;
     let data = ""
     if (this.props.TournamentMatchs) {
@@ -120,7 +120,7 @@ class TournamentMatch extends Component {
         var days=Math.floor(t/(1000*60*60*24));
         var hours=Math.floor((t%(1000*60*60*24))/(1000*60*60));
         var minutes=Math.floor((t%(1000*60*60))/(1000*60));
-        var seconds=Math.floor((t%(1000*60))/1000);        
+        var seconds=Math.floor((t%(1000*60))/1000);
         return <tr key={key}>
           <td><img src={path + data.Team1[0].teamLogo} height="70px" width="70px" alt="Team Image"/></td>  
           <td>{data.Team1[0].teamName} / {data.Team2[0].teamName}</td>

@@ -6,7 +6,7 @@ import { Fetch_Data, deletetournamentdata, INVALID_DATA, FetchSingleTournament, 
 export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName) => {
     return (dispatch) => {
         authService.Tournament(pageno, parpageRecord, sorting, filedName).then((response) => {
-            if (response.status === 200) {                
+            if (response.status === 200) {
                 dispatch(
                     {
                         type: Fetch_Data,
@@ -15,7 +15,7 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName
                 );
             }
         })
-            .catch((error) => {                ;
+            .catch((error) => {
                 if (error.response) {
                     dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
                 }

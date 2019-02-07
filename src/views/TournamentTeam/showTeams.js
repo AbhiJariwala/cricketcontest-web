@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { Checkbox, Col, Row, Button, Popconfirm, Icon } from 'antd';
+import { Checkbox, Col, Row, Button, Popconfirm, Icon,Modal } from 'antd';
 import './tournamentTeam.css'
 import 'antd/dist/antd.css';
 
@@ -23,9 +23,12 @@ class ShowTeams extends Component {
   }
 
   deleteClick = (d, d2) => {
+    this.setState({team: [],
+      indeterminate: true,
+      checkAll: false});
     this.props.deleteClick(d, d2)
   }
-
+ 
   Change = (e) => {
     this.setState({ team: e });
     e.length === this.props.tournament.Teams.length ? this.setState({ checkAll: true, indeterminate: false }) : this.setState({ checkAll: false, indeterminate: e.length === 0 ? false : true })
@@ -40,15 +43,19 @@ class ShowTeams extends Component {
       checkAll: e.target.checked
     })
   }
-
+  closeModal=()=>{
+    this.setState({team: [],
+      indeterminate: true,
+      checkAll: false});
+      this.props.toggleTeam();
+  }
   render() {
-
     let { tournament } = this.props;
     let teamNames = '';
     if (tournament.Teams && tournament.Teams.length > 0) {
       teamNames = tournament.Teams.map((team, i) => {
         return  <Row key={i} className="divTeam">
-                  <Col span={8}>
+                  <Col span={23}>
                     <Checkbox value={team.id}>
                       {team.teamName}
                     </Checkbox>
@@ -59,19 +66,28 @@ class ShowTeams extends Component {
 
     return (
       <div>
+        
+        <Modal  title={tournament.tournamentName} 
+                    visible={this.props.visible}
+                    onCancel={this.closeModal}
+                    footer={null} >
         <div style={{marginBottom:'9px',marginLeft:'10px'}}>
+        
+        { tournament.Teams&&tournament.Teams.length===0 ?
+          <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>:
           <Checkbox indeterminate={this.state.indeterminate}
                     checked={this.state.checkAll}
                     onChange={this.onCheckAllChange}>
                     Check all
           </Checkbox>
+        }
         </div>
           
           <Checkbox.Group style={{ width: '100%' }} onChange={this.Change} value={this.state.team}>
             {teamNames}
           </Checkbox.Group>
           
-          <Popconfirm title="Are you sure delete this team?" 
+          <Popconfirm title="Do you want to delete these teams?" 
                       onConfirm={() => this.deleteClick(tournament.id, this.state.team)} okText="Yes" cancelText="No">
                       <Button hidden={this.state.team.length > 0 ? false : true} 
                               type="danger">
@@ -82,6 +98,7 @@ class ShowTeams extends Component {
                               </span>
                       </Button>
           </Popconfirm>
+          </Modal>
       </div>
     );
   }

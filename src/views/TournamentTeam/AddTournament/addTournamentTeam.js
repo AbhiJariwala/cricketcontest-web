@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 
-import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Alert, Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Select } from 'antd';
 import '../tournamentTeam.css';
 
@@ -18,8 +18,15 @@ class AddTournament extends Component {
     this.state = {
       tournamentId: "",
       teams: [],
-      tournamentTeams: []
+      tournamentTeams: [],
+      createdBy: 0,
+      submitted: false
     }
+  }
+
+  componentWillMount = () => {
+    const userId = localStorage.getItem("userId");
+    this.setState({ createdBy: userId });
   }
 
   componentDidMount = () => {
@@ -27,18 +34,21 @@ class AddTournament extends Component {
   }
 
   AddData = () => {
+    this.setState({submitted: true});
     const { tournamentId, teams } = this.state;
+    if (this.state.submitted && teams.length>0){
     let newTeams = this.props.TeamsData.filter((team) => {
       return teams.includes(team.id)
     })
 
     newTeams.map((team) => {
-      this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentId, teamId : team.id  },team);
+      this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentId, teamId : team.id, createdBy: this.state.createdBy},team);
       return true;
     });
 
     this.setState({ tournamentId: '', teams: [] });
     this.props.toggle();
+  }
   }
 
   handleChange = (e) => {
@@ -57,7 +67,7 @@ class AddTournament extends Component {
       });
 
       this.setState({ tournamentTeams: filteredteams[0] });
-      this.setState({teams:[]})
+      this.setState({teams:[], submitted:false})
     }
   }
 
@@ -68,7 +78,7 @@ class AddTournament extends Component {
   }
 
   closeModal=()=>{
-    this.setState({ tournamentId: '', teams: [] });
+    this.setState({ tournamentId: '', teams: [], submitted:false });
     this.props.toggle();
   }
 
@@ -136,6 +146,15 @@ class AddTournament extends Component {
                     <option hidden>Select Tournament</option>
                     {data}
                   </Input>
+
+                  {(this.state.submitted&&this.state.tournamentId==='') ?
+                      <div>
+                        <br/>
+                        <Alert color="warning">
+                          Please select a tournament
+                        </Alert>
+                      </div>:null
+                  }
                 </FormGroup>
                 
                 <FormGroup>
@@ -147,7 +166,18 @@ class AddTournament extends Component {
                     placeholder="Select Teams"
                     value={teams}
                     onChange={this.handleSelect}
-                  >{teamNames}</Select>
+                    disabled={this.state.tournamentId===""?true:false}
+                  >{teamNames}
+                  </Select>
+                  
+                  {(this.state.submitted&&this.state.teams.length===0 && this.state.tournamentId!=='') ?
+                      <div>
+                        <br/>
+                        <Alert color="warning">
+                          Please select at least one team 
+                        </Alert>
+                      </div>:null
+                  }
                 </FormGroup>
               
               </Form>
