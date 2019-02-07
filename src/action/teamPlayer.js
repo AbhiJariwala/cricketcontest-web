@@ -102,14 +102,14 @@ export const getPlayerOfTeam = (tournamentId, teamId) => {
     }
 }
 
-export const deleteTeamPlayer = (teamplayerId) => {    
+export const deleteTeamPlayer = (teamplayerId, updatedBy) => {
     return dispatch => {
-        teamPlayerService.deleteTeamPlayer(teamplayerId)
-            .then((response) => {                
+        teamPlayerService.deleteTeamPlayer(teamplayerId, updatedBy)
+            .then((response) => {
                 if (response.status === 200) {
                     dispatch({
                         type: DELETE_TEAM_PLAYER,
-                        teamplayerId : teamplayerId
+                        teamplayerId: teamplayerId
                     })
                 }
             })

@@ -41,8 +41,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { FetchSingleTournamentData: [].concat(action.FetchSingleTournamentData) });
         }
 
-        case Fetch_Data: {
-            debugger;
+        case Fetch_Data: {            
             return Object.assign({}, state, { TournamentData: action.TournamentData });
         }
 

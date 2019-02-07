@@ -7,7 +7,7 @@ class userDashBoard extends Component {
     logoutClick() {
         this.props.action.logout.logoutUser();
     }
-    handleLetsGoButton= ()=>{
+    handleLetsGoButton = () => {
         this.props.history.push('/viewTournamentteam');
     }
     render() {
@@ -15,9 +15,9 @@ class userDashBoard extends Component {
             <div>
                 <UserPanel></UserPanel>
                 <div>
-                    <img src={banerhome} style={{width: "100%",height: "640px"}} ></img>
+                    <img src={banerhome} alt="" style={{ width: "100%", height: "640px" }} ></img>
                     <center>
-                    <div style={{marginTop: "-269px"}}><Button  onClick={this.handleLetsGoButton.bind(this)} style={{width:"120px",backgroundColor:"forestgreen" }}>Lets play</Button></div>
+                        <div style={{ marginTop: "-269px" }}><Button onClick={this.handleLetsGoButton.bind(this)} style={{ width: "120px", backgroundColor: "forestgreen" }}>Lets play</Button></div>
                     </center>
                 </div>
             </div>

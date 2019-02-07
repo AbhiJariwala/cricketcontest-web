@@ -25,7 +25,7 @@ class TeamPlayer extends Component {
 
             sort: false,
             pageno: 0,
-            parpageRecord: 5,
+            recordPerPage: 5,
             sorting: "",
             Editdataid: [],
             sortingValueName: "tournamentName",
@@ -37,7 +37,7 @@ class TeamPlayer extends Component {
     }
 
     componentDidMount() {
-        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, this.state.recordPerPage, this.state.sortingValue, this.state.sortingValueName);
     }
 
     showTeamModal = () => {
@@ -56,6 +56,7 @@ class TeamPlayer extends Component {
         this.setState({
             modal: !this.state.modal
         });
+        this.props.action.getTeamPlayerData.getTournaments(0, 5, "desc", "tournamentName");
     }
 
     sortingdata = (Event) => {
@@ -63,7 +64,7 @@ class TeamPlayer extends Component {
         if (sortingValueName === "Tournament") {
             sortingValueName = "tournamentName";
         }
-        if (sortingValueName !== "Team") {
+        if (sortingValueName !== "Team" && sortingValueName !== "Banner") {
             let sortingValue = "asc";
             if (!this.state.sortingValueName) {
                 this.setState({ sortingValueName: sortingValueName })
@@ -80,14 +81,14 @@ class TeamPlayer extends Component {
                 this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
             }
 
-            this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
+            this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, this.state.recordPerPage, sortingValue, sortingValueName);
         }
     }
 
-    parpage = (Event) => {
-        const parpage = parseInt(Event.target.value, 10);
-        this.setState({ parpageRecord: parpage })
-        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
+    perPage = (Event) => {
+        const perPage = parseInt(Event.target.value, 10);
+        this.setState({ recordPerPage: perPage })
+        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, perPage, this.state.sortingValue, this.state.sortingValueName);
     }
 
     changeRecord = (Event) => {
@@ -96,17 +97,17 @@ class TeamPlayer extends Component {
         if (datachangeprevNext === "Next") {
             this.setState({ pageno: this.state.pageno + 5 })
             if (this.state.pageno === 0) {
-                this.setState({ pageno: this.state.parpageRecord })
-                pageno = this.state.parpageRecord
+                this.setState({ pageno: this.state.recordPerPage })
+                pageno = this.state.recordPerPage
             } else {
-                pageno = this.state.pageno + this.state.parpageRecord
+                pageno = this.state.pageno + this.state.recordPerPage
             }
         }
         else if (datachangeprevNext === "Prev") {
-            this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
-            pageno = this.state.pageno - this.state.parpageRecord
+            this.setState({ pageno: this.state.pageno - this.state.recordPerPage })
+            pageno = this.state.pageno - this.state.recordPerPage
         }
-        this.props.action.getTeamPlayerData.getTournaments(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+        this.props.action.getTeamPlayerData.getTournaments(pageno, this.state.recordPerPage, this.state.sortingValue, this.state.sortingValueName);
     }
 
     CollapseChangeHandler(teamId) {
@@ -119,6 +120,7 @@ class TeamPlayer extends Component {
         return (
             <tbody key={teamplayer.id}>
                 <tr style={{ textAlign: "center" }}  >
+                    <td><img src={path + teamplayer.tournamentBanner} alt="Banner" style={{ width: "150px", height: "80px" }}></img></td>
                     <td>{teamplayer.tournamentName}</td>
                     <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} >Show Teams</Button></td>
                 </tr>
@@ -133,7 +135,7 @@ class TeamPlayer extends Component {
     }
 
     DeleteHandler(teamplayerid) {
-        this.props.action.getTeamPlayerData.deleteTeamPlayer(teamplayerid);
+        this.props.action.getTeamPlayerData.deleteTeamPlayer(teamplayerid, parseInt(localStorage.getItem("userId"), 10));
     }
 
     rendershowTeamsModal() {
@@ -192,7 +194,7 @@ class TeamPlayer extends Component {
                     <div style={{ marginTop: "50px" }}>
                         <div style={{ float: "right" }}>
                             Show entries
-                            <Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
+                            <Input type="select" name="select" id="exampleSelect" onChange={this.perPage.bind(Event)}>
                                 <option>5</option>
                                 <option>10</option>
                                 <option>25</option>
@@ -202,12 +204,13 @@ class TeamPlayer extends Component {
                         </div>
 
                         <div style={{ float: "left" }}>
-                        <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
                         </div>
                     </div>
                     <Table responsive hover>
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
+                                <th>Banner</th>
                                 <th style={{ cursor: "pointer" }}>Tournament</th>
                                 <th>Team</th>
                             </tr>
@@ -218,7 +221,7 @@ class TeamPlayer extends Component {
                         {this.state.pageno !== 0 ?
                             <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : null}
                         &nbsp;
-                        {notNext >= this.state.parpageRecord ?
+                        {notNext >= this.state.recordPerPage ?
                             <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : null}
                     </ButtonGroup>
                 </div>

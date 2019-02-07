@@ -20,6 +20,11 @@ class UserRegistration extends Component {
         formValid: false,
     }
 
+    componentWillReceiveProps() {
+        // if (this.props.email) {
+        //     this.props.history.push('/login');
+        // }
+    }
 
     genderChangeHandler(e) {
         if (e.target.checked) {
@@ -85,13 +90,27 @@ class UserRegistration extends Component {
 
     btnRegisterClick() {
         debugger
-        this.props.action.register.RegisterUser(this.state);
-        if (!this.props.err_msg && !this.props.err_msg === undefined) {
-            this.props.history.push('/login');
+        let userAleradyExits = ""
+        if (this.state.formValid) {
+            this.props.action.register.RegisterUser(this.state);
+            userAleradyExits = this.props.err_msg
+            console.log(this.props.err_msg)
+            if (this.props.err_msg) {
+                userAleradyExits = this.props.err_msg    
+            } else {
+                userAleradyExits = ""
+                this.props.history.push("/login");
+            }
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    email: userAleradyExits
+                }
+            })
         }
     }
 
-    render() {
+    render() {       
         return (
             <div>
                 <hr />
@@ -119,7 +138,7 @@ class UserRegistration extends Component {
                                             <Label for="email"><b>Email</b></Label>
                                             <Input type="email" name="email" id="email" placeholder="example@example.com" onChange={this.inputChangeHandler.bind(this)} />
                                             <span style={{ color: "red" }}>{this.state.fieldsErrors.email}</span>
-                                            {(this.props.err_msg !== "") ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : ""}
+                                            {/* {(this.props.err_msg !== "") ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : ""} */}
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="password"><b>Password</b></Label>
@@ -146,7 +165,7 @@ class UserRegistration extends Component {
                                     </Form>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button style={{ "float": "right", "marginBottom": "10px", width: "100%" }} color="info" onClick={this.btnRegisterClick.bind(this)} disabled={!this.state.formValid} >Register</Button>
+                                    <Button style={{ "float": "right", "marginBottom": "10px", width: "100%" }} color="info" onClick={this.btnRegisterClick.bind(this)} >Register</Button>
                                 </CardFooter>
                                 <br />
                                 <hr />
@@ -166,7 +185,8 @@ const mapStateToProps = state => {
     const { auth } = state;
     return {
         auth: auth,
-        err_msg: auth.error_msg
+        err_msg: auth.error_msg,
+        email: auth.email
     }
 }
 
