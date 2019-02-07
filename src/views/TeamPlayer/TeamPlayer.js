@@ -55,8 +55,7 @@ class TeamPlayer extends Component {
     toggle() {
         this.setState({
             modal: !this.state.modal
-        });
-        this.props.action.getTeamPlayerData.getTournaments(0, 5, "desc", "tournamentName");
+        });       
     }
 
     sortingdata = (Event) => {
