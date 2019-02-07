@@ -8,6 +8,8 @@ import Login from './views/Login/Login'
 import indexRoutes from './routes/index'
 import userDashBoard from './views/userDashBoard/userDashBoard';
 import ViewTournamentteam from './views/User/ViewTournamentTeam/ViewTournamentTeam'
+import CreateTeam from './views/User/CreateTeam/CreateTeam'
+
 class App extends Component {
     render() {
         return (
@@ -17,6 +19,7 @@ class App extends Component {
                     <CRoute path="/login" exact component={Login} />
                     <CRoute path="/userDashBoard" exact component={userDashBoard} />
                     <CRoute path="/viewTournamentteam" exact component={ViewTournamentteam} />
+                    <CRoute path="/CreateTeam/:id" exact component={CreateTeam} />
                     {indexRoutes.map((prop, key) => {
                         return <CRoute path={prop.path} key={key} component={prop.component} cprivate />;
                     })}
