@@ -200,7 +200,7 @@ class ModalExample extends React.Component {
 
     render() {
 
-        // let tournamentNameOption = "";
+        let tournamentNameOption = "";
         // if (this.props.TournamentPoint.length !== 0) {
         //     tournamentNameOption = this.props.TournamentPoint.map(tournamentPoint => {
         //         let tournamentPointId = tournamentPoint.tournamentId;
