@@ -193,7 +193,7 @@ class Player extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
             </div>
           </div>
           <Table hover>

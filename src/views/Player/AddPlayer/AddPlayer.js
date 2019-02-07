@@ -102,12 +102,12 @@ class AddPlayer extends Component {
 
         switch (fieldName) {
             case 'firstName':
-                fieldValidation.firstName = /^[a-zA-Z 0-9]+$/.test(value);                
+                fieldValidation.firstName = /^[a-zA-Z 0-9]+$/.test(value);
                 fieldValidationErrors.firstName = fieldValidation.firstName ? '' : ' Only Alphabets Allow';
                 break;
 
             case 'lastName':
-                fieldValidation.lastName = /^[a-zA-Z 0-9]+$/.test(value);                
+                fieldValidation.lastName = /^[a-zA-Z 0-9]+$/.test(value);
                 fieldValidationErrors.lastName = fieldValidation.lastName ? '' : ' Only Alphabets Allow'
                 break;
 

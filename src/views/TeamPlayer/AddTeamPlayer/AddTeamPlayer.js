@@ -50,15 +50,16 @@ class AddTeamPlayer extends Component {
         var players = this.state.selectedItems;
         var result = players.map(function (x) {
             return parseInt(x, 10);
-        });
-
+        });        
         var teamplayerdata = {
             tournamentId: parseInt(this.state.tournamentId, 10),
             teamId: parseInt(this.state.teamId, 10),
-            selectedPlayers: result
+            selectedPlayers: result,
+            createdBy: parseInt(localStorage.getItem("userId"), 10)
         }
         this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
         this.props.toggle(e);
+        this.props.action.getTeamPlayerData.getTournaments(0, 5, "desc", "tournamentName");
     }
     render() {
         let playerData = "";

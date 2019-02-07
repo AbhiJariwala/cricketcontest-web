@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     error_msg:"",
     Team:{},
     updateTeamData: [],
+    TeamSData:[]
 }
 export const Fetch_Data = "Fetch_Data";
 export const update_Team_data = "update_Team_data";
@@ -36,7 +37,13 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, {TeamData:action.TeamData });
         }  
         case Get_Team_By_Id: {
-            return Object.assign({}, state, {Team:action.Team });
+            let teamsData = state.TeamSData;
+            let teamIds = teamsData.map(team=>{
+                return team.id;
+            })
+            if(!teamIds.includes(action.Team.id))
+                teamsData.push(action.Team);
+            return Object.assign({}, state, {Team:action.Team, TeamSData:[...teamsData] });
         }
         case INVALID_DATA: {
             return Object.assign({}, state, { error_msg: action.error_msg });
