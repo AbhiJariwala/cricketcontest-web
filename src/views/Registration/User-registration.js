@@ -18,16 +18,28 @@ class UserRegistration extends Component {
         fieldsErrors: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },
         fieldsValid: { firstName: false, lastName: false, email: false, password: false, confirmPassword: false },
         formValid: false,
+        inValidEmail: ""
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.err_msg)
+        if (nextProps.err_msg === "") {
+            this.setState({
+                inValidEmail: ""
+            })
+            this.props.history.push('/login');
+        }
+        else {
+            this.setState({
+                inValidEmail: nextProps.err_msg
+            })
+        }
+    }
 
     genderChangeHandler(e) {
         if (e.target.checked) {
             if (e.target.value === "Female")
-                this.setState({
-                    gender: 2
-                })
-
+                this.setState({ gender: 2 })
         }
     }
 
@@ -47,6 +59,9 @@ class UserRegistration extends Component {
                 break;
 
             case 'email':
+                this.setState({
+                    inValidEmail: ""
+                })
                 fieldValidation.email = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
                 fieldValidationErrors.email = fieldValidation.email ? '' : ' Invalid Email';
                 break;
@@ -77,7 +92,6 @@ class UserRegistration extends Component {
                 this.state.fieldsValid.email &&
                 this.state.fieldsValid.password &&
                 this.state.fieldsValid.confirmPassword
-
         });
     }
 
@@ -88,9 +102,11 @@ class UserRegistration extends Component {
     }
 
     btnRegisterClick() {
-        this.props.action.register.RegisterUser(this.state);
+        if (this.state.formValid) {
+            this.props.action.register.RegisterUser(this.state);
+        }
     }
-    
+
     render() {
         return (
             <div>
@@ -119,7 +135,7 @@ class UserRegistration extends Component {
                                             <Label for="email"><b>Email</b></Label>
                                             <Input type="email" name="email" id="email" placeholder="example@example.com" onChange={this.inputChangeHandler.bind(this)} />
                                             <span style={{ color: "red" }}>{this.state.fieldsErrors.email}</span>
-                                            {(this.props.err_msg !== "") ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : ""}
+                                            <span style={{ color: "red" }}>{this.state.inValidEmail}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="password"><b>Password</b></Label>
@@ -146,7 +162,7 @@ class UserRegistration extends Component {
                                     </Form>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button style={{ "float": "right", "marginBottom": "10px", width: "100%" }} color="info" onClick={this.btnRegisterClick.bind(this)} disabled={!this.state.formValid} >Register</Button>
+                                    <Button style={{ "float": "right", "marginBottom": "10px", width: "100%" }} color="info" onClick={this.btnRegisterClick.bind(this)} >Register</Button>
                                 </CardFooter>
                                 <br />
                                 <hr />
@@ -166,7 +182,8 @@ const mapStateToProps = state => {
     const { auth } = state;
     return {
         auth: auth,
-        err_msg: auth.error_msg
+        err_msg: auth.error_msg,
+        email: auth.email
     }
 }
 

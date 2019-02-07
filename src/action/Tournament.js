@@ -85,8 +85,6 @@ export const FetchSingleTournamentAction = (id) => {
 };
 export const UpdateTournamentAction = (id, tornament, data) => {
     return (dispatch) => {
-
-        console.log(tornament);
         authService.UpdateTournamentdata(id, data).then((response) => {
             let tournamentBanner = "";
             (response.data.tournamentBanner) ? tournamentBanner = response.data.tournamentBanner

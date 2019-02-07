@@ -200,20 +200,20 @@ class ModalExample extends React.Component {
 
     render() {
 
-        let tournamentNameOption = "";
-        if (this.props.TournamentPoint.length !== 0) {
-            tournamentNameOption = this.props.TournamentPoint.map(tournamentPoint => {
-                let tournamentPointId = tournamentPoint.tournamentId;
-                return (
-                    this.props.Tournaments.map((tournament, i) => {
-                        return (
+        // let tournamentNameOption = "";
+        // if (this.props.TournamentPoint.length !== 0) {
+        //     tournamentNameOption = this.props.TournamentPoint.map(tournamentPoint => {
+        //         let tournamentPointId = tournamentPoint.tournamentId;
+        //         return (
+        //             this.props.Tournaments.map((tournament, i) => {
+        //                 return (
                             
-                        )
-                    })
-                )
-            })
-        }
-        else {
+        //                 )
+        //             })
+        //         )
+        //     })
+        // }
+        // else {
             if (this.props.Tournaments) {
                 tournamentNameOption = this.props.Tournaments.map(tournament => {
                     return (
@@ -221,7 +221,7 @@ class ModalExample extends React.Component {
                     )
                 })
             }
-        }
+        // }
 
         let runTotalBox = [], renderRunBox;
         for (let i = 0; i < this.state.runBox; i++) {

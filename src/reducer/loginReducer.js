@@ -24,7 +24,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { token: "", userId: "" });
         }
         case REGISTER_SUCCESSFUL: {
-            return Object.assign({}, state, { email: action.users.email });
+            return Object.assign({}, state, { email: action.users.email ,error_msg:""});
         }
 
         default:

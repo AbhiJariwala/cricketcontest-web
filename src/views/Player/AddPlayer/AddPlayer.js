@@ -8,7 +8,6 @@ import * as PlayerAction from '../../../action/Player';
 import path from '../../../path';
 
 const deleteIcon = require('../../../Image/delete.jpg');
-const FormData = require('form-data');
 
 class AddPlayer extends Component {
     constructor(props) {
@@ -38,7 +37,6 @@ class AddPlayer extends Component {
                 })
             }
         }
-
     }
     genderChangeHandler(e) {
         let gender = 0;
@@ -104,15 +102,12 @@ class AddPlayer extends Component {
 
         switch (fieldName) {
             case 'firstName':
-                // debugger
                 fieldValidation.firstName = /^[a-zA-Z 0-9]+$/.test(value);
-                console.log(fieldValidation.firstName);
                 fieldValidationErrors.firstName = fieldValidation.firstName ? '' : ' Only Alphabets Allow';
                 break;
 
             case 'lastName':
                 fieldValidation.lastName = /^[a-zA-Z 0-9]+$/.test(value);
-                console.log(fieldValidation.lastName);
                 fieldValidationErrors.lastName = fieldValidation.lastName ? '' : ' Only Alphabets Allow'
                 break;
 
