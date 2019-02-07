@@ -83,19 +83,11 @@ class AddTournament extends Component {
       }
     }
     const data = {
-<<<<<<< HEAD
     "id":this.state.id,
     "tournamentName":this.state.tournamentName,
     "tournamentDescription": this.state.tournamentDescription,
     "tournamentBanner":this.state.tournamentBanner[0],    
     "updatedBy":parseInt(this.state.updatedBy,10)
-=======
-      "id": this.state.id,
-      "tournamentName": this.state.tournamentName,
-      "tournamentDescription": this.state.tournamentDescription,
-      "tournamentBanner": this.state.tournamentBanner[0],
-      "updatedBy": parseInt(this.state.updatedBy, 10)
->>>>>>> 50fd3db6bf5747078f571e3d65c22737d2d01005
     }
     this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
     this.props.toggle(Event);
