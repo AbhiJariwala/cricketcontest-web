@@ -170,9 +170,9 @@ class Player extends Component {
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
           <td>
-          <img src={path+"edit.png"} alt="plus" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
-          <img src={path+"delete1.jpg"}  onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
-            </td>
+            <img src={path + "edit.png"} alt="plus" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
+            <img src={path + "delete1.jpg"} alt="" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
+          </td>
         </tr>
       })
     } else { return <tr>No Player Found</tr> }
@@ -193,7 +193,7 @@ class Player extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
             </div>
           </div>
           <Table hover>

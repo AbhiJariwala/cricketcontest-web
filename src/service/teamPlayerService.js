@@ -24,6 +24,6 @@ export function getTeamPlayer() {
     return BaseService.get('/api/teamplayer/0/500/id/asc');
 }
 
-export function deleteTeamPlayer(teamplayerId) {
-    return BaseService.delete('/api/teamplayer/' + teamplayerId)
+export function deleteTeamPlayer(teamplayerId, updatedBy) {
+    return BaseService.delete('/api/teamplayer/' + teamplayerId + '/' + updatedBy);
 }
