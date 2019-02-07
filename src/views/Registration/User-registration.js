@@ -24,10 +24,7 @@ class UserRegistration extends Component {
     genderChangeHandler(e) {
         if (e.target.checked) {
             if (e.target.value === "Female")
-                this.setState({
-                    gender: 2
-                })
-
+                this.setState({ gender: 2 })
         }
     }
 
@@ -77,7 +74,6 @@ class UserRegistration extends Component {
                 this.state.fieldsValid.email &&
                 this.state.fieldsValid.password &&
                 this.state.fieldsValid.confirmPassword
-
         });
     }
 
@@ -88,9 +84,13 @@ class UserRegistration extends Component {
     }
 
     btnRegisterClick() {
+        debugger
         this.props.action.register.RegisterUser(this.state);
+        if (!this.props.err_msg && !this.props.err_msg === undefined) {
+            this.props.history.push('/login');
+        }
     }
-    
+
     render() {
         return (
             <div>

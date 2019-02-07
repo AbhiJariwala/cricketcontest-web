@@ -12,6 +12,7 @@ import * as TournamentTeamAction from '../../action/TournamentTeam';
 import AddTournamentTeam from '../TournamentTeam/AddTournament/addTournamentTeam'
 
 import ShowTeams from './showTeams';
+import path from '../../path.js'
 
 class TournamentTeam extends Component {
   constructor(props) {
@@ -160,8 +161,17 @@ class TournamentTeam extends Component {
               <div style={{ float: "left" }}>
                 <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
             </div>
+<<<<<<< HEAD
         </div>
           { data ?
+=======
+            <div style={{ float: "left" }}>
+            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+              {/* <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button> */}
+            </div>
+          </div>
+          {data ?
+>>>>>>> 50fd3db6bf5747078f571e3d65c22737d2d01005
             <Table responsive hover>
               <thead className="thead-dark">
                 <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
@@ -175,13 +185,19 @@ class TournamentTeam extends Component {
             </Table>
             : ""}
           <ButtonGroup>
+<<<<<<< HEAD
             { this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled> Prev </Button>
             }
+=======
+            {this.state.pageno !== 0 ?
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
+              : ""}
+>>>>>>> 50fd3db6bf5747078f571e3d65c22737d2d01005
             &nbsp;
             { notNext >= this.state.parpageRecord ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
+            ""}
           </ButtonGroup>
         </div>
       </div>

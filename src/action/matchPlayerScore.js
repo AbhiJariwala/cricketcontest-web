@@ -94,7 +94,7 @@ export const getTournamentMatchPlayerScore = (offset, perPageRecord, fieldName, 
     return dispatch => {
         MatchPlayerService.getTournamentMatchPlayerScore(offset, perPageRecord, fieldName, order)
             .then((response) => {            
-                if (response.status === 200) {
+                if (response.status === 200) {                 
                     dispatch({
                         type: GET_TOURNAMENT_MATCHPLAYER_SCORE,
                         data: response.data

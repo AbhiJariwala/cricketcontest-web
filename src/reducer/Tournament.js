@@ -42,6 +42,7 @@ export default (state = INITIAL_STATE, action) => {
         }
 
         case Fetch_Data: {
+            debugger;
             return Object.assign({}, state, { TournamentData: action.TournamentData });
         }
 
