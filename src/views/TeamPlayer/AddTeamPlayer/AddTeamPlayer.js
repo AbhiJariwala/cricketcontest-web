@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Container, Alert } from 'reactstrap';
+import { Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { Select } from 'antd';
@@ -139,9 +139,9 @@ class AddTeamPlayer extends Component {
                                     {(this.state.submitted && this.state.tournamentId === 0) ?
                                         <div>
                                             <br />
-                                            <Alert color="warning">
+                                            <span style={{ color: "red" }}>
                                                 Please select a tournament
-                                            </Alert>
+                                            </span>
                                         </div> : null
                                     }
                                 </FormGroup>
@@ -155,9 +155,9 @@ class AddTeamPlayer extends Component {
                                     {(this.state.submitted && this.state.teamId === 0 && this.state.tournamentId!==0) ?
                                         <div>
                                             <br />
-                                            <Alert color="warning">
+                                            <span style={{ color: "red" }}>
                                                 Please select a team
-                                            </Alert>
+                                            </span>
                                         </div> : null
                                     }
                                 </FormGroup>
@@ -175,9 +175,9 @@ class AddTeamPlayer extends Component {
                                     {(this.state.submitted && this.state.selectedItems.length === 0 && this.state.tournamentId!==0 && this.state.teamId!==0) ?
                                         <div>
                                             <br />
-                                            <Alert color="warning">
+                                            <span style={{ color: "red" }}>
                                                 Please select at least one player
-                                            </Alert>
+                                            </span>
                                         </div> : null
                                     }
                                 </FormGroup>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 
-import { Alert, Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Select } from 'antd';
 import '../tournamentTeam.css';
 
@@ -150,9 +150,9 @@ class AddTournament extends Component {
                   {(this.state.submitted&&this.state.tournamentId==='') ?
                       <div>
                         <br/>
-                        <Alert color="warning">
-                          Please select a tournament
-                        </Alert>
+                        <span style={{ color: "red" }}>
+                          Please select tournament
+                        </span>
                       </div>:null
                   }
                 </FormGroup>
@@ -173,9 +173,9 @@ class AddTournament extends Component {
                   {(this.state.submitted&&this.state.teams.length===0 && this.state.tournamentId!=='') ?
                       <div>
                         <br/>
-                        <Alert color="warning">
+                        <span style={{ color: "red" }}>
                           Please select at least one team 
-                        </Alert>
+                        </span>
                       </div>:null
                   }
                 </FormGroup>
