@@ -5,8 +5,7 @@ import { GET_TOURNAMENTMATCHS, INVALID_DATA } from '../reducer/TournamentMatch';
 export const SelectTournamentMatchAction = (pageno, parpageRecord, filedName, sortType) => {
     return (dispatch) => {
         
-        tournamentMatchService.getTournamentMatch(pageno, parpageRecord, filedName, sortType)
-        
+        tournamentMatchService.getTournamentMatch(pageno, parpageRecord, filedName, sortType)        
             .then((response) => {               
             
                 if (response.status === 200) {                                   

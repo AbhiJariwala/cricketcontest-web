@@ -75,8 +75,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
         }
 
-        case Delete_Team: {
-            
+        case Delete_Team: {            
             let tournamentss = state.Tournaments;
             let teamId = action.teamId;
             let tournamentId = action.tournamentId;
