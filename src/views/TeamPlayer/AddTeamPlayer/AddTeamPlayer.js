@@ -67,10 +67,8 @@ class AddTeamPlayer extends Component {
             this.setState({ submitted: false });
             this.props.toggle(e);
         }
-
-        this.props.action.getTeamPlayerData.getTournaments(0, 5, "desc", "tournamentName");
-
-
+        this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
+        this.props.toggle(e);
     }
     render() {
         let playerData = "";

@@ -18,12 +18,22 @@ class UserRegistration extends Component {
         fieldsErrors: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },
         fieldsValid: { firstName: false, lastName: false, email: false, password: false, confirmPassword: false },
         formValid: false,
+        inValidEmail: ""
     }
 
-    componentWillReceiveProps() {
-        // if (this.props.email) {
-        //     this.props.history.push('/login');
-        // }
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.err_msg)
+        if (nextProps.err_msg === "") {
+            this.setState({
+                inValidEmail: ""
+            })
+            this.props.history.push('/login');
+        }
+        else {
+            this.setState({
+                inValidEmail: nextProps.err_msg
+            })
+        }
     }
 
     genderChangeHandler(e) {
@@ -49,6 +59,9 @@ class UserRegistration extends Component {
                 break;
 
             case 'email':
+                this.setState({
+                    inValidEmail: ""
+                })
                 fieldValidation.email = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
                 fieldValidationErrors.email = fieldValidation.email ? '' : ' Invalid Email';
                 break;
@@ -89,13 +102,12 @@ class UserRegistration extends Component {
     }
 
     btnRegisterClick() {
-        this.props.action.register.RegisterUser(this.state);
-        if (!this.props.err_msg && !this.props.err_msg === undefined) {
-            this.props.history.push('/login');
+        if (this.state.formValid) {
+            this.props.action.register.RegisterUser(this.state);
         }
     }
 
-    render() {       
+    render() {
         return (
             <div>
                 <hr />
@@ -123,7 +135,7 @@ class UserRegistration extends Component {
                                             <Label for="email"><b>Email</b></Label>
                                             <Input type="email" name="email" id="email" placeholder="example@example.com" onChange={this.inputChangeHandler.bind(this)} />
                                             <span style={{ color: "red" }}>{this.state.fieldsErrors.email}</span>
-                                            {/* {(this.props.err_msg !== "") ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : ""} */}
+                                            <span style={{ color: "red" }}>{this.state.inValidEmail}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="password"><b>Password</b></Label>
