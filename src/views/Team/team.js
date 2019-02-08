@@ -9,7 +9,6 @@ import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
 import path from '../../path';
 class Team extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -99,6 +98,7 @@ class Team extends Component {
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{textAlign:"center"}} >
+        <td><img src={path + data.teamLogo} alt="" style={{ width: "50px", height: "50px" }}></img></td>
           <td>{data.teamName}</td>
           <td> 
           <img src={path+"edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>                      
@@ -128,6 +128,7 @@ class Team extends Component {
             <Table responsive hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{textAlign:"center"}}>
+                <th>Team Logo</th>
                   <th style={{cursor:"pointer"}}>Team Name</th>
                   <th>Action</th>
                 </tr>

@@ -22,7 +22,7 @@ class userDashBoard extends Component {
                 return <div className="card" key={key} style={{ borderRadius: "25px" }} onClick={()=>this.handletornamentteams(tournamentmatch.id)} >
                     <div className="card-body"  >
                         <div style={{ float: "left" }}><img alt="logo" src={path + "add.png"}  style={{ width: 100 }}   ></img></div>
-                        <div style={{ float: "center", margin: "auto", width: "45%", padding: "10px", }}>{tournamentmatch.Team1[0].teamName + " Vs " + tournamentmatch.Team2[0].teamName}</div>
+                        <div style={{ float: "center", margin: "auto", width: "45%", padding: "10px",textAlign:"center" }}>{tournamentmatch.Team1[0].teamName + " Vs " + tournamentmatch.Team2[0].teamName}</div>
                         <div style={{ float: "right" }}><img alt="logo1" src={path + "add.png"}  style={{ width: 100, marginTop: -50 }} ></img></div>
                     </div>
                 </div>

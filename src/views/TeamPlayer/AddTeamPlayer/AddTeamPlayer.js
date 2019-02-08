@@ -47,13 +47,15 @@ class AddTeamPlayer extends Component {
 
     handleChange = (selectedItems) => {
         this.setState({ selectedItems: selectedItems });
-        this.setState({ submitted: false });
     };
-
-    addteamplayer(e) {
+    submitted = () => {
         this.setState({ submitted: true });
-        if (this.state.submitted && this.state.tournamentId !== 0 && this.state.teamId !== 0 && this.state.selectedItems.length > 0) {
-            var players = this.state.selectedItems;
+        this.addteamplayer(true);
+    }
+    addteamplayer(submitted) {
+        const { selectedItems } = this.state;
+        if (submitted && selectedItems.length > 0) {
+            var players = selectedItems;
             var result = players.map(function (x) {
                 return parseInt(x, 10);
             });
@@ -64,11 +66,8 @@ class AddTeamPlayer extends Component {
                 createdBy: parseInt(localStorage.getItem("userId"), 10)
             }
             this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
-            this.setState({ submitted: false });
-            this.props.toggle(e);
+            this.props.toggle();
         }
-        this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
-        this.props.toggle(e);
     }
     render() {
         let playerData = "";
@@ -150,7 +149,7 @@ class AddTeamPlayer extends Component {
                                         {tournamentTeamOption}
                                     </Input>
 
-                                    {(this.state.submitted && this.state.teamId === 0 && this.state.tournamentId!==0) ?
+                                    {(this.state.submitted && this.state.teamId === 0 && this.state.tournamentId !== 0) ?
                                         <div>
                                             <br />
                                             <span style={{ color: "red" }}>
@@ -170,7 +169,7 @@ class AddTeamPlayer extends Component {
                                         disabled={(this.state.teamId === 0) ? true : false}
                                     >{teamPlayersOption}</Select>
 
-                                    {(this.state.submitted && this.state.selectedItems.length === 0 && this.state.tournamentId!==0 && this.state.teamId!==0) ?
+                                    {(this.state.submitted && this.state.selectedItems.length === 0 && this.state.tournamentId !== 0 && this.state.teamId !== 0) ?
                                         <div>
                                             <br />
                                             <span style={{ color: "red" }}>
@@ -182,7 +181,7 @@ class AddTeamPlayer extends Component {
                             </Form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="info" onClick={this.addteamplayer.bind(this)}>Add</Button>
+                            <Button color="info" onClick={this.submitted}>Add</Button>
                             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
