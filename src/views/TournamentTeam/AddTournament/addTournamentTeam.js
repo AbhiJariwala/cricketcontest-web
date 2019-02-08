@@ -33,10 +33,14 @@ class AddTournament extends Component {
     this.props.action.Tournament.fetchTournamentDataAction();
   }
 
-  AddData = () => {
+  submitted=()=>{
     this.setState({submitted: true});
+    this.AddData(true);
+  }
+
+  AddData = (submitted) => {
     const { tournamentId, teams } = this.state;
-    if (this.state.submitted && teams.length>0){
+    if (submitted && teams.length>0){
     let newTeams = this.props.TeamsData.filter((team) => {
       return teams.includes(team.id)
     })
@@ -46,7 +50,7 @@ class AddTournament extends Component {
       return true;
     });
 
-    this.setState({ tournamentId: '', teams: [] });
+    this.setState({ tournamentId: '', teams: [], submitted:false});
     this.props.toggle();
   }
   }
@@ -67,7 +71,7 @@ class AddTournament extends Component {
       });
 
       this.setState({ tournamentTeams: filteredteams[0] });
-      this.setState({teams:[], submitted:false})
+      this.setState({teams:[],submitted:false})
     }
   }
 
@@ -184,7 +188,7 @@ class AddTournament extends Component {
             </ModalBody>
             
             <ModalFooter>
-              <Button color="info" onClick={this.AddData.bind(this)}>Submit</Button>{' '}
+              <Button color="info" onClick={this.submitted}>Submit</Button>{' '}
               <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           
