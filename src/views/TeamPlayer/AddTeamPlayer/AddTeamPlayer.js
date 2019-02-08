@@ -47,13 +47,13 @@ class AddTeamPlayer extends Component {
 
     handleChange = (selectedItems) => {
         this.setState({ selectedItems: selectedItems });
-        this.setState({ submitted: false });
     };
 
     addteamplayer(e) {
         this.setState({ submitted: true });
-        if (this.state.submitted && this.state.tournamentId !== 0 && this.state.teamId !== 0 && this.state.selectedItems.length > 0) {
-            var players = this.state.selectedItems;
+        const {submitted, selectedItems} = this.state;
+        if (submitted && selectedItems.length > 0) {
+            var players = selectedItems;
             var result = players.map(function (x) {
                 return parseInt(x, 10);
             });
@@ -64,11 +64,8 @@ class AddTeamPlayer extends Component {
                 createdBy: parseInt(localStorage.getItem("userId"), 10)
             }
             this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
-            this.setState({ submitted: false });
             this.props.toggle(e);
         }
-        this.props.action.getTeamPlayerData.AddTeamPlayer(teamplayerdata);
-        this.props.toggle(e);
     }
     render() {
         let playerData = "";
