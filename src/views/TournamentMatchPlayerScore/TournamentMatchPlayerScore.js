@@ -124,7 +124,7 @@ class TournamenMatchPlayerScore extends Component {
                                 }))
                             }) : null
                         }
- </Modal>
+                    </Modal>
                     <div style={{ marginTop: "50px" }}>
                         <div style={{ float: "right" }}>
                             Show entries
