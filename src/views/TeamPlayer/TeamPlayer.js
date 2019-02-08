@@ -53,8 +53,9 @@ class TeamPlayer extends Component {
     }
 
     toggle() {
+        const {modal} = this.state;
         this.setState({
-            modal: !this.state.modal
+            modal: !modal
         });       
     }
 
