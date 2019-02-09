@@ -41,11 +41,11 @@ class AddMatchPlayerScore extends Component {
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(1, 100, "desc", "id");
     }
 
-    // tournamentNameChangedHandler(e) {
-    //     this.setState({ tournamentName: e.target.options[e.target.selectedIndex].text });
-    //     this.props.action.getMatchPlayerScore.getTournamentMatchesByTournamentId(e.target.value);
-    //     this.setState({ [e.target.name]: e.target.value });
-    // }
+    tournamentNameChangedHandler(e) {
+        this.setState({ tournamentName: e.target.options[e.target.selectedIndex].text });
+        this.props.action.getMatchPlayerScore.getTournamentMatchesByTournamentId(e.target.value);
+        this.setState({ [e.target.name]: e.target.value });
+    }
 
     // tournamentMatchNameChangedHandler(e) {
     //     this.setState({ tournamentMatchName: e.target.options[e.target.selectedIndex].text });
@@ -304,7 +304,8 @@ const mapStateToProps = state => {
     // scores: state.MatchPlayerScore.scores
     return {
         ShowTournament: state.Tournament.TournamentData,
-        MatchPlayerScore: state.MatchPlayerScore.tournamentMatchPlayerScore
+        MatchPlayerScore: state.MatchPlayerScore.tournamentMatchPlayerScore,
+        TournamentMatch:state.TournamentMatchs.allmatchs
     }
 }
 
