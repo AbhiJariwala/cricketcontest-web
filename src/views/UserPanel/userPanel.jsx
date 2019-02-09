@@ -11,11 +11,7 @@ import {
   NavbarBrand,
   Nav,
   NavLink,
-  NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  NavItem } from 'reactstrap';
   import {Link} from 'react-router-dom';
 class NavbarPage extends Component {constructor(props) {
   super(props);
@@ -49,6 +45,9 @@ render() {
         <Nav className="ml-auto" navbar>
           <NavItem>
             <NavLink tag={Link} to="/userDashBoard">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/Myteam">My tEAMS</NavLink>
           </NavItem>
           <NavItem>
             <NavLink tag={Link} to="/viewTournamentteam">Tournament</NavLink>

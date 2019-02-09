@@ -22,32 +22,35 @@ class userDashBoard extends Component {
         var date1 = date.getDate();
         let month = date.getMonth(); //Be careful! January is 0 not 1
         let year = date.getFullYear();
-        let dateString, m,d;
+        let dateString, m, d;
         m = month + 1;
-        d = date1 ;
+        d = date1;
         if (m < 10) {
-            m = "0" + m;            
+            m = "0" + m;
         }
         if (d < 10) {
-            d = "0" + d;            
+            d = "0" + d;
         }
         dateString = year + "-" + (m) + "-" + d;
         let tournamentMatch = '';
         if (this.props.ShowTornamentmatches.length !== 0) {
             tournamentMatch = this.props.ShowTornamentmatches.map((tournamentmatch, key) => {
-                if(dateString<=tournamentmatch.matchDate.substring(0, 10)){
-                return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
-                    <div className="card-body"  >
-                        <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>
-                        <div style={{ float: "center", margin: "auto", width: "45%", padding: "10px", textAlign: "center" }}>
-                            <div>{tournamentmatch.Team1[0].teamName + " Vs " + tournamentmatch.Team2[0].teamName}</div>
-                            <div><Countdown date={tournamentmatch.matchDate} /></div>
-                        </div>
-                        <div style={{ float: "right" }}><img alt="logo1" src={path + tournamentmatch.Team2[0].teamLogo} style={{ width: 100, marginTop: -100 }} ></img></div>
+                if (dateString <= tournamentmatch.matchDate.substring(0, 10)) {
+                    return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
+                        <div className="card-body"  >
+                            <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>
+                            <div style={{ float: "center", margin: "auto", width: "45%", padding: "10px", textAlign: "center" }}>
+                                <div>{tournamentmatch.Team1[0].teamName + " Vs " + tournamentmatch.Team2[0].teamName}</div>
+                                <div><Countdown date={tournamentmatch.matchDate} /></div>
+                            </div>
+                            <div style={{ float: "right" }}><img alt="logo1" src={path + tournamentmatch.Team2[0].teamLogo} style={{ width: 100, marginTop: -100 }} ></img></div>
 
+                        </div>
                     </div>
-                </div>
-            }})
+                }
+                return "";
+            })
+
         } else {
             tournamentMatch = "No Data found"
         }
@@ -75,7 +78,7 @@ class userDashBoard extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        ShowTornamentmatches: state.TournamentMatchs.tournamentmatchs,
+        ShowTornamentmatches: state.TournamentMatchs.allmatchs,
     }
 };
 const mapDispatchToProps = dispatch => ({
