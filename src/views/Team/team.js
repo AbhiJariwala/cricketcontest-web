@@ -28,7 +28,8 @@ class Team extends Component {
   }
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      Editdataid:""
     });
   }
   parpage = (Event) => {
@@ -77,7 +78,7 @@ class Team extends Component {
       this.props.action.Team.selectTeamAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
     }
   }
-  Edittoggle = (data) => {
+  Edittoggle = (data) => {    
     if (!data) {
       alert("no data");
     } else {
@@ -93,8 +94,7 @@ class Team extends Component {
       });
     }
   }
-  btnDeleteClick = (id) => {
-    
+  btnDeleteClick = (id) => {    
     if (!id) {
       alert("no data");
     } else {

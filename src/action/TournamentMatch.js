@@ -17,7 +17,7 @@ export const getTournamentMatch = (id) => {
             }
         })
             .catch((error) => {
-                debugger;
+                
                 if (error.response) {
                     dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
                 }
@@ -27,12 +27,12 @@ export const getTournamentMatch = (id) => {
 
 
 export const SelectTournamentMatchAction = (pageno, parpageRecord, sorting, fieldName) =>  {
-    debugger;
+    
     return (dispatch) => {
         tournamentMatchService.SelectTournamentMatchAction(pageno, parpageRecord, sorting, fieldName)
         .then((response) => {
             if (response.status === 200) {
-                debugger;
+    
                 var data=response.data;
                 dispatch(
                     {

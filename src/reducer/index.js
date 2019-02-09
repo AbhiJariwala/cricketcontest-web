@@ -8,7 +8,7 @@ import teamPlayer from './teamPlayer'
 import TournamentTeam from './TournamentTeam'
 import MatchPlayerScore from './matchPlayerScore'
 import TournamentPoint from './tournamentPoint'
+import TournamentMatchs from './TournamentMatch' 
+import CreateteamReducer from './User/CreateTeam'
 import User from './userReducer'
-import TournamentMatchs from './TournamentMatch'
-
-export default combineReducers({ auth, Tournament, Team, TournamentTeam, Player, teamPlayer, MatchPlayerScore, TournamentPoint, User, TournamentMatchs });
+export default combineReducers({ auth, Tournament, Team, TournamentTeam, Player, teamPlayer, MatchPlayerScore, TournamentPoint,TournamentMatchs,CreateteamReducer,User });

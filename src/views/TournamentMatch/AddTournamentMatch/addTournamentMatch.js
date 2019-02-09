@@ -37,13 +37,13 @@ class AddTournamentMatch extends Component {
   }
 
   onChange = (e) => {
-    debugger;
+    
     let date = e.target.value
     this.setState({ date });
     console.log("date::", date);
     this.props.action.Team.fetchTeamAction();
     this.props.ShowTornamentAll.map((tournament) => {
-      debugger;
+      
       if (tournament.TournamentMatches.length > 0) {
         console.log("matchdate::", tournament.TournamentMatches[0].matchDate);
         let teams = []
