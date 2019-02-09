@@ -13,7 +13,6 @@ class CRoute extends Component {
         const { component, cprivate, crole } = this.props;
         const Component = component;
         let redirectTo = undefined;
-        
          if (isUserLoggedIn && rest.path === "/userDashBoard" && userCurrentRole === 1) {
             redirectTo = "/"
         }
