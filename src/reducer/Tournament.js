@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     Tournamentss: []
 }
 export const deletetournamentdata = "deletetournamentdata";
-export const Fetch_Data = "Fetch_Data";
+export const Fetch_Tournament_Data = "Fetch_Tournament_Data";
 export const updatetournamentdata = "updatetournamentdata";
 export const FetchSingleTournament = "FetchSingleTournament";
 export const Add_Data = "Add_Data";
@@ -41,7 +41,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { FetchSingleTournamentData: [].concat(action.FetchSingleTournamentData) });
         }
 
-        case Fetch_Data: {
+        case Fetch_Tournament_Data: {
             return Object.assign({}, state, { TournamentData: action.TournamentData });
         }
 

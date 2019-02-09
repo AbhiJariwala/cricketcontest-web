@@ -25,7 +25,7 @@ class Player extends Component {
         playerImage: [],
         showimage: false
       },
-      pageRecord: 1,
+      pageRecord: 0,
       noOfRecords: 5,
       sortFiled: 'id',
       sortType: 'DESC'
@@ -160,7 +160,7 @@ class Player extends Component {
     let start = 0;
     if (this.props.Player) {
       start = 0;
-      start = this.state.pageRecord;
+      start = this.state.pageRecord + 1;
       player = this.props.Player.PlayerData.map((player, key) => {
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
@@ -170,9 +170,9 @@ class Player extends Component {
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
           <td>
-          <img src={path+"edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
-          <img src={path+"delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
-            </td>
+            <img src={path + "edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
+            <img src={path + "delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
+          </td>
         </tr>
       })
     } else { return <tr>No Player Found</tr> }
@@ -213,7 +213,7 @@ class Player extends Component {
             </tbody>
           </Table>
           <ButtonGroup>
-            {(this.state.pageRecord !== 1) ? <Button color="info" onClick={this.btnPageChangeClick.bind(this)} name="Prev">Prev</Button> : null}&nbsp;
+            {(this.state.pageRecord !== 0) ? <Button color="info" onClick={this.btnPageChangeClick.bind(this)} name="Prev">Prev</Button> : null}&nbsp;
             {(start >= this.state.pageRecord + this.state.noOfRecords) ?
               <Button color="info" onClick={this.btnPageChangeClick.bind(this)} name="Next">Next</Button> : null}
           </ButtonGroup>
