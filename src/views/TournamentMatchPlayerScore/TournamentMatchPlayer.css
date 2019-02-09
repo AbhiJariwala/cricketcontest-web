@@ -45,9 +45,9 @@
     float: right;
     margin: 15px;
 }
-
-.noTeams{
-    font-size:20px;
-    color:grey;
-    text-align:center
+.score{
+    width: 20%;      
+    background-color: lightgray;
+    box-shadow: 3px 3px 1px #888888;
+    
 }

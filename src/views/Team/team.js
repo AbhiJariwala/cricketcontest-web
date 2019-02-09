@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Table, Button } from 'reactstrap';
 import { Input, ButtonGroup } from 'reactstrap';
-
+import { confirmAlert } from 'react-confirm-alert';
 import * as TeamAction from '../../action/Team';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
+import path from '../../path';
 class Team extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -84,11 +84,33 @@ class Team extends Component {
       const tObject = {
         id: data.id,
         teamName: data.teamName,
+        teamLogo: data.teamLogo,
+        imagebanner: true
       }
       this.setState({
         modal: !this.state.modal,
         Editdataid: tObject
       });
+    }
+  }
+  btnDeleteClick = (id) => {
+    
+    if (!id) {
+      alert("no data");
+    } else {
+      confirmAlert({
+        title: 'Delete Team',
+        message: 'Are you sure you want to delete Team?.',
+        buttons: [{
+          label: 'Yes',
+          onClick: () => { this.props.action.Team.DeleteTeamAction(id, this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName) }
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+        ]
+      })
     }
   }
   render() {
@@ -98,8 +120,12 @@ class Team extends Component {
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{textAlign:"center"}} >
+        <td><img src={path + data.teamLogo} alt="" style={{ width: "50px", height: "50px" }}></img></td>
           <td>{data.teamName}</td>
-          <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
+          <td> 
+          <img src={path+"edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>                      
+          <img src={path+"delete1.jpg"} alt="Edit"  onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
+          </td>
         </tr>
       })
     }
@@ -118,13 +144,14 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
             </div>
           </div>
           {data ?
             <Table responsive hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{textAlign:"center"}}>
+                <th>Team Logo</th>
                   <th style={{cursor:"pointer"}}>Team Name</th>
                   <th>Action</th>
                 </tr>
@@ -137,10 +164,10 @@ class Team extends Component {
           <ButtonGroup>
             {this.state.pageno !== 0 ?
               <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
-              : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled>Prev</Button>}
+              : ""}
             &nbsp;
             {notNext >= this.state.parpageRecord ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" disabled>Next</Button >}
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :""}
           </ButtonGroup>
         </div>
       </div>
