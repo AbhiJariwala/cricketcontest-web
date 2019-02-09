@@ -27,11 +27,7 @@ class TournamentMatch extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
-<<<<<<< HEAD
   componentWillMount = () => {
-=======
-  componentWillMount = () => {      
->>>>>>> c5991c767d37e020db341f6be6a488339c7abb43
     this.props.action.TournamentAction.fetchTournamentDataAction();
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
@@ -132,13 +128,6 @@ class TournamentMatch extends Component {
         let cdate=new Date().getTime();
         var remainday=Math.round((d-cdate)/(1000*60*60*24));
         remainday=Math.round((d-cdate)/(1000*60*60*24));
-<<<<<<< HEAD
-=======
-        var days=Math.floor(t/(1000*60*60*24));
-        var hours=Math.floor((t%(1000*60*60*24))/(1000*60*60));
-        var minutes=Math.floor((t%(1000*60*60))/(1000*60));
-        var seconds=Math.floor((t%(1000*60))/1000);        
->>>>>>> c5991c767d37e020db341f6be6a488339c7abb43
         return <tr key={key}>
           { (this.state.tournamentid=== 'selected')? (<td>{data.Tournament.tournamentName}</td> ):null}
           <td style={{float:'right'}}><img src={path + data.Team1[0].teamLogo} height="70px" width="70px" alt="TeamImage"/>
