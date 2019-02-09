@@ -9,6 +9,7 @@ export const addTournamentPointScore = (score, offset, perPageRecord, fieldName,
                     TournamentPointService.getTournamentPointScore(offset, perPageRecord, fieldName, order)
                         .then(res => {
                             if (res.status === 200) {
+                                res.data.map(data => data.pointJson=JSON.parse(data.pointJson))
                                 dispatch({
                                     type: ADD_SCORE,
                                     data: res.data
@@ -33,6 +34,7 @@ export const getTournamentPointScore = (offset, perPageRecord, fieldName, order)
         TournamentPointService.getTournamentPointScore(offset, perPageRecord, fieldName, order)
             .then((response) => {
                 if (response.status === 200) {
+                    response.data.map(data => data.pointJson=JSON.parse(data.pointJson))
                     dispatch({
                         type: GET_POINTS,
                         data: response.data

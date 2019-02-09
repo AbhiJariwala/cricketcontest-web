@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Table, Button, Input, ButtonGroup } from 'reactstrap';
-import { Modal, Collapse } from 'antd';
+import { Modal as AntModal, Collapse } from 'antd';
+import 'antd/dist/antd.css';
 
 import * as  MatchPlayerScore from '../../action/matchPlayerScore'
 import { PanelHeader } from "components";
 import * as TournamentMatch from '../../action/TournamentMatch'
-// import ShowMatchPlayerScore from '../TournamentMatchPlayerScore/ShowMatchPlayerScore'
-// import  './TournamenMatchPlayerScore.css'
+import AddMatchPlayerScore from './AddTournamentMatchPlayerScore/AddTournamentMatchPlayerScore'
+import './TournamentMatchPlayer.css'
 
-import 'antd/dist/antd.css';
 const Panel = Collapse.Panel;
 
 class TournamenMatchPlayerScore extends Component {
@@ -19,46 +19,53 @@ class TournamenMatchPlayerScore extends Component {
         super(props);
         this.state = {
             visible: false,
+            showModal: false,
             matchPlayerScore: [],
+            playes: [],
             teamName: "",
             score: []
         };
+        this.toggleMatchPlayerScore = this.toggleMatchPlayerScore.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
-
     componentDidMount() {
         this.getTournamentMatch();
         this.getMatchPlayerScore(0, 100, "id", "DESC");
     }
-
     getTournamentMatch() {
         this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
     getMatchPlayerScore(offset, perPageRecord, fieldName, order) {
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(offset, perPageRecord, fieldName, order);
     }
-    toggleMatchPlayerScore = () => {
+    toggleMatchPlayerScore() {
         this.setState({
             visible: !this.state.visible
         });
     }
-
+    toggleModal() {       
+        this.setState({
+            showModal: !this.state.showModal
+        })
+    }
+    btnAddClick() {       
+        this.toggleModal();
+    }
     getTournamentMatchPlayerScoreByMatch(tournamentId, teamId) {
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
+        console.log(this.state.players)
         this.setState({
             visible: true
         })
     }
-
     CollapsePlayerHandler(playerId) {
-        // console.log(playerId);        
         let Score = "";
         if (this.props.MatchPlayerScore.tournamentMatchPlayerScore) {
             this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(score => {
-                return (score.playerId === playerId) ? Score = score : Score = null
+                return (score.playerId === playerId) ? Score = score : Score = []
             })
         }
         this.setState({ score: [].concat(Score) });
-
     }
 
     render() {
@@ -66,23 +73,22 @@ class TournamenMatchPlayerScore extends Component {
         let start = 0;
 
         const { score } = this.state;
-
-        if (this.props.TournamentMatches.tournamentmatchs) {
-            start = 0;
+        if (this.props.TournamentMatches.tournamentmatchs.length > 0) {
+            start = 1;
             tournamentMatch = this.props.TournamentMatches.tournamentmatchs.map((tournamentmatch, key) => {
                 return <tr key={key} style={{ textAlign: "center" }} >
                     <td>{start++}</td>
                     <td>{tournamentmatch.Tournament.tournamentName}</td>
-                    <td style={{ float: "right" }}>
-                        <Button color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id)} name="team1" >
+                    <td>
+                        <Button style={{ width: "150px", float: "right" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id)} name="team1" >
                             {tournamentmatch.Team1[0].teamName}
                         </Button>
                     </td>
                     <td>
                         <b>VS</b>
                     </td>
-                    <td style={{ float: "left" }}>
-                        <Button color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id)} name="team2" >
+                    <td>
+                        <Button style={{ width: "150px", float: "left" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id)} name="team2" >
                             {tournamentmatch.Team2[0].teamName}
                         </Button>
                     </td>
@@ -92,14 +98,13 @@ class TournamenMatchPlayerScore extends Component {
             })
         }
         else {
-            return <tr>No Match Found</tr>
+            tournamentMatch = "";
         }
         return (
             <div>
                 <PanelHeader size="sm" />
-                <div style={{ marginLeft: "15px" }}>
-                    {/* <AddPlayer isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state}> </AddPlayer> */}
-                    <Modal title="Players"
+                <div style={{ marginLeft: "15px" }}>                   
+                    <AntModal title="Players"
                         visible={this.state.visible}
                         onCancel={this.toggleMatchPlayerScore}
                         footer={null}>
@@ -108,23 +113,23 @@ class TournamenMatchPlayerScore extends Component {
                                 return (player.Players.map((p) => {
                                     return (<Collapse accordion key={p.id} onChange={this.CollapsePlayerHandler.bind(this, p.id)}>
                                         <Panel header={p.firstName} key={p.id}>
-                                            {(score) ? score.map(data => {
-                                                return <ul key={data.id}>
+                                            {(score.length > 0) ? score.map((data, i) => {
+                                                return <ul key={i} style={{ listStyle: "none" }}>
                                                     <li><b>Runs : </b>{data.run}</li>
                                                     <li><b>Six : </b>{data.six}</li>
                                                     <li><b>Four : </b>{data.four}</li>
                                                     <li><b>Catch : </b>{data.catch}</li>
                                                     <li><b>Stumping: </b>{data.stumping}</li>
                                                     <li><b>Wicket : </b>{data.wicket}</li>
-                                                    <li style={{ color: "red" }}><b><i>Your Score: </i></b>{data.wicket}</li>
+                                                    <li className="score"><b><i>Score: </i></b>{data.wicket}</li>
                                                 </ul>
-                                            }) : null}
+                                            }) : <p>Player score not available</p>}
                                         </Panel>
                                     </Collapse>)
                                 }))
                             }) : null
                         }
-                    </Modal>
+                    </AntModal>
                     <div style={{ marginTop: "50px" }}>
                         <div style={{ float: "right" }}>
                             Show entries
@@ -137,7 +142,8 @@ class TournamenMatchPlayerScore extends Component {
                             </Input>
                         </div>
                         <div style={{ float: "left" }}>
-                            <Button color="info" style={{ width: "100%" }}>Add Player</Button>
+                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>
+                            <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
                         </div>
                     </div>
 
@@ -151,7 +157,9 @@ class TournamenMatchPlayerScore extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {tournamentMatch}
+                            {(tournamentMatch !== "") ? tournamentMatch
+                                : <tr><th>Tournament match is not available</th></tr>
+                            }
                         </tbody>
                     </Table>
                     <ButtonGroup>

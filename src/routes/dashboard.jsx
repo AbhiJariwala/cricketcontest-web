@@ -3,8 +3,8 @@ import Tournament from "../views/tournament/tournament";
 import TournamentTeam from "../views/TournamentTeam/tournamentTeam";
 import Team from "../views/Team/team";
 import Player from "../views//Player/Player";
-import TeamPlayer from '../views/TeamPlayer/TeamPlayer'
-// import MatchPlayerScore from '../views/matchPlayerScore/matchPlayerScore'
+import TeamPlayer from '../views/TeamPlayer/TeamPlayer';
+import TournamentMatch from '../views/TournamentMatch/tournamentmatch'
 import TournamentMatchPlayerScore from '../views/TournamentMatchPlayerScore/TournamentMatchPlayerScore'
 import TournamentPoint from '../views/tornamentPoints/tournamentPoint'
 var dashRoutes = [
@@ -32,7 +32,6 @@ var dashRoutes = [
     icon: "sport_user-run",
     component: Player
   },
-
   {
     path: "/TournamentTeam",
     name: "Tournament Team",
@@ -44,6 +43,12 @@ var dashRoutes = [
     name: "Tournament Team Player",
     icon: "sport_user-run",
     component: TeamPlayer
+  },
+  {
+    path: "/TournamentMatchs",
+    name: "Tournament Matchs",
+    icon: "sport_user-run",
+    component: TournamentMatch
   },
   {
     path: "/TournamentPoint",

@@ -204,10 +204,10 @@ class AddPlayer extends Component {
                                     <FormGroup check>
                                         <Label check>
                                             <Input type="radio" name="gender" onChange={this.inputChangedHandler.bind(this)} value="Male" checked={(this.state.Player.gender) === 1 ? true : false} />Male
-                    </Label>
+                                        </Label>
                                         <Label check>
                                             <Input type="radio" name="gender" onChange={this.inputChangedHandler.bind(this)} value="Female" checked={(this.state.Player.gender) === 2 ? true : false} />Female
-                    </Label>
+                                        </Label>
                                     </FormGroup>
                                 </FormGroup>
                                 <FormGroup>
