@@ -93,8 +93,9 @@ class CreateTeam extends Component {
                     teamName1 = tournamentmatch;
                     tournamentMatch = tournamentmatch.Team1[0].player.map((data, key) => {
                         teamplayers.push(data.id);
-                        return <Container key={key} >
-                            <Card body>
+                        return (
+                            // <Container key={key} >
+                            <Card key={key} body>
                                 <div className="row">
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style={{ width: "100%" }}>
                                         <img alt="demo" src={path + data.playerImage} style={{width: "150px" }} ></img>
@@ -110,11 +111,13 @@ class CreateTeam extends Component {
                                     </div>
                                 </div>
                             </Card>
-                        </Container>
+                            // </Container>
+                        )
                     })
                     tournamentMatch2 = tournamentmatch.Team2[0].player.map((data, key) => {
-                        return <Container key={key}>
-                            <Card body>
+                        return (
+                            // <Container key={key}>
+                            <Card key={key} body>
                                 <div className="row">
                                     <div className="col-sm-2" style={{ width: "100%" }}>
                                         <img alt="demo" src={path + data.playerImage} style={{  width: "150px" }}></img>
@@ -130,7 +133,8 @@ class CreateTeam extends Component {
                                     </div>
                                 </div>
                             </Card>
-                        </Container>
+                            // {/* </Container> */}
+                        )
                     })
                     let teams = "";
                     let t1 = tournamentmatch.Team1[0].player;

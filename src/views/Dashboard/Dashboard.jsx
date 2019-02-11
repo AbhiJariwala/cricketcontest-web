@@ -171,10 +171,10 @@ class Dashboard extends React.Component {
                     <br />
                     {matchTeam1 ?
                       <div>
-                        <h4 style={{ textAlign: "center" }}>Tournament :{matchTournamentName} </h4>
+                        <h1 style={{ textAlign: "center" }}>{matchTournamentName} </h1>
                         <h3 style={{ textAlign: "center", marginTop: "10px" }}>
-                          <img src={path + team1Image} height="100px" width="100px" alt="Team1"></img>
-                          {matchTeam1} VS {matchTeam2}
+                          <img src={path + team1Image} height="100px" width="100px" alt="Team1"></img>{' '}
+                          {matchTeam1} VS {matchTeam2}{' '}
                           <img src={path + team2Image} height="100px" width="100px" alt="Team2"></img>
                         </h3>
                       </div> : <h3 style={{ textAlign: "center" }}>No Match Today</h3>
