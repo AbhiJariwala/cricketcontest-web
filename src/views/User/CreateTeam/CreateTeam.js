@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import path from '../../../path';
+import './createTeam.css'
 let teamId = [];
 const image = "https://wallpapersite.com/images/pages/pic_w/6005.jpg"
 class CreateTeam extends Component {
@@ -28,7 +29,6 @@ class CreateTeam extends Component {
     componentDidMount = () => {
         this.getTournamentMatch();
     }
-
     getTournamentMatch() {
         this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
@@ -38,7 +38,6 @@ class CreateTeam extends Component {
         } else if (name === "team2") {
             this.setState({ team2: this.state.team2 + 1 })
         }
-
         if (this.state.Myteam.length !== 11) {
             teamId.push(teams.id);
             this.setState({ Myteam: teamId });
@@ -98,7 +97,7 @@ class CreateTeam extends Component {
                             <Card body>
                                 <div className="row">
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style={{ width: "100%" }}>
-                                        <img alt="demo" src={path + data.playerImage} style={{ height: "50px", width: "175px" }}></img>
+                                        <img alt="demo" src={path + data.playerImage} style={{width: "150px" }} ></img>
                                     </div>
                                     <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                                         <p>{data.firstName}{data.lastName}</p>
@@ -118,7 +117,7 @@ class CreateTeam extends Component {
                             <Card body>
                                 <div className="row">
                                     <div className="col-sm-2" style={{ width: "100%" }}>
-                                        <img alt="demo" src={path + data.playerImage} style={{ height: "50px", width: "175px" }}></img>
+                                        <img alt="demo" src={path + data.playerImage} style={{  width: "150px" }}></img>
                                     </div>
                                     <div className="col-sm-7">
                                         <p>{data.firstName}{' '}{data.lastName}</p>
@@ -165,7 +164,7 @@ class CreateTeam extends Component {
         return (
             <div>
                 <UserPanel></UserPanel>
-                <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})`, overflow: "scroll", height: "600px" }} >
+                <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})`, overflow: "scroll", height: "600px",marginTop:"-17px"}}  >
                     <div className="row">
                         <div className="col-md-6" style={{}}>
                             <Row>
@@ -176,23 +175,38 @@ class CreateTeam extends Component {
                             <Card style={{ background: "linear-gradient(104deg, #3c3c3c 47%, #323232" }}>
                                 <CardBody >
                                     <div className="row" style={{ color: "white" }} >
-                                        <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                            <p>Players</p>
-                                            <p>{this.state.Myteam.length}/11</p>
-                                        </div>
-                                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <p><img alt="demo" className="img-circle" src={teamName1.length !== 0 ? path + teamName1.Team1[0].teamLogo : ""} style={{ height: "30px", width: "30px" }}></img> </p>
-                                        </div>
-                                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <p>{teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}</p>
-                                            <p>{this.state.team1}</p>
-                                        </div>
-                                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <p><img src={teamName1.length !== 0 ? path + teamName1.Team2[0].teamLogo : ""} alt="demo" style={{ height: "30px", width: "30px" }}></img> </p>
-                                        </div>
-                                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <p>{teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}</p>
-                                            <p>{this.state.team2}</p>
+                                        <div className="headerContainer_1725f headerFixed_38df7">
+
+                                            <div>
+                                                <div>
+                                                    <div className="container_aa549">
+                                                        <div className="maxInfoText_13e5b">Max select 11 players from Both team</div>
+                                                        <div className="infoContent_0b612">
+                                                            <div className="playerSelectionContainer_d8646">
+                                                                <div>Players</div>
+                                                                <div className="squadTextContainer_3e550">
+                                                                    <div className="selectedCount_daee8">{this.state.Myteam.length}</div>
+                                                                    <div className="totalCount_c1f66">/11</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flagContainer_029e0">
+                                                                <div className="flagContainer_47acd"><img  alt="true" src={teamName1.length !== 0 ? path + teamName1.Team1[0].teamLogo : ""} className="flag_008b5" /></div>
+                                                                <div className="squadOneText_3ad2c">
+                                                                    <div className="teamName_a2024">{teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}</div>
+                                                                    <div className="teamCount_84ce0">{this.state.team1}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flagContainer_029e0">
+                                                                <div className="squadTwoText_b9766">
+                                                                    <div className="teamName_a2024">{teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}</div>
+                                                                    <div className="teamCount_84ce0">{this.state.team2}</div>
+                                                                </div>
+                                                                <div className="flagContainer_47acd"><img  alt="true" src={teamName1.length !== 0 ? path + teamName1.Team2[0].teamLogo : ""} className="flag_008b5" /></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="row" style={{ background: "white" }}><Nav tabs>
@@ -211,11 +225,7 @@ class CreateTeam extends Component {
                                             </NavLink>
                                         </NavItem>
                                     </Nav>
-                                        <div className="row" style={{}}>
-                                            <div className="col-sm-12" style={{ marginTop: "30px" }}>
-                                                <p >Pick 11 Players From Both Team</p>
-                                            </div>
-                                        </div>
+                                       
                                         <TabContent activeTab={this.state.activeTab} >
                                             <TabPane tabId="1">
                                                 <Row   >

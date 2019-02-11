@@ -145,7 +145,7 @@ class tournament extends Component {
         </tr>
       })
     }else{
-      data=<tr><h3>No Record</h3></tr>;
+      data=<tr><td>No Record</td></tr>;
     }
     return (
       <div>

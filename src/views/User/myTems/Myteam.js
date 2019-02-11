@@ -51,7 +51,7 @@ class userDashBoard extends Component {
         return (
             <div className="content" >
                 <UserPanel></UserPanel>
-                <div className="row" style={{ backgroundRepeat: "none" }} >
+                <div className="row" style={{ backgroundRepeat: "none",marginTop:"-16px" }} >
                     <div className="col-md-6" style={{ backgroundImage: `url(${banerhome})` }}>
                     </div>
                     <div className="col-md-6" style={{ height: "630px", overflow: "scroll" }}>

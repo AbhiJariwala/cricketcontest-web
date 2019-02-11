@@ -21,12 +21,10 @@ class AddTournament extends Component {
     fieldsErrors: { tournamentName: '', tournamentDescription: '', tournamentBanner: '' },
     fieldsValid: { tournamentName: false, tournamentDescription: false, tournamentBanner: "false" },
   }
-
   componentWillMount = () => {
     const userId = localStorage.getItem("userId");
     this.setState({ createdBy: userId, updatedBy: userId });
   }
-
   componentWillUpdate = () => {
     if (this.props.dataid !== null && this.props.dataid.length !== 0 && !this.state.notcallnext) {
       this.setState({
@@ -39,7 +37,6 @@ class AddTournament extends Component {
       })
     }
   }
-
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
@@ -126,8 +123,6 @@ class AddTournament extends Component {
       singleImage={true}
       accept={"image/*"} />
       <center><span style={{ color: "red" }}>{this.state.fieldsErrors.BannerImage}</span></center></div>
-
-
     if (this.props.dataid !== null) {
       if (this.props.dataid.imagebanner) {
         image = <div align="center">
@@ -175,14 +170,14 @@ class AddTournament extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth
-  }
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     auth: state.auth
+//   }
+// };
 const mapDispatchToProps = dispatch => ({
   action: {
     Tournament: bindActionCreators(TournamentAction, dispatch)
   }
 });
-export default connect(mapStateToProps, mapDispatchToProps)(AddTournament)
+export default connect( mapDispatchToProps)(AddTournament)
