@@ -1,195 +1,121 @@
 import React, { Component } from 'react';
-import {  ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import { ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Container, Button, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as matchPlayerScoreAction from '../../../action/matchPlayerScore';
-import * as TournamentAction from '../../../action/Tournament';
-import * as  MatchPlayerScore from '../../../action/matchPlayerScore'
+import * as TournamentMatchAction from '../../../action/TournamentMatch';
+
 // import { Table } from 'antd';
 
 
 class AddMatchPlayerScore extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         tournamentId: 0,
-    //         tournamentMatchId: 0,
-    //         playerId: 0,
-    //         wicket: 0,
-    //         run: 0,
-    //         catch: 0,
-    //         six: 0,
-    //         four: 0,
-    //         stumping: 0,
-    //         score: 0,
-    //         tournamentName: "",
-    //         tournamentMatchName: "",
-    //         tournamentMatchPlayerName: ""
-    //     };
-    //     this.tournamentNameChangedHandler = this.tournamentNameChangedHandler.bind(this);
-    //     this.tournamentMatchNameChangedHandler = this.tournamentMatchNameChangedHandler.bind(this);
-    //     this.addTournamentMatchPlayerScore = this.addTournamentMatchPlayerScore.bind(this);
-    //     // this.updateTournamentMatchPlayerScore = this.updateTournamentMatchPlayerScore.bind(this);
-    //     this.tournamentMatchPlayerNameChangedHandler = this.tournamentMatchPlayerNameChangedHandler.bind(this);
-    //     this.changeHandler = this.changeHandler.bind(this);
-    // }
 
     componentDidMount() {
-        this.props.action.Tournament.SelectTournamentAction(1, 100, "desc", "id");
+        this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "desc", "id");
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(1, 100, "desc", "id");
     }
 
-    // tournamentNameChangedHandler(e) {
-    //     this.setState({ tournamentName: e.target.options[e.target.selectedIndex].text });
-    //     this.props.action.getMatchPlayerScore.getTournamentMatchesByTournamentId(e.target.value);
-    //     this.setState({ [e.target.name]: e.target.value });
-    // }
-
-    // tournamentMatchNameChangedHandler(e) {
-    //     this.setState({ tournamentMatchName: e.target.options[e.target.selectedIndex].text });
-    //     this.props.action.getMatchPlayerScore.getplayersByTournamentMatchId(e.target.value);
-    //     this.setState({ [e.target.name]: e.target.value });
-    // }
-
-    // tournamentMatchPlayerNameChangedHandler(e) {
-    //     this.setState({ tournamentMatchPlayerName: e.target.options[e.target.selectedIndex].text });
-    //     this.setState({ [e.target.name]: e.target.value });
-    // }
-
-    // changeHandler(e) {
-    //     this.setState({ [e.target.name]: e.target.value });
-    // }
+    tournamentNameChangedHandler(e) {
+        let tournamentId = e.target.value;
+        this.props.action.MatchPlayerScore.getMatchByTournament(tournamentId);
+    }
+    teamChangeHandler(tournamentId, e) {
+        let teamId = e.target.value;
+        this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
+    }
 
     addTournamentMatchPlayerScore(e) {
         e.preventDefault();
-        this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore(this.state);
-        // this.props.toggle();
+
+        // this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore(this.state);
     }
 
     render() {
-        let tournament1 = [];
-        let tournament2 = [];
-        let tournamentNameOption = [];
-        let matchPlayerScore = [].concat(this.props.MatchPlayerScore);
-        let tournaments = [].concat(this.props.ShowTournament);
-        if (matchPlayerScore) {
-            matchPlayerScore.map(tournament => {
-                return tournament1.push(tournament.tournamentId);
+        console.log(this.props.MatchPlayerScore.players);
+        let tournamentNameOption = {};
+        if (this.props.TournamentMatches.allmatchs.length > 0) {
+            tournamentNameOption = this.props.TournamentMatches.allmatchs.map((tournamentMatch) => {
+                var d1 = new Date(tournamentMatch.matchDate);
+                var d2 = new Date(new Date().toISOString());
+                var dateDiff = Math.abs(Math.floor((d2 - d1) / (1000 * 60 * 60 * 24)));
+                return (dateDiff === 1) ? tournamentMatch : null
             })
         }
-        tournament2 = tournaments.filter(t => !tournament1.includes(t.id));
-        if (tournament2) {
-            tournamentNameOption = tournament2.map((t1) => {
-                return <option key={t1.id} value={t1.id}>{t1.tournamentName}</option>
-            })
+        let tournament = []
+        for (let i = 0; i < tournamentNameOption.length; i++) {
+            if (tournamentNameOption[i] != null) {
+                tournament[0] = tournamentNameOption[i];
+            }
         }
-        // let tournamentMatchesNameOption = "";
-        // if (this.props.teams.TournamentMatches) {
-        //     tournamentMatchesNameOption = this.props.teams.TournamentMatches.map((tournamentMatch) => {
-        //         return (<option key={tournamentMatch.id} value={tournamentMatch.id}>{tournamentMatch.Team1[0].teamName + " VS " + tournamentMatch.Team2[0].teamName}</option>)
-        //     })
-        // }
+        let tournamentName = "", team1 = "", team2 = "", teams = "";
+        if (tournament[0]) {
+            tournamentName = tournament[0].Tournament.tournamentName;
+            team1 = tournament[0].Team1[0];
+            team2 = tournament[0].Team2[0];
+            teams = <Input type="select" onChange={this.teamChangeHandler.bind(this, tournament[0].tournamentId)} >
+                <option value={team1.id}>{team1.teamName}</option>
+                <option value={team2.id} >{team2.teamName}</option>
+            </Input>
+        }
+        let player = "";
+        if (this.props.MatchPlayerScore.players.length > 0) {
+            player = this.props.MatchPlayerScore.players.map(player => {
+                return player = player.Players.map((p) => {
+                    return <tr key={player.id}>
+                        <td><b>{p.firstName}</b></td>
+                        <td style={{ paddingRight: "5px" }}><Input type="text" name="six" placeholder="Runs" /></td>
+                        <td><Input type="text" name="six" placeholder="Four" /></td>
+                        <td><Input type="text" name="six" placeholder="Sixes" /></td>
+                        <td><Input type="text" name="six" placeholder="Catch" /></td>
+                        <td><Input type="text" name="six" placeholder="Stumping" /></td>
+                        <td><Input type="text" name="six" placeholder="Wicket" /></td>
+                    </tr>
 
-        // let tournamentMatchPlayers1 = "", tournamentMatchPlayers2 = "";
-        // if (this.props.players.Team1 && this.props.players.Team2) {
-        //     tournamentMatchPlayers1 = this.props.players.Team1[0].player.map((player) => {
-        //         return (<option key={player.id} value={player.id}>{player.firstName + " " + player.lastName}</option>)
-        //     });
-        //     tournamentMatchPlayers2 = this.props.players.Team2[0].player.map((player) => {
-        //         return (<option key={player.id} value={player.id}>{player.firstName + " " + player.lastName}</option>)
-        //     });
-        // }
+                })
+
+            })
+        }
 
         return (
             // <Container>
-            // {/* <div style={{ float: "right", margin: "15px" }}> */}
             <Modal isOpen={this.props.isOpen} toggle={this.props.toggleAdd} >
                 <ModalHeader toggle={this.props.toggleAdd} >
                     MatchPlayerScore
-                        {/* {this.props.data ? " Update Match Player Score" : "Match Player Score"} */}
                 </ModalHeader>
-                <ModalBody>
+                <ModalBody >
                     <Form>
                         <FormGroup>
-                            <Label for="tournamentName">Select Tournament Name</Label>
-                            <Input
-                                type="select"
-                                name="tournamentId"
-                                id="tournamentName"
-                                // defaultValue={this.props.data ? this.props.data.tournamentName : ""}
-                                onChange={this.tournamentNameChangedHandler}>
-                                <option value="" style={{ display: "none" }}>Select Tournament</option>
-                                {tournamentNameOption}
-                            </Input>
+                            <h3 style={{ color: "#2CA8FF", textAlign: "center" }}>{' '}{tournamentName}</h3>
                         </FormGroup>
                         <FormGroup>
-                            <table width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Player</th>
-                                        <th>Runs</th>
-                                        <th>Four</th>
-                                        <th>Six</th>
-                                        <th>Catch</th>
-                                        <th>Stumping</th>
-                                        <th>Wicket</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>abc</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <h5 style={{ color: "#2CA8FF", textAlign: "center" }}>{' '}{team1.teamName + " VS " + team2.teamName}</h5>
                         </FormGroup>
-
-                        {/* <FormGroup>
-                            <Label for="tournamentMatchName">Select Tournament Match Name</Label>
-                            <Input
-                                type="select"
-                                name="tournamentMatchId"
-                                id="tournamentMatchName"
-                                // defaultValue={this.props.data ? this.props.data.tournamentMatchName : ""}
-                                onChange={this.tournamentMatchNameChangedHandler}>
-                                <option value="" disabled="" style={{ display: "none" }}>Select Tournament Match</option>
-                                {tournamentMatchesNameOption}
-                            </Input>
-                        </FormGroup> */}
                         <hr />
-                        {/* <FormGroup>
-                            <Table>
-                                <thead>
-                                    <tr>
-                                        <th>Player</th>
-                                        <th>Runs</th>
-                                        <th>Four</th>
-                                        <th>Six</th>
-                                        <th>Catch</th>
-                                        <th>Stumping</th>
-                                        <th>Wicket</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>abc</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </FormGroup> */}
+                        <FormGroup>
+                            {teams}
+                        </FormGroup>
+                        <FormGroup>
+                            {(player) ?
+                                <table style={{ textAlign: "center" }}>
+                                    <thead  >
+                                        <tr>
+                                            <th>Player</th>
+                                            <th>Runs</th>
+                                            <th>Four</th>
+                                            <th>Six</th>
+                                            <th>Catch</th>
+                                            <th>Stumping</th>
+                                            <th>Wicket</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {player}
+                                    </tbody>
+                                </table> : ""
+                            }
+                        </FormGroup>
                         {/* <FormGroup>
                             <Label for="playerName">Select Player Name</Label>
                             <Input type="select" name="playerId" id="playerName"
@@ -284,35 +210,29 @@ class AddMatchPlayerScore extends Component {
                 </ModalBody>
 
                 <ModalFooter>
-                    {/* {this.props.data ?
-                                <Button color="info" onClick={this.updateTournamentMatchPlayerScore}>Update</Button> :
-                                <Button color="info" onClick={this.addTournamentMatchPlayerScore}>Submit</Button>}
-                            <Button color="danger" onClick={this.props.toggle}>Cancel</Button> */}
+                    {/* {this.props.data ? */}
+                    {/* <Button color="info" onClick={this.updateTournamentMatchPlayerScore}>Update</Button> : */}
+                    <Button color="info" onClick={this.addTournamentMatchPlayerScore}>Submit</Button>
+                    {/* <Button color="danger" onClick={this.props.toggle}>Cancel</Button> */}
                 </ModalFooter>
 
             </Modal>
-            // {/* </div> */}
             // </Container>
         );
     }
 }
 
 const mapStateToProps = state => {
-    // tournaments: state.MatchPlayerScore.tournaments,
-    // teams: state.MatchPlayerScore.teams,
-    // players: state.MatchPlayerScore.players,
-    // scores: state.MatchPlayerScore.scores
     return {
-        ShowTournament: state.Tournament.TournamentData,
-        MatchPlayerScore: state.MatchPlayerScore.tournamentMatchPlayerScore
+        MatchPlayerScore: state.MatchPlayerScore,
+        TournamentMatches: state.TournamentMatchs
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     action: {
-        getMatchPlayerScore: bindActionCreators(matchPlayerScoreAction, dispatch),
-        Tournament: bindActionCreators(TournamentAction, dispatch),
-        MatchPlayerScore: bindActionCreators(MatchPlayerScore, dispatch)
+        MatchPlayerScore: bindActionCreators(matchPlayerScoreAction, dispatch),
+        TournamentMatches: bindActionCreators(TournamentMatchAction, dispatch)
     }
 })
 

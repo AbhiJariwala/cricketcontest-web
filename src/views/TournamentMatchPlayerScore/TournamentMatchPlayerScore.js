@@ -9,6 +9,7 @@ import * as  MatchPlayerScore from '../../action/matchPlayerScore'
 import { PanelHeader } from "components";
 import * as TournamentMatch from '../../action/TournamentMatch'
 import AddMatchPlayerScore from './AddTournamentMatchPlayerScore/AddTournamentMatchPlayerScore'
+
 import './TournamentMatchPlayer.css'
 
 const Panel = Collapse.Panel;
@@ -33,7 +34,7 @@ class TournamenMatchPlayerScore extends Component {
         this.getMatchPlayerScore(0, 100, "id", "DESC");
     }
     getTournamentMatch() {
-        this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "id", "desc");
+        this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "desc", "id");
     }
     getMatchPlayerScore(offset, perPageRecord, fieldName, order) {
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(offset, perPageRecord, fieldName, order);
@@ -43,12 +44,12 @@ class TournamenMatchPlayerScore extends Component {
             visible: !this.state.visible
         });
     }
-    toggleModal() {       
+    toggleModal() {
         this.setState({
             showModal: !this.state.showModal
         })
     }
-    btnAddClick() {       
+    btnAddClick() {
         this.toggleModal();
     }
     getTournamentMatchPlayerScoreByMatch(tournamentId, teamId) {
@@ -73,9 +74,9 @@ class TournamenMatchPlayerScore extends Component {
         let start = 0;
 
         const { score } = this.state;
-        if (this.props.TournamentMatches.tournamentmatchs.length > 0) {
+        if (this.props.TournamentMatches.allmatchs.length > 0) {
             start = 1;
-            tournamentMatch = this.props.TournamentMatches.tournamentmatchs.map((tournamentmatch, key) => {
+            tournamentMatch = this.props.TournamentMatches.allmatchs.map((tournamentmatch, key) => {
                 return <tr key={key} style={{ textAlign: "center" }} >
                     <td>{start++}</td>
                     <td>{tournamentmatch.Tournament.tournamentName}</td>
@@ -103,7 +104,7 @@ class TournamenMatchPlayerScore extends Component {
         return (
             <div>
                 <PanelHeader size="sm" />
-                <div style={{ marginLeft: "15px" }}>                   
+                <div style={{ marginLeft: "15px" }}>
                     <AntModal title="Players"
                         visible={this.state.visible}
                         onCancel={this.toggleMatchPlayerScore}
@@ -142,8 +143,8 @@ class TournamenMatchPlayerScore extends Component {
                             </Input>
                         </div>
                         <div style={{ float: "left" }}>
-                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>
-                            <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
+                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>                            
+                                <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />                            
                         </div>
                     </div>
 
@@ -172,10 +173,9 @@ class TournamenMatchPlayerScore extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    const { MatchPlayerScore, TournamentMatchs } = state
     return {
-        MatchPlayerScore: MatchPlayerScore,
-        TournamentMatches: TournamentMatchs,
+        MatchPlayerScore: state.MatchPlayerScore,
+        TournamentMatches: state.TournamentMatchs,
         players: state.MatchPlayerScore.players
     }
 };

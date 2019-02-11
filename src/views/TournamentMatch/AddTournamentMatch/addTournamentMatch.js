@@ -47,9 +47,14 @@ class AddTournamentMatch extends Component {
   }
 
   onChange = (e) => {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 9549e5912ba345bc57f6fed1a09ba080019cb7c9
     let date = e.target.value
     let teams = [];
     this.setState({ date });
+<<<<<<< HEAD
     let isfuture = this.isFutureDate(date)
     if (isfuture) {
       this.setState({ isError: '' });
@@ -57,6 +62,16 @@ class AddTournamentMatch extends Component {
       this.props.ShowTornamentAll.map((tournament) => {
         if (tournament.TournamentMatches.length > 0) {
           tournament.TournamentMatches.map((match) => {
+=======
+    console.log("date::", date);
+    this.props.action.Team.fetchTeamAction();
+    this.props.ShowTornamentAll.map((tournament) => {
+      
+      if (tournament.TournamentMatches.length > 0) {
+        console.log("matchdate::", tournament.TournamentMatches[0].matchDate);
+        let teams = []
+        tournament.TournamentMatches.map((match) => {
+>>>>>>> 9549e5912ba345bc57f6fed1a09ba080019cb7c9
             let mDate = match.matchDate.split("T");
             if (mDate[0] === date) {
               teams.push(match.teamId1);
