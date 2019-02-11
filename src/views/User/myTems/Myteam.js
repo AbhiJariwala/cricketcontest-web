@@ -24,28 +24,13 @@ class userDashBoard extends Component {
             if(!Tournamentmatchid.includes(data.tournamentMatchId)){
                 Tournamentmatchid=Tournamentmatchid.concat(data.tournamentMatchId)
             }            
+            return ""
         })
-        let date = new Date();
-        var date1 = date.getDate();
-        let month = date.getMonth(); //Be careful! January is 0 not 1
-        let year = date.getFullYear();
-        let dateString, m, d;
-        m = month + 1;
-        d = date1;
-        if (m < 10) {
-            m = "0" + m;
-        }
-        if (d < 10) {
-            d = "0" + d;
-        }
         
-        dateString = year + "-" + (m) + "-" + d;
         let tournamentMatch = '';
         if (this.props.ShowTornamentmatches.length !== 0) {
             tournamentMatch = this.props.ShowTornamentmatches.map((tournamentmatch, key) => {
                 if(Tournamentmatchid.includes(parseInt(tournamentmatch.id,10))){   
-                    console.log("hello") ;
-                // if (dateString <= tournamentmatch.matchDate.substring(0, 10)) {
                     return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
                         <div className="card-body"  >
                             <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>

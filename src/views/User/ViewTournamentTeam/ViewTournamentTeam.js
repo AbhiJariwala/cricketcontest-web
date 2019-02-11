@@ -25,7 +25,8 @@ class userDashBoard extends Component {
         this.props.showUserMatches.map(data=>{            
             if(!Tournamentmatchid.includes(data.tournamentMatchId)){
                 Tournamentmatchid=Tournamentmatchid.concat(data.tournamentMatchId)
-            }            
+            } 
+            return ""           
         })
 
         let date = new Date();

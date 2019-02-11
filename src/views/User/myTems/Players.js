@@ -36,10 +36,9 @@ class Players extends React.Component {
     });
   }
   render() {
-
     let players
     players =this.props.showUserMatches.map((data,key)=>{            
-      if(data.tournamentMatchId==this.props.match.params.id){        
+      if(data.tournamentMatchId===this.props.match.params.id){        
         return <tr key={key}>
         <th scope="row">{key+1}</th>
         <th><img alt="logo1" src={path + data.Players[0].playerImage} style={{ width: 100}} ></img></th>
@@ -52,6 +51,7 @@ class Players extends React.Component {
       </tr>
       
       }
+      return ""
   })
     return (<div >
       <UserPanel></UserPanel>
