@@ -34,7 +34,7 @@ class TournamenMatchPlayerScore extends Component {
         this.getMatchPlayerScore(0, 100, "id", "DESC");
     }
     getTournamentMatch() {
-        this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "desc", "id");
+        this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
     getMatchPlayerScore(offset, perPageRecord, fieldName, order) {
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(offset, perPageRecord, fieldName, order);
@@ -143,8 +143,8 @@ class TournamenMatchPlayerScore extends Component {
                             </Input>
                         </div>
                         <div style={{ float: "left" }}>
-                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>                            
-                                <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />                            
+                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>
+                            <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
                         </div>
                     </div>
 

@@ -26,7 +26,7 @@ class RegularTables extends React.Component {
                   <CardTitle tag="h4">Simple Table</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Table responsive>
+                  <Table>
                     <thead className="text-primary">
                       <tr>
                         {thead.map((prop, key) => {
@@ -68,7 +68,7 @@ class RegularTables extends React.Component {
                   <p className="category"> Here is a subtitle for this table</p>
                 </CardHeader>
                 <CardBody>
-                  <Table responsive>
+                  <Table>
                     <thead className="text-primary">
                       <tr>
                         {thead.map((prop, key) => {
