@@ -166,7 +166,7 @@ class CreateTeam extends Component {
         if (teamName1.length !== 0) {
         }
         return (
-            <div >
+            <div>
                 <UserPanel></UserPanel>
                 <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})` ,overflow:"scroll",height:"600px"}} >
                     <div className="row">
@@ -255,8 +255,7 @@ class CreateTeam extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        ShowTornamentmatches: state.TournamentMatchs.allmatchs,
-
+        ShowTornamentmatches: state.TournamentMatchs.allmatchs
     }
 };
 const mapDispatchToProps = dispatch => ({
