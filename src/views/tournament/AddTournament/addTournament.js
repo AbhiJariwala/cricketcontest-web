@@ -39,7 +39,7 @@ class AddTournament extends Component {
       })
     }
   }
-  
+
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
@@ -83,11 +83,11 @@ class AddTournament extends Component {
       }
     }
     const data = {
-    "id":this.state.id,
-    "tournamentName":this.state.tournamentName,
-    "tournamentDescription": this.state.tournamentDescription,
-    "tournamentBanner":this.state.tournamentBanner[0],    
-    "updatedBy":parseInt(this.state.updatedBy,10)
+      "id": this.state.id,
+      "tournamentName": this.state.tournamentName,
+      "tournamentDescription": this.state.tournamentDescription,
+      "tournamentBanner": this.state.tournamentBanner[0],
+      "updatedBy": parseInt(this.state.updatedBy, 10)
     }
     this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
     this.props.toggle(Event);
@@ -160,9 +160,7 @@ class AddTournament extends Component {
                   <Input type="textarea" name="tournamentDescription" id="tournamentDescription" placeholder="tournamentDescription" defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""} onChange={this.inputChangeHandler.bind(this)} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentDescription}</span>
                 </FormGroup>
-                <FormGroup>
-                  {image}
-                </FormGroup>
+                {image}
               </Form>
             </ModalBody>
             <ModalFooter>

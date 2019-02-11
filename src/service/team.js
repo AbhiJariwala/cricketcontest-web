@@ -17,3 +17,6 @@ export function selectTeam(id) {
 export function UpdateTeamdata(id, data) {
     return baseService.put('./api/team/' + id, data);
 }
+export function deleteTeamdata(id) {
+    return baseService.delete('./api/team/' + id);
+}

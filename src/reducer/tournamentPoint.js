@@ -1,7 +1,6 @@
 const INITIAL_STATE = {
     score: {},
     get_points: [],
-    selected_tournaments: [],
     error_msg: ""
 }
 
