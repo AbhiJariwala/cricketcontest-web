@@ -21,8 +21,8 @@ class CreateTeam extends Component {
         this.state = {
             Myteam: [],
             activeTab: '1',
-            team1:0,
-            team2:0
+            team1: 0,
+            team2: 0
         };
     }
     componentDidMount = () => {
@@ -32,14 +32,13 @@ class CreateTeam extends Component {
     getTournamentMatch() {
         this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
-    addplayerteam = (teams,name) => {
-        // debugger
+    addplayerteam = (teams, name) => {
 
-        if(name==="team1"){
-            this.setState({team1:this.state.team1+1})
-                    }else if(name==="team2"){
-                        this.setState({team2:this.state.team2+1})
-                    }
+        if (name === "team1") {
+            this.setState({ team1: this.state.team1 + 1 })
+        } else if (name === "team2") {
+            this.setState({ team2: this.state.team2 + 1 })
+        }
 
         if (this.state.Myteam.length !== 12) {
             teamId.push(teams.id);
@@ -54,12 +53,12 @@ class CreateTeam extends Component {
             })
         }
     }
-    minusplayerteam = (teams,name) => {
-        if(name==="team1"){
-            this.setState({team1:this.state.team1-1})
-                    }else if(name==="team2"){
-                        this.setState({team2:this.state.team2-1})
-                    }
+    minusplayerteam = (teams, name) => {
+        if (name === "team1") {
+            this.setState({ team1: this.state.team1 - 1 })
+        } else if (name === "team2") {
+            this.setState({ team2: this.state.team2 - 1 })
+        }
         teamId.pop(teams.id);
         this.setState({ Myteam: teamId });
     }
@@ -74,7 +73,7 @@ class CreateTeam extends Component {
         E.preventDefault();
         const userId = localStorage.getItem("userId");
         const tournamentMatchId = this.props.match.params.id;
-        
+
         this.state.Myteam.map(data => {
             data = {
                 userId,
@@ -108,8 +107,8 @@ class CreateTeam extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         {(this.state.Myteam.length > 0 && this.state.Myteam.includes(data.id)) ?
-                                            <img alt="" onClick={() => this.minusplayerteam(data,"team1")} style={{ width: 45, cursor: "pointer" }} src={path + "minus.png"}></img>
-                                            : <img alt="" onClick={() => this.addplayerteam(data,"team1")} style={{ width: 45, cursor: "pointer" }} src={path + "plus.png"}></img>
+                                            <img alt="" onClick={() => this.minusplayerteam(data, "team1")} style={{ width: 45, cursor: "pointer" }} src={path + "minus.png"}></img>
+                                            : <img alt="" onClick={() => this.addplayerteam(data, "team1")} style={{ width: 45, cursor: "pointer" }} src={path + "plus.png"}></img>
                                         }
                                     </div>
                                 </div>
@@ -128,8 +127,8 @@ class CreateTeam extends Component {
                                     </div>
                                     <div className="col-sm-3">
                                         {(this.state.Myteam.length > 0 && this.state.Myteam.includes(data.id)) ?
-                                            <img alt="" onClick={() => this.minusplayerteam(data,"team2")} style={{ width: 45 }} src={path + "minus.png"}></img>
-                                            : <img alt="" onClick={() => this.addplayerteam(data,"team2")} style={{ width: 45 }} src={path + "plus.png"}></img>
+                                            <img alt="" onClick={() => this.minusplayerteam(data, "team2")} style={{ width: 45 }} src={path + "minus.png"}></img>
+                                            : <img alt="" onClick={() => this.addplayerteam(data, "team2")} style={{ width: 45 }} src={path + "plus.png"}></img>
                                         }
                                     </div>
                                 </div>
@@ -168,7 +167,7 @@ class CreateTeam extends Component {
         return (
             <div >
                 <UserPanel></UserPanel>
-                <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})` ,overflow:"scroll",height:"600px"}} >
+                <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})`, overflow: "scroll", height: "600px" }} >
                     <div className="row">
                         <div className="col-md-6" style={{}}>
                             <Row>

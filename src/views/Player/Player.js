@@ -56,7 +56,7 @@ class Player extends Component {
 
   showEntriesChanged(e) {
     let noOfRecords = parseInt(e.target.value, 10);
-    let pageRecord = 1;
+    let pageRecord = 0;
     this.setState({
       pageRecord: pageRecord,
       noOfRecords: noOfRecords
