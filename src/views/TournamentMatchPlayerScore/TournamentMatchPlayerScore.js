@@ -142,8 +142,8 @@ class TournamenMatchPlayerScore extends Component {
                             </Input>
                         </div>
                         <div style={{ float: "left" }}>
-                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>                            
-                                <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />                            
+                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>
+                            <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
                         </div>
                     </div>
 

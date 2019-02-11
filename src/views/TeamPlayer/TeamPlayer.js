@@ -208,7 +208,7 @@ class TeamPlayer extends Component {
                             <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
                         </div>
                     </div>
-                    <Table responsive hover>
+                    <Table hover>
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
                                 <th>Banner</th>

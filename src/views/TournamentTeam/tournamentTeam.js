@@ -67,7 +67,8 @@ class TournamentTeam extends Component {
 
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
-    this.setState({ parpageRecord: parpage })
+    this.setState({ parpageRecord: parpage, pageno: 0 });
+
     this.props.action.Tournament.fetchTournamentAction(0, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
 
@@ -170,7 +171,7 @@ class TournamentTeam extends Component {
             </div>
           </div>
           {data ?
-            <Table responsive hover>
+            <Table hover>
               <thead className="thead-dark">
                 <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
                   <th>Banner</th>
@@ -185,7 +186,7 @@ class TournamentTeam extends Component {
             : ""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled> Prev </Button>
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" hidden> Prev </Button>
             }
             &nbsp;
             {notNext >= this.state.parpageRecord ?

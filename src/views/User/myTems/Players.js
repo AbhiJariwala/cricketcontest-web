@@ -12,7 +12,7 @@ class Players extends React.Component {
     this.getTournamentMatch();
   }
   getTournamentMatch() {
-    let userid=localStorage.getItem("userId")
+    let userid = localStorage.getItem("userId")
     this.props.action.UserMatchesteams.Show_My_TeamData(userid);
   }
   state = { visible: false }
@@ -36,26 +36,25 @@ class Players extends React.Component {
     });
   }
   render() {
-    let players
-    players =this.props.showUserMatches.map((data,key)=>{            
-      if(data.tournamentMatchId===this.props.match.params.id){        
+    let players;
+    if(this.props.showUserMatches.length!==0){
+        players = this.props.showUserMatches.map((data, key) => {
+      if (data.tournamentMatchId === parseInt(this.props.match.params.id,10)) {
         return <tr key={key}>
-        <th scope="row">{key+1}</th>
-        <th><img alt="logo1" src={path + data.Players[0].playerImage} style={{ width: 100}} ></img></th>
-        <td>{data.Players[0].firstName}{ "  "}{data.Players[0].lastName}</td>
-        <td>{data.Players[0].description}</td>
-        <td> <Button type="primary" onClick={this.showModal}>
-              show Score
-            </Button>
-        </td>
-      </tr>
-      
+          <th scope="row">{key + 1}</th>
+          <th><img alt="logo1" src={path + data.Players[0].playerImage} style={{ width: 100 }} ></img></th>
+          <td>{data.Players[0].firstName}{"  "}{data.Players[0].lastName}</td>
+          <td>{data.Players[0].description}</td>
+          <td><Button type="primary" onClick={this.showModal}>show Score</Button></td>
+        </tr>
       }
-      return ""
-  })
+      return ""    
+    })}
     return (<div >
       <UserPanel></UserPanel>
       <div className="container">
+      {players?
+
         <Table>
           <thead>
             <tr>
@@ -67,19 +66,22 @@ class Players extends React.Component {
             </tr>
           </thead>
           <tbody>
-           
-{players}
+            {players}
           </tbody>
         </Table>
+        :""}
         <Modal
           title="Basic Modal"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <p>Total Runs:-1</p>
+          <p>Total six:-1</p>
+          <p>Total four:-1</p>
+          <p>Total wicket:-1</p>
+          <p>Total stumping:-1</p>
+          <p>Total catch:-1</p>
         </Modal>
       </div>
     </div >
