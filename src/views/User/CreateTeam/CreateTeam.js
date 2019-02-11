@@ -94,8 +94,9 @@ class CreateTeam extends Component {
                     teamName1 = tournamentmatch;
                     tournamentMatch = tournamentmatch.Team1[0].player.map((data, key) => {
                         teamplayers.push(data.id);
-                        return <Container key={key} >
-                            <Card body>
+                        return (
+                            // <Container key={key} >
+                            <Card key={key} body>
                                 <div className="row">
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style={{ width: "100%" }}>
                                         <img alt="demo" src={path + data.playerImage} style={{ height: "50px", width: "175px" }}></img>
@@ -111,11 +112,13 @@ class CreateTeam extends Component {
                                     </div>
                                 </div>
                             </Card>
-                        </Container>
+                            // </Container>
+                        )
                     })
                     tournamentMatch2 = tournamentmatch.Team2[0].player.map((data, key) => {
-                        return <Container key={key}>
-                            <Card body>
+                        return (
+                            // <Container key={key}>
+                            <Card key={key} body>
                                 <div className="row">
                                     <div className="col-sm-2" style={{ width: "100%" }}>
                                         <img alt="demo" src={path + data.playerImage} style={{ height: "50px", width: "175px" }}></img>
@@ -131,7 +134,8 @@ class CreateTeam extends Component {
                                     </div>
                                 </div>
                             </Card>
-                        </Container>
+                            // {/* </Container> */}
+                        )
                     })
                     let teams = "";
                     let t1 = tournamentmatch.Team1[0].player;
@@ -181,14 +185,14 @@ class CreateTeam extends Component {
                                             <p>{this.state.Myteam.length}/11</p>
                                         </div>
                                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <p><img alt="demo" className="img-circle" src={teamName1.length !== 0 ? path + teamName1.Team1[0].teamLogo : ""} style={{ height: "30px", width: "30px" }}></img> </p>
+                                            <p><img alt="demo" className="img-circle" src={teamName1.length !== 0 ? path + teamName1.Team1[0].teamLogo : ""} style={{ height: "70px", width: "70px" }}></img> </p>
                                         </div>
                                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                             <p>{teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}</p>
                                             <p>{this.state.team1}</p>
                                         </div>
                                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <p><img src={teamName1.length !== 0 ? path + teamName1.Team2[0].teamLogo : ""} alt="demo" style={{ height: "30px", width: "30px" }}></img> </p>
+                                            <p><img src={teamName1.length !== 0 ? path + teamName1.Team2[0].teamLogo : ""} alt="demo" style={{ height: "70px", width: "70px" }}></img> </p>
                                         </div>
                                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                             <p>{teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}</p>
