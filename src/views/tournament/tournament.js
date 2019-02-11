@@ -59,8 +59,9 @@ class tournament extends Component {
 
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
-    this.setState({ parpageRecord: parpage })
-    this.props.action.Tournament.SelectTournamentAction(this.state.pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
+    const pageno = 0
+    this.setState({ parpageRecord: parpage,pageno:0 })
+    this.props.action.Tournament.SelectTournamentAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
 
   changeRecord = (Event) => {
@@ -129,7 +130,7 @@ class tournament extends Component {
   render() {
     let notNext = 0;
     let data = ""
-    if (this.props.ShowTornament) {
+    if (this.props.ShowTornament.length!==0) {
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }}>
@@ -143,6 +144,8 @@ class tournament extends Component {
             </td>
         </tr>
       })
+    }else{
+      data=<tr><h3>No Record</h3></tr>;
     }
     return (
       <div>
