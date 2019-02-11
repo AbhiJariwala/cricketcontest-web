@@ -59,8 +59,9 @@ class tournament extends Component {
 
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
-    this.setState({ parpageRecord: parpage })
-    this.props.action.Tournament.SelectTournamentAction(this.state.pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
+    const pageno = 0
+    this.setState({ parpageRecord: parpage,pageno:0 })
+    this.props.action.Tournament.SelectTournamentAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
 
   changeRecord = (Event) => {
