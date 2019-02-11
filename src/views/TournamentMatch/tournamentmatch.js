@@ -129,9 +129,9 @@ class TournamentMatch extends Component {
       data = this.props.TournamentMatchs.map((data, key) => {
         notNext = key + 1
         let d = new Date(data.matchDate);
-        let cdate=new Date().getTime();
-        var remainday=Math.round((d-cdate)/(1000*60*60*24));
-        remainday=Math.round((d-cdate)/(1000*60*60*24));
+        let cdate = new Date().getTime();
+        var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
+        remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
         return <tr key={key}>
           { (this.state.tournamentid=== 'selected')? (<td>{data.Tournament.tournamentName}</td> ):null}
           <td><img src={path + data.Team1[0].teamLogo} height="70px" width="70px" alt="TeamImage"/>

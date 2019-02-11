@@ -5,16 +5,31 @@ import { bindActionCreators } from 'redux';
 
 import * as matchPlayerScoreAction from '../../../action/matchPlayerScore';
 import * as TournamentMatchAction from '../../../action/TournamentMatch';
+import *  as TournamentPointAction from '../../../action/tournamentPoint'
+import '../AddTournamentMatchPlayerScore/AddTournamentMatchPlayerScore.css'
+
 
 // import { Table } from 'antd';
 
 
 class AddMatchPlayerScore extends Component {
 
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            playerScore: {},
+            Runs: {},
+            Six: {},
+            Four: {},
+            Wicket: {},
+            Stumping: {},
+            Catch: {}
+        };
+    }
     componentDidMount() {
         this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "desc", "id");
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(1, 100, "desc", "id");
+        this.props.action.TournamentPoint.getTournamentPointScore(0,100,"id","desc");
     }
 
     tournamentNameChangedHandler(e) {
@@ -25,21 +40,58 @@ class AddMatchPlayerScore extends Component {
         let teamId = e.target.value;
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
     }
+    inputChangeHandler(playerId, e) {
+        this.setState({
+            playerScore: {
+                ...this.state.playerScore,
+                [playerId]:
+                {
+                    ...this.state.playerScore[playerId],
+                    [e.target.name]: parseInt(e.target.value, 10)
+                }
+            }
+        })
 
-    addTournamentMatchPlayerScore(e) {
-        e.preventDefault();
+    }
 
+
+    addTournamentMatchPlayerScore(tournament) {
+        console.log(tournament);
+        console.log(this.props.TournamentPoint.get_points);
+
+        this.props.TournamentPoint.get_points.map(tournamentPoint=>{
+            (tournamentPoint.tournamentId===tournament.id)?console.log(tournamentPoint):""
+        })
+        Object.entries(this.state.playerScore).map(([key, value]) => {
+            console.log(value)
+            let tempObj = {
+                tournamentId: tournament.tournamentId,
+                tournamentMatchId: tournament.id,
+                playerId: parseInt(key, 10),
+                wicket: value.wicket,
+                run: value.runs,
+                catch: value.catch,
+                six: value.six,
+                four: value.four,
+                stumping: value.stumping,
+            }
+            console.log(tempObj);
+            // this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore();
+        })
+
+        for (var i = 0; i < this.state.playerScore.length; i++) {
+            console.log(this.state.playerScore[i]);
+        }
         // this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore(this.state);
     }
 
     render() {
-        console.log(this.props.MatchPlayerScore.players);
         let tournamentNameOption = {};
         if (this.props.TournamentMatches.allmatchs.length > 0) {
             tournamentNameOption = this.props.TournamentMatches.allmatchs.map((tournamentMatch) => {
                 var d1 = new Date(tournamentMatch.matchDate);
                 var d2 = new Date(new Date().toISOString());
-                var dateDiff = Math.abs(Math.floor((d2 - d1) / (1000 * 60 * 60 * 24)));
+                var dateDiff = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
                 return (dateDiff === 1) ? tournamentMatch : null
             })
         }
@@ -55,26 +107,26 @@ class AddMatchPlayerScore extends Component {
             team1 = tournament[0].Team1[0];
             team2 = tournament[0].Team2[0];
             teams = <Input type="select" onChange={this.teamChangeHandler.bind(this, tournament[0].tournamentId)} >
+                <option disabled defaultChecked>Select Team</option>
                 <option value={team1.id}>{team1.teamName}</option>
                 <option value={team2.id} >{team2.teamName}</option>
             </Input>
         }
+        console.log(tournament[0])
         let player = "";
         if (this.props.MatchPlayerScore.players.length > 0) {
             player = this.props.MatchPlayerScore.players.map(player => {
                 return player = player.Players.map((p) => {
-                    return <tr key={player.id}>
+                    return <tr key={p.id} >
                         <td><b>{p.firstName}</b></td>
-                        <td style={{ paddingRight: "5px" }}><Input type="text" name="six" placeholder="Runs" /></td>
-                        <td><Input type="text" name="six" placeholder="Four" /></td>
-                        <td><Input type="text" name="six" placeholder="Sixes" /></td>
-                        <td><Input type="text" name="six" placeholder="Catch" /></td>
-                        <td><Input type="text" name="six" placeholder="Stumping" /></td>
-                        <td><Input type="text" name="six" placeholder="Wicket" /></td>
+                        <td style={{ paddingRight: "3px", paddingBottom: "3px" }}><Input type="text" name="runs" placeholder="Runs" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td style={{ paddingRight: "3px" }}><Input type="text" name="four" placeholder="Four" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td style={{ paddingRight: "3px" }}><Input type="text" name="six" placeholder="Six" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td style={{ paddingRight: "3px" }}><Input type="text" name="catch" placeholder="Catch" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td style={{ paddingRight: "3px" }}><Input type="text" name="stumping" placeholder="Stumping" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td style={{ paddingRight: "3px" }}><Input type="text" name="wicket" placeholder="Wicket" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
                     </tr>
-
                 })
-
             })
         }
 
@@ -116,95 +168,6 @@ class AddMatchPlayerScore extends Component {
                                 </table> : ""
                             }
                         </FormGroup>
-                        {/* <FormGroup>
-                            <Label for="playerName">Select Player Name</Label>
-                            <Input type="select" name="playerId" id="playerName"
-                                // defaultValue={this.props.data ? this.props.data.tournamentMatchPlayerName : ""}
-                                onChange={this.tournamentMatchPlayerNameChangedHandler}>
-                                <option value="" disabled="" style={{ display: "none" }}>Select Player</option>
-                                {tournamentMatchPlayers1}
-                                {tournamentMatchPlayers2}
-                            </Input>
-                        </FormGroup> */}
-                        {/* <FormGroup>
-                                    <Label for="wicket">Wicket</Label>
-                                    <Input type="select" name="wicket" id="wicket"
-                                        defaultValue={this.props.data ? this.props.data.wicket : ""}
-                                        onChange={this.changeHandler}>
-                                        <option value="" disabled="" style={{ display: "none" }}>Select Wicket</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                    </Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="run">Run</Label>
-                                    <Input type="number" name="run" id="run" placeholder="Runs"
-                                        defaultValue={this.props.data ? this.props.data.run : ""}
-                                        onChange={this.changeHandler} />
-                                    <span style={{ color: "red" }}></span>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="catch">Catch</Label>
-                                    <Input type="select" name="catch" id="catch"
-                                        defaultValue={this.props.data ? this.props.data.catch : ""}
-                                        onChange={this.changeHandler}>
-                                        <option value="" disabled="" style={{ display: "none" }}>Select Catch</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                    </Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="six">Six</Label>
-                                    <Input type="number" name="six" id="six" placeholder="Sixes"
-                                        defaultValue={this.props.data ? this.props.data.six : ""}
-                                        onChange={this.changeHandler} />
-                                    <span style={{ color: "red" }}></span>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="four">Four</Label>
-                                    <Input type="number" name="four" id="four" placeholder="Fours"
-                                        defaultValue={this.props.data ? this.props.data.four : ""}
-                                        onChange={this.changeHandler} />
-                                    <span style={{ color: "red" }}></span>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="stumping">Stumping</Label>
-                                    <Input type="select" name="stumping" id="stumping"
-                                        defaultValue={this.props.data ? this.props.data.stumping : ""}
-                                        onChange={this.changeHandler}>
-                                        <option value="" disabled="" style={{ display: "none" }}>Select Stumping</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                    </Input>
-                                </FormGroup> */}
-
                     </Form>
 
                 </ModalBody>
@@ -212,8 +175,8 @@ class AddMatchPlayerScore extends Component {
                 <ModalFooter>
                     {/* {this.props.data ? */}
                     {/* <Button color="info" onClick={this.updateTournamentMatchPlayerScore}>Update</Button> : */}
-                    <Button color="info" onClick={this.addTournamentMatchPlayerScore}>Submit</Button>
-                    {/* <Button color="danger" onClick={this.props.toggle}>Cancel</Button> */}
+                    <Button color="info" onClick={() => this.addTournamentMatchPlayerScore(tournament[0])}>Submit</Button>
+                    <Button color="secondary" onClick={this.props.toggleAdd}>Cancel</Button>
                 </ModalFooter>
 
             </Modal>
@@ -225,14 +188,16 @@ class AddMatchPlayerScore extends Component {
 const mapStateToProps = state => {
     return {
         MatchPlayerScore: state.MatchPlayerScore,
-        TournamentMatches: state.TournamentMatchs
+        TournamentMatches: state.TournamentMatchs,
+        TournamentPoint:state.TournamentPoint
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     action: {
         MatchPlayerScore: bindActionCreators(matchPlayerScoreAction, dispatch),
-        TournamentMatches: bindActionCreators(TournamentMatchAction, dispatch)
+        TournamentMatches: bindActionCreators(TournamentMatchAction, dispatch),
+        TournamentPoint:bindActionCreators(TournamentPointAction,dispatch)
     }
 })
 
