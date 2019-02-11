@@ -180,7 +180,6 @@ class CreateTeam extends Component {
                                 <CardBody >
                                     <div className="row" style={{ color: "white" }} >
                                         <div className="headerContainer_1725f headerFixed_38df7">
-
                                             <div>
                                                 <div>
                                                     <div className="container_aa549">
