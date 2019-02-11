@@ -5,5 +5,5 @@ export function getTournamentMatch(id){
 }
 
 export function SelectTournamentMatchAction(pageno, parpageRecord,sorting, fieldName){    
-    return baseService.get('/api/tournamentMatch/'+pageno+'/'+parpageRecord+'/'+fieldName+'/'+sorting);
+    return baseService.get('/api/tournamentMatch/'+pageno+'/'+parpageRecord+'/'+sorting+'/'+fieldName);
 }
