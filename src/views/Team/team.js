@@ -155,7 +155,7 @@ class Team extends Component {
             </div>
           </div>
           {data ?
-            <Table responsive hover>
+            <Table hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
                 <th>#</th>

@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
     this.props.action.getTotalTeam.selectTeamAction(0, 500, "desc", "id");
     this.props.action.getTotalPlayer.getPlayer(0, 500, "id", "desc");
     this.props.action.getTotalUser.getUser();
-    this.props.action.getMatch.SelectTournamentMatchAction(0, 500, "asc", "id");
+    this.props.action.getMatch.SelectTournamentMatchAction(0, 500, "id", "asc");
   }
 
   render() {

@@ -11,7 +11,7 @@ class userDashBoard extends Component {
         this.getTournamentMatch();
     }
     getTournamentMatch() {
-        let userid=localStorage.getItem("userId")
+        let userid = localStorage.getItem("userId")
         this.props.action.UserMatchesteams.Show_My_TeamData(userid);
         this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
@@ -19,18 +19,18 @@ class userDashBoard extends Component {
         this.props.history.push('/MyTeamPlayer/' + id);
     }
     render() {
-    let Tournamentmatchid=[]
-        this.props.showUserMatches.map(data=>{            
-            if(!Tournamentmatchid.includes(data.tournamentMatchId)){
-                Tournamentmatchid=Tournamentmatchid.concat(data.tournamentMatchId)
-            }            
+        let Tournamentmatchid = []
+        this.props.showUserMatches.map(data => {
+            if (!Tournamentmatchid.includes(data.tournamentMatchId)) {
+                Tournamentmatchid = Tournamentmatchid.concat(data.tournamentMatchId)
+            }
             return ""
         })
-        
+
         let tournamentMatch = '';
         if (this.props.ShowTornamentmatches.length !== 0) {
             tournamentMatch = this.props.ShowTornamentmatches.map((tournamentmatch, key) => {
-                if(Tournamentmatchid.includes(parseInt(tournamentmatch.id,10))){   
+                if (Tournamentmatchid.includes(parseInt(tournamentmatch.id, 10))) {
                     return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
                         <div className="card-body"  >
                             <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>
@@ -72,15 +72,14 @@ class userDashBoard extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        showUserMatches : state.CreateteamReducer.TeamData,
+        showUserMatches: state.CreateteamReducer.TeamData,
         ShowTornamentmatches: state.TournamentMatchs.allmatchs,
     }
 };
 const mapDispatchToProps = dispatch => ({
-    action: {        
+    action: {
         MatchPlayerScore: bindActionCreators(MatchPlayerScore, dispatch),
-        UserMatchesteams: bindActionCreators(showUserMatchesAction, dispatch)        
+        UserMatchesteams: bindActionCreators(showUserMatchesAction, dispatch)
     }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(userDashBoard);
-
