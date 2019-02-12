@@ -78,7 +78,6 @@ class AddTournamentMatch extends Component {
   }
 
   addrecord = (e) => {
-    debugger;
     let { tournamentId, team1, team2, date } =this.state;
     const obj={
       tournamentId: tournamentId,

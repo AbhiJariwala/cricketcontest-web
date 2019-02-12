@@ -5,7 +5,6 @@ import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-//import logo from "logo-white.svg";
 
 var ps;
 
