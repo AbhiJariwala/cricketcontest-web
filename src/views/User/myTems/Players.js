@@ -76,9 +76,12 @@ class Players extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <p>Total Runs:-1</p>
+          <p>Total six:-1</p>
+          <p>Total four:-1</p>
+          <p>Total wicket:-1</p>
+          <p>Total stumping:-1</p>
+          <p>Total catch:-1</p>
         </Modal>
       </div>
     </div >

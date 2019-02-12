@@ -47,7 +47,8 @@ class userDashBoard extends Component {
         if (this.props.ShowTornamentmatches.length !== 0) {
             tournamentMatch = this.props.ShowTornamentmatches.map((tournamentmatch, key) => {
                 if(!Tournamentmatchid.includes(parseInt(tournamentmatch.id,10))){ 
-                if (dateString <= tournamentmatch.matchDate.substring(0, 10)) {
+                if (dateString < tournamentmatch.matchDate.substring(0, 10)) {
+                    // console.log(tournamentmatch.matchDate);
                     return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
                         <div className="card-body"  >
                             <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>
@@ -70,7 +71,7 @@ class userDashBoard extends Component {
         return (
             <div className="content" >
                 <UserPanel></UserPanel>
-                <div className="row" style={{ backgroundRepeat: "none" }} >
+                <div className="row" style={{ backgroundRepeat: "none",marginTop:"-16px" }} >
                     <div className="col-md-6" style={{ backgroundImage: `url(${banerhome})` }}>
                     </div>
                     <div className="col-md-6" style={{ height: "630px", overflow: "scroll" }}>

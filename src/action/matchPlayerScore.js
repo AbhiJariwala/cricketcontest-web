@@ -74,7 +74,6 @@ export const getMatchByTournament = (tournamentId) => {
         tournamentMatchService.getTournamentMatch(tournamentId)
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response)
                     dispatch({
                         type: GET_MATCHBYTOURNAMENT,
                         data: response.data
