@@ -139,7 +139,7 @@ class tournament extends Component {
           <td>{start++}</td>
           <td><img src={path + data.tournamentBanner} alt="" style={{ width: "150px", height: "80px" }}></img></td>
           <td>{data.tournamentName}</td>
-          <td>{data.tournamentDescription}</td>
+          {/* <td>{data.tournamentDescription}</td> */}
           <td><img src={path+"edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
           <img src={path+"delete1.jpg"} alt="Edit"  onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
             {/* <Button color="info" onClick={() => this.Edittoggle(data)} value={data.id}>Edit</Button> */}
@@ -176,7 +176,7 @@ class tournament extends Component {
                   <th>#</th>
                   <th style={{ cursor: "pointer" }}>Banner</th>
                   <th style={{ cursor: "pointer" }}>Tournament</th>
-                  <th style={{ cursor: "pointer" }}>Description</th>
+                  {/* <th style={{ cursor: "pointer" }}>Description</th> */}
                   <th>Action</th>
                 </tr>
               </thead>

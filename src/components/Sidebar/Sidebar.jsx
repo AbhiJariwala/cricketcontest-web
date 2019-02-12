@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Nav, NavLink as ReactLink } from "reactstrap";
-import Dashboard from "layouts/Dashboard/Dashboard.jsx";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
@@ -35,9 +34,9 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar" data-color="blue">
         <div className="logo">
-        <ReactLink tag={Link} to={"/dashboard"} className="simple-text logo-normal" component={Dashboard}> 
-            Cricket Contest
-         </ReactLink>
+        <ReactLink tag={Link} to={"/dashboard"} className="simple-text logo-normal"> 
+Cricket Contest
+</ReactLink>
         </div>
         <div className="sidebar-wrapper" ref="sidebar">
           <Nav>

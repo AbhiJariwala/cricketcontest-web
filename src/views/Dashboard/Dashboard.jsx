@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, CardTitle, Row, Col } from "reactstrap";
+import { Card, CardHeader, CardBody, CardFooter, CardTitle, Row, Col, Badge } from "reactstrap";
 import { PanelHeader, Stats } from "components";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -54,7 +54,7 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <PanelHeader size="lg" content={<img alt="Cricket Contest" src={path + "Cricket-DashBoard.jpg"}></img>} />
+        <PanelHeader size="lg" content={<img alt="Cricket Contest"  style={{width:'100%',height:'fit-content'}} src={path + "Cricket-DashBoard.jpg"}></img>} />
         <div className="content">
           <Row>
             <Col xs={12} md={3}>
@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
               </Card>
             </Col>
             <Col xs={12} md={3}>
-              <Card>
+              <Card className="card-chart">
                 <CardHeader>
                   <CardTitle tag="h4" style={{ textAlign: "center" }}>Teams</CardTitle>
                 </CardHeader>
@@ -165,16 +165,16 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle tag="h4">Today's Match</CardTitle>
                 </CardHeader>
-                <CardBody>
+                <CardBody style={{ height: "400px" }}>
                   <hr />
                   <div className="chart-area">
                     <br />
                     {matchTeam1 ?
                       <div>
                         <h1 style={{ textAlign: "center" }}>{matchTournamentName} </h1>
-                        <h3 style={{ textAlign: "center", marginTop: "10px" }}>
-                          <img src={path + team1Image} height="100px" width="100px" alt="Team1"></img>{' '}
-                          {matchTeam1} VS {matchTeam2}{' '}
+                        <h3 style={{ textAlign: "center", marginTop: "40px" }}>
+                          <img src={path + team1Image} height="100px" width="100px" alt="Team1"></img>{' '}{' '}{' '}
+                          <Badge color="dark">{matchTeam1}</Badge> VS <Badge color="dark">{matchTeam2}</Badge>{' '}{' '}{' '}
                           <img src={path + team2Image} height="100px" width="100px" alt="Team2"></img>
                         </h3>
                       </div> : <h3 style={{ textAlign: "center" }}>No Match Today</h3>

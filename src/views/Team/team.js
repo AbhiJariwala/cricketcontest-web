@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import * as TeamAction from '../../action/Team';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
-import path from '../../path';
+  import path from '../../path';
 class Team extends Component {
   constructor(props) {
     super(props);
@@ -30,40 +30,40 @@ class Team extends Component {
   toggle() {
     this.setState({
       modal: !this.state.modal,
-      Editdataid:""
+      Editdataid: ""
     });
   }
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
     const pageno = 0
-    this.setState({ parpageRecord: parpage,pageno:0 })
+    this.setState({ parpageRecord: parpage, pageno: 0 })
     this.props.action.Team.selectTeamAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
   changeRecord = (Event) => {
     let datachangeprevNext = Event.target.value;
     let pageno = 0
     if (datachangeprevNext === "Next") {
-      this.setState({ pageno: this.state.pageno + 5 ,pageRecord: this.state.pageRecord + 5 })
+      this.setState({ pageno: this.state.pageno + 5, pageRecord: this.state.pageRecord + 5 })
       if (this.state.pageno === 0) {
         this.setState({ pageno: this.state.parpageRecord })
         pageno = this.state.parpageRecord
       } else {
         pageno = this.state.pageno + this.state.parpageRecord
       }
-
     }
     else if (datachangeprevNext === "Prev") {
-      this.setState({ pageno: this.state.pageno - this.state.parpageRecord,pageRecord: this.state.pageRecord -   5 })
+      this.setState({ pageno: this.state.pageno - this.state.parpageRecord, pageRecord: this.state.pageRecord - 5 })
       pageno = this.state.pageno - this.state.parpageRecord
     }
     this.props.action.Team.selectTeamAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
   sortingdata = (Event) => {
+    
     let sortingValueName;
-    if (Event.target.childNodes[0].data === "Team Name") {
+    if (Event.target.childNodes[0].data === "Team") {
       sortingValueName = "teamName"
     }
-    if (sortingValueName !== "Action") {
+    if (Event.target.childNodes[0].data !== "#" && Event.target.childNodes[0].data !== "Action" && Event.target.childNodes[0].data !== "Logo") {
       let sortingValue = "asc";
       if (!this.state.sortingValueName) {
         this.setState({ sortingValueName: sortingValueName })
@@ -81,7 +81,7 @@ class Team extends Component {
       this.props.action.Team.selectTeamAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
     }
   }
-  Edittoggle = (data) => {    
+  Edittoggle = (data) => {
     if (!data) {
       alert("no data");
     } else {
@@ -97,7 +97,7 @@ class Team extends Component {
       });
     }
   }
-  btnDeleteClick = (id) => {    
+  btnDeleteClick = (id) => {
     if (!id) {
       alert("no data");
     } else {
@@ -126,12 +126,12 @@ class Team extends Component {
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
-        <td>{start++}</td>
+          <td>{start++}</td>
           <td><img src={path + data.teamLogo} alt="" style={{ width: "130px", height: "100px" }}></img></td>
           <td>{data.teamName}</td>
           <td>
             <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
-            <img src={path+"delete1.jpg"} alt="Edit"  onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
+            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
           </td>
         </tr>
       })
@@ -151,16 +151,16 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
             </div>
           </div>
           {data ?
             <Table hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
-                <th>#</th>
-                  <th>Team Logo</th>
-                  <th style={{ cursor: "pointer" }}>Team Name</th>
+                  <th>#</th>
+                  <th>Logo</th>
+                  <th style={{ cursor: "pointer" }}>Team</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -182,8 +182,8 @@ class Team extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
 
+const mapStateToProps = (state) => {
   return {
     ShowTeam: state.Team.TeamData,
   }
@@ -194,4 +194,5 @@ const mapDispatchToProps = dispatch => ({
     Team: bindActionCreators(TeamAction, dispatch)
   }
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(Team)

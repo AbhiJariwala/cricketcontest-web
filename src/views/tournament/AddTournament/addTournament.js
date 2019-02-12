@@ -43,11 +43,11 @@ class AddTournament extends Component {
     switch (fieldName) {
       case 'tournamentName':
         fieldValidation.tournamentName = value.match(/^[a-zA-Z0-9_ ]+$/i);
-        fieldValidationErrors.tournamentName = fieldValidation.tournamentName ? '' : ' Only Alphabets Allow'
+        fieldValidationErrors.tournamentName = fieldValidation.tournamentName ? '' : ' Invalied Tournament'
         break;
       case 'tournamentDescription':
         fieldValidation.tournamentDescription = value.match(/^[~`!@#$%^&*()-=+a-zA-Z0-9_ ]+$/i);
-        fieldValidationErrors.tournamentDescription = fieldValidation.tournamentDescription ? '' : ' Only Alphabets Allow'
+        fieldValidationErrors.tournamentDescription = fieldValidation.tournamentDescription ? '' : ' Invalied description'
         break;
       default:
         break;
@@ -91,22 +91,25 @@ class AddTournament extends Component {
   }
   AddDataData = (Event) => {
     Event.preventDefault();
-    let formdata = new FormData();
-    formdata.append("tournamentName", this.state.tournamentName);
-    formdata.append("tournamentDescription", this.state.tournamentDescription);
-    formdata.append("tournamentBanner", this.state.tournamentBanner[0]);
-    formdata.append("createdBy", this.state.createdBy);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
+    if (this.state.imagebanner) {
+      let formdata = new FormData();
+      formdata.append("tournamentName", this.state.tournamentName);
+      formdata.append("tournamentDescription", this.state.tournamentDescription);
+      formdata.append("tournamentBanner", this.state.tournamentBanner[0]);
+      formdata.append("createdBy", this.state.createdBy);
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
       }
+      this.props.action.Tournament.AddTournamentAction(formdata, config)
+      this.props.toggle(Event);
     }
-    this.props.action.Tournament.AddTournamentAction(formdata, config)
-    this.props.toggle(Event);
   }
   imageChangedHandler(image) {
     this.setState({
-      tournamentBanner: image
+      tournamentBanner: image,
+      imagebanner: true
     })
     this.validateField("BannerImage", "true");
   }
@@ -179,5 +182,6 @@ const mapDispatchToProps = dispatch => ({
   action: {
     Tournament: bindActionCreators(TournamentAction, dispatch)
   }
-});
-export default connect( mapDispatchToProps)(AddTournament)
+})
+
+export default connect(null, mapDispatchToProps)(AddTournament)

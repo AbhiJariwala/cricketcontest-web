@@ -17,7 +17,6 @@ class userDashBoard extends Component {
         this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
     handletornamentteams = (id) => {
-
         this.props.history.push('/CreateTeam/' + id);
     }
     render() {
@@ -28,7 +27,6 @@ class userDashBoard extends Component {
             } 
             return ""           
         })
-
         let date = new Date();
         var date1 = date.getDate();
         let month = date.getMonth(); //Be careful! January is 0 not 1
@@ -48,7 +46,6 @@ class userDashBoard extends Component {
             tournamentMatch = this.props.ShowTornamentmatches.map((tournamentmatch, key) => {
                 if(!Tournamentmatchid.includes(parseInt(tournamentmatch.id,10))){ 
                 if (dateString < tournamentmatch.matchDate.substring(0, 10)) {
-                    // console.log(tournamentmatch.matchDate);
                     return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
                         <div className="card-body"  >
                             <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>
@@ -57,16 +54,27 @@ class userDashBoard extends Component {
                                 <div><Countdown date={tournamentmatch.matchDate} /></div>
                             </div>
                             <div style={{ float: "right" }}><img alt="logo1" src={path + tournamentmatch.Team2[0].teamLogo} style={{ width: 100, marginTop: -100 }} ></img></div>
-
                         </div>
                     </div>
+                }else {
+                    tournamentMatch = "No Data found"
                 }
+            }else {
+                tournamentMatch = "No Data found"
             }
                 return "";
             })
 
         } else {
             tournamentMatch = "No Data found"
+        }
+        let count=0
+        for (let index = 0; index < tournamentMatch.length; index++) {
+            if(tournamentMatch[index].key){
+                if(tournamentMatch[index]){
+                    count=count+1
+                }
+            }             
         }
         return (
             <div className="content" >
@@ -80,7 +88,7 @@ class userDashBoard extends Component {
                                 <h2>Upcoming Matches</h2>
                             </div>
                             <div className="card-body" style={{ backgroundColor: "gainsboro" }} >
-                                {tournamentMatch}
+                                {(count)!==0?tournamentMatch:<h3>No Upcoming Matches</h3>}
                             </div>
                         </div>
                     </div>

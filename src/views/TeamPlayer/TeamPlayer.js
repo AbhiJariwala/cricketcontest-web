@@ -6,6 +6,7 @@ import { PanelHeader } from "components";
 import { Collapse, Button as AntButton, Modal as AntModal, Popconfirm } from 'antd';
 import 'antd/dist/antd.css';
 import path from '../../path';
+import './TeamPlayer.css'
 
 import * as teamPlayerAction from '../../action/teamPlayer';
 import AddTeamPlayer from './AddTeamPlayer/AddTeamPlayer';
@@ -168,7 +169,7 @@ class TeamPlayer extends Component {
                                 return (
                                     <Collapse key={data.TournamentTeam.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
                                         <Panel header={data.teamName}>
-                                            {player}
+                                            {(player.length > 0) ? player : <p className="noPlayers">No Players found</p>}
                                         </Panel>
                                     </Collapse>
                                 );
@@ -205,7 +206,7 @@ class TeamPlayer extends Component {
                         </div>
 
                         <div style={{ float: "left" }}>
-                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
+                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
                         </div>
                     </div>
                     <Table hover>
