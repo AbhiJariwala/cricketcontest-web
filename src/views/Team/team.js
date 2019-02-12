@@ -19,7 +19,8 @@ class Team extends Component {
       sorting: "",
       Editdataid: [],
       sortingValueName: "id",
-      sortingValue: "desc"
+      sortingValue: "desc",
+      pageRecord: 0,
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -34,23 +35,25 @@ class Team extends Component {
   }
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
-    this.setState({ parpageRecord: parpage })
-    this.props.action.Team.selectTeamAction(this.state.pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
+    const pageno = 0
+    this.setState({ parpageRecord: parpage,pageno:0 })
+    this.props.action.Team.selectTeamAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
   changeRecord = (Event) => {
     let datachangeprevNext = Event.target.value;
     let pageno = 0
     if (datachangeprevNext === "Next") {
-      this.setState({ pageno: this.state.pageno + 5 })
+      this.setState({ pageno: this.state.pageno + 5 ,pageRecord: this.state.pageRecord + 5 })
       if (this.state.pageno === 0) {
         this.setState({ pageno: this.state.parpageRecord })
         pageno = this.state.parpageRecord
       } else {
         pageno = this.state.pageno + this.state.parpageRecord
       }
+
     }
     else if (datachangeprevNext === "Prev") {
-      this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
+      this.setState({ pageno: this.state.pageno - this.state.parpageRecord,pageRecord: this.state.pageRecord -   5 })
       pageno = this.state.pageno - this.state.parpageRecord
     }
     this.props.action.Team.selectTeamAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
@@ -116,14 +119,19 @@ class Team extends Component {
   render() {
     let notNext = 0;
     let data = ""
+    let start
     if (this.props.ShowTeam) {
+      start = 0;
+      start = this.state.pageRecord + 1;
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
+        <td>{start++}</td>
           <td><img src={path + data.teamLogo} alt="" style={{ width: "130px", height: "100px" }}></img></td>
           <td>{data.teamName}</td>
           <td>
             <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
+            <img src={path+"delete1.jpg"} alt="Edit"  onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
           </td>
         </tr>
       })
@@ -147,9 +155,10 @@ class Team extends Component {
             </div>
           </div>
           {data ?
-            <Table responsive hover>
+            <Table hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
+                <th>#</th>
                   <th>Team Logo</th>
                   <th style={{ cursor: "pointer" }}>Team Name</th>
                   <th>Action</th>

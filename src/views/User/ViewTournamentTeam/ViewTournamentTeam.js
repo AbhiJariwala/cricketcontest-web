@@ -3,6 +3,7 @@ import UserPanel from '../../UserPanel/userPanel'
 import path from '../../../path';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import * as  showUserMatchesAction from '../../../action/user/Createteam'
 import * as  MatchPlayerScore from '../../../action/TournamentMatch'
 import Countdown from './displayTimer';
 const banerhome = require('../../../Image/image1.jpg')
@@ -11,6 +12,8 @@ class userDashBoard extends Component {
         this.getTournamentMatch();
     }
     getTournamentMatch() {
+        let userid=localStorage.getItem("userId")
+        this.props.action.UserMatchesteams.Show_My_TeamData(userid);
         this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
     handletornamentteams = (id) => {
@@ -18,6 +21,14 @@ class userDashBoard extends Component {
         this.props.history.push('/CreateTeam/' + id);
     }
     render() {
+        let Tournamentmatchid=[]
+        this.props.showUserMatches.map(data=>{            
+            if(!Tournamentmatchid.includes(data.tournamentMatchId)){
+                Tournamentmatchid=Tournamentmatchid.concat(data.tournamentMatchId)
+            } 
+            return ""           
+        })
+
         let date = new Date();
         var date1 = date.getDate();
         let month = date.getMonth(); //Be careful! January is 0 not 1
@@ -35,7 +46,9 @@ class userDashBoard extends Component {
         let tournamentMatch = '';
         if (this.props.ShowTornamentmatches.length !== 0) {
             tournamentMatch = this.props.ShowTornamentmatches.map((tournamentmatch, key) => {
-                if (dateString <= tournamentmatch.matchDate.substring(0, 10)) {
+                if(!Tournamentmatchid.includes(parseInt(tournamentmatch.id,10))){ 
+                if (dateString < tournamentmatch.matchDate.substring(0, 10)) {
+                    // console.log(tournamentmatch.matchDate);
                     return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
                         <div className="card-body"  >
                             <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>
@@ -48,6 +61,7 @@ class userDashBoard extends Component {
                         </div>
                     </div>
                 }
+            }
                 return "";
             })
 
@@ -57,7 +71,7 @@ class userDashBoard extends Component {
         return (
             <div className="content" >
                 <UserPanel></UserPanel>
-                <div className="row" style={{ backgroundRepeat: "none" }} >
+                <div className="row" style={{ backgroundRepeat: "none",marginTop:"-16px" }} >
                     <div className="col-md-6" style={{ backgroundImage: `url(${banerhome})` }}>
                     </div>
                     <div className="col-md-6" style={{ height: "630px", overflow: "scroll" }}>
@@ -78,12 +92,14 @@ class userDashBoard extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        ShowTornamentmatches: state.TournamentMatchs.allmatchs,
+        showUserMatches : state.CreateteamReducer.TeamData,
+        ShowTornamentmatches: state.TournamentMatchs.allmatchs
     }
 };
 const mapDispatchToProps = dispatch => ({
     action: {
         MatchPlayerScore: bindActionCreators(MatchPlayerScore, dispatch),
+        UserMatchesteams: bindActionCreators(showUserMatchesAction, dispatch)        
     }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(userDashBoard);

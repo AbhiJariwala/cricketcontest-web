@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Container, Button, Table } from 'reactstrap';
+import { ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -56,32 +56,32 @@ class AddMatchPlayerScore extends Component {
 
 
     addTournamentMatchPlayerScore(tournament) {
-        console.log(tournament);
-        console.log(this.props.TournamentPoint.get_points);
+        // console.log(tournament);
+        // console.log(this.props.TournamentPoint.get_points);
 
-        this.props.TournamentPoint.get_points.map(tournamentPoint=>{
-            (tournamentPoint.tournamentId===tournament.id)?console.log(tournamentPoint):""
-        })
-        Object.entries(this.state.playerScore).map(([key, value]) => {
-            console.log(value)
-            let tempObj = {
-                tournamentId: tournament.tournamentId,
-                tournamentMatchId: tournament.id,
-                playerId: parseInt(key, 10),
-                wicket: value.wicket,
-                run: value.runs,
-                catch: value.catch,
-                six: value.six,
-                four: value.four,
-                stumping: value.stumping,
-            }
-            console.log(tempObj);
-            // this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore();
-        })
+        // this.props.TournamentPoint.get_points.map(tournamentPoint=>{
+        //     (tournamentPoint.tournamentId===tournament.id)?console.log(tournamentPoint):""
+        // })
+        // Object.entries(this.state.playerScore).map(([key, value]) => {
+        //     console.log(value)
+        //     let tempObj = {
+        //         tournamentId: tournament.tournamentId,
+        //         tournamentMatchId: tournament.id,
+        //         playerId: parseInt(key, 10),
+        //         wicket: value.wicket,
+        //         run: value.runs,
+        //         catch: value.catch,
+        //         six: value.six,
+        //         four: value.four,
+        //         stumping: value.stumping,
+        //     }
+        //     console.log(tempObj);
+        //     // this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore();
+        // })
 
-        for (var i = 0; i < this.state.playerScore.length; i++) {
-            console.log(this.state.playerScore[i]);
-        }
+        // for (var i = 0; i < this.state.playerScore.length; i++) {
+        //     console.log(this.state.playerScore[i]);
+        // }
         // this.props.action.getMatchPlayerScore.addTournamentMatchPlayerScore(this.state);
     }
 
@@ -112,7 +112,7 @@ class AddMatchPlayerScore extends Component {
                 <option value={team2.id} >{team2.teamName}</option>
             </Input>
         }
-        console.log(tournament[0])
+        // console.log(tournament[0])
         let player = "";
         if (this.props.MatchPlayerScore.players.length > 0) {
             player = this.props.MatchPlayerScore.players.map(player => {

@@ -52,7 +52,7 @@ class Login extends Component {
 
 
     inputChangeHandler(e) {
-
+        this.setState({ fieldsErrors: { email: '', password: '' } })
         const name = e.target.name;
         const value = e.target.value;
         this.setState({ [name]: value }, () => { this.validateField(name, value) })
@@ -97,7 +97,7 @@ class Login extends Component {
                                     </Form>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button style={{ "float": "right", "marginBottom": "10px", "width": "100%" }} color="info" onClick={this.btnLoginClick.bind(this)} disabled={!this.state.formValid}>Login</Button>
+                                    <Button style={{ "float": "right", "marginBottom": "10px", "width": "100%" }} color="info" onClick={this.btnLoginClick.bind(this)}>Login</Button>
                                 </CardFooter>
                                 <br />
                                 <hr />

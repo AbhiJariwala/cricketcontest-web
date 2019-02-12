@@ -290,7 +290,7 @@ class tournamentPoint extends Component {
             </div>
           </div>
 
-          <Table responsive hover>
+          <Table hover>
             <thead className="thead-dark">
               <tr style={{ textAlign: "center" }}>
                 <th>Tournament Name</th>

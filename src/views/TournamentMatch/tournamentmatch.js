@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Button,Input, ButtonGroup } from 'reactstrap';
+import { Table, Button, Input, ButtonGroup } from 'reactstrap';
 import * as TournamentMatchAction from '../../action/TournamentMatch';
 import * as TournamentAction from '../../action/Tournament';
 import AddTournamentMatch from './AddTournamentMatch/addTournamentMatch'
@@ -24,12 +24,12 @@ class TournamentMatch extends Component {
       sortingValueName: "id",
       sortingValue: "desc",
       showWinner: false,
-      data:''
+      data: ''
     };
     this.toggle = this.toggle.bind(this);
   }
 
-  componentWillMount = () => {      
+  componentWillMount = () => {
     this.props.action.TournamentAction.fetchTournamentDataAction();
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord,this.state.sortingValueName, this.state.sortingValue);
   }
@@ -101,9 +101,9 @@ class TournamentMatch extends Component {
     });
   }
 
-  winningTeam=(data)=>{
-    this.setState({data:data});
-    this.setState({showWinner:true})
+  winningTeam = (data) => {
+    this.setState({ data: data });
+    this.setState({ showWinner: true })
 
   }
   toggleWinner = () => {
@@ -225,9 +225,9 @@ class TournamentMatch extends Component {
         <PanelHeader size="sm" />
         <div className="content" >
           {
-            (this.state.data !== '')?(
-              <WinnerModal isOpen={this.state.showWinner} data={this.state.data} toggleWinner={this.toggleWinner}/>
-            ):null
+            (this.state.data !== '') ? (
+              <WinnerModal isOpen={this.state.showWinner} data={this.state.data} toggleWinner={this.toggleWinner} />
+            ) : null
           }
           <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
           <div style={{ marginTop: "50px" }}>
@@ -244,7 +244,7 @@ class TournamentMatch extends Component {
                 </div>
               ) : null
             }
-            <div style={{ float: "right" ,paddingRight:'50px' }}>
+            <div style={{ float: "right", paddingRight: '50px' }}>
               Tournament<Input type="select" name="tournamentid" id="exampleSelect" onChange={this.handlechangetournament.bind(Event)}>
                 <option value={'selected'}>All Selected</option>
                 {tournamentD}

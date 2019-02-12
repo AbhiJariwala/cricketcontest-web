@@ -12,7 +12,7 @@ class userDashBoard extends Component {
         return (
             <div>
                 <UserPanel></UserPanel>
-                <div>
+                <div style={{marginTop:"-20px"}}>
                     <img src="https://wallpapersite.com/images/pages/pic_w/6005.jpg" alt={{}} style={{width: "100%",height: "690px"}} ></img>
                     <center>
                         <div style={{ marginTop: "-269px" }}><Button onClick={this.handleLetsGoButton.bind(this)} style={{ width: "120px", backgroundColor: "#007bff" }}>Lets play</Button></div>

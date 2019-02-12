@@ -88,7 +88,8 @@ class TeamPlayer extends Component {
     perPage = (Event) => {
         const perPage = parseInt(Event.target.value, 10);
         this.setState({ recordPerPage: perPage })
-        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, perPage, this.state.sortingValue, this.state.sortingValueName);
+        this.setState({pageno:0});
+        this.props.action.getTeamPlayerData.getTournaments(0, perPage, this.state.sortingValue, this.state.sortingValueName);
     }
 
     changeRecord = (Event) => {
@@ -207,7 +208,7 @@ class TeamPlayer extends Component {
                             <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
                         </div>
                     </div>
-                    <Table responsive hover>
+                    <Table hover>
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
                                 <th>Banner</th>
