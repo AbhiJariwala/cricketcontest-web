@@ -48,6 +48,16 @@ class userDashBoard extends Component {
         } else {
             tournamentMatch = "No Data found"
         }
+
+        let count=0
+        for (let index = 0; index < tournamentMatch.length; index++) {
+            if(tournamentMatch[index].key){
+                if(tournamentMatch[index]){
+                    count=count+1
+                }
+            }    
+            
+        }
         return (
             <div className="content" >
                 <UserPanel></UserPanel>
@@ -57,10 +67,10 @@ class userDashBoard extends Component {
                     <div className="col-md-6" style={{ height: "630px", overflow: "scroll" }}>
                         <div className="card" style={{ borderRadius: "25px" }}>
                             <div className="card-header" style={{ backgroundColor: "gainsboro", textAlign: "center" }} >
-                                <h2>Matches</h2>
+                                <h2>My Teams</h2>
                             </div>
                             <div className="card-body" style={{ backgroundColor: "gainsboro" }} >
-                                {tournamentMatch}
+                            {(count)!==0?tournamentMatch:<h3>No Teams Available</h3>}
                             </div>
                         </div>
                     </div>

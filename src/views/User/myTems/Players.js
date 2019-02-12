@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import UserPanel from '../../UserPanel/userPanel'
-import {  Button } from 'antd';
+import {  Button, Empty } from 'antd';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import path from '../../../path';
@@ -21,6 +21,8 @@ class Players extends React.Component {
     let bindScoreData={
       playerId:data.playerId,
       tournamentMatchId:data.tournamentMatchId
+      // playerId:10,
+      // tournamentMatchId:1
     }
       
     this.setState({
@@ -53,7 +55,7 @@ class Players extends React.Component {
             <td><Button type="primary" onClick={()=>this.showModal(data)}>show Score</Button></td>
           </tr>
         }
-        return
+        return Empty
       })
     }
     return (<div >

@@ -21,7 +21,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { error_msg: action.data.error_msg });
         }
         case LOGOUT: {
-            return Object.assign({}, state, { token: "", userId: "" });
+            return Object.assign({}, state, { token: "", userId: "", Role: "" });
         }
         case REGISTER_SUCCESSFUL: {
             return Object.assign({}, state, { email: action.users.email ,error_msg:""});

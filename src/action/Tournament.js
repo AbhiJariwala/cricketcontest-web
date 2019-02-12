@@ -3,16 +3,14 @@ import * as authService from '../service/Tournament'
 import { Get_Data } from '../reducer/Tournament';
 import { Fetch_Tournament_Data, deletetournamentdata, INVALID_DATA, FetchSingleTournament, updatetournamentdata, Add_Tournament_Data, Get_Tournament_Data } from '../reducer/Tournament';
 
-export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName) => {    
+export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName) => {
     return (dispatch) => {
         authService.Tournament(pageno, parpageRecord, sorting, filedName).then((response) => {
-            if (response.status === 200) {                
-                dispatch(
-                    {
-                        type: Fetch_Tournament_Data,
-                        TournamentData: response.data
-                    }
-                );
+            if (response.status === 200) {
+                dispatch({
+                    type: Fetch_Tournament_Data,
+                    TournamentData: response.data
+                });
             }
         })
             .catch((error) => {
@@ -23,15 +21,15 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName
     }
 };
 export const AddTournamentAction = (data) => {
+    
     return (dispatch) => {
         authService.TournamentAdd(data).then((response) => {
             if (response.status === 200) {
-                dispatch(
-                    {
-                        type: Add_Tournament_Data,
-                        TournamentAddData: response.data
-                    }
-                );
+    
+                dispatch({
+                    type: Add_Tournament_Data,
+                    TournamentAddData: response.data
+                });
             }
         })
             .catch((error) => {

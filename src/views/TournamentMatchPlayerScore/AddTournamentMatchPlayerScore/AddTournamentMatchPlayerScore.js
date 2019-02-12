@@ -57,7 +57,6 @@ class AddMatchPlayerScore extends Component {
         Object.entries(this.state.playerScore).map(([key, value]) => {
              this.props.TournamentPoint.get_points.map(tournamentPoint => {
                 if (tournamentPoint.tournamentId === tournament.tournamentId) {
-                    console.log(tournamentPoint);
                      Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
                         let from, to;
                         if (pointType === "Catch") {
@@ -140,6 +139,7 @@ class AddMatchPlayerScore extends Component {
                 score: value.score
             }
             this.props.action.MatchPlayerScore.addTournamentMatchPlayerScore(finalScore);
+            this.props.toggleAdd();
             return ""
         })
     }
@@ -165,8 +165,8 @@ class AddMatchPlayerScore extends Component {
             tournamentName = tournament[0].Tournament.tournamentName;
             team1 = tournament[0].Team1[0];
             team2 = tournament[0].Team2[0];
-            teams = <Input type="select" onChange={this.teamChangeHandler.bind(this, tournament[0].tournamentId)} >
-                <option disabled defaultChecked>Select Team</option>
+            teams = <Input type="select" id="selectTeam" onChange={this.teamChangeHandler.bind(this, tournament[0].tournamentId)} >
+                <option value="" disabled="" style={{ display: "none" }}>Select Team</option>
                 <option value={team1.id}>{team1.teamName}</option>
                 <option value={team2.id} >{team2.teamName}</option>
             </Input>
@@ -207,7 +207,7 @@ class AddMatchPlayerScore extends Component {
                             {teams}
                         </FormGroup>
                         <FormGroup>
-                            {(player) ?
+                            {(player && document.getElementById("selectTeam")) ?
                                 <table style={{ textAlign: "center" }}>
                                     <thead  >
                                         <tr>

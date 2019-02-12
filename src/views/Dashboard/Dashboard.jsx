@@ -54,7 +54,7 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <PanelHeader size="lg" content={<img alt="Cricket Contest" src={path + "Cricket-DashBoard.jpg"}></img>} />
+        <PanelHeader size="lg" content={<img alt="Cricket Contest"  style={{width:'100%',height:'fit-content'}} src={path + "Cricket-DashBoard.jpg"}></img>} />
         <div className="content">
           <Row>
             <Col xs={12} md={3}>
@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
               </Card>
             </Col>
             <Col xs={12} md={3}>
-              <Card>
+              <Card className="card-chart">
                 <CardHeader>
                   <CardTitle tag="h4" style={{ textAlign: "center" }}>Teams</CardTitle>
                 </CardHeader>

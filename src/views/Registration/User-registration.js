@@ -22,7 +22,6 @@ class UserRegistration extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.err_msg)
         if (nextProps.err_msg === "") {
             this.setState({
                 inValidEmail: ""

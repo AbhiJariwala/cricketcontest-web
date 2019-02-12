@@ -74,8 +74,10 @@ class CreateTeam extends Component {
             data = {
                 userId,
                 tournamentMatchId,
-                playerId: data
+                playerId: data,
+                createdBy:parseInt(userId,10)
             }
+            
             this.props.action.CreateTeam.createTeam(data)
             return "";
         })
@@ -141,7 +143,7 @@ class CreateTeam extends Component {
 
                     selectedPlayer = teams.map((data, key) => {
                         if (this.state.Myteam.length > 0 && this.state.Myteam.includes(data.id)) {
-                            return <Col md={4}>
+                            return <Col md={4} key={key}>
                                 <Card style={{ height: "200px" }}>
                                     <CardBody>
                                         <img alt="Cricket Contest" src={path + data.playerImage} height="100px" width="100px" ></img>
@@ -248,9 +250,9 @@ class CreateTeam extends Component {
                                             </TabPane>
                                         </TabContent></div>
                                     <div style={{ float: "right" }}>
-                                        {this.state.Myteam.length === 10 ?
-                                            <Button onClick={this.createteam.bind(Event)} >Continue</Button>
-                                            : <Button disabled>Continue</Button>}
+                                        {this.state.Myteam.length === 11 ?
+                                            <Button onClick={this.createteam.bind(Event)} >Create Team</Button>
+                                            : <Button disabled>Create Team</Button>}
                                     </div>
                                 </CardBody>
                             </Card>

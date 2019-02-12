@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Button, Input, ButtonGroup } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import { Modal as AntModal, Collapse } from 'antd';
 import 'antd/dist/antd.css';
-
+import path from '../../path';
 import * as  MatchPlayerScore from '../../action/matchPlayerScore'
 import { PanelHeader } from "components";
 import * as TournamentMatch from '../../action/TournamentMatch'
@@ -13,9 +13,7 @@ import AddMatchPlayerScore from './AddTournamentMatchPlayerScore/AddTournamentMa
 import './TournamentMatchPlayer.css'
 
 const Panel = Collapse.Panel;
-
 class TournamenMatchPlayerScore extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -92,8 +90,8 @@ class TournamenMatchPlayerScore extends Component {
                             {tournamentmatch.Team2[0].teamName}
                         </Button>
                     </td>
-                    <td><Button color="info" style={{ width: "62px" }} >Edit</Button>&nbsp;
-                <Button color="danger" >Delete</Button></td>
+                    {/* <td><Button color="info" style={{ width: "62px" }} >Edit</Button>&nbsp;
+                <Button color="danger" >Delete</Button></td> */}
                 </tr>
             })
         }
@@ -131,7 +129,7 @@ class TournamenMatchPlayerScore extends Component {
                         }
                     </AntModal>
                     <div style={{ marginTop: "50px" }}>
-                        <div style={{ float: "right" }}>
+                        {/* <div style={{ float: "right" }}>
                             Show entries
                            <Input type="select" name="select" >
                                 <option value="5">5</option>
@@ -140,9 +138,10 @@ class TournamenMatchPlayerScore extends Component {
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                             </Input>
-                        </div>
+                        </div> */}
                         <div style={{ float: "left" }}>
-                            <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button>
+                            {/* <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button> */}
+                            <img src={path + "add.png"} alt="plus" onClick={this.btnAddClick.bind(this)} style={{ width: 60, cursor: "pointer" }} ></img>
                             <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
                         </div>
                     </div>
@@ -153,7 +152,7 @@ class TournamenMatchPlayerScore extends Component {
                                 <th>#</th>
                                 <th style={{ cursor: "pointer" }}>Tournament</th>
                                 <th style={{ cursor: "pointer" }} colSpan="3">Match</th>
-                                <th>Action</th>
+                                {/* <th>Action</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -162,10 +161,10 @@ class TournamenMatchPlayerScore extends Component {
                             }
                         </tbody>
                     </Table>
-                    <ButtonGroup>
+                    {/* <ButtonGroup>
                         <Button color="info" name="Prev">Prev</Button> &nbsp;
                         <Button color="info" name="Next">Next</Button>
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                 </div>
             </div>
         );
