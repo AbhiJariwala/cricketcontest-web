@@ -1,11 +1,11 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import UserPanel from '../../UserPanel/userPanel'
-import {  Button } from 'antd';
+import { Button } from 'antd';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import path from '../../../path';
-import ViewPlayerScore from  './ViewPlayerScore/viewPlayerScore';
+import ViewPlayerScore from './ViewPlayerScore/viewPlayerScore';
 import * as  showUserMatchesAction from '../../../action/user/Createteam'
 
 class Players extends React.Component {
@@ -16,16 +16,16 @@ class Players extends React.Component {
     let userid = localStorage.getItem("userId")
     this.props.action.UserMatchesteams.Show_My_TeamData(userid);
   }
-  state = { visible: false,scoredata:[] }
+  state = { visible: false, scoredata: [] }
   showModal = (data) => {
-    let bindScoreData={
-      playerId:data.playerId,
-      tournamentMatchId:data.tournamentMatchId
+    let bindScoreData = {
+      playerId: data.playerId,
+      tournamentMatchId: data.tournamentMatchId
     }
-      
+
     this.setState({
       visible: true,
-      scoredata:bindScoreData
+      scoredata: bindScoreData
     });
 
   }
@@ -40,32 +40,32 @@ class Players extends React.Component {
       visible: false,
     });
   }
-  render() {   
-    let players,no=1;
+  render() {
+    let players, no = 1;
     if (this.props.showUserMatches.length !== 0) {
       players = this.props.showUserMatches.map((data, key) => {
         if (data.tournamentMatchId === parseInt(this.props.match.params.id, 10)) {
           return <tr key={key}>
-            <th scope="row">{no ++}</th>
-            <th><img alt="logo1" src={path + data.Players[0].playerImage} style={{ width: 100,height:100 }} ></img></th>
+            <th scope="row">{no++}</th>
+            <th><img alt="logo1" src={path + data.Players[0].playerImage} style={{ width: 100, height: 100 }} ></img></th>
             <td>{data.Players[0].firstName}{"  "}{data.Players[0].lastName}</td>
             <td>{data.Players[0].description}</td>
-            <td><Button type="primary" onClick={()=>this.showModal(data)}>show Score</Button></td>
+            <td><Button type="primary" onClick={() => this.showModal(data)}>show Score</Button></td>
           </tr>
         }
-        return
+        return "";
       })
     }
     return (<div >
       <UserPanel></UserPanel>
-      <ViewPlayerScore 
-          visible={this.state.visible} 
-          handleOk={this.handleOk} 
-          onCancel={this.handleCancel}
-          binddata={this.state.scoredata}></ViewPlayerScore>
+      <ViewPlayerScore
+        visible={this.state.visible}
+        handleOk={this.handleOk}
+        onCancel={this.handleCancel}
+        binddata={this.state.scoredata}></ViewPlayerScore>
       <div className="container">
-        {players!==" " ?        
-          <Table>            
+        {players !== " " ?
+          <Table>
             <thead>
               <tr>
                 <th>#</th>

@@ -151,11 +151,13 @@ class TournamentMatch extends Component {
               }
             </td>
             <td style={{ textAlign: 'center' }}>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
-            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage"  >
+            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
               {
-                (data.winningTeamId === data.Team2[0].id) ? <img style={{ position: 'relative', left: '66px' }} src={path + 'winbadge.png'} height="30px" width="30px" alt="" /> : null
+                (data.winningTeamId === data.Team2[0].id) ? <img style={{
+                  position: 'relative', left: '-80px',
+                  top: '-20px'
+                }} src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
-            </img>
             </td>
             <td style={{ textAlign: 'center' }}>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
             {(remainday > 0) ? (
@@ -189,11 +191,13 @@ class TournamentMatch extends Component {
               }
             </td>
             <td style={{ textAlign: 'center' }}>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
-            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage"  >
+            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
               {
-                (data.winningTeamId === data.Team2[0].id) ? <img style={{ position: 'relative', left: '86px' }} src={path + 'winbadge.png'} height="30px" width="30px" alt="" /> : null
+                (data.winningTeamId === data.Team2[0].id) ? <img style={{
+                  position: 'relative', left: '-80px',
+                  top: '-20px'
+                }} src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
-            </img>
             </td>
             <td style={{ textAlign: 'center' }}>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
             {(remainday > 0) ? (
@@ -320,4 +324,4 @@ const mapDispatchToProps = (dispatch) => ({
     TournamentAction: bindActionCreators(TournamentAction, dispatch)
   }
 });
-export default connect(mapStateToProps, mapDispatchToProps)(TournamentMatch)
+export default connect(mapStateToProps, mapDispatchToProps)(TournamentMatch);
