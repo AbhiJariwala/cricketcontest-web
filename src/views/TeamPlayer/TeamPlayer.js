@@ -53,10 +53,10 @@ class TeamPlayer extends Component {
     }
 
     toggle() {
-        const {modal} = this.state;
+        const { modal } = this.state;
         this.setState({
             modal: !modal
-        });       
+        });
     }
 
     sortingdata = (Event) => {
@@ -88,7 +88,7 @@ class TeamPlayer extends Component {
     perPage = (Event) => {
         const perPage = parseInt(Event.target.value, 10);
         this.setState({ recordPerPage: perPage })
-        this.setState({pageno:0});
+        this.setState({ pageno: 0 });
         this.props.action.getTeamPlayerData.getTournaments(0, perPage, this.state.sortingValue, this.state.sortingValueName);
     }
 
@@ -167,7 +167,7 @@ class TeamPlayer extends Component {
                             if (data.TournamentTeam.isDelete === 0) {
                                 return (
                                     <Collapse key={data.TournamentTeam.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
-                                        <Panel header={data.teamName} key={data.TournamentTeam.id}>
+                                        <Panel header={data.teamName}>
                                             {player}
                                         </Panel>
                                     </Collapse>
@@ -205,7 +205,7 @@ class TeamPlayer extends Component {
                         </div>
 
                         <div style={{ float: "left" }}>
-                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
                         </div>
                     </div>
                     <Table hover>

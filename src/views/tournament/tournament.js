@@ -130,10 +130,13 @@ class tournament extends Component {
   render() {
     let notNext = 0;
     let data = ""
+    let start=0;
     if (this.props.ShowTornament.length!==0) {
+      start=this.state.pageno+1
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }}>
+          <td>{start++}</td>
           <td><img src={path + data.tournamentBanner} alt="" style={{ width: "150px", height: "80px" }}></img></td>
           <td>{data.tournamentName}</td>
           <td>{data.tournamentDescription}</td>
@@ -163,13 +166,14 @@ class tournament extends Component {
               </Input>
             </div>
             <div style={{ float: "left", borderRadius: "50%" }}>
-              <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+              <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
             </div>
           </div>
           {data ?
             <Table hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
+                  <th>#</th>
                   <th style={{ cursor: "pointer" }}>Banner</th>
                   <th style={{ cursor: "pointer" }}>Tournament</th>
                   <th style={{ cursor: "pointer" }}>Description</th>

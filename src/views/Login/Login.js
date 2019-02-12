@@ -58,12 +58,14 @@ class Login extends Component {
         this.setState({ [name]: value }, () => { this.validateField(name, value) })
     }
 
-
-    btnLoginClick(e) {
-        e.preventDefault();
-        if (this.state.formValid) {
+    enterPress(e){
+        if(e.key==="Enter"){
             this.props.action.auth.loginUser(this.state);
         }
+    }
+    btnLoginClick(e) {
+        e.preventDefault();
+        this.props.action.auth.loginUser(this.state);
     }
     render() {
         return (
@@ -78,7 +80,7 @@ class Login extends Component {
                                     <h5 className="title">Login</h5>
                                 </CardHeader>
                                 <CardBody>
-                                    <Form>
+                                    <Form onKeyPress={this.enterPress.bind(this)}>
                                         <FormGroup>
                                             {(this.props.err_msg !== "") ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : ""}
                                         </FormGroup>

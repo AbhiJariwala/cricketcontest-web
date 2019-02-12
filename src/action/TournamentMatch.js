@@ -11,7 +11,7 @@ export const getTournamentMatch = (id) => {
                 dispatch(
                     {
                         type: GET_TOURNAMENTMATCHS,
-                        allmatchs:data
+                        tournamentMatches:data
                     }
                 );
             }
@@ -24,9 +24,9 @@ export const getTournamentMatch = (id) => {
     }
 };
 
-export const SelectTournamentMatchAction = (pageno, parpageRecord, sorting, fieldName) =>  {
+export const SelectTournamentMatchAction = (pageno, parpageRecord, fieldName, sorting) =>  {
     return (dispatch) => {
-        tournamentMatchService.SelectTournamentMatchAction(pageno, parpageRecord, sorting, fieldName)
+        tournamentMatchService.SelectTournamentMatchAction(pageno, parpageRecord, fieldName, sorting)
         .then((response) => {
             if (response.status === 200) {
                 var data=response.data;
@@ -46,7 +46,7 @@ export const SelectTournamentMatchAction = (pageno, parpageRecord, sorting, fiel
     }
 };
 
-export const AddTournamentMatchAction = (data) =>  {
+export const AddTournamentMatchAction = (data,tournament,team1,team2,tournamentid,nrecord) =>  {
     return (dispatch) => {
         tournamentMatchService.addTournamentMatch(data)
         .then((response) => {
@@ -55,7 +55,12 @@ export const AddTournamentMatchAction = (data) =>  {
                 dispatch(
                     {
                         type: ADD_TOURNAMENTMATCHS,
-                        data:data
+                        data:data,
+                        tournament,
+                        team1,
+                        team2,
+                        tournamentid,
+                        nrecord
                     }
                 );
             }
