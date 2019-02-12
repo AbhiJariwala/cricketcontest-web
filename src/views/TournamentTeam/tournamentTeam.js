@@ -68,6 +68,7 @@ class TournamentTeam extends Component {
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
     this.setState({ parpageRecord: parpage })
+    this.setState({ pageno: 0 });
     this.props.action.Tournament.fetchTournamentAction(0, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
 
@@ -129,10 +130,14 @@ class TournamentTeam extends Component {
   render() {
     let notNext = 0;
     let data = "";
+    let start=0;
     if (this.props.ShowTournamentAll && this.props.ShowTournamentAll.length > 0) {
+      start = 0;
+      start = this.state.pageno + 1; 
       data = this.props.ShowTournamentAll.map((tournament, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }}>
+          <td>{start++}</td>
           <td><img src={path + tournament.tournamentBanner} alt="Banner" style={{ width: "150px", height: "80px" }}></img></td>
           <td>{tournament.tournamentName}</td>
           <td>
@@ -166,13 +171,14 @@ class TournamentTeam extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
             </div>
           </div>
           {data ?
-            <Table responsive hover>
+            <Table hover>
               <thead className="thead-dark">
                 <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
+                  <th>#</th>
                   <th>Banner</th>
                   <th id="tournamentName" style={{ cursor: "pointer" }}>Tournament</th>
                   <th>Team</th>
@@ -185,7 +191,7 @@ class TournamentTeam extends Component {
             : ""}
           <ButtonGroup>
             {this.state.pageno !== 0 ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" disabled> Prev </Button>
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" hidden> Prev </Button>
             }
             &nbsp;
             {notNext >= this.state.parpageRecord ?

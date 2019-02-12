@@ -31,7 +31,7 @@ class TournamentMatch extends Component {
 
   componentWillMount = () => {      
     this.props.action.TournamentAction.fetchTournamentDataAction();
-    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord,this.state.sortingValueName, this.state.sortingValue);
   }
 
   sortingdata = (Event) => {
@@ -52,14 +52,14 @@ class TournamentMatch extends Component {
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
       }
-      this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
+      this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
     }
   }
 
   parpage = (Event) => {
     const nrecord = parseInt(Event.target.value, 10);
     this.setState({ pageno: 0});
-    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(0, nrecord,this.state.sortingValue,this.state.sortingValueName);
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(0, nrecord,this.state.sortingValueName, this.state.sortingValue);
     this.setState({ parpageRecord: nrecord })
   }
 
@@ -79,16 +79,20 @@ class TournamentMatch extends Component {
       this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
       pageno = this.state.pageno - this.state.parpageRecord
     }
-    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   }
 
   handlechangetournament =(Event) =>{
         this.setState({[Event.target.name]:Event.target.value})
-        if(Event.target.value !== 'selected')
-            this.props.action.TournamentMatchAction.getTournamentMatch(Event.target.value);
-        else    
-        this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
-  }
+        if(Event.target.value !== 'selected'){
+          this.setState({pageno:0});
+            this.props.action.TournamentMatchAction.getTournamentMatch(Event.target.value);}
+        else    {
+          let {pageno}=this.state;
+          this.setState({pageno:0});
+        this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
+  
+      }    }
 
   toggle(Event) {
     this.setState({
@@ -125,42 +129,89 @@ class TournamentMatch extends Component {
   render() {
     let notNext = 0;
     let data = ""
-    if (this.props.TournamentMatchs && this.props.TournamentMatchs.length > 0) {
-      data = this.props.TournamentMatchs.map((data, key) => {
-        notNext = key + 1
-        let d = new Date(data.matchDate);
-        let cdate = new Date().getTime();
-        var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
-        remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
-        return <tr key={key}>
-          { (this.state.tournamentid=== 'selected')? (<td>{data.Tournament.tournamentName}</td> ):null}
-          <td><img src={path + data.Team1[0].teamLogo} height="70px" width="70px" alt="TeamImage"/>
-          {
-              (data.winningTeamId===data.Team1[0].id)?<img style={{position:'relative', left: '-80px', top: '-15px'}} src={path+'winbadge.png'} height="50px" width="30px" alt=""/>:null
-          }
-          </td>  
-          <td style={{textAlign:'center'}}>{data.Team1[0].teamName}  <b>VS</b>   {data.Team2[0].teamName}</td>
-          <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage"  >
-              {
-                (data.winningTeamId===data.Team2[0].id)?<img style={{position:'relative', left: '-80px', top: '-15px'}} src={path+'winbadge.png'}  height="30px" width="30px"alt=""/>:null
-              }
-          </img>
-          </td>  
-          <td>{d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()}</td>
-          { (remainday>0) ? ( 
-                ( remainday > 5 ) ? 
-                      (<td>{remainday +' days '}</td>) : (<td><Timer date={data.matchDate}/></td>) 
-                ): (
-                  <td style={{cursor:'pointer'}} onClick={()=>this.winningTeam(data)}> {'Finished'} </td>)
-           }
-           <td> <Button color="info" onClick={() => this.Edittoggle(data)} style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
-        </tr>
-      })
-    }
+    let start = 0;
+    if(this.state.tournamentid === 'selected') {
+      if (this.props.TournamentMatchs && this.props.TournamentMatchs.length > 0) {
+        start = 0;
+        start = this.state.pageno + 1;
+        data = this.props.TournamentMatchs.map((data, key) => {
+          notNext = key + 1
+          let d = new Date(data.matchDate);
+          let cdate = new Date().getTime();
+          var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
+          remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
+          return <tr key={key}>
+            <td>{start++}</td>
+            <td>{data.Tournament.tournamentName}</td>
+            <td><img src={path + data.Team1[0].teamLogo} style={{float:"right"}} height="70px" width="70px" alt="TeamImage"/>
+            {
+                (data.winningTeamId===data.Team1[0].id)?<img style={{position:'relative', left: '66px'}} src={path+'winbadge.png'} height="50px" width="30px" alt=""/>:null
+            }
+            </td>  
+            <td style={{textAlign:'center'}}>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
+            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage"  >
+                {
+                  (data.winningTeamId===data.Team2[0].id)?<img style={{position:'relative', left: '66px'}} src={path+'winbadge.png'}  height="30px" width="30px"alt=""/>:null
+                }
+            </img>
+            </td>  
+            <td style={{textAlign:'center'}}>{d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()}</td>
+            { (remainday>0) ? ( 
+                  ( remainday > 5 ) ? 
+                        (<td style={{textAlign:'center'}}>{remainday +' days '}</td>) : (<td style={{textAlign:'center'}} ><Timer date={data.matchDate}/></td>) 
+                  ): (
+                    <td style={{cursor:'pointer',textAlign:'center'}} onClick={()=>this.winningTeam(data)}> {'Finished'} </td>)
+             }
+             <td> <Button color="info"  style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
+          </tr>
+        })
+      }
+      else {
+        data = <tr><td colSpan="6" style={{ textAlign: 'center' }}>No Match Exists</td></tr>
+      }
+
+    } 
     else {
-      data = <tr><td colSpan="6" style={{ textAlign: 'center' }}>No Match Exists</td></tr>
+      if (this.props.TournamentMatchById && this.props.TournamentMatchById.length > 0) {
+        data = this.props.TournamentMatchById.map((data, key) => {
+          notNext = key + 1
+          let d = new Date(data.matchDate);
+          let cdate = new Date().getTime();
+          var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
+          remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
+          return <tr key={key}>
+            <td>{key+1}</td>
+            <td><img src={path + data.Team1[0].teamLogo} style={{float:"right"}} height="70px" width="70px" alt="TeamImage"/>
+            {
+                (data.winningTeamId===data.Team1[0].id)?<img style={{position:'relative', left: '86px'}} src={path+'winbadge.png'} height="50px" width="30px" alt=""/>:null
+            }
+            </td>  
+            <td style={{textAlign:'center'}}>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
+            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage"  >
+                {
+                  (data.winningTeamId===data.Team2[0].id)?<img style={{position:'relative', left: '86px'}} src={path+'winbadge.png'}  height="30px" width="30px"alt=""/>:null
+                }
+            </img>
+            </td>  
+            <td style={{textAlign:'center'}}>{d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()}</td>
+            { (remainday>0) ? ( 
+                  ( remainday > 5 ) ? 
+                        (<td style={{textAlign:'center'}}>{remainday +' days '}</td>) : (<td style={{textAlign:'center'}}><Timer date={data.matchDate}/></td>) 
+                  ): (
+                    <td style={{cursor:'pointer',textAlign:'center'}} onClick={()=>this.winningTeam(data)}> {'Finished'} </td>)
+             }
+             <td> <Button color="info"  style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
+          </tr>
+        })
+      }
+      else {
+        data = <tr><td colSpan="6" style={{ textAlign: 'center' }}>No Match Exists</td></tr>
+      }
+  
+
     }
 
+    
     let tournamentD = "";
     if (this.props.Tournament.length > 0 && this.props.Tournament) {
       tournamentD = this.props.Tournament.map((data, key) => {
@@ -178,7 +229,7 @@ class TournamentMatch extends Component {
               <WinnerModal isOpen={this.state.showWinner} data={this.state.data} toggleWinner={this.toggleWinner}/>
             ):null
           }
-          <AddTournamentMatch isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournamentMatch>
+          <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
           <div style={{ marginTop: "50px" }}>
             {
               (this.state.tournamentid === 'selected') ? (
@@ -200,7 +251,7 @@ class TournamentMatch extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} style={{ width: "62px" }}>Add </Button>
+              <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
             </div>
           </div>
           {data ?
@@ -209,17 +260,19 @@ class TournamentMatch extends Component {
                 {
                   (this.state.tournamentid === 'selected') ? (
                     <tr onClick={this.sortingdata.bind(Event)}>
+                        <th style={{cursor:'pointer'}}>#</th>
                         <th id={'tournamentId'} style={{cursor:'pointer'}}>Tournament</th>
                         <th colSpan="3" style={{textAlign:'center',cursor:'pointer'}} id={'tournamentId'} >Teams</th>
-                        <th>Date</th>
-                        <th>Remaining Time</th>
+                        <th style={{textAlign:'center'}}>Date</th>
+                        <th style={{textAlign:'center'}}>Remaining Time</th>
                         <th>Action</th>
                     </tr>
                   ) : (
                       <tr>
+                        <th style={{cursor:'pointer'}}>#</th>
                         <th colSpan="3" style={{ textAlign: 'center' }} id={'tournamentId'} >Teams</th>
-                        <th>Date</th>
-                        <th>Remaining Time</th>
+                        <th style={{textAlign:'center'}}>Date</th>
+                        <th style={{textAlign:'center'}}>Remaining Time</th>
                         <th>Action</th>
                       </tr>
                     )
@@ -254,7 +307,8 @@ const mapStateToProps = (state) => {
   return {
     TournamentMatchs: state.TournamentMatchs.allmatchs,
     Tournament: state.Tournament.Tournamentss,
-    AddTournament: state.Tournament.Tournamentss
+    AddTournament: state.Tournament.Tournamentss,
+    TournamentMatchById: state.TournamentMatchs.tournamentMatches
   }
 };
 

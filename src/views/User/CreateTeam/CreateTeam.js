@@ -33,8 +33,6 @@ class CreateTeam extends Component {
         this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
     addplayerteam = (teams,name) => {
-        // debugger
-
         if(name==="team1"){
             this.setState({team1:this.state.team1+1})
                     }else if(name==="team2"){
