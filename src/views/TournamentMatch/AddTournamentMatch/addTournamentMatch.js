@@ -59,8 +59,8 @@ class AddTournamentMatch extends Component {
           tournament.TournamentMatches.map((match) => {
             let mDate = match.matchDate.split("T");
             if (mDate[0] === date) {
-              teams.push(match.teamId1);
-              teams.push(match.teamId2);
+              this.setState({ isError: 'A match is already fixed on this date,select another' });
+              this.setState({isteams:''});
             }
             return null;
           })
@@ -73,17 +73,33 @@ class AddTournamentMatch extends Component {
     }
     else {
       this.setState({ isError: 'Select valid date' });
+      this.setState({isteams:''});
     }
   }
 
   addrecord = (e) => {
+    let { tournamentId, team1, team2, date } =this.state;
     const obj={
-      tournamentId: this.state.tournamentId,
-      teamId1: this.state.team1,
-      teamId2: this.state.team2,
-      matchDate: this.state.date
+      tournamentId: tournamentId,
+      teamId1: team1,
+      teamId2: team2,
+      matchDate: date
     }
-    this.props.action.TournamentMatch.AddTournamentMatchAction(obj);
+    let tournament = this.props.ShowTornamentAll.filter(tournament=>{
+      return tournament.id === parseInt(tournamentId,10);
+    })
+
+    let teamid1 = this.props.ShowTeamAll.filter(team=>{
+      return team.id === parseInt(team1,10);
+    })
+
+    let teamid2 = this.props.ShowTeamAll.filter(team=>{
+      return team.id === parseInt(team2,10);
+    })
+    if (this.props.tournamentid==='selected')
+      this.props.action.TournamentMatch.AddTournamentMatchAction(obj,tournament,teamid1,teamid2,'',this.props.nrecord);
+    else
+      this.props.action.TournamentMatch.AddTournamentMatchAction(obj,tournament,teamid1,teamid2,this.props.tournamentid);
     this.closeModal();
   }
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
 import UserPanel from '../../UserPanel/userPanel'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button } from 'reactstrap';
 import classnames from 'classnames';
@@ -71,7 +70,6 @@ class CreateTeam extends Component {
         E.preventDefault();
         const userId = localStorage.getItem("userId");
         const tournamentMatchId = this.props.match.params.id;
-
         this.state.Myteam.map(data => {
             data = {
                 userId,
@@ -81,7 +79,7 @@ class CreateTeam extends Component {
             this.props.action.CreateTeam.createTeam(data)
             return "";
         })
-
+        this.props.history.push('/Myteam');
     }
     render() {
         let teamplayers = [];
@@ -180,7 +178,6 @@ class CreateTeam extends Component {
                                 <CardBody >
                                     <div className="row" style={{ color: "white" }} >
                                         <div className="headerContainer_1725f headerFixed_38df7">
-
                                             <div>
                                                 <div>
                                                     <div className="container_aa549">
@@ -251,7 +248,7 @@ class CreateTeam extends Component {
                                             </TabPane>
                                         </TabContent></div>
                                     <div style={{ float: "right" }}>
-                                        {this.state.Myteam.length === 11 ?
+                                        {this.state.Myteam.length === 10 ?
                                             <Button onClick={this.createteam.bind(Event)} >Continue</Button>
                                             : <Button disabled>Continue</Button>}
                                     </div>

@@ -122,7 +122,7 @@ class Team extends Component {
     let start
     if (this.props.ShowTeam) {
       start = 0;
-      start = this.state.pageRecord + 1;
+      start = this.state.pageno + 1;
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
@@ -151,7 +151,7 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
             </div>
           </div>
           {data ?

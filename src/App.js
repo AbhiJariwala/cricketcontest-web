@@ -9,7 +9,7 @@ import indexRoutes from './routes/index'
 import userDashBoard from './views/userDashBoard/userDashBoard';
 import ViewTournamentteam from './views/User/ViewTournamentTeam/ViewTournamentTeam'
 import CreateTeam from './views/User/CreateTeam/CreateTeam'
-import Myteam from './views/User/myTems/Myteam';
+import Myteam from './views/User/myTems/myTeam'
 import MyTeamPlayer from './views/User/myTems/Players'
 class App extends Component {
     render() {
