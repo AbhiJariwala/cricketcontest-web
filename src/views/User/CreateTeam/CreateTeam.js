@@ -6,14 +6,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as  MatchPlayerScore from '../../../action/TournamentMatch'
 import * as  CreateTeamAction from '../../../action/user/Createteam'
-import {
-    Card, CardBody
-} from 'reactstrap';
+import { Card, CardBody } from 'reactstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import path from '../../../path';
-import './createTeam.css'
+import './createTeam.css';
+
 let teamId = [];
-const image = "https://wallpapersite.com/images/pages/pic_w/6005.jpg"
+const image = path + 'UserMainImage.jpg'
 class CreateTeam extends Component {
     constructor(props) {
         super(props);
@@ -98,7 +97,7 @@ class CreateTeam extends Component {
                             <Card key={key} body>
                                 <div className="row">
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style={{ width: "100%" }}>
-                                        <img alt="demo" src={path + data.playerImage} style={{width: "150px" }} ></img>
+                                        <img alt="demo" src={path + data.playerImage} style={{ width: "150px" }} ></img>
                                     </div>
                                     <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7">
                                         <p>{data.firstName}{data.lastName}</p>
@@ -120,7 +119,7 @@ class CreateTeam extends Component {
                             <Card key={key} body>
                                 <div className="row">
                                     <div className="col-sm-2" style={{ width: "100%" }}>
-                                        <img alt="demo" src={path + data.playerImage} style={{  width: "150px" }}></img>
+                                        <img alt="demo" src={path + data.playerImage} style={{ width: "150px" }}></img>
                                     </div>
                                     <div className="col-sm-7">
                                         <p>{data.firstName}{' '}{data.lastName}</p>
@@ -168,7 +167,7 @@ class CreateTeam extends Component {
         return (
             <div>
                 <UserPanel></UserPanel>
-                <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})`, overflow: "scroll", height: "600px",marginTop:"-17px"}}  >
+                <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})`, overflow: "scroll", height: "600px", marginTop: "-17px" }}  >
                     <div className="row">
                         <div className="col-md-6" style={{}}>
                             <Row>
@@ -193,7 +192,7 @@ class CreateTeam extends Component {
                                                                 </div>
                                                             </div>
                                                             <div className="flagContainer_029e0">
-                                                                <div className="flagContainer_47acd"><img  alt="true" src={teamName1.length !== 0 ? path + teamName1.Team1[0].teamLogo : ""} className="flag_008b5" /></div>
+                                                                <div className="flagContainer_47acd"><img alt="true" src={teamName1.length !== 0 ? path + teamName1.Team1[0].teamLogo : ""} className="flag_008b5" /></div>
                                                                 <div className="squadOneText_3ad2c">
                                                                     <div className="teamName_a2024">{teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}</div>
                                                                     <div className="teamCount_84ce0">{this.state.team1}</div>
@@ -204,7 +203,7 @@ class CreateTeam extends Component {
                                                                     <div className="teamName_a2024">{teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}</div>
                                                                     <div className="teamCount_84ce0">{this.state.team2}</div>
                                                                 </div>
-                                                                <div className="flagContainer_47acd"><img  alt="true" src={teamName1.length !== 0 ? path + teamName1.Team2[0].teamLogo : ""} className="flag_008b5" /></div>
+                                                                <div className="flagContainer_47acd"><img alt="true" src={teamName1.length !== 0 ? path + teamName1.Team2[0].teamLogo : ""} className="flag_008b5" /></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -212,23 +211,23 @@ class CreateTeam extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row" style={{ background: "white" }}><Nav tabs>
-                                        <NavItem>
-                                            <NavLink
-                                                className={classnames({ active: this.state.activeTab === '1' })}
-                                                onClick={() => { this.toggle('1'); }}>
-                                                {teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}
-                                            </NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                className={classnames({ active: this.state.activeTab === '2' })}
-                                                onClick={() => { this.toggle('2'); }}>
-                                                {teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}
-                                            </NavLink>
-                                        </NavItem>
-                                    </Nav>
-                                       
+                                    <div className="row" style={{ background: "white" }}>
+                                        <Nav tabs>
+                                            <NavItem>
+                                                <NavLink
+                                                    className={classnames({ active: this.state.activeTab === '1' })}
+                                                    onClick={() => { this.toggle('1'); }}>
+                                                    {teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink
+                                                    className={classnames({ active: this.state.activeTab === '2' })}
+                                                    onClick={() => { this.toggle('2'); }}>
+                                                    {teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}
+                                                </NavLink>
+                                            </NavItem>
+                                        </Nav>
                                         <TabContent activeTab={this.state.activeTab} >
                                             <TabPane tabId="1">
                                                 <Row   >
@@ -263,17 +262,18 @@ class CreateTeam extends Component {
         );
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         ShowTornamentmatches: state.TournamentMatchs.allmatchs
     }
-};
+}
+
 const mapDispatchToProps = dispatch => ({
     action: {
         MatchPlayerScore: bindActionCreators(MatchPlayerScore, dispatch),
         CreateTeam: bindActionCreators(CreateTeamAction, dispatch),
-
-
     }
-});
+})
+
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTeam);

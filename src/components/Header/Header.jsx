@@ -1,13 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem, 
-  Container, 
+  Container,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 
 import dashboardRoutes from "routes/dashboard.jsx";
@@ -155,14 +157,26 @@ class Header extends React.Component {
             navbar
             className="justify-content-end">
             <Nav navbar>
-              <NavItem>
+              {/* <NavItem>
                 <Link to="/login" className="nav-link">
                   <i className="now-ui-icons users_single-02" onClick={this.logoutClick.bind(this)} />
                   <p>
                     <span className="d-lg-none d-md-block">Account</span>
                   </p>
                 </Link>
-              </NavItem>
+              </NavItem> */}
+              <Dropdown
+                nav
+                isOpen={this.state.dropdownOpen}
+                toggle={e => this.dropdownToggle(e)}
+              >
+                <DropdownToggle caret nav>
+                  <i className="now-ui-icons users_single-02" />
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem onClick={this.logoutClick.bind(this)}>Logout</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
             </Nav>
           </Collapse>
         </Container>

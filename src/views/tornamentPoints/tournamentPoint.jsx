@@ -172,79 +172,79 @@ class tournamentPoint extends Component {
           {
             (this.state.pointData)
               ? <Collapse key="Runs" accordion>
-                  <Collapse.Panel header="Runs" key="Runs">
-                    <Table hover>
-                      <thead>
-                        <tr style={{ textAlign: "center" }}>
-                          <th>Range</th>
-                          <th>Point</th>
-                        </tr>
-                      </thead>
-                      <tbody>{runsPoints}</tbody>
-                    </Table>
-                  </Collapse.Panel>
+                <Collapse.Panel header="Runs" key="Runs">
+                  <Table hover>
+                    <thead>
+                      <tr style={{ textAlign: "center" }}>
+                        <th>Range</th>
+                        <th>Point</th>
+                      </tr>
+                    </thead>
+                    <tbody>{runsPoints}</tbody>
+                  </Table>
+                </Collapse.Panel>
 
-                  <Collapse.Panel header="Six" key="Six">
-                    <Table hover>
-                      <thead>
-                        <tr style={{ textAlign: "center" }}>
-                          <th>Range</th>
-                          <th>Point</th>
-                        </tr>
-                      </thead>
-                      <tbody>{sixPoints}</tbody>
-                    </Table>
-                  </Collapse.Panel>
+                <Collapse.Panel header="Six" key="Six">
+                  <Table hover>
+                    <thead>
+                      <tr style={{ textAlign: "center" }}>
+                        <th>Range</th>
+                        <th>Point</th>
+                      </tr>
+                    </thead>
+                    <tbody>{sixPoints}</tbody>
+                  </Table>
+                </Collapse.Panel>
 
-                  <Collapse.Panel header="Four" key="Four">
-                    <Table hover>
-                      <thead>
-                        <tr style={{ textAlign: "center" }}>
-                          <th>Range</th>
-                          <th>Point</th>
-                        </tr>
-                      </thead>
-                      <tbody>{fourPoints}</tbody>
-                    </Table>
-                  </Collapse.Panel>
+                <Collapse.Panel header="Four" key="Four">
+                  <Table hover>
+                    <thead>
+                      <tr style={{ textAlign: "center" }}>
+                        <th>Range</th>
+                        <th>Point</th>
+                      </tr>
+                    </thead>
+                    <tbody>{fourPoints}</tbody>
+                  </Table>
+                </Collapse.Panel>
 
-                  <Collapse.Panel header="Wicket" key="Wicket">
-                    <Table hover>
-                      <thead>
-                        <tr style={{ textAlign: "center" }}>
-                          <th>Range</th>
-                          <th>Point</th>
-                        </tr>
-                      </thead>
-                      <tbody>{wicketPoints}</tbody>
-                    </Table>
-                  </Collapse.Panel>
+                <Collapse.Panel header="Wicket" key="Wicket">
+                  <Table hover>
+                    <thead>
+                      <tr style={{ textAlign: "center" }}>
+                        <th>Range</th>
+                        <th>Point</th>
+                      </tr>
+                    </thead>
+                    <tbody>{wicketPoints}</tbody>
+                  </Table>
+                </Collapse.Panel>
 
-                  <Collapse.Panel header="Stumping" key="Stumping">
-                    <Table hover>
-                      <thead>
-                        <tr style={{ textAlign: "center" }}>
-                          <th>Range</th>
-                          <th>Point</th>
-                        </tr>
-                      </thead>
-                      <tbody>{stumpingPoints}</tbody>
-                    </Table>
-                  </Collapse.Panel>
+                <Collapse.Panel header="Stumping" key="Stumping">
+                  <Table hover>
+                    <thead>
+                      <tr style={{ textAlign: "center" }}>
+                        <th>Range</th>
+                        <th>Point</th>
+                      </tr>
+                    </thead>
+                    <tbody>{stumpingPoints}</tbody>
+                  </Table>
+                </Collapse.Panel>
 
-                  <Collapse.Panel header="Catch" key="Catch">
-                    <Table hover>
-                      <thead>
-                        <tr style={{ textAlign: "center" }}>
-                          <th>Range</th>
-                          <th>Point</th>
-                        </tr>
-                      </thead>
-                      <tbody>{catchPoints}</tbody>
-                    </Table>
-                  </Collapse.Panel>
+                <Collapse.Panel header="Catch" key="Catch">
+                  <Table hover>
+                    <thead>
+                      <tr style={{ textAlign: "center" }}>
+                        <th>Range</th>
+                        <th>Point</th>
+                      </tr>
+                    </thead>
+                    <tbody>{catchPoints}</tbody>
+                  </Table>
+                </Collapse.Panel>
 
-                </Collapse>
+              </Collapse>
               : "No Data"
           }
         </AntModal>
@@ -270,7 +270,7 @@ class tournamentPoint extends Component {
     return (
       <div>
         <PanelHeader size="sm" />
-          <div className="content">
+        <div className="content">
 
           <AddTournamentPoint isOpen={this.state.modal} toggle={this.toggle}></AddTournamentPoint>
           {this.renderPointModal()}
@@ -294,8 +294,8 @@ class tournamentPoint extends Component {
           <Table hover>
             <thead className="thead-dark">
               <tr style={{ textAlign: "center" }}>
-                <th>Tournament Name</th>
-                <th>Tournament Point</th>
+                <th>Tournament</th>
+                <th>Point</th>
               </tr>
             </thead>
             <tbody>
