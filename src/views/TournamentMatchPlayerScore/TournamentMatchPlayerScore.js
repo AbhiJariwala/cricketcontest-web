@@ -53,8 +53,7 @@ class TournamenMatchPlayerScore extends Component {
         this.toggleModal();
     }
     getTournamentMatchPlayerScoreByMatch(tournamentId, teamId) {
-        this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
-        console.log(this.state.players)
+        this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);       
         this.setState({
             visible: true
         })
