@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as matchPlayerScoreAction from '../../../action/matchPlayerScore';
 import * as TournamentMatchAction from '../../../action/TournamentMatch';
 import *  as TournamentPointAction from '../../../action/tournamentPoint'
-import '../AddTournamentMatchPlayerScore/AddTournamentMatchPlayerScore.css'
+import './AddTournamentMatchPlayerScore.css'
 
 
 // import { Table } from 'antd';
@@ -55,10 +55,10 @@ class AddMatchPlayerScore extends Component {
 
     addTournamentMatchPlayerScore(tournament) {
         Object.entries(this.state.playerScore).map(([key, value]) => {
-             this.props.TournamentPoint.get_points.map(tournamentPoint => {
+            this.props.TournamentPoint.get_points.map(tournamentPoint => {
                 if (tournamentPoint.tournamentId === tournament.tournamentId) {
                     console.log(tournamentPoint);
-                     Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
+                    Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
                         let from, to;
                         if (pointType === "Catch") {
                             for (var Cpv in pointValue) {
@@ -165,8 +165,8 @@ class AddMatchPlayerScore extends Component {
             tournamentName = tournament[0].Tournament.tournamentName;
             team1 = tournament[0].Team1[0];
             team2 = tournament[0].Team2[0];
-            teams = <Input type="select" onChange={this.teamChangeHandler.bind(this, tournament[0].tournamentId)} >
-                <option disabled defaultChecked>Select Team</option>
+            teams = <Input type="select" id="selectTeam" onChange={this.teamChangeHandler.bind(this, tournament[0].tournamentId)} >
+                <option value="" disabled="" style={{ display: "none" }}>Select Team</option>
                 <option value={team1.id}>{team1.teamName}</option>
                 <option value={team2.id} >{team2.teamName}</option>
             </Input>
@@ -175,14 +175,14 @@ class AddMatchPlayerScore extends Component {
         if (this.props.MatchPlayerScore.players.length > 0) {
             player = this.props.MatchPlayerScore.players.map(player => {
                 return player = player.Players.map((p) => {
-                    return <tr key={p.id} >
+                    return <tr key={p.id} className="playerScore" >
                         <td><b>{p.firstName}</b></td>
-                        <td style={{ paddingRight: "3px", paddingBottom: "3px" }}><Input type="text" name="runs" placeholder="Runs" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                        <td style={{ paddingRight: "3px" }}><Input type="text" name="four" placeholder="Four" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                        <td style={{ paddingRight: "3px" }}><Input type="text" name="six" placeholder="Six" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                        <td style={{ paddingRight: "3px" }}><Input type="text" name="catch" placeholder="Catch" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                        <td style={{ paddingRight: "3px" }}><Input type="text" name="stumping" placeholder="Stumping" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                        <td style={{ paddingRight: "3px" }}><Input type="text" name="wicket" placeholder="Wicket" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td><Input type="text" name="runs" placeholder="Runs" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td><Input type="text" name="four" placeholder="Four" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td><Input type="text" name="six" placeholder="Six" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td><Input type="text" name="catch" placeholder="Catch" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td><Input type="text" name="stumping" placeholder="Stumping" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                        <td><Input type="text" name="wicket" placeholder="Wicket" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
                     </tr>
                 })
             })
@@ -207,7 +207,7 @@ class AddMatchPlayerScore extends Component {
                             {teams}
                         </FormGroup>
                         <FormGroup>
-                            {(player) ?
+                            {(player && document.getElementById("selectTeam")) ?
                                 <table style={{ textAlign: "center" }}>
                                     <thead  >
                                         <tr>
