@@ -53,11 +53,11 @@ class AddMatchPlayerScore extends Component {
         })
     }
 
-
     addTournamentMatchPlayerScore(tournament) {
         Object.entries(this.state.playerScore).map(([key, value]) => {
              this.props.TournamentPoint.get_points.map(tournamentPoint => {
                 if (tournamentPoint.tournamentId === tournament.tournamentId) {
+                    console.log(tournamentPoint);
                      Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
                         let from, to;
                         if (pointType === "Catch") {
