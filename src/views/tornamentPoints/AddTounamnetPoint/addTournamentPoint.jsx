@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import * as tournamentAction from '../../../action/Tournament';
 import * as tournamentPointAction from '../../../action/tournamentPoint';
+import path from '../../../path';
 
 class ModalExample extends React.Component {
     constructor(props) {
@@ -211,9 +212,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div>
-                            <img onClick={() => this.addBox("Runs")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Runs")} alt="plus" src={path + 'plusPoints.png'} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.runBox >= 2
-                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={path + 'minusPoints.png'} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -235,9 +236,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Six")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Six")} alt="plus" src={path + 'plusPoints.png'} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.sixBox >= 2
-                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src={path + 'minusPoints.png'} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -259,9 +260,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Four")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Four")} alt="plus" src={path + 'plusPoints.png'} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.fourBox >= 2
-                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src={path + 'minusPoints.png'} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -283,9 +284,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Wicket")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Wicket")} alt="plus" src={path + 'plusPoints.png'} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.wicketBox >= 2
-                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src={path + 'minusPoints.png'} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -307,9 +308,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Stumping")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Stumping")} alt="plus" src={path + 'plusPoints.png'} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.stumpingBox >= 2
-                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src={path + 'minusPoints.png'} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -331,9 +332,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Catch")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Catch")} alt="plus" src={path + 'plusPoints.png'} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.catchBox >= 2
-                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src={path + 'minusPoints.png'} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
