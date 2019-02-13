@@ -164,7 +164,7 @@ class Player extends Component {
       player = this.props.Player.PlayerData.map((player, key) => {
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
-          <td><img src={path + player.playerImage} height="50px" width="50px" alt="playerImage" /></td>
+          <td><img src={path + 'thumbnail/' + player.playerImage} height="50px" width="50px" alt="playerImage" /></td>
           <td>{player.firstName}&nbsp;{player.lastName}</td>
           <td>{this.calculateAge(player.dob).toString()}</td>
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>

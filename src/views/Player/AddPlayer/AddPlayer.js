@@ -19,7 +19,7 @@ class AddPlayer extends Component {
             formValid: false
         }
     }
-    componentWillReceiveProps(nextProps) {        
+    componentWillReceiveProps(nextProps) {
         let Player = nextProps.data.Player;
         if (nextProps.data.Player) {
             if (nextProps.data.Edit) {
@@ -51,7 +51,7 @@ class AddPlayer extends Component {
         }
     }
 
-    imageChangedHandler(image) {
+    imageChangedHandler(image) {    
         this.setState({
             Player: {
                 ...this.state.Player,
@@ -132,7 +132,6 @@ class AddPlayer extends Component {
     }
 
     validateForm() {
-
         this.setState({
             formValid: this.state.fieldsValid.firstName &&
                 this.state.fieldsValid.lastName &&
