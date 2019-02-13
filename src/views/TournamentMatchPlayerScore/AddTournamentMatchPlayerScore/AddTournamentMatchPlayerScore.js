@@ -125,18 +125,18 @@ class AddMatchPlayerScore extends Component {
                 }
                 return ""
             })
-            let finalScore = {
-                tournamentId: tournament.tournamentId,
-                tournamentMatchId: tournament.id,
-                playerId: parseInt(key, 10),
-                wicket: value.wicket,
-                run: value.runs,
-                catch: value.catch,
-                six: value.six,
-                four: value.four,
-                stumping: value.stumping,
-                score: value.score
-            }
+            // let finalScore = {
+            //     tournamentId: tournament.tournamentId,
+            //     tournamentMatchId: tournament.id,
+            //     playerId: parseInt(key, 10),
+            //     wicket: value.wicket,
+            //     run: value.runs,
+            //     catch: value.catch,
+            //     six: value.six,
+            //     four: value.four,
+            //     stumping: value.stumping,
+            //     score: value.score
+            // }
             // this.props.action.MatchPlayer Score.addTournamentMatchPlayerScore(finalScore);
             this.props.toggleAdd();
             return ""

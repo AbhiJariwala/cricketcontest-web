@@ -9,7 +9,6 @@ import './tournamentTeam.css'
 import 'antd/dist/antd.css';
 import AddTournamentTeam from '.././TournamentTeam/AddTournament/addTournamentTeam'
 import * as TournamentTeamAction from '../../action/TournamentTeam';
-import path from '../../path';
 class ShowTeams extends Component {
   constructor(props) {
     super(props);
