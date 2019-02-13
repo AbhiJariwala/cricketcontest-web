@@ -1,23 +1,23 @@
 import * as tournamentMatchService from '../service/TournamentMatch'
 import { GET_TOURNAMENTMATCHS, INVALID_DATA, GET_ALLTOURNAMENTMATCHS } from '../reducer/TournamentMatch';
 
-import * as authService from '../service/TournamentMatch'
+import { GET_TOURNAMENTMATCHS, GET_ALLTOURNAMENTMATCHS, INVALID_DATA, ADD_TOURNAMENTMATCHS} from '../reducer/TournamentMatch';
+
 export const getTournamentMatch = (id) => {
     return (dispatch) => {
-        authService.getTournamentMatch(id)
-            .then((response) => {
-                if (response.status === 200) {
-                    var data = response.data;
-                    dispatch(
-                        {
-                            type: GET_TOURNAMENTMATCHS,
-                            allmatchs: data
-                        }
-                    );
-                }
-            })
+        tournamentMatchService.getTournamentMatch(id)
+        .then((response) => {
+            if (response.status === 200) {
+                var data=response.data;
+                dispatch(
+                    {
+                        type: GET_TOURNAMENTMATCHS,
+                        tournamentMatches:data
+                    }
+                );
+            }
+        })
             .catch((error) => {
-                debugger;
                 if (error.response) {
                     dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
                 }
@@ -25,64 +25,47 @@ export const getTournamentMatch = (id) => {
     }
 };
 
-// export const getAllTournamentMatch = () =>  {
-//     return (dispatch) => {
-//         authService.getAllTournamentMatch()
-//         .then((response) => {
-//             if (response.status === 200) {
-//                 var data=response.data;
-//                 dispatch(
-//                     {
-//                         type: GET_ALLTOURNAMENTMATCHS,
-//                         allmatchs:data
-//                     }
-//                 );
-//             }
-//         })
-//             .catch((error) => {
-//                 if (error.response) {
-//                     dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
-//                 }
-//             })
-//     }
-// };
-
-export const SelectTournamentMatchAction = (pageno, parpageRecord, sorting, fieldName) => {
-    debugger;
+export const SelectTournamentMatchAction = (pageno, parpageRecord, fieldName, sorting) =>  {
     return (dispatch) => {
-        authService.SelectTournamentMatchAction(pageno, parpageRecord, sorting, fieldName)
-            .then((response) => {
-                if (response.status === 200) {
-                    debugger;
-                    var data = response.data;
-                    dispatch(
-                        {
-                            type: GET_ALLTOURNAMENTMATCHS,
-                            allmatchs: data
-                        }
-                    );
+        tournamentMatchService.SelectTournamentMatchAction(pageno, parpageRecord, fieldName, sorting)
+        .then((response) => {
+            if (response.status === 200) {
+                var data=response.data;
+                dispatch(
+                    {
+                        type: GET_ALLTOURNAMENTMATCHS,
+                        allmatchs:data
+                    }
+                );
+            }
+        })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });
                 }
             })
     }
-}
+};
 
-export const getTournamentMatchAction = (pageno, parpageRecord, filedName, sortType) => {
+export const AddTournamentMatchAction = (data,tournament,team1,team2,tournamentid,nrecord) =>  {
     return (dispatch) => {
-
-        tournamentMatchService.getTournamentMatchAction(pageno, parpageRecord, filedName, sortType)
-            .then((response) => {
-
-                if (response.status === 200) {
-                    var data = response.data;
-                    dispatch(
-                        {
-                            type: GET_TOURNAMENTMATCHS,
-                            tournamentmatchs: data
-                        }
-                    );
-                }
-            })
-
+        tournamentMatchService.addTournamentMatch(data)
+        .then((response) => {
+            if (response.status === 200) {
+                var data=response.data;
+                dispatch(
+                    {
+                        type: ADD_TOURNAMENTMATCHS,
+                        data:data,
+                        tournament,
+                        team1,
+                        team2,
+                        tournamentid,
+                        nrecord
+                    }
+                );
+            }
+        })
             .catch((error) => {
                 if (error.response) {
                     dispatch({ type: INVALID_DATA, data: { error_msg: error.response.data.error } });

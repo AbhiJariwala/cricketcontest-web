@@ -31,8 +31,8 @@ class Login extends Component {
                 fieldValidationErrors.email = fieldValidation.email ? '' : ' Invalid Email';
                 break;
             case 'password':
-                fieldValidation.password = value.length >= 6;
-                fieldValidationErrors.password = fieldValidation.password ? '' : ' Password is too short';
+                fieldValidation.password = value.trim().length >= 6;
+                fieldValidationErrors.password = fieldValidation.password ? '' : ' Invalid Password ';
                 break;
             default:
                 break;
@@ -52,19 +52,31 @@ class Login extends Component {
 
 
     inputChangeHandler(e) {
-
+        this.setState({ fieldsErrors: { email: '', password: '' } })
         const name = e.target.name;
         const value = e.target.value;
         this.setState({ [name]: value }, () => { this.validateField(name, value) })
     }
 
-
+    enterPress(e) {
+        if (e.key === "Enter") {
+            this.props.action.auth.loginUser(this.state);
+        }
+    }
     btnLoginClick(e) {
+        // this.setState({ fieldsErrors: { email: '', password: '' } })
+        const emailname = document.getElementById("email").name;
+        const emailvalue = document.getElementById("email").value;
+        const passwordname = document.getElementById("password").name;
+        const passwordvalue = document.getElementById("password").value;
+        this.validateField(emailname, emailvalue);
+        this.validateField(passwordname, passwordvalue);
+
         e.preventDefault();
-        this.props.action.auth.loginUser(this.state);
-        // if (this.props.err_msg !== "") {
-        //     this.setState({ err_msg: this.props.err_msg });
-        // }
+        if (this.state.formValid) {
+            this.props.action.auth.loginUser(this.state);
+        }
+
     }
     render() {
         return (
@@ -79,9 +91,9 @@ class Login extends Component {
                                     <h5 className="title">Login</h5>
                                 </CardHeader>
                                 <CardBody>
-                                    <Form>
+                                    <Form onKeyPress={this.enterPress.bind(this)}>
                                         <FormGroup>
-                                            {(this.props.err_msg !== "") ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : ""}
+
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="email"><b>Email</b></Label>
@@ -91,12 +103,12 @@ class Login extends Component {
                                         <FormGroup>
                                             <Label for="password"><b>Password</b></Label>
                                             <Input type="password" name="password" id="password" placeholder="Password" onChange={this.inputChangeHandler.bind(this)} value={this.state.password} />
-                                            <span style={{ color: "red" }}>{this.state.fieldsErrors.password}</span>
+                                            {(this.props.err_msg !== "" && this.props.err_msg !== undefined) ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : <span style={{ color: "red" }}>{this.state.fieldsErrors.password}</span>}
                                         </FormGroup>
                                     </Form>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button style={{ "float": "right", "marginBottom": "10px", "width": "100%" }} color="info" onClick={this.btnLoginClick.bind(this)} disabled={!this.state.formValid}>Login</Button>
+                                    <Button style={{ "float": "right", "marginBottom": "10px", "width": "100%" }} color="info" onClick={this.btnLoginClick.bind(this)}>Login</Button>
                                 </CardFooter>
                                 <br />
                                 <hr />

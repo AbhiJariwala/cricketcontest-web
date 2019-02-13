@@ -21,12 +21,10 @@ class AddTournament extends Component {
     fieldsErrors: { tournamentName: '', tournamentDescription: '', tournamentBanner: '' },
     fieldsValid: { tournamentName: false, tournamentDescription: false, tournamentBanner: "false" },
   }
-
   componentWillMount = () => {
     const userId = localStorage.getItem("userId");
     this.setState({ createdBy: userId, updatedBy: userId });
   }
-
   componentWillUpdate = () => {
     if (this.props.dataid !== null && this.props.dataid.length !== 0 && !this.state.notcallnext) {
       this.setState({
@@ -39,18 +37,17 @@ class AddTournament extends Component {
       })
     }
   }
-  
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
     switch (fieldName) {
       case 'tournamentName':
         fieldValidation.tournamentName = value.match(/^[a-zA-Z0-9_ ]+$/i);
-        fieldValidationErrors.tournamentName = fieldValidation.tournamentName ? '' : ' Only Alphabets Allow'
+        fieldValidationErrors.tournamentName = fieldValidation.tournamentName ? '' : ' Invalied Tournament'
         break;
       case 'tournamentDescription':
         fieldValidation.tournamentDescription = value.match(/^[~`!@#$%^&*()-=+a-zA-Z0-9_ ]+$/i);
-        fieldValidationErrors.tournamentDescription = fieldValidation.tournamentDescription ? '' : ' Only Alphabets Allow'
+        fieldValidationErrors.tournamentDescription = fieldValidation.tournamentDescription ? '' : ' Invalied description'
         break;
       default:
         break;
@@ -83,33 +80,36 @@ class AddTournament extends Component {
       }
     }
     const data = {
-    "id":this.state.id,
-    "tournamentName":this.state.tournamentName,
-    "tournamentDescription": this.state.tournamentDescription,
-    "tournamentBanner":this.state.tournamentBanner[0],    
-    "updatedBy":parseInt(this.state.updatedBy,10)
+      "id": this.state.id,
+      "tournamentName": this.state.tournamentName,
+      "tournamentDescription": this.state.tournamentDescription,
+      "tournamentBanner": this.state.tournamentBanner[0],
+      "updatedBy": parseInt(this.state.updatedBy, 10)
     }
     this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
     this.props.toggle(Event);
   }
   AddDataData = (Event) => {
     Event.preventDefault();
-    let formdata = new FormData();
-    formdata.append("tournamentName", this.state.tournamentName);
-    formdata.append("tournamentDescription", this.state.tournamentDescription);
-    formdata.append("tournamentBanner", this.state.tournamentBanner[0]);
-    formdata.append("createdBy", this.state.createdBy);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
+    if (this.state.imagebanner) {
+      let formdata = new FormData();
+      formdata.append("tournamentName", this.state.tournamentName);
+      formdata.append("tournamentDescription", this.state.tournamentDescription);
+      formdata.append("tournamentBanner", this.state.tournamentBanner[0]);
+      formdata.append("createdBy", this.state.createdBy);
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
       }
+      this.props.action.Tournament.AddTournamentAction(formdata, config)
+      this.props.toggle(Event);
     }
-    this.props.action.Tournament.AddTournamentAction(formdata, config)
-    this.props.toggle(Event);
   }
   imageChangedHandler(image) {
     this.setState({
-      tournamentBanner: image
+      tournamentBanner: image,
+      imagebanner: true
     })
     this.validateField("BannerImage", "true");
   }
@@ -126,8 +126,6 @@ class AddTournament extends Component {
       singleImage={true}
       accept={"image/*"} />
       <center><span style={{ color: "red" }}>{this.state.fieldsErrors.BannerImage}</span></center></div>
-
-
     if (this.props.dataid !== null) {
       if (this.props.dataid.imagebanner) {
         image = <div align="center">
@@ -160,9 +158,7 @@ class AddTournament extends Component {
                   <Input type="textarea" name="tournamentDescription" id="tournamentDescription" placeholder="tournamentDescription" defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""} onChange={this.inputChangeHandler.bind(this)} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentDescription}</span>
                 </FormGroup>
-                <FormGroup>
-                  {image}
-                </FormGroup>
+                {image}
               </Form>
             </ModalBody>
             <ModalFooter>
@@ -177,14 +173,15 @@ class AddTournament extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth
-  }
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     auth: state.auth
+//   }
+// };
 const mapDispatchToProps = dispatch => ({
   action: {
     Tournament: bindActionCreators(TournamentAction, dispatch)
   }
-});
-export default connect(mapStateToProps, mapDispatchToProps)(AddTournament)
+})
+
+export default connect(null, mapDispatchToProps)(AddTournament)

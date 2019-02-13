@@ -1,7 +1,8 @@
 import * as MatchPlayerService from '../service/matchPlayerScore';
 import * as TeamPlayerService from '../service/teamPlayerService';
-import { GET_PLAYER, GET_TOURNAMENT, FAILED, GET_TOURNAMENT_MATCHPLAYER_SCORE } from '../reducer/matchPlayerScore';
-// ADD_SCORE,GET_TEAM
+import * as tournamentMatchService from '../service/TournamentMatch'
+import { GET_PLAYER, GET_TOURNAMENT, FAILED, GET_TOURNAMENT_MATCHPLAYER_SCORE,GET_MATCHBYTOURNAMENT,ADD_SCORE } from '../reducer/matchPlayerScore';
+
 export const getTournaments = () => {
     return dispatch => {
         MatchPlayerService.getTournaments()
@@ -23,50 +24,6 @@ export const getTournaments = () => {
             })
     }
 }
-
-// export const getTournamentMatchesByTournamentId = (tournamentId) => {
-//     return dispatch => {
-//         MatchPlayerService.getTournamentMatchesByTournamentId(tournamentId)
-//             .then((response) => {
-//                 if (response.status === 200) {
-//                     dispatch({
-//                         type: GET_TEAM,
-//                         data: response.data
-//                     })
-//                 }
-//             })
-//             .catch((error) => {
-//                 if (error.response) {
-//                     dispatch({
-//                         type: FAILED,
-//                         data: error.response.data.error
-//                     })
-//                 }
-//             })
-//     }
-// }
-
-// export const addTournamentMatchPlayerScore = (tournamentMatchPlayerScore) => {
-//     return dispatch => {
-//         MatchPlayerService.addTournamentMatchPlayerScore(tournamentMatchPlayerScore)
-//             .then((response) => {
-//                 if (response.status === 200) {
-//                     dispatch({
-//                         type: ADD_SCORE,
-//                         data: response.data
-//                     })
-//                 }
-//             })
-//             .catch((error) => {
-//                 if (error.response) {
-//                     dispatch({
-//                         type: FAILED,
-//                         data: error.response.data.error
-//                     })
-//                 }
-//             })
-//     }
-// }
 
 export const getTournamentMatchPlayerScore = (offset, perPageRecord, fieldName, order) => {
     return dispatch => {
@@ -111,6 +68,45 @@ export const getPlayers = (tournamentId, teamId) => {
             })
     }
 }
+
+export const getMatchByTournament = (tournamentId) => {
+    return dispatch => {
+        tournamentMatchService.getTournamentMatch(tournamentId)
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch({
+                        type: GET_MATCHBYTOURNAMENT,
+                        data: response.data
+                    })
+                }
+            })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({
+                        type: FAILED,
+                        data: error.response.data.error
+                    })
+                }
+            })
+    }
+}
+export const addTournamentMatchPlayerScore = (score) => {
+    return (dispatch) => {
+        MatchPlayerService.addTournamentMatchPlayerScore(score).then((response) => {
+            if (response.status === 200) {
+                dispatch({
+                    type: ADD_SCORE,
+                    data: response.data
+                });
+            }
+        }).catch((error) => {
+            if (error.response) {
+                dispatch({ type: FAILED, data: { error_msg: error.response.data.error } });
+            }
+        })
+    }
+};
+
 
 
 

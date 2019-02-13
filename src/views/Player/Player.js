@@ -25,7 +25,7 @@ class Player extends Component {
         playerImage: [],
         showimage: false
       },
-      pageRecord: 1,
+      pageRecord: 0,
       noOfRecords: 5,
       sortFiled: 'id',
       sortType: 'DESC'
@@ -56,7 +56,7 @@ class Player extends Component {
 
   showEntriesChanged(e) {
     let noOfRecords = parseInt(e.target.value, 10);
-    let pageRecord = 1;
+    let pageRecord = 0;
     this.setState({
       pageRecord: pageRecord,
       noOfRecords: noOfRecords
@@ -160,19 +160,19 @@ class Player extends Component {
     let start = 0;
     if (this.props.Player) {
       start = 0;
-      start = this.state.pageRecord;
+      start = this.state.pageRecord + 1;
       player = this.props.Player.PlayerData.map((player, key) => {
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
-          <td><img src={path + player.playerImage} height="50px" width="50px" alt="playerImage" /></td>
+          <td><img src={path + 'thumbnail/' + player.playerImage} height="50px" width="50px" alt="playerImage" /></td>
           <td>{player.firstName}&nbsp;{player.lastName}</td>
           <td>{this.calculateAge(player.dob).toString()}</td>
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
           <td>
-          <img src={path+"edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
-          <img src={path+"delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
-            </td>
+            <img src={path + "edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
+            <img src={path + "delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
+          </td>
         </tr>
       })
     } else { return <tr>No Player Found</tr> }
@@ -213,7 +213,7 @@ class Player extends Component {
             </tbody>
           </Table>
           <ButtonGroup>
-            {(this.state.pageRecord !== 1) ? <Button color="info" onClick={this.btnPageChangeClick.bind(this)} name="Prev">Prev</Button> : null}&nbsp;
+            {(this.state.pageRecord !== 0) ? <Button color="info" onClick={this.btnPageChangeClick.bind(this)} name="Prev">Prev</Button> : null}&nbsp;
             {(start >= this.state.pageRecord + this.state.noOfRecords) ?
               <Button color="info" onClick={this.btnPageChangeClick.bind(this)} name="Next">Next</Button> : null}
           </ButtonGroup>

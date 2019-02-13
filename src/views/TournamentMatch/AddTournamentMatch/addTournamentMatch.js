@@ -6,7 +6,9 @@ import { bindActionCreators } from 'redux';
 
 import * as TournamentAction from '../../../action/Tournament';
 import * as TeamAction from '../../../action/Team';
+import * as TournamentMatchAction from '../../../action/TournamentMatch';
 import './AddTournamentMatch.css';
+
 
 class AddTournamentMatch extends Component {
   constructor(props) {
@@ -18,7 +20,8 @@ class AddTournamentMatch extends Component {
       team1: "",
       team2: "",
       date: '',
-      isError: ''
+      isError: '',
+      isteams: []
     }
   }
 
@@ -32,48 +35,86 @@ class AddTournamentMatch extends Component {
     }
   }
 
+  isFutureDate(idate) {
+    var today = new Date().getTime();
+    idate = idate.split("-");
+    idate = new Date(idate[0], idate[1] - 1, idate[2]).getTime();
+    return (today - idate) < 0;
+  }
+
   handleChangeTeam = (e) => {
     this.setState({ [e.target.name]: parseInt(e.target.value, 10) });
   }
 
   onChange = (e) => {
-    debugger;
     let date = e.target.value
+    let teams = [];
     this.setState({ date });
-    console.log("date::", date);
-    this.props.action.Team.fetchTeamAction();
-    this.props.ShowTornamentAll.map((tournament) => {
-      debugger;
-      if (tournament.TournamentMatches.length > 0) {
-        console.log("matchdate::", tournament.TournamentMatches[0].matchDate);
-        let teams = []
-        tournament.TournamentMatches.map((match) => {
+    let isfuture = this.isFutureDate(date)
+    if (isfuture) {
+      this.setState({ isError: '' });
+      this.props.action.Team.fetchTeamAction();
+      this.props.ShowTornamentAll.map((tournament) => {
+        if (tournament.TournamentMatches.length > 0) {
+          tournament.TournamentMatches.map((match) => {
             let mDate = match.matchDate.split("T");
-            console.log("mDate", mDate[0]);
             if (mDate[0] === date) {
-              return teams.push([match.teamId1, match.teamId2]);
+              this.setState({ isError: 'A match is already fixed on this date,select another' });
+              this.setState({isteams:''});
             }
             return null;
           })
-         console.log('teams', teams);
-      }
-      return (tournament.id === parseInt(this.state.tournamentId, 10)) ? (
-        this.setState({ teams: tournament.Teams })
-      ) : null;
-    })
+        }
+        return (tournament.id === parseInt(this.state.tournamentId, 10)) ? (
+          this.setState({ teams: tournament.Teams })
+        ) : null;
+      })
+      this.setState({ isteams: teams });
+    }
+    else {
+      this.setState({ isError: 'Select valid date' });
+      this.setState({isteams:''});
+    }
   }
 
   addrecord = (e) => {
-    //this.props.action.AllMatch.getAllTournamentMatch();
-    console.log("Select record value::");
-    console.log("Tournament id::", this.state.tournamentId);
-    console.log("Team1 id::", this.state.team1);
-    console.log("Team2 id::", this.state.team2);
-    console.log("Match Date::", this.state.date);
+    let { tournamentId, team1, team2, date } =this.state;
+    const obj={
+      tournamentId: tournamentId,
+      teamId1: team1,
+      teamId2: team2,
+      matchDate: date
+    }
+    let tournament = this.props.ShowTornamentAll.filter(tournament=>{
+      return tournament.id === parseInt(tournamentId,10);
+    })
 
-    // let st=this.props.ShowTornamentAll.filter((tournament,key) => {
-    //   return (parseInt(this.state.tournamentId, 10) === parseInt(tournament.id, 10))
-    // })
+    let teamid1 = this.props.ShowTeamAll.filter(team=>{
+      return team.id === parseInt(team1,10);
+    })
+
+    let teamid2 = this.props.ShowTeamAll.filter(team=>{
+      return team.id === parseInt(team2,10);
+    })
+    if (this.props.tournamentid==='selected')
+      this.props.action.TournamentMatch.AddTournamentMatchAction(obj,tournament,teamid1,teamid2,'',this.props.nrecord);
+    else
+      this.props.action.TournamentMatch.AddTournamentMatchAction(obj,tournament,teamid1,teamid2,this.props.tournamentid);
+    this.closeModal();
+  }
+
+  closeModal = () => {
+    this.setState({
+      tournamentId: "",
+      tournamentTeams: [],
+      teams: [],
+      team1: "",
+      team2: "",
+      date: '',
+      isError: '',
+      isteams: []
+    })
+    this.props.toggle();
   }
 
   render() {
@@ -89,10 +130,13 @@ class AddTournamentMatch extends Component {
       });
     }
 
-    const { team1 } = this.state;
+    const { team1, isteams } = this.state;
     let teamlist1 = ""
-    if (this.state.teams !== '') {
-      teamlist1 = this.state.teams.map((t1, key) => {
+    let filteredteams = this.state.teams.filter(team => {
+      return !isteams.includes(team.id)
+    })
+    if (filteredteams !== '') {
+      teamlist1 = filteredteams.map((t1, key) => {
         return <option value={t1.id} id={t1.id} key={t1.id}>{t1.teamName}</option>
       })
     }
@@ -100,8 +144,8 @@ class AddTournamentMatch extends Component {
     const { team2 } = this.state;
     let teamlist2 = ""
     if (team1 !== '') {
-      if (this.state.teams !== '') {
-        teamlist2 = this.state.teams.map((t2, key) => {
+      if (filteredteams !== '') {
+        teamlist2 = filteredteams.map((t2, key) => {
           if (this.state.team1 !== t2.id)
             return <option value={t2.id} id={t2.id} key={t2.id}>{t2.teamName}</option>
           else
@@ -113,20 +157,15 @@ class AddTournamentMatch extends Component {
     return (
       <Container>
         <div className="containerDiv">
-          <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} >
-            <ModalHeader toggle={this.props.toggle} >Tournament Match</ModalHeader>
+          <Modal isOpen={this.props.isOpen} toggle={this.closeModal} >
+            <ModalHeader toggle={this.closeModal} >Tournament Match</ModalHeader>
             <ModalBody>
               <Form>
                 <FormGroup>
                   <Label for="exampleSelect">Select Tournament Name</Label>
-                  <Input
-                    required={true}
-                    onChange={this.handleChange}
-                    type="select"
-                    name="tournamentId"
-                    value={tournamentId}>
-                    <option hidden>select</option>
-                    {data}
+                  <Input required={true} onChange={this.handleChange} type="select" name="tournamentId" value={tournamentId}>
+                      <option hidden>select</option>
+                      {data}
                   </Input>
                 </FormGroup>
                 {
@@ -138,7 +177,11 @@ class AddTournamentMatch extends Component {
                   ) : null
                 }
                 {
-                  (this.state.date !== '') ? (
+                  (this.state.isError !== '') ?
+                      (<span style={{ color: "red" }}>{this.state.isError}</span>) : null
+                }
+                {
+                  (this.state.date !== '' && this.state.isError === '') ? (
                     <FormGroup>
                       <Label for="exampleSelect">Select Team 1</Label>
                       <Input required={true} onChange={this.handleChangeTeam} type="select" name="team1" value={team1}>
@@ -152,26 +195,18 @@ class AddTournamentMatch extends Component {
                   (this.state.team1 !== '') ? (
                     <FormGroup>
                       <Label for="exampleSelect">Select Team 2</Label>
-                      <Input
-                        required={true}
-                        onChange={this.handleChangeTeam}
-                        type="select"
-                        name="team2"
-                        value={team2}>
+                      <Input required={true} onChange={this.handleChangeTeam} type="select" name="team2" value={team2}>
                         <option hidden>select</option>
                         {teamlist2}
                       </Input>
                     </FormGroup>
                   ) : null
                 }
-                {(this.state.isError !== '') ?
-                  (<span style={{ color: "red" }}>{this.state.isError}</span>) : null
-                }
               </Form>
             </ModalBody>
             <ModalFooter>
               <Button color="info" onClick={this.addrecord.bind(this)} >Submit</Button>{''}
-              <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
+              <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>
@@ -191,7 +226,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     action: {
       Tournament: bindActionCreators(TournamentAction, dispatch),
-      Team: bindActionCreators(TeamAction, dispatch)
+      Team: bindActionCreators(TeamAction, dispatch),
+      TournamentMatch:bindActionCreators(TournamentMatchAction,dispatch)
     }
   }
 }

@@ -7,6 +7,7 @@ import TeamPlayer from '../views/TeamPlayer/TeamPlayer';
 import TournamentMatch from '../views/TournamentMatch/tournamentmatch'
 import TournamentMatchPlayerScore from '../views/TournamentMatchPlayerScore/TournamentMatchPlayerScore'
 import TournamentPoint from '../views/tornamentPoints/tournamentPoint'
+
 var dashRoutes = [
   {
     path: "/dashboard",

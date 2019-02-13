@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import * as TeamAction from '../../action/Team';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
-import path from '../../path';
+  import path from '../../path';
 class Team extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +19,8 @@ class Team extends Component {
       sorting: "",
       Editdataid: [],
       sortingValueName: "id",
-      sortingValue: "desc"
+      sortingValue: "desc",
+      pageRecord: 0,
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -28,19 +29,21 @@ class Team extends Component {
   }
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      Editdataid: ""
     });
   }
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
-    this.setState({ parpageRecord: parpage })
-    this.props.action.Team.selectTeamAction(this.state.pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
+    const pageno = 0
+    this.setState({ parpageRecord: parpage, pageno: 0 })
+    this.props.action.Team.selectTeamAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
   changeRecord = (Event) => {
     let datachangeprevNext = Event.target.value;
     let pageno = 0
     if (datachangeprevNext === "Next") {
-      this.setState({ pageno: this.state.pageno + 5 })
+      this.setState({ pageno: this.state.pageno + 5, pageRecord: this.state.pageRecord + 5 })
       if (this.state.pageno === 0) {
         this.setState({ pageno: this.state.parpageRecord })
         pageno = this.state.parpageRecord
@@ -49,17 +52,23 @@ class Team extends Component {
       }
     }
     else if (datachangeprevNext === "Prev") {
-      this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
+      this.setState({ pageno: this.state.pageno - this.state.parpageRecord, pageRecord: this.state.pageRecord - 5 })
       pageno = this.state.pageno - this.state.parpageRecord
     }
     this.props.action.Team.selectTeamAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
   sortingdata = (Event) => {
+<<<<<<< HEAD
     let sortingValueName;
     if (Event.target.childNodes[0].data === "Team Name") {
+=======
+    
+    let sortingValueName;
+    if (Event.target.childNodes[0].data === "Team") {
+>>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
       sortingValueName = "teamName"
     }
-    if (sortingValueName !== "Action") {
+    if (Event.target.childNodes[0].data !== "#" && Event.target.childNodes[0].data !== "Action" && Event.target.childNodes[0].data !== "Logo") {
       let sortingValue = "asc";
       if (!this.state.sortingValueName) {
         this.setState({ sortingValueName: sortingValueName })
@@ -94,7 +103,6 @@ class Team extends Component {
     }
   }
   btnDeleteClick = (id) => {
-
     if (!id) {
       alert("no data");
     } else {
@@ -116,11 +124,19 @@ class Team extends Component {
   render() {
     let notNext = 0;
     let data = ""
+    let start
     if (this.props.ShowTeam) {
+      start = 0;
+      start = this.state.pageno + 1;
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
+<<<<<<< HEAD
           <td><img src={path + data.teamLogo} alt="" style={{ width: "50px", height: "50px" }}></img></td>
+=======
+          <td>{start++}</td>
+          <td><img src={path + data.teamLogo} alt="" style={{ width: "130px", height: "100px" }}></img></td>
+>>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
           <td>{data.teamName}</td>
           <td>
             <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
@@ -144,15 +160,25 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
+<<<<<<< HEAD
               <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+=======
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
+>>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
             </div>
           </div>
           {data ?
-            <Table responsive hover>
+            <Table hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
+<<<<<<< HEAD
                   <th>Team Logo</th>
                   <th style={{ cursor: "pointer" }}>Team Name</th>
+=======
+                  <th>#</th>
+                  <th>Logo</th>
+                  <th style={{ cursor: "pointer" }}>Team</th>
+>>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
                   <th>Action</th>
                 </tr>
               </thead>
@@ -174,8 +200,8 @@ class Team extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
 
+const mapStateToProps = (state) => {
   return {
     ShowTeam: state.Team.TeamData,
   }
@@ -186,4 +212,5 @@ const mapDispatchToProps = dispatch => ({
     Team: bindActionCreators(TeamAction, dispatch)
   }
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(Team)

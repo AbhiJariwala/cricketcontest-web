@@ -6,6 +6,7 @@ import { PanelHeader } from "components";
 import { Collapse, Button as AntButton, Modal as AntModal, Popconfirm } from 'antd';
 import 'antd/dist/antd.css';
 import path from '../../path';
+import './TeamPlayer.css'
 
 import * as teamPlayerAction from '../../action/teamPlayer';
 import AddTeamPlayer from './AddTeamPlayer/AddTeamPlayer';
@@ -53,10 +54,10 @@ class TeamPlayer extends Component {
     }
 
     toggle() {
-        const {modal} = this.state;
+        const { modal } = this.state;
         this.setState({
             modal: !modal
-        });       
+        });
     }
 
     sortingdata = (Event) => {
@@ -88,7 +89,8 @@ class TeamPlayer extends Component {
     perPage = (Event) => {
         const perPage = parseInt(Event.target.value, 10);
         this.setState({ recordPerPage: perPage })
-        this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, perPage, this.state.sortingValue, this.state.sortingValueName);
+        this.setState({ pageno: 0 });
+        this.props.action.getTeamPlayerData.getTournaments(0, perPage, this.state.sortingValue, this.state.sortingValueName);
     }
 
     changeRecord = (Event) => {
@@ -166,8 +168,8 @@ class TeamPlayer extends Component {
                             if (data.TournamentTeam.isDelete === 0) {
                                 return (
                                     <Collapse key={data.TournamentTeam.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
-                                        <Panel header={data.teamName} key={data.TournamentTeam.id}>
-                                            {player}
+                                        <Panel header={data.teamName}>
+                                            {(player.length > 0) ? player : <p className="noPlayers">No Players found</p>}
                                         </Panel>
                                     </Collapse>
                                 );
@@ -204,10 +206,10 @@ class TeamPlayer extends Component {
                         </div>
 
                         <div style={{ float: "left" }}>
-                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
                         </div>
                     </div>
-                    <Table responsive hover>
+                    <Table hover>
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
                                 <th>Banner</th>
