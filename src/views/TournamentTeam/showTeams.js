@@ -4,22 +4,33 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { Checkbox, Col, Row, Button, Popconfirm, Icon, Modal } from 'antd';
+import {Button as ReactButton} from 'reactstrap'
 import './tournamentTeam.css'
 import 'antd/dist/antd.css';
-
+import AddTournamentTeam from '.././TournamentTeam/AddTournament/addTournamentTeam'
 import * as TournamentTeamAction from '../../action/TournamentTeam';
-
+import path from '../../path';
 class ShowTeams extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      addModal: false,
+      teamModal: false,
       visible: false,
       toggle: this.props.toggle,
       tournament: {},
       team: [],
       indeterminate: true,
       checkAll: false,
+      tournamentId:"",
+      callNotnext:0
     }
+    this.toggle = this.toggle.bind(this);
+  }
+  componentDidUpdate=()=>{    
+    if(this.props.tournament.id!==undefined && !this.state.callNotnext){    
+        this.setState({tournamentId:this.props.tournament.id,callNotnext:1})    
+    }    
   }
 
   deleteClick = (d, d2) => {
@@ -30,7 +41,14 @@ class ShowTeams extends Component {
     });
     this.props.deleteClick(d, d2)
   }
-
+  toggle(id) {
+    this.setState({
+      addModal: !this.state.addModal,
+      Editdataid: null
+    });    
+    this.props.toggleTeam();
+    
+  }
   Change = (e) => {
     this.setState({ team: e });
     e.length === this.props.tournament.Teams.length ? this.setState({ checkAll: true, indeterminate: false }) : this.setState({ checkAll: false, indeterminate: e.length === 0 ? false : true })
@@ -70,22 +88,33 @@ class ShowTeams extends Component {
 
     return (
       <div>
-
+<AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle} tournamentid={this.state.tournamentId}/>
         <Modal title={tournament.tournamentName}
           visible={this.props.visible}
           onCancel={this.closeModal}
           footer={null} >
-          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>
-
+          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>         
+          
             {tournament.Teams && tournament.Teams.length === 0 ?
-              <p className='noTeams'> No Teams found in {tournament.tournamentName}</p> :
+              <div> 
+                    <div style={{ float: "right" }}>
+                        <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
+                    </div>
+                    <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
+              </div> :
+              <div>
               <Checkbox indeterminate={this.state.indeterminate}
                 checked={this.state.checkAll}
                 onChange={this.onCheckAllChange}>
                 Check all
           </Checkbox>
-            }
+          <div style={{ float: "right" }}>
+                        <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
+                    </div>
           </div>
+
+            }
+</div>
 
           <Checkbox.Group style={{ width: '100%' }} onChange={this.Change} value={this.state.team}>
             {teamNames}

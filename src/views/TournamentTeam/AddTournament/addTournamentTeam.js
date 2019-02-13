@@ -20,7 +20,8 @@ class AddTournament extends Component {
       teams: [],
       tournamentTeams: [],
       createdBy: 0,
-      submitted: false
+      submitted: false,
+      noCallNext: 0
     }
   }
 
@@ -33,33 +34,51 @@ class AddTournament extends Component {
     this.props.action.Tournament.fetchTournamentDataAction();
   }
 
-  submitted=()=>{
-    this.setState({submitted: true});
+  submitted = () => {
+    this.setState({ submitted: true });
     this.AddData(true);
   }
 
   AddData = (submitted) => {
-    const { tournamentId, teams } = this.state;
-    if (submitted && teams.length>0){
-    let newTeams = this.props.TeamsData.filter((team) => {
-      return teams.includes(team.id)
-    })
+    const { tournamentId, teams} = this.state;
+    if (submitted && teams.length > 0) {
+      let newTeams = this.props.TeamsData.filter((team) => {
+        return teams.includes(team.id)
+      })
 
-    newTeams.map((team) => {
-      this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentId, teamId : team.id, createdBy: this.state.createdBy},team);
-      return true;
-    });
+      newTeams.map((team) => {
+        this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentId, teamId: team.id, createdBy: this.state.createdBy }, team);
+        return true;
+      });
 
-    this.setState({ tournamentId: '', teams: [], submitted:false});
-    this.props.toggle();
+      this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext:0 });
+
+      this.props.toggle();
+    }
   }
+
+  handleChange = (tournamentId) => {
+    console.log(tournamentId)
+    debugger
+    let { noCallNext } = this.state;
+    debugger;
+    let id
+    if(tournamentId!==undefined){
+      if(typeof(tournamentId) ==='number')
+      {
+      id = tournamentId;
+      }
+    else if (tournamentId.target.name === "tournamentId" && tournamentId.target.name !==undefined ) {
+      id = tournamentId.target.value;
+    }
   }
 
-  handleChange = (e) => {
-    if (e.target.name === "tournamentId") {
-      let id = e.target.value;
+    
+    if (tournamentId && !noCallNext) {
+      
 
-      this.setState({ [e.target.name]: e.target.value });
+      this.setState({ tournamentId: tournamentId, noCallNext: 1 });
+
       this.props.action.Team.fetchTeamAction();
 
       let teams = this.props.ShowTornamentAll.map((tournament) => {
@@ -71,7 +90,7 @@ class AddTournament extends Component {
       });
 
       this.setState({ tournamentTeams: filteredteams[0] });
-      this.setState({teams:[],submitted:false})
+      this.setState({ teams: [], submitted: false })
     }
   }
 
@@ -81,37 +100,40 @@ class AddTournament extends Component {
     this.props.action.Team.getTeamAction(id);
   }
 
-  closeModal=()=>{
-    this.setState({ tournamentId: '', teams: [], submitted:false });
-    this.props.toggle();
+  closeModal = () => {
+    this.setState({ tournamentId: '', teams: [], submitted: false,noCallNext:0 });
+    this.props.toggle(1);
   }
 
   render() {
+    console.log(this.props.tournamentid);
+    if (this.props.tournamentid !== "") {
+      this.handleChange(this.props.tournamentid);
+    }
     const Option = Select.Option;
     let teamNames = "";
     if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
       let teamId
       if (this.state.tournamentTeams) {
-        if(this.state.tournamentTeams.length > 0)
-        {
+        if (this.state.tournamentTeams.length > 0) {
           teamId = this.state.tournamentTeams.filter((team) => {
             let teamStatus = team.TournamentTeam;
-            return (teamStatus.isDelete===0)
+            return (teamStatus.isDelete === 0)
           })
 
           let team_id = teamId.map((team) => {
             return team.id
           })
-    
+
           let teamsdata = this.props.ShowTeamAll.filter((team) => {
             return !team_id.includes(team.id);
           })
-   
+
           teamNames = teamsdata.map((team) => {
             return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
           })
         }
-        
+
         else if (this.state.tournamentTeams.length === 0) {
           teamNames = this.props.ShowTeamAll.map((team) => {
             return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
@@ -123,13 +145,13 @@ class AddTournament extends Component {
     const { tournamentId, teams } = this.state;
     let data = "";
     if (this.props.ShowTornamentAll && this.props.ShowTornamentAll.length > 0) {
-        data = this.props.ShowTornamentAll.map((tournament) => {
-          return <option value={tournament.id}
-                         id={tournament.id}
-                         key={tournament.id}>
-                    {tournament.tournamentName}
-                  </option>
-          });
+      data = this.props.ShowTornamentAll.map((tournament) => {
+        return <option value={tournament.id}
+          id={tournament.id}
+          key={tournament.id}>
+          {tournament.tournamentName}
+        </option>
+      });
     }
 
     return (
@@ -139,28 +161,28 @@ class AddTournament extends Component {
             <ModalHeader toggle={this.closeModal} >Tournament</ModalHeader>
             <ModalBody>
               <Form>
-                
-                <FormGroup>
-                  <Label for="exampleSelect">Select Tournament Name</Label>
-                  <Input
-                    onChange={this.handleChange}
-                    type="select"
-                    name="tournamentId"
-                    value={tournamentId}>
-                    <option hidden>Select Tournament</option>
-                    {data}
-                  </Input>
+                { (!this.props.tournamentid)?
+                  <FormGroup>
+                    <Label for="exampleSelect">Select Tournament Name</Label>
+                    <Input
+                      onChange={this.handleChange}
+                      type="select"
+                      name="tournamentId"
+                      value={tournamentId}>
+                      <option hidden>Select Tournament</option>
+                      {data}
+                    </Input>
 
-                  {(this.state.submitted&&this.state.tournamentId==='') ?
+                    {(this.state.submitted && this.state.tournamentId === '') ?
                       <div>
-                        <br/>
+                        <br />
                         <span style={{ color: "red" }}>
                           Please select tournament
                         </span>
-                      </div>:null
-                  }
-                </FormGroup>
-                
+                      </div> : null
+                    }
+                  </FormGroup>:null
+                }
                 <FormGroup>
                   <Label for="exampleSelect">Select Team Name</Label>
                   <Select
@@ -170,28 +192,28 @@ class AddTournament extends Component {
                     placeholder="Select Teams"
                     value={teams}
                     onChange={this.handleSelect}
-                    disabled={this.state.tournamentId===""?true:false}
+                    disabled={this.state.tournamentId === "" ? true : false}
                   >{teamNames}
                   </Select>
-                  
-                  {(this.state.submitted&&this.state.teams.length===0 && this.state.tournamentId!=='') ?
-                      <div>
-                        <br/>
-                        <span style={{ color: "red" }}>
-                          Please select at least one team 
+
+                  {(this.state.submitted && this.state.teams.length === 0 && this.state.tournamentId !== '') ?
+                    <div>
+                      <br />
+                      <span style={{ color: "red" }}>
+                        Please select at least one team
                         </span>
-                      </div>:null
+                    </div> : null
                   }
                 </FormGroup>
-              
+
               </Form>
             </ModalBody>
-            
+
             <ModalFooter>
               <Button color="info" onClick={this.submitted}>Submit</Button>{' '}
               <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
             </ModalFooter>
-          
+
           </Modal>
         </div>
       </Container>
