@@ -18,12 +18,7 @@ class AddMatchPlayerScore extends Component {
         super(props);
         this.state = {
             playerScore: {},
-            Runs: {},
-            Six: {},
-            Four: {},
-            Wicket: {},
-            Stumping: {},
-            Catch: {}
+            teamId:0
         };
     }
     componentDidMount() {
@@ -37,6 +32,9 @@ class AddMatchPlayerScore extends Component {
     }
     teamChangeHandler(tournamentId, e) {
         let teamId = e.target.value;
+        this.setState({
+            teamId:teamId
+        })
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
     }
     inputChangeHandler(playerId, e) {
@@ -47,7 +45,8 @@ class AddMatchPlayerScore extends Component {
                 {
                     ...this.state.playerScore[playerId],
                     [e.target.name]: parseInt(e.target.value, 10),
-                    score: 0
+                    score: 0,
+                    teamId:this.state
                 }
             }
         })
@@ -138,7 +137,7 @@ class AddMatchPlayerScore extends Component {
                 stumping: value.stumping,
                 score: value.score
             }
-            this.props.action.MatchPlayerScore.addTournamentMatchPlayerScore(finalScore);
+            // this.props.action.MatchPlayer Score.addTournamentMatchPlayerScore(finalScore);
             this.props.toggleAdd();
             return ""
         })
