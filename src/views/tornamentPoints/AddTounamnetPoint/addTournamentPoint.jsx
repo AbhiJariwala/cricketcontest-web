@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import { Container, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as tournamentAction from '../../../action/Tournament';
 import * as tournamentPointAction from '../../../action/tournamentPoint';
+import Path from '../../../path';
 
 class ModalExample extends React.Component {
     constructor(props) {
@@ -23,8 +24,12 @@ class ModalExample extends React.Component {
             Wicket: {},
             Stumping: {},
             Catch: {},
-            submitted: false
+            fieldsError: "",
+            tournamentError: "",
+            fieldsValid: false
         };
+        this.addBox = this.addBox.bind(this);
+        this.removeBox = this.removeBox.bind(this);
         this.addScore = this.addScore.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.tournamentNameChangedHandler = this.tournamentNameChangedHandler.bind(this);
@@ -44,35 +49,205 @@ class ModalExample extends React.Component {
         this.props.toggle();
         this.setState({
             tournamentId: 0,
+            Runs: {},
+            Six: {},
+            Four: {},
+            Wicket: {},
+            Stumping: {},
+            Catch: {},
             runBox: 0,
             sixBox: 0,
             fourBox: 0,
             wicketBox: 0,
             stumpingBox: 0,
-            catchBox: 0
+            catchBox: 0,
+            fieldsError: "",
+            tournamentError: "",
+            fieldsValid: false
         });
     }
 
     tournamentNameChangedHandler(e) {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value, tournamentError: "" });
     }
 
     addScore(e) {
         e.preventDefault();
-        let points = {
-            Runs: this.state.Runs,
-            Six: this.state.Six,
-            Four: this.state.Four,
-            Wicket: this.state.Wicket,
-            Stumping: this.state.Stumping,
-            Catch: this.state.Catch
+        if (this.state.tournamentId === 0) {
+            this.setState({
+                tournamentError: "Please Select Tournament."
+            })
         }
-        let finalPoints = {
-            tournamentId: this.state.tournamentId,
-            pointJson: JSON.stringify(points)
+
+        let arr = [];
+        if (this.state.Runs) {
+            arr.push(Object.values(this.state.Runs));
+            if (arr[0].length === this.state.runBox) {
+                for (let i = 0; i < arr[0].length; i++) {
+                    if (Object.keys(arr[0][i]).length === 3) {
+                        if (arr[0][i].from === "" || arr[0][i].to === "" || arr[0][i].point === "" || parseInt(arr[0][i].from, 10) < 0 || parseInt(arr[0][i].to, 10) < 0 || parseInt(arr[0][i].point, 10) < 0) {
+                            this.setState({ fieldsError: "Run Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                            return;
+                        }
+                        else {
+                            this.setState({ fieldsError: "", fieldsValid: true });
+                        }
+                    }
+                    else {
+                        this.setState({ fieldsError: "Run Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                        return;
+                    }
+                }
+            }
+            else {
+                this.setState({ fieldsError: "Run Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                return;
+            }
         }
-        this.props.action.TournamentPoint.addTournamentPointScore(finalPoints, 0, 5, "id", "desc");
-        this.toggleModal();
+
+        if (this.state.Six) {
+            arr.push(Object.values(this.state.Six));
+            if (arr[1].length === this.state.sixBox) {
+                for (let i = 0; i < arr[1].length; i++) {
+                    if (Object.keys(arr[1][i]).length === 3) {
+                        if (arr[1][i].from === "" || arr[1][i].to === "" || arr[1][i].point === "" || parseInt(arr[1][i].from, 10) < 0 || parseInt(arr[1][i].to, 10) < 0 || parseInt(arr[1][i].point, 10) < 0) {
+                            this.setState({ fieldsError: "Six Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                            return;
+                        }
+                        else {
+                            this.setState({ fieldsError: "", fieldsValid: true })
+                        }
+                    }
+                    else {
+                        this.setState({ fieldsError: "Six Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                        return;
+                    }
+                }
+            }
+            else {
+                this.setState({ fieldsError: "Six Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                return;
+            }
+        }
+
+        if (this.state.Four) {
+            arr.push(Object.values(this.state.Four));
+            if (arr[2].length === this.state.fourBox) {
+                for (let i = 0; i < arr[2].length; i++) {
+                    if (Object.keys(arr[2][i]).length === 3) {
+                        if (arr[2][i].from === "" || arr[2][i].to === "" || arr[2][i].point === "" || parseInt(arr[2][i].from, 10) < 0 || parseInt(arr[2][i].to, 10) < 0 || parseInt(arr[2][i].point, 10) < 0) {
+                            this.setState({ fieldsError: "Four Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                            return;
+                        }
+                        else {
+                            this.setState({ fieldsError: "", fieldsValid: true })
+                        }
+                    }
+                    else {
+                        this.setState({ fieldsError: "Four Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                        return;
+                    }
+                }
+            }
+            else {
+                this.setState({ fieldsError: "Four Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                return;
+            }
+        }
+
+        if (this.state.Wicket) {
+            arr.push(Object.values(this.state.Wicket));
+            if (arr[3].length === this.state.wicketBox) {
+                for (let i = 0; i < arr[3].length; i++) {
+                    if (Object.keys(arr[3][i]).length === 3) {
+                        if (arr[3][i].from === "" || arr[3][i].to === "" || arr[3][i].point === "" || parseInt(arr[3][i].from, 10) < 0 || parseInt(arr[3][i].to, 10) < 0 || parseInt(arr[3][i].point, 10) < 0) {
+                            this.setState({ fieldsError: "Wicket Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                            return;
+                        }
+                        else {
+                            this.setState({ fieldsError: "", fieldsValid: true })
+                        }
+                    }
+                    else {
+                        this.setState({ fieldsError: "Wicket Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                        return;
+                    }
+                }
+            }
+            else {
+                this.setState({ fieldsError: "Wicket Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                return;
+            }
+        }
+
+        if (this.state.Stumping) {
+            arr.push(Object.values(this.state.Stumping));
+            if (arr[4].length === this.state.stumpingBox) {
+                for (let i = 0; i < arr[4].length; i++) {
+                    if (Object.keys(arr[4][i]).length === 3) {
+                        if (arr[4][i].from === "" || arr[4][i].to === "" || arr[4][i].point === "" || parseInt(arr[4][i].from, 10) < 0 || parseInt(arr[4][i].to, 10) < 0 || parseInt(arr[4][i].point, 10) < 0) {
+                            this.setState({ fieldsError: "Stumping Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                            return;
+                        }
+                        else {
+                            this.setState({ fieldsError: "", fieldsValid: true })
+                        }
+                    }
+                    else {
+                        this.setState({ fieldsError: "Stumping Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                        return;
+                    }
+                }
+            }
+            else {
+                this.setState({ fieldsError: "Stumping Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                return;
+            }
+        }
+
+        if (this.state.Catch) {
+            arr.push(Object.values(this.state.Catch));
+            if (arr[5].length === this.state.catchBox) {
+                for (let i = 0; i < arr[5].length; i++) {
+                    if (Object.keys(arr[5][i]).length === 3) {
+                        if (arr[5][i].from === "" || arr[5][i].to === "" || arr[5][i].point === "" || parseInt(arr[5][i].from, 10) < 0 || parseInt(arr[5][i].to, 10) < 0 || parseInt(arr[5][i].point, 10) < 0) {
+                            this.setState({ fieldsError: "Catch Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                            return;
+                        }
+                        else {
+                            this.setState({ fieldsError: "", fieldsValid: true })
+                        }
+                    }
+                    else {
+                        this.setState({ fieldsError: "Catch Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                        return;
+                    }
+                }
+            }
+            else {
+                this.setState({ fieldsError: "Catch Empty/Invalid Field Not Allowed.", fieldsValid: false });
+                return;
+            }
+        }
+
+        if (this.state.fieldsError === "" && this.state.tournamentError === "" && this.state.fieldsValid && this.state.tournamentId !== 0) {
+            let points = {
+                Runs: this.state.Runs,
+                Six: this.state.Six,
+                Four: this.state.Four,
+                Wicket: this.state.Wicket,
+                Stumping: this.state.Stumping,
+                Catch: this.state.Catch
+            }
+
+            let finalPoints = {
+                tournamentId: this.state.tournamentId,
+                pointJson: JSON.stringify(points)
+            }
+            this.props.action.TournamentPoint.addTournamentPointScore(finalPoints, 0, 5, "id", "desc");
+            this.toggleModal();
+        }
+
     }
 
     runChangeHandler = (e, value) => {
@@ -180,7 +355,6 @@ class ModalExample extends React.Component {
     }
 
     render() {
-
         let tournamentPointArr = [], notSelectedTournament = [];
         tournamentPointArr = this.props.TournamentPoint.map(tournamentPoint => tournamentPoint.tournamentId);
         let tournamentNameOption = "";
@@ -211,9 +385,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div>
-                            <img onClick={() => this.addBox("Runs")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Runs")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.runBox >= 2
-                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -235,9 +409,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Six")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Six")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.sixBox >= 2
-                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -259,9 +433,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Four")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Four")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.fourBox >= 2
-                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -283,9 +457,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Wicket")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Wicket")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.wicketBox >= 2
-                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -307,9 +481,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Stumping")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Stumping")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.stumpingBox >= 2
-                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -331,9 +505,9 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Catch")} alt="plus" src="https://www.iconsdb.com/icons/preview/caribbean-blue/plus-4-xxl.png" style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Catch")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.catchBox >= 2
-                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src="https://www.iconsdb.com/icons/preview/red/minus-4-xxl.png" style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -360,15 +534,10 @@ class ModalExample extends React.Component {
                                     <option value="" disabled="" style={{ display: "none" }}>Select Tournament</option>
                                     {tournamentNameOption}
                                 </Input>
-                                {(this.state.submitted && this.state.tournamentId === 0) ?
-                                    <div><br />
-                                        <Alert color="warning">
-                                            Please select a tournament
-                                            </Alert>
-                                    </div> : null
-                                }
+                                <center><span style={{ color: "red" }}>{this.state.tournamentError}</span></center>
                             </FormGroup>
                         </Form>
+                        <center><span style={{ color: "red" }}>{this.state.fieldsError}</span></center>
                         {this.state.runBox
                             ? <div style={{ textAlign: "center", marginTop: "10px" }}>
                                 <h6>Runs</h6>{renderRunBox}
@@ -407,7 +576,7 @@ class ModalExample extends React.Component {
                             {this.state.stumpingBox === 0
                                 ? <Button color="info" onClick={() => this.addBox("Stumping")}>Add Stumping</Button> : ""}
                             {this.state.catchBox === 0
-                                ? <Button color="info" onClick={() => this.addBox("Catch")}>Add Ctach</Button> : ""}
+                                ? <Button color="info" onClick={() => this.addBox("Catch")}>Add Catch</Button> : ""}
                         </div>
                     </ModalBody>
                     <ModalFooter>
@@ -420,6 +589,7 @@ class ModalExample extends React.Component {
         );
     }
 }
+
 const mapStateToProps = state => ({
     Tournaments: state.Tournament.Tournamentss,
     TournamentPoint: state.TournamentPoint.get_points
