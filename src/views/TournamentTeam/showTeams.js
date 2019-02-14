@@ -46,11 +46,6 @@ class ShowTeams extends Component {
     this.setState({
       addModal: !this.state.addModal,
       Editdataid: null
-<<<<<<< HEAD
-    });
-    this.props.toggleTeam();
-
-=======
     }); 
     if(id==="1")
     {
@@ -61,7 +56,6 @@ class ShowTeams extends Component {
     this.props.toggleTeam();
     }
     this.props.toggleTeam();this.props.toggleTeam();
->>>>>>> 371416a352b20fc1cf088d0dbba41da4ec4fb04b
   }
   Change = (e) => {
     this.setState({ team: e });
@@ -103,25 +97,11 @@ class ShowTeams extends Component {
 
     return (
       <div>
-<<<<<<< HEAD
         <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle} tournamentid={this.state.tournamentId} />
-=======
-      <AddTournamentTeam refresh={this.props.refresh} filteredteams ={this.props.filter} isOpen={this.state.addModal} toggle={this.toggle} tournament={this.props.tournament} teamsdata={this.props.teamsdata}/>
->>>>>>> 371416a352b20fc1cf088d0dbba41da4ec4fb04b
         <Modal title={tournament.tournamentName}
           visible={this.props.visible}
           onCancel={this.closeModal}
           footer={null} >
-<<<<<<< HEAD
-          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>
-
-            {tournament.Teams && tournament.Teams.length === 0 ?
-              <div>
-                <div style={{ float: "right" }}>
-                  <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
-                </div>
-                <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
-=======
           <div style={{ marginBottom: '9px', marginLeft: '10px' }}>         
           
             {!tournament.Teams || tournament.Teams.length === 0 ?
@@ -130,7 +110,6 @@ class ShowTeams extends Component {
                         <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
                     </div>
                     <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
->>>>>>> 371416a352b20fc1cf088d0dbba41da4ec4fb04b
               </div> :
               <div>
                 <Checkbox indeterminate={this.state.indeterminate}
