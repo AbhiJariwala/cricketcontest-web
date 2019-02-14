@@ -61,7 +61,7 @@ class AddTournamentMatch extends Component {
   }
   handleDatePickerChange = (e) => {
     if (e)
-      this.setState({ date: e._d, time: '' ,isError:'',isErrordate:''})
+      this.setState({ date: e._d, time: '' ,teams:'', team1: '', team2: '' ,isError:'',isErrordate:''})
     else {
       this.setState({ date: '', time: '', teams: '', team1: '', team2: '' ,isError:'',isErrordate:''})
 

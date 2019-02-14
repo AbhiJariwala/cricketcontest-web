@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import { withRouter } from "react-router";
 import { Checkbox, Col, Row, Button, Popconfirm, Icon, Modal } from 'antd';
 import { Button as ReactButton } from 'reactstrap'
 import './tournamentTeam.css'
 import 'antd/dist/antd.css';
 import AddTournamentTeam from '.././TournamentTeam/AddTournament/addTournamentTeam'
 import * as TournamentTeamAction from '../../action/TournamentTeam';
-import path from '../../path';
 class ShowTeams extends Component {
   constructor(props) {
     super(props);
@@ -42,12 +41,27 @@ class ShowTeams extends Component {
     this.props.deleteClick(d, d2)
   }
   toggle(id) {
+
+  
     this.setState({
       addModal: !this.state.addModal,
       Editdataid: null
+<<<<<<< HEAD
     });
     this.props.toggleTeam();
 
+=======
+    }); 
+    if(id==="1")
+    {
+     
+        this.props.history.push('/tournament');
+    }   
+    else{
+    this.props.toggleTeam();
+    }
+    this.props.toggleTeam();this.props.toggleTeam();
+>>>>>>> 371416a352b20fc1cf088d0dbba41da4ec4fb04b
   }
   Change = (e) => {
     this.setState({ team: e });
@@ -72,6 +86,7 @@ class ShowTeams extends Component {
     this.props.toggleTeam();
   }
   render() {
+   
     let { tournament } = this.props;
     let teamNames = '';
     if (tournament.Teams && tournament.Teams.length > 0) {
@@ -88,11 +103,16 @@ class ShowTeams extends Component {
 
     return (
       <div>
+<<<<<<< HEAD
         <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle} tournamentid={this.state.tournamentId} />
+=======
+      <AddTournamentTeam refresh={this.props.refresh} filteredteams ={this.props.filter} isOpen={this.state.addModal} toggle={this.toggle} tournament={this.props.tournament} teamsdata={this.props.teamsdata}/>
+>>>>>>> 371416a352b20fc1cf088d0dbba41da4ec4fb04b
         <Modal title={tournament.tournamentName}
           visible={this.props.visible}
           onCancel={this.closeModal}
           footer={null} >
+<<<<<<< HEAD
           <div style={{ marginBottom: '9px', marginLeft: '10px' }}>
 
             {tournament.Teams && tournament.Teams.length === 0 ?
@@ -101,6 +121,16 @@ class ShowTeams extends Component {
                   <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
                 </div>
                 <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
+=======
+          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>         
+          
+            {!tournament.Teams || tournament.Teams.length === 0 ?
+              <div> 
+                    <div style={{ float: "right" }}>
+                        <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
+                    </div>
+                    <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
+>>>>>>> 371416a352b20fc1cf088d0dbba41da4ec4fb04b
               </div> :
               <div>
                 <Checkbox indeterminate={this.state.indeterminate}
@@ -142,7 +172,7 @@ const mapDispatchToProps = dispatch => ({
     TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch)
   }
 });
-export default connect(null, mapDispatchToProps)(ShowTeams)
+export default withRouter(connect(null, mapDispatchToProps)(ShowTeams))
 
 
 

@@ -1,4 +1,4 @@
-import * as authService from '../service/Tournament'
+    import * as authService from '../service/Tournament'
 
 import { Get_Data } from '../reducer/Tournament';
 import { Fetch_Tournament_Data, deletetournamentdata, INVALID_DATA, FetchSingleTournament, updatetournamentdata, Add_Tournament_Data, Get_Tournament_Data } from '../reducer/Tournament';
@@ -20,8 +20,7 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName
             })
     }
 };
-export const AddTournamentAction = (data) => {
-
+export const AddTournamentAction = (data) => {    
     return (dispatch) => {
         authService.TournamentAdd(data).then((response) => {
             if (response.status === 200) {

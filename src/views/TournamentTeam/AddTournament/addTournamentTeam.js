@@ -47,21 +47,21 @@ class AddTournament extends Component {
       })
 
       newTeams.map((team) => {
+
         this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentId, teamId: team.id, createdBy: this.state.createdBy }, team);
         return true;
       });
 
       this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
-
-      this.props.toggle();
+      this.props.refresh();
+      this.props.toggle("1");
     }
   }
 
   handleChange = (tournamentId) => {
-    console.log(tournamentId)
-    debugger
+
     let { noCallNext } = this.state;
-    debugger;
+
     let id
     if (tournamentId !== undefined) {
       if (typeof (tournamentId) === 'number') {
@@ -71,75 +71,40 @@ class AddTournament extends Component {
         id = tournamentId.target.value;
       }
     }
-
-
     if (tournamentId && !noCallNext) {
-
-
-      this.setState({ tournamentId: tournamentId, noCallNext: 1 });
-
+      this.setState({ noCallNext: 1, teams: [], submitted: false });
       this.props.action.Team.fetchTeamAction();
+    }
+    if (this.state.tournamentId === "") {
+      this.setState({ tournamentId: tournamentId });
+    }
 
-      let teams = this.props.ShowTornamentAll.map((tournament) => {
-        return (tournament.id === parseInt(id, 10)) ? tournament.Teams : undefined;
-      })
-
-      let filteredteams = teams.filter((team) => {
-        return team !== undefined;
-      });
-
-      this.setState({ tournamentTeams: filteredteams[0] });
-      this.setState({ teams: [], submitted: false })
+    if (this.props.filteredteams) {
+      if (this.props.filteredteams.length !== this.state.tournamentTeams.length) {
+        this.setState({ tournamentTeams: this.props.filteredteams });
+      }
     }
   }
-
   handleSelect = (e) => {
     this.setState({ teams: e });
     let id = e[e.length - 1];
     this.props.action.Team.getTeamAction(id);
   }
-
   closeModal = () => {
     this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
     this.props.toggle(1);
   }
-
   render() {
-    console.log(this.props.tournamentid);
-    if (this.props.tournamentid !== "") {
-      this.handleChange(this.props.tournamentid);
+    console.log(this.props);
+    if (this.props.tournament.id !== "") {
+      this.handleChange(this.props.tournament.id);
     }
     const Option = Select.Option;
     let teamNames = "";
-    if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
-      let teamId
-      if (this.state.tournamentTeams) {
-        if (this.state.tournamentTeams.length > 0) {
-          teamId = this.state.tournamentTeams.filter((team) => {
-            let teamStatus = team.TournamentTeam;
-            return (teamStatus.isDelete === 0)
-          })
+    teamNames = this.props.teamsdata.map((team) => {
+      return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
+    })
 
-          let team_id = teamId.map((team) => {
-            return team.id
-          })
-
-          let teamsdata = this.props.ShowTeamAll.filter((team) => {
-            return !team_id.includes(team.id);
-          })
-
-          teamNames = teamsdata.map((team) => {
-            return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
-          })
-        }
-
-        else if (this.state.tournamentTeams.length === 0) {
-          teamNames = this.props.ShowTeamAll.map((team) => {
-            return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
-          })
-        }
-      }
-    }
 
     const { tournamentId, teams } = this.state;
     let data = "";
@@ -160,7 +125,7 @@ class AddTournament extends Component {
             <ModalHeader toggle={this.closeModal} >Tournament</ModalHeader>
             <ModalBody>
               <Form>
-                {(!this.props.tournamentid) ?
+                {(!this.props.tournament.id) ?
                   <FormGroup>
                     <Label for="exampleSelect">Select Tournament Name</Label>
                     <Input
@@ -176,21 +141,18 @@ class AddTournament extends Component {
                       <div>
                         <br />
                         <span style={{ color: "red" }}>
-                          <br />
-                          <span className="alert">
-                            Please select tournament
-                        </span>
+                          Please select tournament
                         </span>
                       </div> : null
                     }
-                  </FormGroup> : null
+                  </FormGroup> : null}
                 }
                 <FormGroup>
                   <Label for="exampleSelect">Select Team Name</Label>
                   <Select
                     mode="multiple"
                     name="teamId"
-                    className="widthh"
+                    style={{ width: '100%' }}
                     placeholder="Select Teams"
                     value={teams}
                     onChange={this.handleSelect}
@@ -198,14 +160,14 @@ class AddTournament extends Component {
                   >{teamNames}
                   </Select>
 
+
                   {(this.state.submitted && this.state.teams.length === 0 && this.state.tournamentId !== '') ?
                     <div>
                       <br />
                       <span className="alert">
                         Please select at least one team
-                                </span>
-                    </div> : null
-                  }
+                        </span>
+                    </div> : null}
                 </FormGroup>
 
               </Form>
