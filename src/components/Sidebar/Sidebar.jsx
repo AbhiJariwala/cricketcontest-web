@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { Nav, NavLink as ReactLink } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-
+import path from '../../path';
 
 var ps;
 
