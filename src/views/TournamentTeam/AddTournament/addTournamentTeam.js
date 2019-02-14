@@ -181,9 +181,10 @@ class AddTournament extends Component {
                         <span className="alert">
                           Please select tournament
                         </span>
+                        </span>
                       </div> : null
                     }
-                  </FormGroup>:null
+                  </FormGroup>:null}
                 }
                 <FormGroup>
                   <Label for="exampleSelect">Select Team Name</Label>
@@ -198,20 +199,14 @@ class AddTournament extends Component {
                   >{teamNames}
                   </Select>
 
-                  {(this.state.submitted && this.state.teams.length === 0 && this.state.tournamentId !== '') ?
-                    <div>
-                      <br />
-                      <span style={{ color: "red" }}>
-                        Please select at least one team
-
-                  {(this.state.submitted&&this.state.teams.length===0 && this.state.tournamentId!=='') ?
+    
+                 {(this.state.submitted&&this.state.teams.length===0 && this.state.tournamentId!=='') ?
                       <div>
                         <br/>
                         <span className="alert">
                           Please select at least one team
                         </span>
-                    </div> : null
-                  }
+                    </div>:null}
                 </FormGroup>
 
               </Form>
