@@ -122,7 +122,7 @@ class TeamPlayer extends Component {
         return (
             <tbody key={teamplayer.id}>
                 <tr style={{ textAlign: "center" }}  >
-                    <td>{key+this.state.pageno+1}</td>    
+                    <td>{key + this.state.pageno + 1}</td>
                     <td><img src={path + teamplayer.tournamentBanner} alt="Banner" style={{ width: "150px", height: "80px" }}></img></td>
                     <td>{teamplayer.tournamentName}</td>
                     <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} >Show Teams</Button></td>
@@ -207,7 +207,8 @@ class TeamPlayer extends Component {
                         </div>
 
                         <div style={{ float: "left" }}>
-                            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
+                            <Button color="info" onClick={this.toggle} >Add</Button>
+                            {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
                         </div>
                     </div>
                     <Table hover>

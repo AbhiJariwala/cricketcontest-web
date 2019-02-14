@@ -95,7 +95,6 @@ class AddTournament extends Component {
     this.props.toggle(1);
   }
   render() {
-    console.log(this.props);
     if (this.props.tournament.id !== "") {
       this.handleChange(this.props.tournament.id);
     }

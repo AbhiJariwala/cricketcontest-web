@@ -32,7 +32,7 @@ class TournamentMatch extends Component {
 
   componentWillMount = () => {
     this.props.action.TournamentAction.fetchTournamentDataAction();
-    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord,this.state.sortingValueName, this.state.sortingValue);
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   }
 
   sortingdata = (Event) => {
@@ -52,15 +52,15 @@ class TournamentMatch extends Component {
       }
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
-      this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
+        this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
+      }
     }
   }
-}
 
   parpage = (Event) => {
     const nrecord = parseInt(Event.target.value, 10);
-    this.setState({ pageno: 0});
-    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(0, nrecord,this.state.sortingValueName, this.state.sortingValue);
+    this.setState({ pageno: 0 });
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(0, nrecord, this.state.sortingValueName, this.state.sortingValue);
     this.setState({ parpageRecord: nrecord })
   }
 
@@ -83,20 +83,21 @@ class TournamentMatch extends Component {
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   }
 
-  handlechangetournament =(Event) =>{
-        this.setState({[Event.target.name]:Event.target.value})
-        if(Event.target.value !== 'selected'){
-          this.setState({pageno:0});
-            this.props.action.TournamentMatchAction.getTournamentMatch(Event.target.value);}
-        else    {
-          let {pageno}=this.state;
-          this.setState({pageno:0});
-        this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
-  
-      }    
+  handlechangetournament = (Event) => {
+    this.setState({ [Event.target.name]: Event.target.value })
+    if (Event.target.value !== 'selected') {
+      this.setState({ pageno: 0 });
+      this.props.action.TournamentMatchAction.getTournamentMatch(Event.target.value);
+    }
+    else {
+      let { pageno } = this.state;
+      this.setState({ pageno: 0 });
+      this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
+
+    }
   }
 
-  toggle(Event){
+  toggle(Event) {
     this.setState({
       modal: !this.state.modal,
       Editdataid: null
@@ -132,7 +133,7 @@ class TournamentMatch extends Component {
     let notNext = 0;
     let data = "";
     let start = 0;
-    if(this.state.tournamentid === 'selected') {
+    if (this.state.tournamentid === 'selected') {
       if (this.props.TournamentMatchs && this.props.TournamentMatchs.length > 0) {
         start = 0;
         start = this.state.pageno + 1;
@@ -145,24 +146,24 @@ class TournamentMatch extends Component {
           return <tr key={key}>
             <td className='header-center'>{start++}</td>
             <td>{data.Tournament.tournamentName}</td>
-            <td><img src={path + data.Team1[0].teamLogo} className='float-image-right' height="70px" width="70px" alt="TeamImage"/>
-            {
-                (data.winningTeamId===data.Team1[0].id)?<img className='team-1-badge' src={path+'winbadge.png'} height="50px" width="30px" alt=""/>:null
-            }
+            <td><img src={path + data.Team1[0].teamLogo} className='float-image-right' height="70px" width="70px" alt="TeamImage" />
+              {
+                (data.winningTeamId === data.Team1[0].id) ? <img className='team-1-badge' src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
+              }
             </td>
             <td className='header-center'>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
             <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
-                {
-                  (data.winningTeamId===data.Team2[0].id)?<img className='team-2-badge' src={path+'winbadge.png'}  height="35px" width="30px" alt=""/>:null
-                }
+              {
+                (data.winningTeamId === data.Team2[0].id) ? <img className='team-2-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
+              }
             </td>
-            <td className='header-center'>{d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()}</td>
-            { (remaintime>0) ? (
-                  ( remainday > 5 ) ?
-                        (<td className='header-center'>{remainday +' days '}</td>) : (<td className='header-center' ><Timer date={data.matchDate}/></td>)
-                  ): (
-                    <td className='header-center header-pointer' onClick={()=>this.winningTeam(data)}> {'Finished'} </td>)
-             }
+            <td className='header-center'>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
+            {(remaintime > 0) ? (
+              (remainday > 5) ?
+                (<td className='header-center'>{remainday + ' days '}</td>) : (<td className='header-center' ><Timer date={data.matchDate} /></td>)
+            ) : (
+                <td className='header-center header-pointer' onClick={() => this.winningTeam(data)}> {'Finished'} </td>)
+            }
           </tr>
         })
       }
@@ -170,7 +171,7 @@ class TournamentMatch extends Component {
         data = <tr><td colSpan="6" className='header-center'>No Match Exists</td></tr>
       }
 
-    } 
+    }
     else {
       if (this.props.TournamentMatchById && this.props.TournamentMatchById.length > 0) {
         data = this.props.TournamentMatchById.map((data, key) => {
@@ -180,36 +181,36 @@ class TournamentMatch extends Component {
           var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           return <tr key={key}>
-            <td className='header-center'>{key+1}</td>
-            <td><img src={path + data.Team1[0].teamLogo}  className='float-image-right' height="70px" width="70px" alt="TeamImage"/>
-            {
-                (data.winningTeamId===data.Team1[0].id)?<img className='team-one-badge' src={path+'winbadge.png'} height="50px" width="30px" alt=""/>:null
-            }
+            <td className='header-center'>{key + 1}</td>
+            <td><img src={path + data.Team1[0].teamLogo} className='float-image-right' height="70px" width="70px" alt="TeamImage" />
+              {
+                (data.winningTeamId === data.Team1[0].id) ? <img className='team-one-badge' src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
+              }
             </td>
             <td className='header-center'>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
-            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage"  />
-                {
-                  (data.winningTeamId===data.Team2[0].id)?<img className='team-two-badge' src={path+'winbadge.png'}  height="35px" width="30px"alt=""/>:null
-                }
+            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
+              {
+                (data.winningTeamId === data.Team2[0].id) ? <img className='team-two-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
+              }
             </td>
-            <td className='header-center'>{d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()}</td>
-            { (remainday>0) ? (
-                  ( remainday > 5 ) ?
-                        (<td className='header-center'>{remainday +' days '}</td>) : (<td className='header-center'><Timer date={data.matchDate}/></td>)
-                  ): (
-                    <td className='header-center header-pointer' onClick={()=>this.winningTeam(data)}> {'Finished'} </td>)
-             }
+            <td className='header-center'>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
+            {(remainday > 0) ? (
+              (remainday > 5) ?
+                (<td className='header-center'>{remainday + ' days '}</td>) : (<td className='header-center'><Timer date={data.matchDate} /></td>)
+            ) : (
+                <td className='header-center header-pointer' onClick={() => this.winningTeam(data)}> {'Finished'} </td>)
+            }
           </tr>
         })
       }
       else {
         data = <tr><td colSpan="6" className='header-center'>No Match Exists</td></tr>
       }
-  
+
 
     }
 
-    
+
     let tournamentD = "";
     if (this.props.Tournament.length > 0 && this.props.Tournament) {
       tournamentD = this.props.Tournament.map((data, key) => {
@@ -249,7 +250,8 @@ class TournamentMatch extends Component {
               </Input>
             </div>
             <div className="addbtn">
-              <img src={path+"add.png"} alt="plus" onClick={this.toggle} className="addimg"/>
+              <Button color="info" onClick={this.toggle} >Add</Button>
+              {/* <img src={path+"add.png"} alt="plus" onClick={this.toggle} className="addimg"/> */}
             </div>
           </div>
           {data ?
@@ -258,11 +260,11 @@ class TournamentMatch extends Component {
                 {
                   (this.state.tournamentid === 'selected') ? (
                     <tr onClick={this.sortingdata.bind(Event)}>
-                        <th className='header-center header-pointer'>#</th>
-                        <th id={'tournamentId'} className='header-pointer'>Tournament</th>
-                        <th colSpan="3" className='header-pointer header-center' id={'tournamentId'} >Teams</th>
-                        <th className='header-pointer header-center'>Date</th>
-                        <th className='header-pointer header-center'>Remaining Time</th>
+                      <th className='header-center header-pointer'>#</th>
+                      <th id={'tournamentId'} className='header-pointer'>Tournament</th>
+                      <th colSpan="3" className='header-pointer header-center' id={'tournamentId'} >Teams</th>
+                      <th className='header-pointer header-center'>Date</th>
+                      <th className='header-pointer header-center'>Remaining Time</th>
                     </tr>
                   ) : (
                       <tr>

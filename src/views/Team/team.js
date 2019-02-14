@@ -37,8 +37,8 @@ class Team extends Component {
     const parpage = parseInt(Event.target.value, 10);
     const pageno = 0
     this.setState({ parpageRecord: parpage, pageno: 0 })
-    this.setState({ parpageRecord: parpage})
-    this.setState({pageno:0 });
+    this.setState({ parpageRecord: parpage })
+    this.setState({ pageno: 0 });
     this.props.action.Team.selectTeamAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
   changeRecord = (Event) => {
@@ -133,8 +133,8 @@ class Team extends Component {
           {/* <td><img src={path + 'thumbnail/' + data.teamLogo} alt=""></img></td> */}
           <td>{data.teamName}</td>
           <td>
-            <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
-            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
+            <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 25 }} ></img>
+            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 25 }} ></img>
           </td>
         </tr>
       })
@@ -154,7 +154,8 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+              <Button color="info" onClick={this.toggle} >Add</Button>
+              {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img> */}
             </div>
           </div>
           {data ?
