@@ -1,15 +1,15 @@
 import * as authService from '../service/team';
 
 import { Get_Team_By_Id } from '../reducer/Team';
-import { Fetch_Data, INVALID_DATA, Add_Team_Data, update_Team_data,deleteteamdata } from '../reducer/Team';
+import { Fetch_Data, INVALID_DATA, Add_Team_Data, update_Team_data, deleteteamdata } from '../reducer/Team';
 export const DeleteTeamAction = (id, pageno, parpageRecord, sorting, filedName) => {
-    
+
     return (dispatch) => {
         authService.deleteTeamdata(id).then((response) => {
-    
+
             if (response.status === 200) {
                 authService.Team(pageno, parpageRecord, sorting, filedName).then(data => {
-    
+
                     if (data.status === 200) {
                         dispatch(
                             {
@@ -48,10 +48,9 @@ export const selectTeamAction = (pageno, parpageRecord, sorting, filedName) => {
     }
 };
 export const AddTeamAction = (data) => {
-    
+
     return (dispatch) => {
         authService.TeamAdd(data).then((response) => {
-    
             if (response.status === 200) {
                 dispatch(
                     {
@@ -116,7 +115,7 @@ export const UpdateTournamentAction = (id, team, data) => {
             (response.data.teamLogo) ? teamLogo = response.data.teamLogo
                 : teamLogo = team.teamLogo
             if (response.status === 200) {
-                
+
                 dispatch(
                     {
                         type: update_Team_data,

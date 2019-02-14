@@ -1,11 +1,11 @@
 const INITIAL_STATE = {
-    TeamData:[],
-    TeamAddData:[],
-    error_msg:"",
-    Team:{},
+    TeamData: [],
+    TeamAddData: [],
+    error_msg: "",
+    Team: {},
     DeleteTeams: "",
     updateTeamData: [],
-    TeamSData:[]
+    TeamSData: []
 }
 export const deleteteamdata = "deleteteamdata";
 export const Fetch_Data = "Fetch_Data";
@@ -21,36 +21,37 @@ export default (state = INITIAL_STATE, action) => {
                 TeamData: action.DeleteTeams
             });
         }
-        case update_Team_data: { 
-            let id = parseInt(action.updateTeamData.id, 10);  
-            
+        case update_Team_data: {
+            let id = parseInt(action.updateTeamData.id, 10);
+
             return Object.assign({}, state, {
-               TeamData: state.TeamData.map(item => {;
+                TeamData: state.TeamData.map(item => {
+                    ;
                     return item.id === id ? action.updateTeamData : item;
                 })
             });
         }
         case Fetch_Data: {
-            return Object.assign({}, state, {TeamData:action.TeamData });
-        }          
-        case Add_Team_Data: {        
+            return Object.assign({}, state, { TeamData: action.TeamData });
+        }
+        case Add_Team_Data: {
             state.TeamData.splice(-1, 1)
             state.TeamData.unshift(action.TeamAddData)
             return Object.assign({}, state, {
-                TeamData:state.TeamData.splice(action.TeamAddData)
-             });             
-        }             
+                TeamData: state.TeamData.splice(action.TeamAddData)
+            });
+        }
         case Get_Data: {
-            return Object.assign({}, state, {TeamData:action.TeamData });
-        }  
+            return Object.assign({}, state, { TeamData: action.TeamData });
+        }
         case Get_Team_By_Id: {
             let teamsData = state.TeamSData;
-            let teamIds = teamsData.map(team=>{
+            let teamIds = teamsData.map(team => {
                 return team.id;
             })
-            if(!teamIds.includes(action.Team.id))
+            if (!teamIds.includes(action.Team.id))
                 teamsData.push(action.Team);
-            return Object.assign({}, state, {Team:action.Team, TeamSData:[...teamsData] });
+            return Object.assign({}, state, { Team: action.Team, TeamSData: [...teamsData] });
         }
         case INVALID_DATA: {
             return Object.assign({}, state, { error_msg: action.error_msg });

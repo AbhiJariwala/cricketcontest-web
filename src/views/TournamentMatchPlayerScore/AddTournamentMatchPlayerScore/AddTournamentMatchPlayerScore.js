@@ -18,7 +18,7 @@ class AddMatchPlayerScore extends Component {
         super(props);
         this.state = {
             playerScore: {},
-            teamId:0
+            teamId: 0
         };
     }
     componentDidMount() {
@@ -33,7 +33,7 @@ class AddMatchPlayerScore extends Component {
     teamChangeHandler(tournamentId, e) {
         let teamId = e.target.value;
         this.setState({
-            teamId:teamId
+            teamId: teamId
         })
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
     }
@@ -46,7 +46,7 @@ class AddMatchPlayerScore extends Component {
                     ...this.state.playerScore[playerId],
                     [e.target.name]: parseInt(e.target.value, 10),
                     score: 0,
-                    teamId:this.state
+                    teamId: this.state
                 }
             }
         })
@@ -56,7 +56,7 @@ class AddMatchPlayerScore extends Component {
         Object.entries(this.state.playerScore).map(([key, value]) => {
             this.props.TournamentPoint.get_points.map(tournamentPoint => {
                 if (tournamentPoint.tournamentId === tournament.tournamentId) {
-                     Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
+                    Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
                         let from, to;
                         if (pointType === "Catch") {
                             for (var Cpv in pointValue) {

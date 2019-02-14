@@ -171,7 +171,7 @@ class tournamentPoint extends Component {
           footer={<AntButton type="primary" onClick={this.togglePoints}>Ok</AntButton>}>
           {
             (this.state.pointData)
-              ? <Collapse key="Runs" accordion>
+              ? <Collapse key="points" accordion>
                 <Collapse.Panel header="Runs" key="Runs">
                   <Table hover>
                     <thead>
@@ -277,7 +277,7 @@ class tournamentPoint extends Component {
           {this.renderPointModal()}
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "left" }}>
-            <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
               {/* <Button color="info" onClick={this.toggle}>Add Points</Button> */}
             </div>
             <div style={{ float: "right", marginRight: "45px" }}>

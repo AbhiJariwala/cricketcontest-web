@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     error_msg: "",
     Tournamentss: []
 }
+
 export const deletetournamentdata = "deletetournamentdata";
 export const Fetch_Tournament_Data = "Fetch_Tournament_Data";
 export const updatetournamentdata = "updatetournamentdata";
@@ -75,7 +76,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
         }
 
-        case Delete_Team: {            
+        case Delete_Team: {
             let tournamentss = state.Tournaments;
             let teamId = action.teamId;
             let tournamentId = action.tournamentId;
@@ -86,17 +87,17 @@ export default (state = INITIAL_STATE, action) => {
             let newTournament = tournamentss[k].Teams.filter((team, i) => {
                 return team.id !== teamId;
             })
-            
+
             let tournament_Data = state.Tournamentss;
             tournamentss[k].Teams = newTournament;
-            let x = tournament_Data.findIndex(tournament=>{
-                return tournament.id===parseInt(tournamentId,10);
-            }) 
+            let x = tournament_Data.findIndex(tournament => {
+                return tournament.id === parseInt(tournamentId, 10);
+            })
             let newTournamentData = tournament_Data[x].Teams.filter((team, i) => {
                 return team.id !== teamId;
             })
             tournament_Data[x].Teams = newTournamentData;
-            return Object.assign({}, state, { Tournaments: [...tournamentss], Tournamentss:[...tournament_Data] });
+            return Object.assign({}, state, { Tournaments: [...tournamentss], Tournamentss: [...tournament_Data] });
         }
 
         case INVALID_DATA: {
@@ -113,9 +114,9 @@ export default (state = INITIAL_STATE, action) => {
             let j = tournamentssData.findIndex(tournament => {
                 return tournament.id === parseInt(id, 10);
             })
-            
-            let TournamentTeam = {id:action.tournamentTeamm.id,isDelete:action.tournamentTeamm.isDelete};
-            let newTeamm = {...action.newTeam,TournamentTeam};
+
+            let TournamentTeam = { id: action.tournamentTeamm.id, isDelete: action.tournamentTeamm.isDelete };
+            let newTeamm = { ...action.newTeam, TournamentTeam };
             tournamentssData[j].Teams = [...tournamentssData[j].Teams, newTeamm];
             tournaments[i].Teams = [...tournaments[i].Teams, newTeamm]
             return Object.assign({}, state, { Tournaments: [...tournaments], Tournamentss: [...tournamentssData] });

@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import * as TeamAction from '../../action/Team';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
-  import path from '../../path';
+import path from '../../path';
 class Team extends Component {
   constructor(props) {
     super(props);
@@ -58,14 +58,9 @@ class Team extends Component {
     this.props.action.Team.selectTeamAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
   sortingdata = (Event) => {
-<<<<<<< HEAD
-    let sortingValueName;
-    if (Event.target.childNodes[0].data === "Team Name") {
-=======
-    
+
     let sortingValueName;
     if (Event.target.childNodes[0].data === "Team") {
->>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
       sortingValueName = "teamName"
     }
     if (Event.target.childNodes[0].data !== "#" && Event.target.childNodes[0].data !== "Action" && Event.target.childNodes[0].data !== "Logo") {
@@ -107,7 +102,7 @@ class Team extends Component {
       alert("no data");
     } else {
       confirmAlert({
-        title: 'Delete Team',
+        //title: 'Delete Team',
         message: 'Are you sure you want to delete Team?.',
         buttons: [{
           label: 'Yes',
@@ -131,12 +126,14 @@ class Team extends Component {
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
-<<<<<<< HEAD
-          <td><img src={path + data.teamLogo} alt="" style={{ width: "50px", height: "50px" }}></img></td>
-=======
           <td>{start++}</td>
-          <td><img src={path + data.teamLogo} alt="" style={{ width: "130px", height: "100px" }}></img></td>
->>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
+          <td>
+            {(data.teamLogo !== '') ?
+              <img src={path + data.teamLogo} alt="" style={{ width: "130px", height: "100px" }}></img> :
+              <img src={path + data.defaultTeam.png} alt="" style={{ width: "130px", height: "100px" }}></img>
+
+            }
+          </td>
           <td>{data.teamName}</td>
           <td>
             <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
@@ -160,25 +157,16 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
-<<<<<<< HEAD
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
-=======
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
->>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 34, marginTop: "20px", cursor: "pointer" }} ></img>
             </div>
           </div>
           {data ?
             <Table hover>
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
-<<<<<<< HEAD
-                  <th>Team Logo</th>
-                  <th style={{ cursor: "pointer" }}>Team Name</th>
-=======
                   <th>#</th>
                   <th>Logo</th>
                   <th style={{ cursor: "pointer" }}>Team</th>
->>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
                   <th>Action</th>
                 </tr>
               </thead>
