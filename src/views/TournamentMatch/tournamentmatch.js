@@ -33,10 +33,6 @@ class TournamentMatch extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
   componentWillMount = () => {
     this.props.action.TournamentAction.fetchTournamentDataAction();
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
@@ -59,12 +55,11 @@ class TournamentMatch extends Component {
       }
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
-      }
+      } 
 <<<<<<< HEAD
       this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
 =======
       this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
->>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192
     }
   }
 
