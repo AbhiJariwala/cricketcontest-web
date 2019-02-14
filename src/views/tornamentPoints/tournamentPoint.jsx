@@ -171,7 +171,7 @@ class tournamentPoint extends Component {
           footer={<AntButton type="primary" onClick={this.togglePoints}>Ok</AntButton>}>
           {
             (this.state.pointData)
-              ? <Collapse key="Runs" accordion>
+              ? <Collapse key="points" accordion>
                 <Collapse.Panel header="Runs" key="Runs">
                   <Table hover>
                     <thead>

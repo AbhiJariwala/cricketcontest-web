@@ -13,6 +13,7 @@ const INITIAL_STATE = {
     errors: "",
     addtournament:""
 }
+
 export const deletetournamentdata = "deletetournamentdata";
 export const Fetch_Tournament_Data = "Fetch_Tournament_Data";
 export const updatetournamentdata = "updatetournamentdata";
