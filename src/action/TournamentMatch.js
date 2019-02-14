@@ -1,4 +1,5 @@
 import * as tournamentMatchService from '../service/TournamentMatch'
+import { GET_TOURNAMENTMATCHS, INVALID_DATA, GET_ALLTOURNAMENTMATCHS } from '../reducer/TournamentMatch';
 
 import { GET_TOURNAMENTMATCHS, GET_ALLTOURNAMENTMATCHS, INVALID_DATA, ADD_TOURNAMENTMATCHS} from '../reducer/TournamentMatch';
 
@@ -71,4 +72,4 @@ export const AddTournamentMatchAction = (data,tournament,team1,team2,tournamenti
                 }
             })
     }
-};
+}

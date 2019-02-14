@@ -11,15 +11,15 @@ class AddTeam extends Component {
   state = {
     teamName: "",
     id: 0,
-    createdBy:0,
-    updatedBy:0,teamLogo:[],
+    createdBy: 0,
+    updatedBy: 0, teamLogo: [],
     imagebanner: false,
-    fieldsErrors: { teamName: '' },
-    fieldsValid: { teamName: false },
+    fieldsErrors: { teamName: '', imagebanner: '' },
+    fieldsValid: { teamName: false, imagebanner: false },
   }
-  componentWillMount=()=>{
+  componentWillMount = () => {
     const userId = localStorage.getItem("userId");
-    this.setState({createdBy:userId,updatedBy:userId});
+    this.setState({ createdBy: userId, updatedBy: userId });
   }
   componentWillUpdate = () => {
     if (this.props.dataid.length !== 0 && this.props.dataid !== null && !this.state.notcallnext) {
@@ -35,23 +35,34 @@ class AddTeam extends Component {
   inputChangeHandler(e) {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({ [name]: value }, () => { this.validateField(name, value) })   
+    this.setState({ [name]: value }, () => { this.validateField(name, value) })
   }
+
   imageChangedHandler(image) {
     this.setState({
+      ...this.state,
       teamLogo: image
     })
-    this.validateField("BannerImage", "true");
+    this.validateField("imageBanner", true);
   }
 
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
+    debugger;
+
     switch (fieldName) {
+
       case 'teamName':
-        fieldValidation.teamName = value.match(/^[a-zA-Z0-9_ ]+$/i);
+        fieldValidation.teamName = /^[a-zA-Z 0-9]+$/.test(value);
         fieldValidationErrors.teamName = fieldValidation.teamName ? '' : ' Only Alphabets Allow'
         break;
+      case 'imageBanner':
+        fieldValidation.teamLogo = value;
+        fieldValidation.teamLogo = fieldValidation.teamLogo === true ? '' : 'Image is required'
+
+        break;
+
       default:
         break;
     }
@@ -76,21 +87,22 @@ class AddTeam extends Component {
         'content-type': 'multipart/form-data'
       }
     }
-    const data ={
-      "teamName":this.state.teamName,
-      "teamLogo":this.state.teamLogo[0],  
-      "updatedBy":parseInt(this.state.updatedBy,10),
-      "id":this.state.id
+    const data = {
+      "teamName": this.state.teamName,
+      "teamLogo": this.state.teamLogo[0],
+      "updatedBy": parseInt(this.state.updatedBy, 10),
+      "id": this.state.id
     }
-    Event.preventDefault();   
-    this.props.action.Team.UpdateTournamentAction(this.props.dataid.id,data ,formdata, config) 
+    Event.preventDefault();
+    this.props.action.Team.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
     this.props.toggle(Event);
   }
-  AddDataData = (Event) => { 
+
+  AddDataData = (Event) => {
     let formdata = new FormData();
     formdata.append("teamName", this.state.teamName);
     formdata.append("teamLogo", this.state.teamLogo[0]);
-    formdata.append("createdBy", parseInt(this.state.createdBy,10));
+    formdata.append("createdBy", parseInt(this.state.createdBy, 10));
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
@@ -99,13 +111,26 @@ class AddTeam extends Component {
     this.props.action.Team.AddTeamAction(formdata, config);
     this.props.toggle(Event);
   }
-  cancelImageClick = () => {
+
+  cancelImageClick = (e) => {
+    e.preventDefault()
+
     this.props.dataid.teamLogo = false
-    this.setState({ imagebanner: false })
+    this.setState({
+      ...this.state,
+      imagebanner: false
+    })
+    debugger
+    this.validateField("imageBanner", true);
+
   }
   render() {
     let image;
-    let imageuploader = <div><ImageUploader withIcon={true} buttonText="Select Images" imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']} withPreview={true}
+    let imageuploader = <div><ImageUploader
+      withIcon={true}
+      buttonText="Select Images"
+      imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
+      withPreview={true}
       onChange={this.imageChangedHandler.bind(this)}
       maxFileSize={5242880}
       withLabel={false}
@@ -141,7 +166,7 @@ class AddTeam extends Component {
               </Form>
             </ModalBody>
             <ModalFooter>
-              {this.props.dataid && this.props.dataid.length !== 0?
+              {this.props.dataid && this.props.dataid.length !== 0 ?
                 <Button color="info" onClick={this.UpdateDataData.bind(this)}>Update</Button>
                 : <Button color="info" onClick={this.AddDataData.bind(this)}>Submit</Button>}
               <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
@@ -156,7 +181,7 @@ const mapStateToProps = (state) => {
 
   return {
     ShowTeam: state.Team.TeamData,
-    auth:state.auth
+    auth: state.auth
   }
 };
 
