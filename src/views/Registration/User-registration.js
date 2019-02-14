@@ -4,7 +4,6 @@ import { PanelHeader } from "components";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { Link } from 'react-router-dom';
-
 import * as registerAction from '../../action/registrationAction';
 
 class UserRegistration extends Component {
@@ -14,6 +13,7 @@ class UserRegistration extends Component {
         lastName: "",
         email: "",
         password: "",
+        confirmPassword: "",
         gender: 1,
         fieldsErrors: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },
         fieldsValid: { firstName: false, lastName: false, email: false, password: false, confirmPassword: false },
@@ -48,21 +48,18 @@ class UserRegistration extends Component {
 
         switch (fieldName) {
             case 'firstName':
-                fieldValidation.firstName = value.match(/^[a-zA-Z]+$/i);
-                fieldValidationErrors.firstName = fieldValidation.firstName ? '' : ' Only Alphabets Allow'
+                fieldValidation.firstName = value.match(/^[a-zA-Z 0-9]+$/i);
+                fieldValidationErrors.firstName = fieldValidation.firstName ? '' : ' Invalid first name'
                 break;
 
             case 'lastName':
-                fieldValidation.lastName = value.match(/^[a-zA-Z]+$/i);
-                fieldValidationErrors.lastName = fieldValidation.lastName ? '' : ' Only Alphabets Allow'
+                fieldValidation.lastName = value.match(/^[a-zA-Z 0-9]+$/i);
+                fieldValidationErrors.lastName = fieldValidation.lastName ? '' : '  Invalid last name'
                 break;
 
             case 'email':
-                this.setState({
-                    inValidEmail: ""
-                })
                 fieldValidation.email = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-                fieldValidationErrors.email = fieldValidation.email ? '' : ' Invalid Email';
+                fieldValidationErrors.email = fieldValidation.email ? '' : ' Invalid email';
                 break;
             case 'password':
                 fieldValidation.password = value.length >= 6;
@@ -79,8 +76,8 @@ class UserRegistration extends Component {
                 break;
         }
         this.setState({
-            fieldsErrors: fieldValidationErrors,
-            fieldsValid: fieldValidation
+            fieldsErrors: { ...this.state.fieldsErrors, fieldValidationErrors },
+            fieldsValid: fieldValidation,
         }, this.validateForm);
     }
 
@@ -101,6 +98,42 @@ class UserRegistration extends Component {
     }
 
     btnRegisterClick() {
+        if (this.state.confirmPassword === "")
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    confirmPassword: "* Password Required"
+                }
+            })
+        if (this.state.password === "")
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    password: "* Password Required"
+                }
+            })
+        if (this.state.email === "")
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    email: "* Email Required"
+                }
+            })
+        if (this.state.lastName === "")
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    lastName: "* Last Name Required"
+                }
+            })
+        if (this.state.firstName === "")
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    firstName: "* First Name Required"
+                }
+            })
+
         if (this.state.formValid) {
             this.props.action.register.RegisterUser(this.state);
         }
@@ -122,7 +155,7 @@ class UserRegistration extends Component {
                                     <Form>
                                         <FormGroup>
                                             <Label for="firstName"><b>First Name</b></Label>
-                                            <Input type="text" name="firstName" id="firstName" placeholder="First Name" onChange={this.inputChangeHandler.bind(this)} />
+                                            <Input type="text" name="firstName" id="firstName" placeholder="First Name" onChange={this.inputChangeHandler.bind(this)} required />
                                             <span style={{ color: "red" }}>{this.state.fieldsErrors.firstName}</span>
                                         </FormGroup>
                                         <FormGroup>
@@ -191,5 +224,4 @@ const mapDispatchToProps = (dispatch) => ({
         register: bindActionCreators(registerAction, dispatch)
     }
 })
-
 export default connect(mapStateToProps, mapDispatchToProps)(UserRegistration);
