@@ -6,7 +6,12 @@ const INITIAL_STATE = {
     FetchSingleTournamentData: [],
     updateTournamentData: [],
     error_msg: "",
-    Tournamentss: []
+    Tournamentss: [],
+    tournamentmatchs: [],
+    allmatchs:[],
+    tournamentMatches:[],
+    errors: "",
+    addtournament:""
 }
 
 export const deletetournamentdata = "deletetournamentdata";
@@ -20,6 +25,9 @@ export const Get_Tournament_Data = "Get_Tournament_Data";
 export const Add_New_Team = "Add_New_Team";
 export const Add_Tournament_Data = "Add_Tournament_Data";
 export const Delete_Team = "Delete_Team";
+export const GET_TOURNAMENTMATCHS = "GET_TOURNAMENTMATCHS";
+export const GET_ALLTOURNAMENTMATCHS="GET_ALLTOURNAMENTMATCHS";
+export const ADD_TOURNAMENTMATCHS="ADD_TOURNAMENTMATCHS"
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -122,6 +130,40 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { Tournaments: [...tournaments], Tournamentss: [...tournamentssData] });
         }
 
+        case ADD_TOURNAMENTMATCHS: {
+            let tournamentI = state.Tournamentss;
+            let { allmatchs } = state;
+            let { data, tournament, team1, team2, tournamentid, nrecord } = action;
+            let { id, tournamentName } = tournament[0];
+            let Tournament = { id, tournamentName };
+            let Team1 = team1;
+            let Team2 = team2;
+            let { tournamentMatches } = state;
+            data = { ...data, Tournament, Team1, Team2 };
+            if (parseInt(tournamentid, 10) === Tournament.id) {
+                tournamentMatches = [...tournamentMatches, data];
+            }
+            if(allmatchs.length >= nrecord){
+                allmatchs.splice(-1,1);
+                allmatchs.unshift(data); 
+            }
+            else{
+                allmatchs.unshift(data);
+            }
+            let index = tournamentI.findIndex(tournament => {
+                return tournament.id === parseInt(id, 10);
+            })
+            tournamentI[index].TournamentMatches = [...tournamentI[index].TournamentMatches,data];
+            return Object.assign({}, state, { addtournament: action.data, allmatchs: [...allmatchs], tournamentMatches: [...tournamentMatches], Tournamentss:[...tournamentI] });
+        }
+
+        case GET_TOURNAMENTMATCHS: {
+            return Object.assign({}, state, { tournamentMatches: [...action.tournamentMatches] });
+        }
+
+        case GET_ALLTOURNAMENTMATCHS: {
+            return Object.assign({}, state, { allmatchs: action.allmatchs });
+         }
         default:
             return state
     }

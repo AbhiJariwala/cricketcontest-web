@@ -1,5 +1,5 @@
 import * as tournamentMatchService from '../service/TournamentMatch'
-import { GET_TOURNAMENTMATCHS, GET_ALLTOURNAMENTMATCHS, INVALID_DATA, ADD_TOURNAMENTMATCHS } from '../reducer/TournamentMatch';
+import { GET_TOURNAMENTMATCHS, GET_ALLTOURNAMENTMATCHS, INVALID_DATA, ADD_TOURNAMENTMATCHS} from '../reducer/Tournament';
 
 export const getTournamentMatch = (id) => {
     return (dispatch) => {

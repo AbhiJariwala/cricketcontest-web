@@ -40,7 +40,7 @@ class AddTournament extends Component {
   }
 
   AddData = (submitted) => {
-    const { tournamentId, teams} = this.state;
+    const { tournamentId, teams } = this.state;
     if (submitted && teams.length > 0) {
       let newTeams = this.props.TeamsData.filter((team) => {
         return teams.includes(team.id)
@@ -51,7 +51,7 @@ class AddTournament extends Component {
         return true;
       });
 
-      this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext:0 });
+      this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
 
       this.props.toggle();
     }
@@ -63,19 +63,18 @@ class AddTournament extends Component {
     let { noCallNext } = this.state;
     debugger;
     let id
-    if(tournamentId!==undefined){
-      if(typeof(tournamentId) ==='number')
-      {
-      id = tournamentId;
+    if (tournamentId !== undefined) {
+      if (typeof (tournamentId) === 'number') {
+        id = tournamentId;
       }
-    else if (tournamentId.target.name === "tournamentId" && tournamentId.target.name !==undefined ) {
-      id = tournamentId.target.value;
+      else if (tournamentId.target.name === "tournamentId" && tournamentId.target.name !== undefined) {
+        id = tournamentId.target.value;
+      }
     }
-  }
 
-    
+
     if (tournamentId && !noCallNext) {
-      
+
 
       this.setState({ tournamentId: tournamentId, noCallNext: 1 });
 
@@ -101,7 +100,7 @@ class AddTournament extends Component {
   }
 
   closeModal = () => {
-    this.setState({ tournamentId: '', teams: [], submitted: false,noCallNext:0 });
+    this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
     this.props.toggle(1);
   }
 
@@ -161,7 +160,7 @@ class AddTournament extends Component {
             <ModalHeader toggle={this.closeModal} >Tournament</ModalHeader>
             <ModalBody>
               <Form>
-                { (!this.props.tournamentid)?
+                {(!this.props.tournamentid) ?
                   <FormGroup>
                     <Label for="exampleSelect">Select Tournament Name</Label>
                     <Input
@@ -177,18 +176,21 @@ class AddTournament extends Component {
                       <div>
                         <br />
                         <span style={{ color: "red" }}>
-                          Please select tournament
+                          <br />
+                          <span className="alert">
+                            Please select tournament
+                        </span>
                         </span>
                       </div> : null
                     }
-                  </FormGroup>:null
+                  </FormGroup> : null
                 }
                 <FormGroup>
                   <Label for="exampleSelect">Select Team Name</Label>
                   <Select
                     mode="multiple"
                     name="teamId"
-                    style={{ width: '100%' }}
+                    className="widthh"
                     placeholder="Select Teams"
                     value={teams}
                     onChange={this.handleSelect}
@@ -199,9 +201,9 @@ class AddTournament extends Component {
                   {(this.state.submitted && this.state.teams.length === 0 && this.state.tournamentId !== '') ?
                     <div>
                       <br />
-                      <span style={{ color: "red" }}>
+                      <span className="alert">
                         Please select at least one team
-                        </span>
+                                </span>
                     </div> : null
                   }
                 </FormGroup>
