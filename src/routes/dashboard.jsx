@@ -32,12 +32,12 @@ var dashRoutes = [
     icon: "sport_user-run",
     component: Player
   },
-  {
-    path: "/TournamentTeam",
-    name: "Tournament Team",
-    icon: "sport_trophy",
-    component: TournamentTeam
-  },
+  // {
+  //   path: "/TournamentTeam",
+  //   name: "Tournament Team",
+  //   icon: "sport_trophy",
+  //   component: TournamentTeam
+  // },
   {
     path: "/teamplayer",
     name: "Tournament Team Player",
