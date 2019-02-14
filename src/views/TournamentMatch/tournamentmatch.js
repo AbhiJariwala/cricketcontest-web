@@ -52,10 +52,10 @@ class TournamentMatch extends Component {
       }
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
-      }
       this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
     }
   }
+}
 
   parpage = (Event) => {
     const nrecord = parseInt(Event.target.value, 10);
@@ -93,9 +93,10 @@ class TournamentMatch extends Component {
           this.setState({pageno:0});
         this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   
-      }    }
+      }    
+  }
 
-  toggle(Event) {
+  toggle(Event){
     this.setState({
       modal: !this.state.modal,
       Editdataid: null
@@ -129,7 +130,7 @@ class TournamentMatch extends Component {
 
   render() {
     let notNext = 0;
-    let data = ""
+    let data = "";
     let start = 0;
     if(this.state.tournamentid === 'selected') {
       if (this.props.TournamentMatchs && this.props.TournamentMatchs.length > 0) {

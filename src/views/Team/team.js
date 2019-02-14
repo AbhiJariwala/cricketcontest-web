@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import * as TeamAction from '../../action/Team';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import { PanelHeader } from "components";
-  import path from '../../path';
+import path from '../../path';
 class Team extends Component {
   constructor(props) {
     super(props);
@@ -128,10 +128,9 @@ class Team extends Component {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
 
-          <td><img src={path + data.teamLogo} alt="" style={{ width: "50px", height: "50px" }}></img></td>
- 
           <td>{start++}</td>
-          <td><img src={path + 'thumbnail/' + data.teamLogo} alt=""></img></td>
+          <td><img src={path + data.teamLogo} alt="" style={{ width: "50px", height: "50px" }}></img></td>
+          {/* <td><img src={path + 'thumbnail/' + data.teamLogo} alt=""></img></td> */}
           <td>{data.teamName}</td>
           <td>
             <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
