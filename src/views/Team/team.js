@@ -37,6 +37,8 @@ class Team extends Component {
     const parpage = parseInt(Event.target.value, 10);
     const pageno = 0
     this.setState({ parpageRecord: parpage, pageno: 0 })
+    this.setState({ parpageRecord: parpage})
+    this.setState({pageno:0 });
     this.props.action.Team.selectTeamAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
   changeRecord = (Event) => {
@@ -58,7 +60,6 @@ class Team extends Component {
     this.props.action.Team.selectTeamAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
   sortingdata = (Event) => {
-
     let sortingValueName;
     if (Event.target.childNodes[0].data === "Team") {
       sortingValueName = "teamName"
@@ -126,9 +127,10 @@ class Team extends Component {
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
+
           <td>{start++}</td>
           <td><img src={path + data.teamLogo} alt="" style={{ width: "50px", height: "50px" }}></img></td>
-          <td><img src={path + 'thumbnail/' + data.teamLogo} alt=""></img></td>
+          {/* <td><img src={path + 'thumbnail/' + data.teamLogo} alt=""></img></td> */}
           <td>{data.teamName}</td>
           <td>
             <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>

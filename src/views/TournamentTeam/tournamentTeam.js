@@ -136,9 +136,9 @@ class TournamentTeam extends Component {
       start = this.state.pageno + 1; 
       data = this.props.ShowTournamentAll.map((tournament, key) => {
         notNext = key + 1
-        return <tr key={key} style={{ textAlign: "center" }}>
+        return <tr key={key} className="centertr">
           <td>{start++}</td>
-          <td><img src={path + tournament.tournamentBanner} alt="Banner" style={{ width: "150px", height: "80px" }}></img></td>
+          <td><img src={path + tournament.tournamentBanner} alt="Banner" width='150px' height='80px'></img></td>
           <td>{tournament.tournamentName}</td>
           <td>
             <Button color="info" onClick={() => this.ShowTeam(tournament)}>Show Teams</Button>
@@ -159,10 +159,10 @@ class TournamentTeam extends Component {
             visible={this.state.visible}
             toggleTeam={this.toggleTeam}
           />
-          <div style={{ marginTop: "50px" }}>
-            <div style={{ float: "right" }}>
-              Show entries
-                <Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
+          <div className="divHeader">
+            <div  className="pageSelect">
+              Show entries{' '}
+                <Input type="select" name="select" id="exampleSelect"  onChange={this.parpage.bind(Event)}>
                 <option>5</option>
                 <option>10</option>
                 <option>25</option>
@@ -170,17 +170,17 @@ class TournamentTeam extends Component {
                 <option>100</option>
               </Input>
             </div>
-            <div style={{ float: "left" }}>
-            <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
+            <div className="addbtn">
+            <img src={path+"add.png"} alt="plus" onClick={this.toggle} className="addimg" ></img>
             </div>
           </div>
           {data ?
             <Table hover>
               <thead className="thead-dark">
-                <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
+                <tr className="textCenter" onClick={this.sortingdata.bind(Event)}>
                   <th>#</th>
                   <th>Banner</th>
-                  <th id="tournamentName" style={{ cursor: "pointer" }}>Tournament</th>
+                  <th id="tournamentName" className="cursorPointer">Tournament</th>
                   <th>Team</th>
                 </tr>
               </thead>

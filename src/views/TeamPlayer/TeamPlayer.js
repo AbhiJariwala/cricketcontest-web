@@ -122,6 +122,7 @@ class TeamPlayer extends Component {
         return (
             <tbody key={teamplayer.id}>
                 <tr style={{ textAlign: "center" }}  >
+                    <td>{key+this.state.pageno+1}</td>    
                     <td><img src={path + teamplayer.tournamentBanner} alt="Banner" style={{ width: "150px", height: "80px" }}></img></td>
                     <td>{teamplayer.tournamentName}</td>
                     <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} >Show Teams</Button></td>
@@ -212,6 +213,7 @@ class TeamPlayer extends Component {
                     <Table hover>
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
+                                <th>#</th>
                                 <th>Banner</th>
                                 <th style={{ cursor: "pointer" }}>Tournament</th>
                                 <th>Team</th>

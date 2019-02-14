@@ -5,8 +5,10 @@ import { Add_New_Team, Delete_Team } from '../reducer/Tournament';
 
 export const AddTournamentTeamAction = (data, team) => {
     return (dispatch) => {
+        
         authService.addTournamentTeam(data).then((response) => {
             if (response.status === 200) {
+               
                 dispatch(
                     {
                         type: Add_New_Team,

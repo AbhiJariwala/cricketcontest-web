@@ -6,7 +6,12 @@ const INITIAL_STATE = {
     FetchSingleTournamentData: [],
     updateTournamentData: [],
     error_msg: "",
-    Tournamentss: []
+    Tournamentss: [],
+    tournamentmatchs: [],
+    allmatchs:[],
+    tournamentMatches:[],
+    errors: "",
+    addtournament:""
 }
 export const deletetournamentdata = "deletetournamentdata";
 export const Fetch_Tournament_Data = "Fetch_Tournament_Data";
@@ -19,21 +24,28 @@ export const Get_Tournament_Data = "Get_Tournament_Data";
 export const Add_New_Team = "Add_New_Team";
 export const Add_Tournament_Data = "Add_Tournament_Data";
 export const Delete_Team = "Delete_Team";
+export const GET_TOURNAMENTMATCHS = "GET_TOURNAMENTMATCHS";
+export const GET_ALLTOURNAMENTMATCHS="GET_ALLTOURNAMENTMATCHS";
+export const ADD_TOURNAMENTMATCHS="ADD_TOURNAMENTMATCHS"
 
 export default (state = INITIAL_STATE, action) => {
+    
     switch (action.type) {
         case deletetournamentdata: {
+           
             return Object.assign({}, state, {
-                TournamentData: action.TournamentAddData
+                Tournaments: action.TournamentAddData
             });
         }
         case updatetournamentdata: {
+          
             let id = parseInt(action.updateTournamentData.id, 10);
-            var newState = state.TournamentData.map(item => {
+            var newState = state.Tournaments.map(item => {
                 return item.id === id ? action.updateTournamentData : item;
             })
+            
             return Object.assign({}, state, {
-                TournamentData: newState
+                Tournaments: newState
             });
         }
 
@@ -70,12 +82,16 @@ export default (state = INITIAL_STATE, action) => {
         }
 
         case Add_Tournament_Data: {
-            state.TournamentData.splice(-1, 1)
-            state.TournamentData.unshift(action.TournamentAddData)
-            return Object.assign({}, state, { TournamentData: state.TournamentData.splice(action.TournamentAddData) });
+            state.Tournaments.splice(-1, 1)
+            state.Tournaments.unshift(action.TournamentAddData)
+            if(action.TournamentAddData.Teams===undefined){
+                let Teams=[];
+                action.TournamentAddData={...action.TournamentAddData,Teams};
+            }
+            return Object.assign({}, state, { Tournaments: state.Tournaments.splice(action.TournamentAddData)});
         }
 
-        case Delete_Team: {            
+        case Delete_Team: {
             let tournamentss = state.Tournaments;
             let teamId = action.teamId;
             let tournamentId = action.tournamentId;
@@ -86,17 +102,17 @@ export default (state = INITIAL_STATE, action) => {
             let newTournament = tournamentss[k].Teams.filter((team, i) => {
                 return team.id !== teamId;
             })
-            
+
             let tournament_Data = state.Tournamentss;
             tournamentss[k].Teams = newTournament;
-            let x = tournament_Data.findIndex(tournament=>{
-                return tournament.id===parseInt(tournamentId,10);
-            }) 
+            let x = tournament_Data.findIndex(tournament => {
+                return tournament.id === parseInt(tournamentId, 10);
+            })
             let newTournamentData = tournament_Data[x].Teams.filter((team, i) => {
                 return team.id !== teamId;
             })
             tournament_Data[x].Teams = newTournamentData;
-            return Object.assign({}, state, { Tournaments: [...tournamentss], Tournamentss:[...tournament_Data] });
+            return Object.assign({}, state, { Tournaments: [...tournamentss], Tournamentss: [...tournament_Data] });
         }
 
         case INVALID_DATA: {
@@ -104,6 +120,7 @@ export default (state = INITIAL_STATE, action) => {
         }
 
         case Add_New_Team: {
+
             let tournamentssData = state.Tournamentss;
             let tournaments = state.Tournaments;
             let id = action.TournamentTeamAddData.tournamentId;
@@ -113,14 +130,51 @@ export default (state = INITIAL_STATE, action) => {
             let j = tournamentssData.findIndex(tournament => {
                 return tournament.id === parseInt(id, 10);
             })
-            
             let TournamentTeam = {id:action.tournamentTeamm.id,isDelete:action.tournamentTeamm.isDelete};
             let newTeamm = {...action.newTeam,TournamentTeam};
-            tournamentssData[j].Teams = [...tournamentssData[j].Teams, newTeamm];
+            if(tournaments[i].Teams===undefined){
+                let Teams=[];
+                tournaments[i]={...tournaments[i],Teams};
+            }
+            // tournamentssData[j].Teams = [...tournamentssData[j].Teams, newTeamm];
             tournaments[i].Teams = [...tournaments[i].Teams, newTeamm]
-            return Object.assign({}, state, { Tournaments: [...tournaments], Tournamentss: [...tournamentssData] });
+            return Object.assign({}, state, { Tournaments: [...tournaments] });
         }
 
+        case ADD_TOURNAMENTMATCHS: {
+            let tournamentI = state.Tournamentss;
+            let { allmatchs } = state;
+            let { data, tournament, team1, team2, tournamentid, nrecord } = action;
+            let { id, tournamentName } = tournament[0];
+            let Tournament = { id, tournamentName };
+            let Team1 = team1;
+            let Team2 = team2;
+            let { tournamentMatches } = state;
+            data = { ...data, Tournament, Team1, Team2 };
+            if (parseInt(tournamentid, 10) === Tournament.id) {
+                tournamentMatches = [...tournamentMatches, data];
+            }
+            if(allmatchs.length >= nrecord){
+                allmatchs.splice(-1,1);
+                allmatchs.unshift(data); 
+            }
+            else{
+                allmatchs.unshift(data);
+            }
+            let index = tournamentI.findIndex(tournament => {
+                return tournament.id === parseInt(id, 10);
+            })
+            tournamentI[index].TournamentMatches = [...tournamentI[index].TournamentMatches,data];
+            return Object.assign({}, state, { addtournament: action.data, allmatchs: [...allmatchs], tournamentMatches: [...tournamentMatches], Tournamentss:[...tournamentI] });
+        }
+
+        case GET_TOURNAMENTMATCHS: {
+            return Object.assign({}, state, { tournamentMatches: [...action.tournamentMatches] });
+        }
+
+        case GET_ALLTOURNAMENTMATCHS: {
+            return Object.assign({}, state, { allmatchs: action.allmatchs });
+         }
         default:
             return state
     }

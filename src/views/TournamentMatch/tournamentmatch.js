@@ -9,6 +9,7 @@ import { PanelHeader } from "components";
 import path from '../../path';
 import Timer from './DisplayTimer/displaytimer';
 import WinnerModal from './winnerModal'
+import './tournamentmatch.css';
 
 class TournamentMatch extends Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class TournamentMatch extends Component {
       parpageRecord: 5,
       sorting: "",
       Editdataid: [],
-      sortingValueName: "id",
-      sortingValue: "desc",
+      sortingValueName: "matchDate",
+      sortingValue: "asc",
       showWinner: false,
       data: ''
     };
@@ -31,11 +32,11 @@ class TournamentMatch extends Component {
 
   componentWillMount = () => {
     this.props.action.TournamentAction.fetchTournamentDataAction();
-    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord,this.state.sortingValueName, this.state.sortingValue);
   }
 
   sortingdata = (Event) => {
-    const sortingValueName = Event.target.id;
+    const sortingValueName = 'matchDate';
     if (sortingValueName !== "Action") {
       let sortingValue = "asc";
       if (!this.state.sortingValueName) {
@@ -51,15 +52,19 @@ class TournamentMatch extends Component {
       }
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
+<<<<<<< HEAD
       }
+=======
+>>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
       this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
     }
   }
+}
 
   parpage = (Event) => {
     const nrecord = parseInt(Event.target.value, 10);
-    this.setState({ pageno: 0 });
-    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(0, nrecord, this.state.sortingValueName, this.state.sortingValue);
+    this.setState({ pageno: 0});
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(0, nrecord,this.state.sortingValueName, this.state.sortingValue);
     this.setState({ parpageRecord: nrecord })
   }
 
@@ -82,6 +87,7 @@ class TournamentMatch extends Component {
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   }
 
+<<<<<<< HEAD
   handlechangetournament = (Event) => {
     this.setState({ [Event.target.name]: Event.target.value })
     if (Event.target.value !== 'selected') {
@@ -94,9 +100,22 @@ class TournamentMatch extends Component {
       this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
 
     }
+=======
+  handlechangetournament =(Event) =>{
+        this.setState({[Event.target.name]:Event.target.value})
+        if(Event.target.value !== 'selected'){
+          this.setState({pageno:0});
+            this.props.action.TournamentMatchAction.getTournamentMatch(Event.target.value);}
+        else    {
+          let {pageno}=this.state;
+          this.setState({pageno:0});
+        this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
+  
+      }    
+>>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
   }
 
-  toggle(Event) {
+  toggle(Event){
     this.setState({
       modal: !this.state.modal,
       Editdataid: null
@@ -130,51 +149,51 @@ class TournamentMatch extends Component {
 
   render() {
     let notNext = 0;
+<<<<<<< HEAD
     let data = ""
+=======
+    let data = "";
+>>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
     let start = 0;
-    if (this.state.tournamentid === 'selected') {
+    if(this.state.tournamentid === 'selected') {
       if (this.props.TournamentMatchs && this.props.TournamentMatchs.length > 0) {
         start = 0;
         start = this.state.pageno + 1;
         data = this.props.TournamentMatchs.map((data, key) => {
           notNext = key + 1
           let d = new Date(data.matchDate);
-          let cdate = new Date().getTime();
+          let cdate = new Date();
+          var remaintime = Math.round((d - cdate));
           var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
-          remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           return <tr key={key}>
-            <td>{start++}</td>
+            <td className='header-center'>{start++}</td>
             <td>{data.Tournament.tournamentName}</td>
-            <td><img src={path + data.Team1[0].teamLogo} style={{ float: "right" }} height="70px" width="70px" alt="TeamImage" />
-              {
-                (data.winningTeamId === data.Team1[0].id) ? <img style={{ position: 'relative', left: '66px' }} src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
-              }
-            </td>
-            <td style={{ textAlign: 'center' }}>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
-            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
-              {
-                (data.winningTeamId === data.Team2[0].id) ? <img style={{
-                  position: 'relative', left: '-80px',
-                  top: '-20px'
-                }} src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
-              }
-            </td>
-            <td style={{ textAlign: 'center' }}>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
-            {(remainday > 0) ? (
-              (remainday > 5) ?
-                (<td style={{ textAlign: 'center' }}>{remainday + ' days '}</td>) : (<td style={{ textAlign: 'center' }} ><Timer date={data.matchDate} /></td>)
-            ) : (
-                <td style={{ cursor: 'pointer', textAlign: 'center' }} onClick={() => this.winningTeam(data)}> {'Finished'} </td>)
+            <td><img src={path + data.Team1[0].teamLogo} className='float-image-right' height="70px" width="70px" alt="TeamImage"/>
+            {
+                (data.winningTeamId===data.Team1[0].id)?<img className='team-1-badge' src={path+'winbadge.png'} height="50px" width="30px" alt=""/>:null
             }
-            <td> <Button color="info" style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
+            </td>
+            <td className='header-center'>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
+            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
+                {
+                  (data.winningTeamId===data.Team2[0].id)?<img className='team-2-badge' src={path+'winbadge.png'}  height="35px" width="30px" alt=""/>:null
+                }
+            </td>
+            <td className='header-center'>{d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()}</td>
+            { (remaintime>0) ? (
+                  ( remainday > 5 ) ?
+                        (<td className='header-center'>{remainday +' days '}</td>) : (<td className='header-center' ><Timer date={data.matchDate}/></td>)
+                  ): (
+                    <td className='header-center header-pointer' onClick={()=>this.winningTeam(data)}> {'Finished'} </td>)
+             }
           </tr>
         })
       }
       else {
-        data = <tr><td colSpan="6" style={{ textAlign: 'center' }}>No Match Exists</td></tr>
+        data = <tr><td colSpan="6" className='header-center'>No Match Exists</td></tr>
       }
 
-    }
+    } 
     else {
       if (this.props.TournamentMatchById && this.props.TournamentMatchById.length > 0) {
         data = this.props.TournamentMatchById.map((data, key) => {
@@ -184,40 +203,40 @@ class TournamentMatch extends Component {
           var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           return <tr key={key}>
-            <td>{key + 1}</td>
-            <td><img src={path + data.Team1[0].teamLogo} style={{ float: "right" }} height="70px" width="70px" alt="TeamImage" />
-              {
-                (data.winningTeamId === data.Team1[0].id) ? <img style={{ position: 'relative', left: '86px' }} src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
-              }
-            </td>
-            <td style={{ textAlign: 'center' }}>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
-            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
-              {
-                (data.winningTeamId === data.Team2[0].id) ? <img style={{
-                  position: 'relative', left: '-80px',
-                  top: '-20px'
-                }} src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
-              }
-            </td>
-            <td style={{ textAlign: 'center' }}>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
-            {(remainday > 0) ? (
-              (remainday > 5) ?
-                (<td style={{ textAlign: 'center' }}>{remainday + ' days '}</td>) : (<td style={{ textAlign: 'center' }}><Timer date={data.matchDate} /></td>)
-            ) : (
-                <td style={{ cursor: 'pointer', textAlign: 'center' }} onClick={() => this.winningTeam(data)}> {'Finished'} </td>)
+            <td className='header-center'>{key+1}</td>
+            <td><img src={path + data.Team1[0].teamLogo}  className='float-image-right' height="70px" width="70px" alt="TeamImage"/>
+            {
+                (data.winningTeamId===data.Team1[0].id)?<img className='team-one-badge' src={path+'winbadge.png'} height="50px" width="30px" alt=""/>:null
             }
-            <td> <Button color="info" style={{ width: "62px" }} value={data.id}>Edit</Button>{' '}</td>
+            </td>
+            <td className='header-center'>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
+            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage"  />
+                {
+                  (data.winningTeamId===data.Team2[0].id)?<img className='team-two-badge' src={path+'winbadge.png'}  height="35px" width="30px"alt=""/>:null
+                }
+            </td>
+            <td className='header-center'>{d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()}</td>
+            { (remainday>0) ? (
+                  ( remainday > 5 ) ?
+                        (<td className='header-center'>{remainday +' days '}</td>) : (<td className='header-center'><Timer date={data.matchDate}/></td>)
+                  ): (
+                    <td className='header-center header-pointer' onClick={()=>this.winningTeam(data)}> {'Finished'} </td>)
+             }
           </tr>
         })
       }
       else {
-        data = <tr><td colSpan="6" style={{ textAlign: 'center' }}>No Match Exists</td></tr>
+        data = <tr><td colSpan="6" className='header-center'>No Match Exists</td></tr>
       }
-
+  
 
     }
 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
     let tournamentD = "";
     if (this.props.Tournament.length > 0 && this.props.Tournament) {
       tournamentD = this.props.Tournament.map((data, key) => {
@@ -236,10 +255,14 @@ class TournamentMatch extends Component {
             ) : null
           }
           <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
+<<<<<<< HEAD
           <div style={{ marginTop: "50px" }}>
+=======
+          <div className="headerdiv" >
+>>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
             {
               (this.state.tournamentid === 'selected') ? (
-                <div style={{ float: "right" }}>
+                <div className='pagenumber'>
                   Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
                     <option>5</option>
                     <option>10</option>
@@ -250,14 +273,18 @@ class TournamentMatch extends Component {
                 </div>
               ) : null
             }
+<<<<<<< HEAD
             <div style={{ float: "right", paddingRight: '50px' }}>
+=======
+            <div className="tournamentselect">
+>>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
               Tournament<Input type="select" name="tournamentid" id="exampleSelect" onChange={this.handlechangetournament.bind(Event)}>
                 <option value={'selected'}>All Selected</option>
                 {tournamentD}
               </Input>
             </div>
-            <div style={{ float: "left" }}>
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
+            <div className="addbtn">
+              <img src={path+"add.png"} alt="plus" onClick={this.toggle} className="addimg"/>
             </div>
           </div>
           {data ?
@@ -266,6 +293,7 @@ class TournamentMatch extends Component {
                 {
                   (this.state.tournamentid === 'selected') ? (
                     <tr onClick={this.sortingdata.bind(Event)}>
+<<<<<<< HEAD
                       <th style={{ cursor: 'pointer' }}>#</th>
                       <th id={'tournamentId'} style={{ cursor: 'pointer' }}>Tournament</th>
                       <th colSpan="3" style={{ textAlign: 'center', cursor: 'pointer' }} id={'tournamentId'} >Teams</th>
@@ -280,6 +308,20 @@ class TournamentMatch extends Component {
                         <th style={{ textAlign: 'center' }}>Date</th>
                         <th style={{ textAlign: 'center' }}>Remaining Time</th>
                         <th>Action</th>
+=======
+                        <th className='header-center header-pointer'>#</th>
+                        <th id={'tournamentId'} className='header-pointer'>Tournament</th>
+                        <th colSpan="3" className='header-pointer header-center' id={'tournamentId'} >Teams</th>
+                        <th className='header-pointer header-center'>Date</th>
+                        <th className='header-pointer header-center'>Remaining Time</th>
+                    </tr>
+                  ) : (
+                      <tr>
+                        <th className='header-center'>#</th>
+                        <th colSpan="3" className='header-center' id={'tournamentId'} >Teams</th>
+                        <th className='header-center'>Date</th>
+                        <th className='header-center'>Remaining Time</th>
+>>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
                       </tr>
                     )
                 }
@@ -311,10 +353,10 @@ class TournamentMatch extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    TournamentMatchs: state.TournamentMatchs.allmatchs,
+    TournamentMatchs: state.Tournament.allmatchs,
     Tournament: state.Tournament.Tournamentss,
     AddTournament: state.Tournament.Tournamentss,
-    TournamentMatchById: state.TournamentMatchs.tournamentMatches
+    TournamentMatchById: state.Tournament.tournamentMatches
   }
 };
 
@@ -324,4 +366,4 @@ const mapDispatchToProps = (dispatch) => ({
     TournamentAction: bindActionCreators(TournamentAction, dispatch)
   }
 });
-export default connect(mapStateToProps, mapDispatchToProps)(TournamentMatch);
+export default connect(mapStateToProps, mapDispatchToProps)(TournamentMatch)
