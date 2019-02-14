@@ -127,7 +127,7 @@ class Team extends Component {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
-          <td><img src={path + data.teamLogo} alt="" style={{ width: "130px", height: "100px" }}></img></td>
+          <td><img src={path + 'thumbnail/' + data.teamLogo} alt=""></img></td>
           <td>{data.teamName}</td>
           <td>
             <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>

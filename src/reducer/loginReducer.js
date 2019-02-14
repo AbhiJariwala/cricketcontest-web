@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     error_msg: "",
     userId: '',
     email: '',
+    Name:""
 }
 export const LOGIN_SUCCESSFUL = 'LOGIN_SUCCESSFUL';
 export const FAILED = 'FAILED';
@@ -16,6 +17,7 @@ export default (state = INITIAL_STATE, action) => {
                 token: action.data.token,
                 userId: action.data.userId,
                 Role: action.data.Role,
+                Name:action.data.Name,
                 error_msg: ""
             });
         }

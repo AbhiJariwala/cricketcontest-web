@@ -8,10 +8,13 @@ export const loginUser = (credentials) => {
                 if (response.status === 200) {
                     localStorage.setItem("token", response.data.user.token)
                     localStorage.setItem("userId", response.data.user.id)
+                    const fullname= response.data.user.firstName + " "+ response.data.user.lastName
+
                     localStorage.setItem("role", response.data.user.role)
+                    localStorage.setItem("Name", fullname)
                     dispatch({
                         type: LOGIN_SUCCESSFUL,
-                        data: { token: response.data.user.token, userId: response.data.user.id,Role:response.data.user.role }
+                        data: { token: response.data.user.token, userId: response.data.user.id,Role:response.data.user.role,Name:fullname }
                     });
                 }
             })
@@ -31,6 +34,7 @@ export const logoutUser = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("role");
+        localStorage.removeItem("Name");
     }
 };
 
