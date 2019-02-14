@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter, CardTitle, Row, Col, Badge } from "reactstrap";
+import { Card, CardHeader, CardBody, CardFooter, CardTitle, Row, Col } from "reactstrap";
 import { PanelHeader, Stats } from "components";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -54,138 +54,109 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <PanelHeader size="lg" content={<img alt="Cricket Contest"  style={{width:'100%',height:'fit-content'}} src={path + "Cricket-DashBoard.jpg"}></img>} />
-        <div className="content">
-          <Row>
-            <Col xs={12} md={3}>
-              <Card className="card-chart">
-                <CardHeader>
-                  <CardTitle tag="h4" style={{ textAlign: "center" }}>Tournaments</CardTitle>
-                </CardHeader>
-                <CardBody style={{ height: "150px" }}>
-                  <hr />
-                  <div className="chart-area">
-                    <br />
-                    <h1 style={{ textAlign: "center", marginTop: "10px" }}>{tournaments}</h1>
-                  </div>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <Stats>
-                    {[
-                      {
-                        i: "now-ui-icons loader_refresh spin",
-                        t: "Total Tournaments"
-                      }
-                    ]}
-                  </Stats>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col xs={12} md={3}>
-              <Card className="card-chart">
-                <CardHeader>
-                  <CardTitle tag="h4" style={{ textAlign: "center" }}>Teams</CardTitle>
-                </CardHeader>
-                <CardBody style={{ height: "150px" }}>
-                  <hr />
-                  <div className="chart-area">
-                    <br />
-                    <h1 style={{ textAlign: "center", marginTop: "10px" }}>{teams}</h1>
-                  </div>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <Stats>
-                    {[
-                      {
-                        i: "now-ui-icons loader_refresh spin",
-                        t: "Total Teams"
-                      }
-                    ]}
-                  </Stats>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col xs={12} md={3}>
-              <Card className="card-chart">
-                <CardHeader>
-                  <CardTitle tag="h4" style={{ textAlign: "center" }}>Players</CardTitle>
-                </CardHeader>
-                <CardBody style={{ height: "150px" }}>
-                  <hr />
-                  <div className="chart-area">
-                    <br />
-                    <h1 style={{ textAlign: "center", marginTop: "10px" }}>{players}</h1>
-                  </div>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <Stats>
-                    {[
-                      {
-                        i: "now-ui-icons loader_refresh spin",
-                        t: "Total Players"
-                      }
-                    ]}
-                  </Stats>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col xs={12} md={3}>
-              <Card className="card-chart">
-                <CardHeader>
-                  <CardTitle tag="h4" style={{ textAlign: "center" }}>Users</CardTitle>
-                </CardHeader>
-                <CardBody style={{ height: "150px" }}>
-                  <hr />
-                  <div className="chart-area">
-                    <br />
-                    <h1 style={{ textAlign: "center", marginTop: "10px" }}>{users - 1}</h1>
-                  </div>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <Stats>
-                    {[
-                      {
-                        i: "now-ui-icons loader_refresh spin",
-                        t: "Total Users"
-                      }
-                    ]}
-                  </Stats>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs={12}>
-              <Card className="card-tasks">
-                <CardHeader>
-                  <CardTitle tag="h4">Today's Match</CardTitle>
-                </CardHeader>
-                <CardBody style={{ height: "400px" }}>
-                  <hr />
-                  <div className="chart-area">
-                    <br />
-                    {matchTeam1 ?
-                      <div>
-                        <h1 style={{ textAlign: "center" }}>{matchTournamentName} </h1>
-                        <h3 style={{ textAlign: "center", marginTop: "40px" }}>
-                          <img src={path + team1Image} height="100px" width="100px" alt="Team1"></img>{' '}{' '}{' '}
-                          <Badge color="dark">{matchTeam1}</Badge> VS <Badge color="dark">{matchTeam2}</Badge>{' '}{' '}{' '}
-                          <img src={path + team2Image} height="100px" width="100px" alt="Team2"></img>
-                        </h3>
-                      </div> : <h3 style={{ textAlign: "center" }}>No Match Today</h3>
+        <PanelHeader size="lg" content={<img alt="Cricket Contest" style={{ width: '100%', height: 'fit-content' }} src={path + "Cricket-DashBoard.jpg"}></img>} />
+        <Row>
+          <Col xs={12} md={3}>
+            <Card className="card-chart">
+              <CardHeader>
+                <CardTitle tag="h4" style={{ textAlign: "center" }}>Tournaments</CardTitle>
+              </CardHeader>
+              <CardBody style={{ height: "150px" }}>
+                <hr />
+                <div className="chart-area">
+                  <br />
+                  <h1 style={{ textAlign: "center", marginTop: "10px" }}>{tournaments}</h1>
+                </div>
+              </CardBody>
+              <CardFooter>
+                <hr />
+                <Stats>
+                  {[
+                    {
+                      i: "now-ui-icons sport_trophy",
+                      t: "Total Tournaments"
                     }
-
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </div>
+                  ]}
+                </Stats>
+              </CardFooter>
+            </Card>
+          </Col>
+          <Col xs={12} md={3}>
+            <Card className="card-chart">
+              <CardHeader>
+                <CardTitle tag="h4" style={{ textAlign: "center" }}>Teams</CardTitle>
+              </CardHeader>
+              <CardBody style={{ height: "150px" }}>
+                <hr />
+                <div className="chart-area">
+                  <br />
+                  <h1 style={{ textAlign: "center", marginTop: "10px" }}>{teams}</h1>
+                </div>
+              </CardBody>
+              <CardFooter>
+                <hr />
+                <Stats>
+                  {[
+                    {
+                      i: "now-ui-icons users_circle-08",
+                      t: "Total Teams"
+                    }
+                  ]}
+                </Stats>
+              </CardFooter>
+            </Card>
+          </Col>
+          <Col xs={12} md={3}>
+            <Card className="card-chart">
+              <CardHeader>
+                <CardTitle tag="h4" style={{ textAlign: "center" }}>Players</CardTitle>
+              </CardHeader>
+              <CardBody style={{ height: "150px" }}>
+                <hr />
+                <div className="chart-area">
+                  <br />
+                  <h1 style={{ textAlign: "center", marginTop: "10px" }}>{players}</h1>
+                </div>
+              </CardBody>
+              <CardFooter>
+                <hr />
+                <Stats>
+                  {[
+                    {
+                      i: "now-ui-icons sport_user-run ",
+                      t: "Total Players"
+                    }
+                  ]}
+                </Stats>
+              </CardFooter>
+            </Card>
+          </Col>
+          <Col xs={12} md={3}>
+            <Card className="card-chart">
+              <CardHeader>
+                <CardTitle tag="h4" style={{ textAlign: "center" }}>Users</CardTitle>
+              </CardHeader>
+              <CardBody style={{ height: "150px" }}>
+                <hr />
+                <div className="chart-area">
+                  <br />
+                  <h1 style={{ textAlign: "center", marginTop: "10px" }}>{users - 1}</h1>
+                </div>
+              </CardBody>
+              <CardFooter>
+                <hr />
+                <Stats>
+                  {[
+                    {
+                      i: "now-ui-icons users_single-02",
+                      t: "Total Users"
+                    }
+                  ]}
+                </Stats>
+              </CardFooter>
+            </Card>
+          </Col>
+        </Row>
       </div>
     );
   }

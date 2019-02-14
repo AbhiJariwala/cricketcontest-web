@@ -29,14 +29,14 @@ export default (state = INITIAL_STATE, action) => {
             let {tournamentMatches}=state;
             data={...data,Tournament, Team1, Team2};
             if (parseInt(tournamentid,10)===Tournament.id){
-                tournamentMatches=[...tournamentMatches,data];
+                tournamentMatches=[data,...tournamentMatches];  
             }
             if(allmatchs.length >= nrecord){
-                let a=allmatchs.slice(1);
-                allmatchs = [...a,data]; 
+                allmatchs.splice(-1,1);
+                allmatchs.unshift(data); 
             }
             else{
-                allmatchs=[...allmatchs,data];
+                allmatchs.unshift(data);
             }
             
             return Object.assign({}, state, { addtournament: action.data, allmatchs:[...allmatchs], tournamentMatches: [...tournamentMatches] });

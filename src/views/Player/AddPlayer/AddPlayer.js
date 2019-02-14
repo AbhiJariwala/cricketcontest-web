@@ -13,27 +13,27 @@ class AddPlayer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Player: { id: "", firstName: "", lastName: "", dob: "", gender: 1, description: "", playerImage: [], showimage: true },
-            fieldsErrors: { firstName: '', lastName: '', dob: '', playerImage: '' },
-            fieldsValid: { firstName: false, lastName: false, dob: false, playerImage: "false" },
-            formValid: false
+            Player: { id: "", firstName: "", lastName: "", dob: "", gender: 1, description: "", playerImage: [], showimage: true, displayImage: "" },
+            fieldsErrors: { firstName: '', lastName: '', dob: '', description: '' },
+            fieldsValid: { firstName: false, lastName: false, dob: false, description: false },
+            formValid: false,
         }
     }
-    componentWillReceiveProps(nextProps) {        
+    componentWillReceiveProps(nextProps) {
         let Player = nextProps.data.Player;
         if (nextProps.data.Player) {
             if (nextProps.data.Edit) {
                 this.setState({
                     Player: Player,
                     formValid: true,
-                    fieldsValid: { firstName: true, lastName: true, dob: true, playerImage: "true" },
+                    fieldsValid: { firstName: true, lastName: true, dob: true },
                 })
             }
             else {
                 this.setState({
                     Player: Player,
                     formValid: false,
-                    fieldsValid: { firstName: false, lastName: false, dob: false, playerImage: "false" },
+                    fieldsValid: { firstName: false, lastName: false, dob: false },
                 })
             }
         }
@@ -52,12 +52,21 @@ class AddPlayer extends Component {
     }
 
     imageChangedHandler(image) {
-        this.setState({
-            Player: {
-                ...this.state.Player,
-                playerImage: image
-            }
-        })
+        var reader = new FileReader();
+        reader.readAsDataURL(image[0]);
+
+        reader.onloadend = (e) => {
+            this.setState({
+                Player: {
+                    ...this.state.Player,
+                    playerImage: image,
+                    showimage: true,
+                    displayImage: reader.result
+                }
+
+            })
+        };
+
         this.validateField("playerImage", "true");
     }
 
@@ -82,10 +91,12 @@ class AddPlayer extends Component {
         this.setState({
             Player: {
                 ...this.state.Player,
-                showimage: false
-            }
+                showimage: false,
+                displayImage: ""
+            },
+
+
         })
-        this.validateField("playerImage", "false");
     }
 
     calculateAge(dobString) {
@@ -117,34 +128,62 @@ class AddPlayer extends Component {
                 fieldValidationErrors.dob = fieldValidation.dob ? '' : "Invalid date of birth"
                 break;
 
-            case 'playerImage':
-                fieldValidation.playerImage = value;
-                fieldValidationErrors.playerImage = fieldValidation.playerImage === "true" ? '' : "Must select player image"
+            case 'description':
+                fieldValidation.description = true;
                 break;
-
             default:
                 break;
         }
         this.setState({
-            fieldsErrors: fieldValidationErrors,
+            fieldsErrors: { ...this.state.fieldsErrors, fieldValidationErrors },
             fieldsValid: fieldValidation
         }, this.validateForm);
     }
 
     validateForm() {
-
         this.setState({
             formValid: this.state.fieldsValid.firstName &&
                 this.state.fieldsValid.lastName &&
                 this.state.fieldsValid.dob &&
-                (this.state.fieldsValid.playerImage === "true")
+                this.state.fieldsValid.description
         });
     }
 
-
-
     btnSubmitClick = (e) => {
         e.preventDefault();
+        if (this.state.Player.description === "") {
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    description: "* Description Required"
+                }
+            })
+        }
+        if (this.state.Player.dob === "") {
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    dob: "* Date of birth Required"
+                }
+            })
+        }
+        if (this.state.Player.lastName === "") {
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    lastName: "* Last Name Required"
+                }
+            })
+        }
+        if (this.state.Player.firstName === "") {
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    firstName: "* First Name Required"
+                },
+            })
+        }
+
         if (this.state.formValid) {
             let formdata = new FormData();
             formdata.append("firstName", this.state.Player.firstName);
@@ -166,9 +205,10 @@ class AddPlayer extends Component {
             }
             else {
                 let playerId = this.state.Player.id;
-                if (!this.state.Player.showimage) {
+                if (this.state.Player.displayImage) {
                     formdata.append("playerImage", this.state.Player.playerImage[0]);
                 }
+
                 formdata.append("id", playerId);
                 formdata.append("updatedBy", loginUserId);
                 this.props.action.Player.updatePlayer(this.state.Player, formdata, config)
@@ -213,17 +253,23 @@ class AddPlayer extends Component {
                                 <FormGroup>
                                     <Label for="description">Description</Label>
                                     <Input type="textarea" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} />
+                                    <span style={{ color: "red" }}>{this.state.fieldsErrors.description}</span>
                                 </FormGroup>
-                                {(this.state.Player.showimage) ?
-                                    <div align="center">
-                                        <img src={path + this.state.Player.playerImage} height="100px" width="100px" alt="" />
-                                        <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
-                                    </div>
+                                {(this.state.Player.showimage && this.state.Player.playerImage !== "defaultPlayerImage.png") ?
+                                    (this.state.Player.length > 0 || this.state.Player.displayImage === "") ?
+                                        <div align="center">
+                                            <img src={path + this.state.Player.playerImage} alt="" style={{ height: "100px", width: "100px" }} />
+                                            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
+                                        </div> :
+                                        <div align="center">
+                                            <img src={this.state.Player.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
+                                            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
+                                        </div>
                                     : (<div><ImageUploader
                                         withIcon={true}
+                                        ref="file"
                                         buttonText="Select Images"
                                         imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
-                                        withPreview={true}
                                         onChange={this.imageChangedHandler.bind(this)}
                                         maxFileSize={5242880}
                                         withLabel={false}

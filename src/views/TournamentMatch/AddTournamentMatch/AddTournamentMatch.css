@@ -45,3 +45,9 @@
     float: right;
     margin: 15px;
 }
+
+.span-error{
+    text-align: center;
+    display: block;
+    color: red;
+}

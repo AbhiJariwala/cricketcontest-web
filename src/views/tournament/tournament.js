@@ -77,7 +77,7 @@ class tournament extends Component {
   parpage = (Event) => {
     const parpage = parseInt(Event.target.value, 10);
     const pageno = 0
-    this.setState({ parpageRecord: parpage,pageno:0 })
+    this.setState({ parpageRecord: parpage, pageno: 0 })
     this.props.action.Tournament.SelectTournamentAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
 
@@ -110,7 +110,7 @@ class tournament extends Component {
     // this.props.action.Tournament.fetchTournamentAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
     this.setState({
       visible: !this.state.visible
-    });   
+    });
   }
   ShowTeam = (tournament) => {
   
@@ -206,18 +206,18 @@ class tournament extends Component {
       start=this.state.pageno+1
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
-        return <tr key={key} style={{ textAlign: "center" }}>        
+        return <tr key={key} style={{ textAlign: "center" }}>
           <td>{start++}</td>
-          <td><img src={path + data.tournamentBanner} alt="" style={{ width: "150px", height: "80px" }}></img></td>
+          <td><img src={path + 'thumbnail/' + data.tournamentBanner} alt="" ></img></td>
           <td>{data.tournamentName}</td>
           <th onClick={() => this.ShowTeam(data)}><Button color="info">Teams</Button></th>
-          <td><img src={path+"edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
-          <img src={path+"delete1.jpg"} alt="Edit"  onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
-            </td>
+          <td><img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
+            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
+          </td>
         </tr>
       })
-    }else{
-      data=<tr><td>No Record</td></tr>;
+    } else {
+      data = <tr><td>No Record</td></tr>;
     }
     return (
       <div>
@@ -245,7 +245,7 @@ class tournament extends Component {
               </Input>
             </div>
             <div style={{ float: "left", borderRadius: "50%" }}>
-              <img src={path+"add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor:"pointer" }} ></img>
+              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
             </div>
           </div>
           {data ?
@@ -255,7 +255,7 @@ class tournament extends Component {
                   <th>#</th>
                   <th style={{ cursor: "pointer" }}>Banner</th>
                   <th style={{ cursor: "pointer" }}>Tournament</th>
-                <th>Teams</th>
+                  <th>Teams</th>
                   <th>Action</th>
                 </tr>
               </thead>

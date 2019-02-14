@@ -6,7 +6,12 @@ const INITIAL_STATE = {
     FetchSingleTournamentData: [],
     updateTournamentData: [],
     error_msg: "",
-    Tournamentss: []
+    Tournamentss: [],
+    tournamentmatchs: [],
+    allmatchs:[],
+    tournamentMatches:[],
+    errors: "",
+    addtournament:""
 }
 export const deletetournamentdata = "deletetournamentdata";
 export const Fetch_Tournament_Data = "Fetch_Tournament_Data";
@@ -19,6 +24,9 @@ export const Get_Tournament_Data = "Get_Tournament_Data";
 export const Add_New_Team = "Add_New_Team";
 export const Add_Tournament_Data = "Add_Tournament_Data";
 export const Delete_Team = "Delete_Team";
+export const GET_TOURNAMENTMATCHS = "GET_TOURNAMENTMATCHS";
+export const GET_ALLTOURNAMENTMATCHS="GET_ALLTOURNAMENTMATCHS";
+export const ADD_TOURNAMENTMATCHS="ADD_TOURNAMENTMATCHS"
 
 export default (state = INITIAL_STATE, action) => {
     
@@ -83,7 +91,7 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { Tournaments: state.Tournaments.splice(action.TournamentAddData)});
         }
 
-        case Delete_Team: {            
+        case Delete_Team: {
             let tournamentss = state.Tournaments;
             let teamId = action.teamId;
             let tournamentId = action.tournamentId;
@@ -94,17 +102,17 @@ export default (state = INITIAL_STATE, action) => {
             let newTournament = tournamentss[k].Teams.filter((team, i) => {
                 return team.id !== teamId;
             })
-            
+
             let tournament_Data = state.Tournamentss;
             tournamentss[k].Teams = newTournament;
-            let x = tournament_Data.findIndex(tournament=>{
-                return tournament.id===parseInt(tournamentId,10);
-            }) 
+            let x = tournament_Data.findIndex(tournament => {
+                return tournament.id === parseInt(tournamentId, 10);
+            })
             let newTournamentData = tournament_Data[x].Teams.filter((team, i) => {
                 return team.id !== teamId;
             })
             tournament_Data[x].Teams = newTournamentData;
-            return Object.assign({}, state, { Tournaments: [...tournamentss], Tournamentss:[...tournament_Data] });
+            return Object.assign({}, state, { Tournaments: [...tournamentss], Tournamentss: [...tournament_Data] });
         }
 
         case INVALID_DATA: {
@@ -133,6 +141,40 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { Tournaments: [...tournaments] });
         }
 
+        case ADD_TOURNAMENTMATCHS: {
+            let tournamentI = state.Tournamentss;
+            let { allmatchs } = state;
+            let { data, tournament, team1, team2, tournamentid, nrecord } = action;
+            let { id, tournamentName } = tournament[0];
+            let Tournament = { id, tournamentName };
+            let Team1 = team1;
+            let Team2 = team2;
+            let { tournamentMatches } = state;
+            data = { ...data, Tournament, Team1, Team2 };
+            if (parseInt(tournamentid, 10) === Tournament.id) {
+                tournamentMatches = [...tournamentMatches, data];
+            }
+            if(allmatchs.length >= nrecord){
+                allmatchs.splice(-1,1);
+                allmatchs.unshift(data); 
+            }
+            else{
+                allmatchs.unshift(data);
+            }
+            let index = tournamentI.findIndex(tournament => {
+                return tournament.id === parseInt(id, 10);
+            })
+            tournamentI[index].TournamentMatches = [...tournamentI[index].TournamentMatches,data];
+            return Object.assign({}, state, { addtournament: action.data, allmatchs: [...allmatchs], tournamentMatches: [...tournamentMatches], Tournamentss:[...tournamentI] });
+        }
+
+        case GET_TOURNAMENTMATCHS: {
+            return Object.assign({}, state, { tournamentMatches: [...action.tournamentMatches] });
+        }
+
+        case GET_ALLTOURNAMENTMATCHS: {
+            return Object.assign({}, state, { allmatchs: action.allmatchs });
+         }
         default:
             return state
     }

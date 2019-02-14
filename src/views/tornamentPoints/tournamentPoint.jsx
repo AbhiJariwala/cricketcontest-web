@@ -260,6 +260,7 @@ class tournamentPoint extends Component {
         total = i + 1;
         return (
           <tr key={tournamentPoint.id} style={{ textAlign: "center" }}>
+            <td>{total}</td>
             <td>{tournamentPoint.Tournament.tournamentName}</td>
             <td><Button color="info" onClick={() => this.getPoints(tournamentPoint)}>Points</Button></td>
           </tr>
@@ -294,8 +295,9 @@ class tournamentPoint extends Component {
           <Table hover>
             <thead className="thead-dark">
               <tr style={{ textAlign: "center" }}>
-                <th>Tournament</th>
-                <th>Point</th>
+                <th>#</th>
+                <th>Tournament Name</th>
+                <th>Tournament Point</th>
               </tr>
             </thead>
             <tbody>
@@ -314,7 +316,6 @@ class tournamentPoint extends Component {
           </ButtonGroup>
         </div>
       </div>
-
     );
   }
 }
