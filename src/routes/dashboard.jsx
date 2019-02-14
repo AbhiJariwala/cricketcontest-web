@@ -1,6 +1,6 @@
 import Dashboard from "views/Dashboard/Dashboard.jsx";
 import Tournament from "../views/tournament/tournament";
-import TournamentTeam from "../views/TournamentTeam/tournamentTeam";
+//import TournamentTeam from "../views/TournamentTeam/tournamentTeam";
 import Team from "../views/Team/team";
 import Player from "../views//Player/Player";
 import TeamPlayer from '../views/TeamPlayer/TeamPlayer';
