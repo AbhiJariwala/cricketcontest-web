@@ -52,10 +52,6 @@ class TournamentMatch extends Component {
       }
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
-<<<<<<< HEAD
-      }
-=======
->>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
       this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
     }
   }
@@ -87,20 +83,6 @@ class TournamentMatch extends Component {
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   }
 
-<<<<<<< HEAD
-  handlechangetournament = (Event) => {
-    this.setState({ [Event.target.name]: Event.target.value })
-    if (Event.target.value !== 'selected') {
-      this.setState({ pageno: 0 });
-      this.props.action.TournamentMatchAction.getTournamentMatch(Event.target.value);
-    }
-    else {
-      let { pageno } = this.state;
-      this.setState({ pageno: 0 });
-      this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
-
-    }
-=======
   handlechangetournament =(Event) =>{
         this.setState({[Event.target.name]:Event.target.value})
         if(Event.target.value !== 'selected'){
@@ -112,7 +94,6 @@ class TournamentMatch extends Component {
         this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   
       }    
->>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
   }
 
   toggle(Event){
@@ -149,11 +130,7 @@ class TournamentMatch extends Component {
 
   render() {
     let notNext = 0;
-<<<<<<< HEAD
-    let data = ""
-=======
     let data = "";
->>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
     let start = 0;
     if(this.state.tournamentid === 'selected') {
       if (this.props.TournamentMatchs && this.props.TournamentMatchs.length > 0) {
@@ -232,11 +209,7 @@ class TournamentMatch extends Component {
 
     }
 
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
     let tournamentD = "";
     if (this.props.Tournament.length > 0 && this.props.Tournament) {
       tournamentD = this.props.Tournament.map((data, key) => {
@@ -255,11 +228,7 @@ class TournamentMatch extends Component {
             ) : null
           }
           <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
-<<<<<<< HEAD
-          <div style={{ marginTop: "50px" }}>
-=======
           <div className="headerdiv" >
->>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
             {
               (this.state.tournamentid === 'selected') ? (
                 <div className='pagenumber'>
@@ -273,11 +242,7 @@ class TournamentMatch extends Component {
                 </div>
               ) : null
             }
-<<<<<<< HEAD
-            <div style={{ float: "right", paddingRight: '50px' }}>
-=======
             <div className="tournamentselect">
->>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
               Tournament<Input type="select" name="tournamentid" id="exampleSelect" onChange={this.handlechangetournament.bind(Event)}>
                 <option value={'selected'}>All Selected</option>
                 {tournamentD}
@@ -293,22 +258,6 @@ class TournamentMatch extends Component {
                 {
                   (this.state.tournamentid === 'selected') ? (
                     <tr onClick={this.sortingdata.bind(Event)}>
-<<<<<<< HEAD
-                      <th style={{ cursor: 'pointer' }}>#</th>
-                      <th id={'tournamentId'} style={{ cursor: 'pointer' }}>Tournament</th>
-                      <th colSpan="3" style={{ textAlign: 'center', cursor: 'pointer' }} id={'tournamentId'} >Teams</th>
-                      <th style={{ textAlign: 'center' }}>Date</th>
-                      <th style={{ textAlign: 'center' }}>Remaining Time</th>
-                      <th>Action</th>
-                    </tr>
-                  ) : (
-                      <tr>
-                        <th style={{ cursor: 'pointer' }}>#</th>
-                        <th colSpan="3" style={{ textAlign: 'center' }} id={'tournamentId'} >Teams</th>
-                        <th style={{ textAlign: 'center' }}>Date</th>
-                        <th style={{ textAlign: 'center' }}>Remaining Time</th>
-                        <th>Action</th>
-=======
                         <th className='header-center header-pointer'>#</th>
                         <th id={'tournamentId'} className='header-pointer'>Tournament</th>
                         <th colSpan="3" className='header-pointer header-center' id={'tournamentId'} >Teams</th>
@@ -321,7 +270,6 @@ class TournamentMatch extends Component {
                         <th colSpan="3" className='header-center' id={'tournamentId'} >Teams</th>
                         <th className='header-center'>Date</th>
                         <th className='header-center'>Remaining Time</th>
->>>>>>> 78d8ad4a9379c586e4a9043100ba4f747c2ffea3
                       </tr>
                     )
                 }
