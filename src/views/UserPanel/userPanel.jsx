@@ -10,71 +10,66 @@ import {
   NavbarBrand,
   Nav,
   NavLink,
-  NavItem } from 'reactstrap';
-  import {Link} from 'react-router-dom';
-class NavbarPage extends Component {constructor(props) {
-  super(props);
+  NavItem, DropdownToggle, DropdownItem, UncontrolledDropdown, DropdownMenu
+} from 'reactstrap';
+import { Link } from 'react-router-dom';
+class NavbarPage extends Component {
+  constructor(props) {
+    super(props);
 
-  this.toggle = this.toggle.bind(this);
-  this.state = {
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+  state = {
     isOpen: false
   };
-}
-toggle() {
-  this.setState({
-    isOpen: !this.state.isOpen
-  });
-} 
-state = {
-  isOpen: false
-};
-logoutClick() {
+  logoutClick() {
     this.props.action.logout.logoutUser();
-}
-toggleCollapse = () => {
-  this.setState({ isOpen: !this.state.isOpen });
-}
-render() {
-  return (
-    <div>
-    <Navbar color="dark" light expand="md">
-      <NavbarBrand href="/userDashBoard">Cricket Contest</NavbarBrand>
-      <NavbarToggler onClick={this.toggle} />
-      <Collapse isOpen={this.state.isOpen} navbar>
-        <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink tag={Link} to="/userDashBoard">Home</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/Myteam">My tEAMS</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/viewTournamentteam">Tournament</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} onClick={this.logoutClick.bind(this)} to="">Logout</NavLink>
-          </NavItem>
-          {/* <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret>
-              Options
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>
-                Option 1
-              </DropdownItem>
-              <DropdownItem>
-                Option 2
-              </DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>
-                Reset
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown> */}
-        </Nav>
-      </Collapse>
-    </Navbar>
-  </div>
+  }
+  toggleCollapse = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
+  render() {
+    return (
+      <div>
+        <Navbar color="dark" light expand="md">
+          <NavbarBrand href="/userDashBoard">Cricket Contest</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink tag={Link} to="/userDashBoard">Home</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/Myteam">My tEAMS</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/viewTournamentteam">Tournament</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} onClick={this.logoutClick.bind(this)} to="">Logout</NavLink>
+              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  <i className="fas fa-user-circle" style={{ fontSize: '18px' }} ></i>&nbsp;{localStorage.getItem("Name")}
+                </DropdownToggle>
+                <DropdownMenu right style={{ height: '38px', width: '35px' }}>
+                  <center><DropdownItem onClick={this.logoutClick.bind(this)} style={{ marginTop: '-8px', backgroundColor: '#D3D3D3', border: '2px solid white', fontStyle: 'bold', fontSize: '15px' }}>
+                    Logout</DropdownItem>
+                  </center>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </div>
 
 
 
@@ -83,9 +78,9 @@ render() {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    action: {
-        logout: bindActionCreators(loginAction, dispatch)
-    }
+  action: {
+    logout: bindActionCreators(loginAction, dispatch)
+  }
 })
 
 export default connect(null, mapDispatchToProps)(NavbarPage);

@@ -118,9 +118,7 @@ class Player extends Component {
         playerImage: [],
         showimage: false
       },
-      Edit: false,
-      // fieldsValid: { firstName: false, lastName: false, dob: false, playerImage: "false" },
-      // formValid: false
+      Edit: false,     
     })
     this.toggle();
   }
@@ -129,11 +127,10 @@ class Player extends Component {
     this.setState({
       Player: {
         ...player,
-        showimage: true
+        showimage: true,
+        displayImage:""
       },
-      Edit: true,
-      // formValid: true,
-      // fieldsValid: { firstName: true, lastName: true, dob: true, playerImage: "true" },
+      Edit: true,     
     })
     this.toggle();
   }
@@ -164,14 +161,14 @@ class Player extends Component {
       player = this.props.Player.PlayerData.map((player, key) => {
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
-          <td><img src={path + 'thumbnail/' + player.playerImage} height="50px" width="50px" alt="playerImage" /></td>
+          <td><img src={path + 'thumbnail/' + player.playerImage}  alt="playerImage" /></td>
           <td>{player.firstName}&nbsp;{player.lastName}</td>
           <td>{this.calculateAge(player.dob).toString()}</td>
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
           <td>
-            <img src={path + "edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 40 }} ></img>
-            <img src={path + "delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 40 }} ></img>
+            <img src={path + "edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 25 }} ></img>
+            <img src={path + "delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 25 }} ></img>
           </td>
         </tr>
       })
@@ -193,7 +190,8 @@ class Player extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img>
+            <Button color="info" onClick={this.toggle} >Add</Button>
+              {/* <img src={path + "thumbnail/" + "addData.png"} alt="plus" onClick={this.toggle} ></img> */}
             </div>
           </div>
           <Table hover>
@@ -210,6 +208,7 @@ class Player extends Component {
             </thead>
             <tbody>
               {player}
+              
             </tbody>
           </Table>
           <ButtonGroup>
