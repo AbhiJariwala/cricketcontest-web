@@ -178,7 +178,7 @@ class Player extends Component {
         <PanelHeader size="sm" />
         <div style={{ marginLeft: "15px" }}>
           <AddPlayer isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state}> </AddPlayer>
-          <div style={{ marginTop: "50px" }}>
+          <div >
             <div style={{ float: "right" }}>
               Show entries
                 <Input type="select" name="select" onChange={this.showEntriesChanged.bind(this)}>
