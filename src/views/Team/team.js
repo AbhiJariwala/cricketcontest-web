@@ -37,6 +37,8 @@ class Team extends Component {
     const parpage = parseInt(Event.target.value, 10);
     const pageno = 0
     this.setState({ parpageRecord: parpage, pageno: 0 })
+    this.setState({ parpageRecord: parpage})
+    this.setState({pageno:0 });
     this.props.action.Team.selectTeamAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
   changeRecord = (Event) => {
@@ -62,7 +64,7 @@ class Team extends Component {
     let sortingValueName;
     if (Event.target.childNodes[0].data === "Team Name") {
 =======
-    
+
     let sortingValueName;
     if (Event.target.childNodes[0].data === "Team") {
 >>>>>>> a3f5ad4ca8399919c2a0f4ad4ee9d7e5322b7192

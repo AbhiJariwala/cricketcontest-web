@@ -34,9 +34,9 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar" data-color="blue">
         <div className="logo">
-        <ReactLink tag={Link} to={"/dashboard"} className="simple-text logo-normal"> 
-Cricket Contest
-</ReactLink>
+        <ReactLink tag={Link} to={"/dashboard"} className="simple-text logo-normal">
+            <img src={path + "logo2.jpg"}  height="30%" width="20%" alt="Logo"/> Cricket Contest
+         </ReactLink>
         </div>
         <div className="sidebar-wrapper" ref="sidebar">
           <Nav>

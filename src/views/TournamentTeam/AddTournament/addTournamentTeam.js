@@ -73,9 +73,9 @@ class AddTournament extends Component {
     }
   }
 
-    
+
     if (tournamentId && !noCallNext) {
-      
+
 
       this.setState({ tournamentId: tournamentId, noCallNext: 1 });
 
@@ -177,6 +177,8 @@ class AddTournament extends Component {
                       <div>
                         <br />
                         <span style={{ color: "red" }}>
+                        <br/>
+                        <span className="alert">
                           Please select tournament
                         </span>
                       </div> : null
@@ -188,7 +190,7 @@ class AddTournament extends Component {
                   <Select
                     mode="multiple"
                     name="teamId"
-                    style={{ width: '100%' }}
+                    className="widthh"
                     placeholder="Select Teams"
                     value={teams}
                     onChange={this.handleSelect}
@@ -201,6 +203,12 @@ class AddTournament extends Component {
                       <br />
                       <span style={{ color: "red" }}>
                         Please select at least one team
+
+                  {(this.state.submitted&&this.state.teams.length===0 && this.state.tournamentId!=='') ?
+                      <div>
+                        <br/>
+                        <span className="alert">
+                          Please select at least one team
                         </span>
                     </div> : null
                   }
