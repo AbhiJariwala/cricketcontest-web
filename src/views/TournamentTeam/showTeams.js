@@ -9,6 +9,8 @@ import './tournamentTeam.css'
 import 'antd/dist/antd.css';
 import AddTournamentTeam from '.././TournamentTeam/AddTournament/addTournamentTeam'
 import * as TournamentTeamAction from '../../action/TournamentTeam';
+import * as TournamentAction from '../../action/Tournament';
+
 class ShowTeams extends Component {
   constructor(props) {
     super(props);
@@ -26,10 +28,11 @@ class ShowTeams extends Component {
     }
     this.toggle = this.toggle.bind(this);
   }
-  componentDidUpdate = () => {
-    if (this.props.tournament.id !== undefined && !this.state.callNotnext) {
-      this.setState({ tournamentId: this.props.tournament.id, callNotnext: 1 })
+  componentDidUpdate=()=>{    
+    if(this.props.tournament.id!==undefined && !this.state.callNotnext){    
+        this.setState({tournamentId:this.props.tournament.id,callNotnext:1})    
     }
+
   }
 
   deleteClick = (d, d2) => {
@@ -38,7 +41,7 @@ class ShowTeams extends Component {
       indeterminate: true,
       checkAll: false
     });
-    this.props.deleteClick(d, d2)
+    this.props.deleteClick(d, d2);
   }
   toggle(id) {
 
@@ -46,19 +49,20 @@ class ShowTeams extends Component {
     this.setState({
       addModal: !this.state.addModal,
       Editdataid: null
-    });
-    if (id === "1") {
-
-      this.props.history.push('/tournament');
+    }); 
+    if(id==="1")
+    {
+        this.props.history.push('/tournament');
+    }   
+    else{
+    this.props.toggleTeam();
     }
-    else {
-      this.props.toggleTeam();
-    }
-    this.props.toggleTeam(); this.props.toggleTeam();
+    this.props.toggleTeam();this.props.toggleTeam();
   }
   Change = (e) => {
     this.setState({ team: e });
     e.length === this.props.tournament.Teams.length ? this.setState({ checkAll: true, indeterminate: false }) : this.setState({ checkAll: false, indeterminate: e.length === 0 ? false : true })
+
   }
 
   onCheckAllChange = (e) => {
@@ -79,11 +83,18 @@ class ShowTeams extends Component {
     this.props.toggleTeam();
   }
   render() {
-
-    let { tournament } = this.props;
+    let sTournament='';
+      let { tournament } = this.props;
+    
+    if(this.props.Tournaments && this.props.Tournaments.length>0 ){
+      sTournament = this.props.Tournaments.filter(t=>{
+        return t.id===tournament.id;
+      })
+    }
+    let teams = ((sTournament[0]?sTournament[0].Teams:null))
     let teamNames = '';
-    if (tournament.Teams && tournament.Teams.length > 0) {
-      teamNames = tournament.Teams.map((team, i) => {
+    if (teams && teams.length > 0) {
+      teamNames = teams.map((team, i) => {
         return <Row key={i} className="divTeam">
           <Col span={23}>
             <Checkbox value={team.id}>
@@ -96,19 +107,19 @@ class ShowTeams extends Component {
 
     return (
       <div>
-        <AddTournamentTeam refresh={this.props.refresh} filteredteams={this.props.filter} isOpen={this.state.addModal} toggle={this.toggle} tournament={this.props.tournament} teamsdata={this.props.teamsdata} />
+        <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle} tournamentid={this.state.tournamentId} tournament={this.props.tournament} refresh={this.props.refresh} teamsdata={this.props.teamsdata} />
         <Modal title={tournament.tournamentName}
           visible={this.props.visible}
           onCancel={this.closeModal}
           footer={null} >
-          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>
-
-            {!tournament.Teams || tournament.Teams.length === 0 ?
-              <div>
-                <div style={{ float: "right" }}>
-                  <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
-                </div>
-                <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
+          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>         
+          
+            {!teams || teams.length === 0 ?
+              <div> 
+                    <div style={{ float: "right" }}>
+                        <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
+                    </div>
+                    <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
               </div> :
               <div>
                 <Checkbox indeterminate={this.state.indeterminate}
@@ -144,13 +155,19 @@ class ShowTeams extends Component {
     );
   }
 }
-
+const mapStateToProps=(state)=>{
+  const {Tournaments}=state.Tournament;
+  return {
+    Tournaments
+  }
+}
 const mapDispatchToProps = dispatch => ({
   action: {
-    TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch)
+    TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch),
+    Tournament: bindActionCreators(TournamentAction,dispatch)
   }
 });
-export default withRouter(connect(null, mapDispatchToProps)(ShowTeams))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShowTeams))
 
 
 

@@ -250,7 +250,8 @@ class TournamentMatch extends Component {
               </Input>
             </div>
             <div className="addbtn">
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} className="addimg" />
+              <Button color="info" onClick={this.toggle} >Add</Button>
+              {/* <img src={path+"add.png"} alt="plus" onClick={this.toggle} className="addimg"/> */}
             </div>
           </div>
           {data ?

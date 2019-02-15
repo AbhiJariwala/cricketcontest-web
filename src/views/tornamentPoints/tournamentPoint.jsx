@@ -277,7 +277,8 @@ class tournamentPoint extends Component {
           {this.renderPointModal()}
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "left" }}>
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
+              <Button color="info" onClick={this.toggle} >Add</Button>
+              {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
               {/* <Button color="info" onClick={this.toggle}>Add Points</Button> */}
             </div>
             <div style={{ float: "right", marginRight: "45px" }}>

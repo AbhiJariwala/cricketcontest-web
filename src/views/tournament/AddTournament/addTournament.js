@@ -25,7 +25,7 @@ class AddTournament extends Component {
     const userId = localStorage.getItem("userId");
     this.setState({ createdBy: userId, updatedBy: userId });
   }
-  componentWillUpdate = () => {
+  componentDidUpdate = () => {
     if (this.props.dataid !== null && this.props.dataid.length !== 0 && !this.state.notcallnext) {
       this.setState({
         tournamentName: this.props.dataid.tournamentName,
@@ -63,35 +63,69 @@ class AddTournament extends Component {
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
   }
   UpdateDataData = (Event) => {
-    Event.preventDefault();
-    let formdata = new FormData();
-    formdata.append("id", this.state.id);
-    formdata.append("tournamentName", this.state.tournamentName);
-    formdata.append("tournamentDescription", this.state.tournamentDescription);
-    if (this.props.dataid.imagebanner) {
-      formdata.append("tournamentBanner", this.props.dataid.tournamentBanner);
-    } else {
-      formdata.append("tournamentBanner", this.state.tournamentBanner[0]);
+    if (this.state.tournamentDescription === "") {
+      this.setState({
+        fieldsErrors: {
+          ...this.state.fieldsErrors,
+          tournamentDescription: "Please Enter Tournament Discription"
+        }
+      })
     }
-    formdata.append("updatedBy", parseInt(this.state.updatedBy, 10));
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
+    if (this.state.tournamentName === "") {
+      this.setState({
+        fieldsErrors: {
+          ...this.state.fieldsErrors,
+          tournamentName: "Please Enter Tournament Name"
+        }
+      })
+    }
+    if (this.state.tournamentName && this.state.tournamentDescription) {
+      Event.preventDefault();
+      let formdata = new FormData();
+      formdata.append("id", this.state.id);
+      formdata.append("tournamentName", this.state.tournamentName);
+      formdata.append("tournamentDescription", this.state.tournamentDescription);
+      if (this.state.tournamentBanner[0].length !== 0) {
+        formdata.append("tournamentBanner", this.state.tournamentBanner[0]);
+
       }
+      formdata.append("updatedBy", parseInt(this.state.updatedBy, 10));
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      }
+      const data = {
+        "id": this.state.id,
+        "tournamentName": this.state.tournamentName,
+        "tournamentDescription": this.state.tournamentDescription,
+        "tournamentBanner": this.state.tournamentBanner[0],
+        "updatedBy": parseInt(this.state.updatedBy, 10)
+      }
+      this.setState({ notcallnext: 0 })
+      this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
+      this.props.toggle(Event);
     }
-    const data = {
-      "id": this.state.id,
-      "tournamentName": this.state.tournamentName,
-      "tournamentDescription": this.state.tournamentDescription,
-      "tournamentBanner": this.state.tournamentBanner[0],
-      "updatedBy": parseInt(this.state.updatedBy, 10)
-    }
-    this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
-    this.props.toggle(Event);
   }
   AddDataData = (Event) => {
     Event.preventDefault();
-    if (this.state.imagebanner) {
+    if (this.state.tournamentDescription === "") {
+      this.setState({
+        fieldsErrors: {
+          ...this.state.fieldsErrors,
+          tournamentDescription: "Please Enter Tournament Discription"
+        }
+      })
+    }
+    if (this.state.tournamentName === "") {
+      this.setState({
+        fieldsErrors: {
+          ...this.state.fieldsErrors,
+          tournamentName: "Please Enter Tournament Name"
+        }
+      })
+    }
+    if (this.state.tournamentName && this.state.tournamentDescription) {
       let formdata = new FormData();
       formdata.append("tournamentName", this.state.tournamentName);
       formdata.append("tournamentDescription", this.state.tournamentDescription);
@@ -127,7 +161,10 @@ class AddTournament extends Component {
       accept={"image/*"} />
       <center><span style={{ color: "red" }}>{this.state.fieldsErrors.BannerImage}</span></center></div>
     if (this.props.dataid !== null) {
-      if (this.props.dataid.imagebanner) {
+      if (this.props.dataid.tournamentBanner === "defaultTournament.png") {
+        image = imageuploader
+      }
+      else if (this.props.dataid.imagebanner) {
         image = <div align="center">
           <p></p><img src={path + this.props.dataid.tournamentBanner} height="100px" width="100px" alt="" />
           <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />

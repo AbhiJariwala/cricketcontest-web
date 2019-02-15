@@ -19,3 +19,6 @@ export const getTournamentMatchPlayerScore = (offset, perPageRecord, fieldName, 
 export const addTournamentMatchPlayerScore = (tournamentMatchPlayerScore) => {
     return BaseService.post("api/tournamentmatchplayerscore", tournamentMatchPlayerScore);
 }
+export const updateWinning = (matchId, winningTeamId) => {
+    return BaseService.put("api/tournamentmatch/" + matchId + "/" + winningTeamId);
+}

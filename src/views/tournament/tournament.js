@@ -70,7 +70,7 @@ class tournament extends Component {
       else {
         this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
       }
-      this.props.action.Tournament.SelectTournamentAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
+      this.props.action.Tournament.fetchTournamentAction(this.state.pageno, this.state.parpageRecord, sortingValue, sortingValueName);
     }
   }
 
@@ -78,7 +78,7 @@ class tournament extends Component {
     const parpage = parseInt(Event.target.value, 10);
     const pageno = 0
     this.setState({ parpageRecord: parpage, pageno: 0 })
-    this.props.action.Tournament.SelectTournamentAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
+    this.props.action.Tournament.fetchTournamentAction(pageno, parpage, this.state.sortingValue, this.state.sortingValueName);
   }
 
   changeRecord = (Event) => {
@@ -97,7 +97,7 @@ class tournament extends Component {
       this.setState({ pageno: this.state.pageno - this.state.parpageRecord })
       pageno = this.state.pageno - this.state.parpageRecord
     }
-    this.props.action.Tournament.SelectTournamentAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
+    this.props.action.Tournament.fetchTournamentAction(pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
   }
 
   toggle(Event) {
@@ -113,12 +113,16 @@ class tournament extends Component {
     });
   }
   ShowTeam = (tournament) => {
-
-    this.setState(
-      {
-        tournament: tournament,
-        visible: true
-      })
+    this.props.action.Team.fetchTeamAction();
+    if(tournament.Teams===undefined){
+      let Teams=[];
+      tournament={... tournament,Teams};
+  }
+      this.setState(
+        {
+          tournament: tournament,
+          visible: true
+        })
   }
   handleDelete = (tournamnetId, team) => {
     message.success("successfully deleted");
@@ -152,7 +156,7 @@ class tournament extends Component {
       alert("no data");
     } else {
       confirmAlert({
-        message: 'Are you sure you want to delete Tournament?.',
+        message: 'Are you sure you want to delete this Tournament?.',
         buttons: [{
           label: 'Yes',
           onClick: () => { this.props.action.Tournament.DeleteTournamentAction(id, this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName) }
@@ -166,12 +170,11 @@ class tournament extends Component {
     }
   }
   render() {
-
-    let teamsdata = [];
+    let teamsdata=[];
     let notNext = 0;
     let data = ""
     let start = 0;
-    if (this.state.tournament.Teams !== {}) {
+    if (this.state.tournament.Teams != {}) {
       let teams = this.state.tournament.Teams;
 
       if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
@@ -211,8 +214,8 @@ class tournament extends Component {
           <td><img src={path + 'thumbnail/' + data.tournamentBanner} alt="" ></img></td>
           <td>{data.tournamentName}</td>
           <th onClick={() => this.ShowTeam(data)}><Button color="info">Teams</Button></th>
-          <td><img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 30 }} ></img>
-            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 30 }} ></img>
+          <td><img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 25 }} ></img>
+            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 25 }} ></img>
           </td>
         </tr>
       })
@@ -222,16 +225,17 @@ class tournament extends Component {
     return (
       <div>
         <PanelHeader size="sm" />
+        {(teamsdata)?(
         <ShowTeams tournament={this.state.tournament}
-          teamid={this.state.teamid}
-          tournamentid={this.state.tournamentid}
-          deleteClick={this.handleDelete}
-          visible={this.state.visible}
-          toggleTeam={this.toggleTeam}
-          refresh={this.refresh}
-          filter={this.state.filteredteams}
-          teamsdata={teamsdata}
-        />
+            teamid={this.state.teamid}
+            tournamentid={this.state.tournamentid}
+            deleteClick={this.handleDelete}
+            visible={this.state.visible}
+            toggleTeam={this.toggleTeam}
+            refresh={this.refresh}
+            filter={this.state.filteredteams}
+            teamsdata={teamsdata}
+          />):null}
         <div className="content"  >
           <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournament>
           <div style={{ marginTop: "50px" }}>
@@ -245,7 +249,8 @@ class tournament extends Component {
               </Input>
             </div>
             <div style={{ float: "left", borderRadius: "50%" }}>
-              <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img>
+            <Button color="info" onClick={this.toggle} >Add</Button>
+              {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
             </div>
           </div>
           {data ?
@@ -283,7 +288,8 @@ const mapStateToProps = (state) => {
     ShowTornament: state.Tournament.Tournaments,
     ShowTeamAll: state.Team.TeamData,
     Team: state.Team.Team,
-    TeamsData: state.Team.TeamSData
+    TeamsData: state.Team.TeamSData,
+    Tournament: state.Tournament.FetchSingleTournamentData
   }
 };
 

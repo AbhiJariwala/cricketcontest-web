@@ -53,9 +53,6 @@ class NavbarPage extends Component {
               <NavItem>
                 <NavLink tag={Link} to="/viewTournamentteam">Tournament</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink tag={Link} onClick={this.logoutClick.bind(this)} to="">Logout</NavLink>
-              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   <i className="fas fa-user-circle" style={{ fontSize: '18px' }} ></i>&nbsp;{localStorage.getItem("Name")}
