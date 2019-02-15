@@ -27,6 +27,7 @@ class AddPlayer extends Component {
                     Player: Player,
                     formValid: true,
                     fieldsValid: { firstName: true, lastName: true, dob: true, description: true },
+                    fieldsErrors: { firstName: '', lastName: '', dob: '', description: '' }
                 })
             }
             else {

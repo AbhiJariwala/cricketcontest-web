@@ -13,8 +13,10 @@ export const GET_TOURNAMENT_MATCHPLAYER_SCORE = "GET_TOURNAMENT_MATCHPLAYER_SCOR
 export const GET_MATCHBYTOURNAMENT = "GET_MATCHBYTOURNAMENT";
 export const GET_TEAM = "GET_TEAM";
 export const GET_PLAYER = "GET_PLAYER";
-export const ADD_SCORE = "ADD_SCORE"
+export const ADD_SCORE = "ADD_SCORE";
+// export const UPDATE_WINING_TEAM="UPDATE_WINING_TEAM";
 export const FAILED = "FAILED";
+
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -31,11 +33,14 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { teams: action.data });
         }
         case GET_PLAYER: {
-            return Object.assign({}, state, { players: action.data });
+            return Object.assign({}, state, { players: [...action.data] });
         }
         case ADD_SCORE: {
-            return Object.assign({}, state, { add_score: action.data });
-        }
+            let scores = [...state.tournamentMatchPlayerScore]
+            return Object.assign({}, state, {
+                tournamentMatchPlayerScore: scores.concat(action.data),
+            });
+        }      
         case FAILED: {
             return Object.assign({}, state, { error_msg: "" });
         }

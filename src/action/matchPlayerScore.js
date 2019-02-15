@@ -1,7 +1,7 @@
 import * as MatchPlayerService from '../service/matchPlayerScore';
 import * as TeamPlayerService from '../service/teamPlayerService';
 import * as tournamentMatchService from '../service/TournamentMatch'
-import { GET_PLAYER, GET_TOURNAMENT, FAILED, GET_TOURNAMENT_MATCHPLAYER_SCORE,GET_MATCHBYTOURNAMENT,ADD_SCORE } from '../reducer/matchPlayerScore';
+import { GET_PLAYER, GET_TOURNAMENT, FAILED, GET_TOURNAMENT_MATCHPLAYER_SCORE, GET_MATCHBYTOURNAMENT, ADD_SCORE } from '../reducer/matchPlayerScore';
 
 export const getTournaments = () => {
     return dispatch => {
@@ -98,6 +98,19 @@ export const addTournamentMatchPlayerScore = (score) => {
                     type: ADD_SCORE,
                     data: response.data
                 });
+            }
+        }).catch((error) => {
+            if (error.response) {
+                dispatch({ type: FAILED, data: { error_msg: error.response.data.error } });
+            }
+        })
+    }
+};
+export const updateWinning = (matchId,winingTeamId) => {
+    return (dispatch) => {
+        MatchPlayerService.updateWinning(matchId,winingTeamId).then((response) => {
+            if (response.status === 200) {    
+                    
             }
         }).catch((error) => {
             if (error.response) {
