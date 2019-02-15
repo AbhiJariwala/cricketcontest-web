@@ -124,7 +124,12 @@ class AddTeam extends Component {
   }
   cancelImageClick = () => {
     this.props.dataid.teamLogo = false
-    this.setState({ imagebanner: false })
+    this.setState({
+      ...this.state,
+      imagebanner: false
+    })
+    this.validateField("imageBanner", true);
+
   }
   render() {
     let image;

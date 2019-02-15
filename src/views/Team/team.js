@@ -151,8 +151,7 @@ class Team extends Component {
                 <option>100</option>
               </Input></div>
             <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} >Add</Button>
-              {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60 }} ></img> */}
+            <Button color="info" onClick={this.toggle} >Add</Button>
             </div>
           </div>
           {data ?
