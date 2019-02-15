@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-import {  Table } from "reactstrap";
+import { Table } from "reactstrap";
 import * as  matchPlayerScoreAction from '../../../../action/matchPlayerScore'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -64,7 +64,7 @@ class viewplayerscore extends React.Component {
         return null;
       })
     }
-    
+
     let count = 0
     if (data) {
       for (let index = 0; index < data.length; index++) {

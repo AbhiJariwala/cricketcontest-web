@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import UserPanel from '../../UserPanel/userPanel'
-import {  Button, Empty } from 'antd';
+import { Button, Empty } from 'antd';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import path from '../../../path';
@@ -18,9 +18,9 @@ class Players extends React.Component {
   }
   state = { visible: false, scoredata: [] }
   showModal = (data) => {
-    let bindScoreData={
-      playerId:data.playerId,
-      tournamentMatchId:data.tournamentMatchId
+    let bindScoreData = {
+      playerId: data.playerId,
+      tournamentMatchId: data.tournamentMatchId
       // playerId:10,
       // tournamentMatchId:1
     }
@@ -65,8 +65,8 @@ class Players extends React.Component {
         handleOk={this.handleOk}
         onCancel={this.handleCancel}
         binddata={this.state.scoredata}></ViewPlayerScore>
-      <div className="container">
-        {players !== " " ?
+      <div className="container" style={{ paddingTop: "70px" }}>
+        {players !== "" ?
           <Table>
             <thead>
               <tr>

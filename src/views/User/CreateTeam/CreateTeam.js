@@ -1,69 +1,48 @@
 import React, { Component } from 'react';
 import UserPanel from '../../UserPanel/userPanel'
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button } from 'reactstrap';
-import classnames from 'classnames';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button, Card, CardBody } from 'reactstrap';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as  MatchPlayerScore from '../../../action/TournamentMatch'
-import * as  CreateTeamAction from '../../../action/user/Createteam'
-import { Card, CardBody } from 'reactstrap';
 import { confirmAlert } from 'react-confirm-alert';
+
+import * as TournamentAction from '../../../action/Tournament';
+import * as  CreateTeamAction from '../../../action/user/Createteam'
 import path from '../../../path';
 import './createTeam.css';
 
 let teamId = [];
-const image = path + 'UserMainImage.jpg'
 class CreateTeam extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.state = {
             Myteam: [],
-            activeTab: '1',
-            team1: 0,
-            team2: 0
+            width: window.innerWidth
         };
+    }
+    componentWillMount() {
+        this.props.action.Tournament.FetchSingleTournamentAction(this.props.match.params.id);
     }
     componentDidMount = () => {
         this.getTournamentMatch();
     }
     getTournamentMatch() {
-        this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
+
     }
-    addplayerteam = (teams, name) => {
-        if (name === "team1") {
-            this.setState({ team1: this.state.team1 + 1 })
-        } else if (name === "team2") {
-            this.setState({ team2: this.state.team2 + 1 })
-        }
+    addplayerteam = (playerId) => {
         if (this.state.Myteam.length !== 11) {
-            teamId.push(teams.id);
+            teamId.push(playerId);
             this.setState({ Myteam: teamId });
-        } else {
+        }
+        else {
             confirmAlert({
-                message: 'you are already selected 11 players?.',
-                buttons: [{
-                    label: 'ok',
-                }
-                ]
+                message: 'You Had already select 11 players.',
+                buttons: [{ label: 'ok' }]
             })
         }
     }
-    minusplayerteam = (teams, name) => {
-        if (name === "team1") {
-            this.setState({ team1: this.state.team1 - 1 })
-        } else if (name === "team2") {
-            this.setState({ team2: this.state.team2 - 1 })
-        }
-        teamId.pop(teams.id);
+    minusplayerteam = (playerId) => {
+        teamId.splice(teamId.indexOf(parseInt(teamId.filter(teamid => playerId === teamid), 10)), 1);
         this.setState({ Myteam: teamId });
-    }
-    toggle(tab) {
-        if (this.state.activeTab !== tab) {
-            this.setState({
-                activeTab: tab
-            });
-        }
     }
     createteam = (E) => {
         E.preventDefault();
@@ -74,100 +53,75 @@ class CreateTeam extends Component {
                 userId,
                 tournamentMatchId,
                 playerId: data,
-                createdBy:parseInt(userId,10)
+                createdBy: parseInt(userId, 10)
             }
-            
             this.props.action.CreateTeam.createTeam(data)
             return "";
         })
         this.props.history.push('/Myteam');
     }
     render() {
-        let teamplayers = [];
-        let teamName1 = [];
-        let tournamentMatch = '', tournamentMatch2 = '', selectedPlayer = "";
-        if (this.props.ShowTornamentmatches.length !== 0) {
-            this.props.ShowTornamentmatches.map((tournamentmatch) => {
-                if (parseInt(this.props.match.params.id, 10) === tournamentmatch.id) {
-                    teamName1 = tournamentmatch;
-                    tournamentMatch = tournamentmatch.Team1[0].player.map((data, key) => {
-                        teamplayers.push(data.id);
+        let selectedTournamentBanner = "";
+        if (this.props.SelectedTournament[0]) {
+            selectedTournamentBanner = this.props.SelectedTournament[0].tournamentBanner;
+        }
+        else {
+            selectedTournamentBanner = "defaultTournament.png";
+        }
+        let tournamentPlayers = '', selectedPlayer = "";
+        if (this.props.SelectedTournament[0]) {
+            tournamentPlayers = this.props.SelectedTournament[0].Teams.map(team => {
+                return (
+                    team.player.map(player => {
                         return (
-                            // <Container key={key} >
-                            <Card key={key} body>
-                                <div className="row">
-                                    <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style={{ width: "100%" }}>
-                                        <img alt="demo" src={path + data.playerImage} style={{ width: "150px" }} ></img>
+                            <Card key={player.id} body style={{ borderRadius: "10px" }}>
+                                <div className="row" style={{ textAlign: "center" }}>
+                                    <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
+                                        <img alt="demo" src={path + "thumbnail/" + player.playerImage} style={{ width: "150px" }} ></img>
                                     </div>
-                                    <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                                        <p>{data.firstName}{data.lastName}</p>
+                                    <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" style={{ margin: "auto", float: "center" }}>
+                                        <p>{player.firstName + " " + player.lastName}</p>
                                     </div>
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        {(this.state.Myteam.length > 0 && this.state.Myteam.includes(data.id)) ?
-                                            <img alt="" onClick={() => this.minusplayerteam(data, "team1")} style={{ width: 45, cursor: "pointer" }} src={path + "minus.png"}></img>
-                                            : <img alt="" onClick={() => this.addplayerteam(data, "team1")} style={{ width: 45, cursor: "pointer" }} src={path + "plus.png"}></img>
+                                        {(this.state.Myteam.length > 0 && this.state.Myteam.includes(player.id)) ?
+                                            <img alt="" onClick={() => this.minusplayerteam(player.id)} style={{ width: 45, cursor: "pointer" }} src={path + "minus.png"}></img>
+                                            : <img alt="" onClick={() => this.addplayerteam(player.id)} style={{ width: 45, cursor: "pointer" }} src={path + "plus.png"}></img>
                                         }
                                     </div>
                                 </div>
                             </Card>
-                            // </Container>
                         )
                     })
-                    tournamentMatch2 = tournamentmatch.Team2[0].player.map((data, key) => {
-                        return (
-                            // <Container key={key}>
-                            <Card key={key} body>
-                                <div className="row">
-                                    <div className="col-sm-2" style={{ width: "100%" }}>
-                                        <img alt="demo" src={path + data.playerImage} style={{ width: "150px" }}></img>
-                                    </div>
-                                    <div className="col-sm-7">
-                                        <p>{data.firstName}{' '}{data.lastName}</p>
-                                    </div>
-                                    <div className="col-sm-3">
-                                        {(this.state.Myteam.length > 0 && this.state.Myteam.includes(data.id)) ?
-                                            <img alt="" onClick={() => this.minusplayerteam(data, "team2")} style={{ width: 45 }} src={path + "minus.png"}></img>
-                                            : <img alt="" onClick={() => this.addplayerteam(data, "team2")} style={{ width: 45 }} src={path + "plus.png"}></img>
-                                        }
-                                    </div>
-                                </div>
-                            </Card>
-                            // {/* </Container> */}
-                        )
-                    })
-                    let teams = "";
-                    let t1 = tournamentmatch.Team1[0].player;
-                    let t2 = tournamentmatch.Team2[0].player;
-                    teams = t1.concat(t2);
+                )
+            });
+        }
 
-                    selectedPlayer = teams.map((data, key) => {
-                        if (this.state.Myteam.length > 0 && this.state.Myteam.includes(data.id)) {
-                            return <Col md={4} key={key}>
-                                <Card style={{ height: "200px" }}>
-                                    <CardBody>
-                                        <img alt="Cricket Contest" src={path + data.playerImage} height="100px" width="100px" ></img>
-                                        <p>{data.firstName}{' '}{data.lastName}</p>
-                                        <p style={{ marginTop: "-15px" }}>{data.description}</p>
-                                    </CardBody>
-                                </Card>
-                            </Col>
+        if (this.props.SelectedTournament[0]) {
+            selectedPlayer = this.props.SelectedTournament[0].Teams.map(team => {
+                return (
+                    team.player.map(player => {
+                        if (this.state.Myteam.length > 0 && this.state.Myteam.includes(player.id)) {
+                            return (
+                                <Col md={4} key={player.id}>
+                                    <Card style={{ height: "180px", textAlign: "center" }}>
+                                        <CardBody>
+                                            <img alt="Cricket Contest" src={path + "thumbnail/" + player.playerImage} height="100px" width="100px" ></img>
+                                            <p>{player.firstName + " " + player.lastName}</p>
+                                            <p style={{ marginTop: "-15px" }}>{player.description}</p>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            )
                         }
-                        return "";
                     })
-                }
-                return 0
-            })
-        } else {
-            tournamentMatch = "No Data"
-            tournamentMatch2 = "No Data"
+                )
+            });
         }
-
-        if (teamName1.length !== 0) {
-        }
+        let urlImage = "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=" + window.innerWidth + "&q=80";
         return (
-            <div>
+            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}>
                 <UserPanel></UserPanel>
-                <div className="container" style={{ backgroundRepeat: "no-repeat", backgroundImage: `url(${image})`, overflow: "scroll", height: "600px", marginTop: "-17px" }}  >
+                <div className="container" style={{ paddingTop: "70px" }}>
                     <div className="row">
                         <div className="col-md-6" style={{}}>
                             <Row>
@@ -182,28 +136,16 @@ class CreateTeam extends Component {
                                             <div>
                                                 <div>
                                                     <div className="container_aa549">
-                                                        <div className="maxInfoText_13e5b">Max select 11 players from Both team</div>
+                                                        <div className="maxInfoText_13e5b" style={{ fontSize: "20px" }}>You can Select Maximum 11 players from below List</div>
                                                         <div className="infoContent_0b612">
-                                                            <div className="playerSelectionContainer_d8646">
-                                                                <div>Players</div>
-                                                                <div className="squadTextContainer_3e550">
-                                                                    <div className="selectedCount_daee8">{this.state.Myteam.length}</div>
-                                                                    <div className="totalCount_c1f66">/11</div>
+                                                            <div>
+                                                                <div style={{ display: "inline-block" }}>
+                                                                    <img className="card-img" src={path + "thumbnail/" + selectedTournamentBanner} alt="Card image cap" />
                                                                 </div>
                                                             </div>
-                                                            <div className="flagContainer_029e0">
-                                                                <div className="flagContainer_47acd"><img alt="true" src={teamName1.length !== 0 ? path + teamName1.Team1[0].teamLogo : ""} className="flag_008b5" /></div>
-                                                                <div className="squadOneText_3ad2c">
-                                                                    <div className="teamName_a2024">{teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}</div>
-                                                                    <div className="teamCount_84ce0">{this.state.team1}</div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flagContainer_029e0">
-                                                                <div className="squadTwoText_b9766">
-                                                                    <div className="teamName_a2024">{teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}</div>
-                                                                    <div className="teamCount_84ce0">{this.state.team2}</div>
-                                                                </div>
-                                                                <div className="flagContainer_47acd"><img alt="true" src={teamName1.length !== 0 ? path + teamName1.Team2[0].teamLogo : ""} className="flag_008b5" /></div>
+                                                            <div >
+                                                                <div style={{ fontSize: "20px" }}>Players</div>
+                                                                <div style={{ fontSize: "20px", marginLeft: "14px" }}>{this.state.Myteam.length + "/11"}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -211,43 +153,24 @@ class CreateTeam extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row" style={{ background: "white" }}>
+                                    <div className="row" style={{ background: "#e6e6e6" }}>
                                         <Nav tabs>
                                             <NavItem>
-                                                <NavLink
-                                                    className={classnames({ active: this.state.activeTab === '1' })}
-                                                    onClick={() => { this.toggle('1'); }}>
-                                                    {teamName1.length !== 0 ? teamName1.Team1[0].teamName : ""}
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink
-                                                    className={classnames({ active: this.state.activeTab === '2' })}
-                                                    onClick={() => { this.toggle('2'); }}>
-                                                    {teamName1.length !== 0 ? teamName1.Team2[0].teamName : ""}
-                                                </NavLink>
+                                                <NavLink>Players</NavLink>
                                             </NavItem>
                                         </Nav>
-                                        <TabContent activeTab={this.state.activeTab} >
+                                        <TabContent activeTab="1" >
                                             <TabPane tabId="1">
-                                                <Row   >
-                                                    <Col sm="12">
-                                                        <Col sm="12">
-                                                            {tournamentMatch}
-                                                        </Col>
-                                                    </Col>
-                                                </Row>
-                                            </TabPane>
-                                            <TabPane tabId="2">
                                                 <Row>
                                                     <Col sm="12">
                                                         <Col sm="12">
-                                                            {tournamentMatch2}
+                                                            {tournamentPlayers}
                                                         </Col>
                                                     </Col>
                                                 </Row>
                                             </TabPane>
-                                        </TabContent></div>
+                                        </TabContent>
+                                    </div>
                                     <div style={{ float: "right" }}>
                                         {this.state.Myteam.length === 11 ?
                                             <Button onClick={this.createteam.bind(Event)} >Create Team</Button>
@@ -265,13 +188,13 @@ class CreateTeam extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        ShowTornamentmatches: state.TournamentMatchs.allmatchs
+        SelectedTournament: state.Tournament.FetchSingleTournamentData,
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     action: {
-        MatchPlayerScore: bindActionCreators(MatchPlayerScore, dispatch),
+        Tournament: bindActionCreators(TournamentAction, dispatch),
         CreateTeam: bindActionCreators(CreateTeamAction, dispatch),
     }
 })

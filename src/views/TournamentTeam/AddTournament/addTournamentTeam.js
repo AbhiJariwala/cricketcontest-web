@@ -62,7 +62,7 @@ class AddTournament extends Component {
 
     let { noCallNext } = this.state;
 
-    let id
+    let id = "";
     if (tournamentId !== undefined) {
       if (typeof (tournamentId) === 'number') {
         id = tournamentId;
