@@ -149,8 +149,9 @@ class AddMatchPlayerScore extends Component {
             tournamentNameOption = this.props.TournamentMatches.allmatchs.map((tournamentMatch) => {
                 var d1 = new Date(tournamentMatch.matchDate);
                 var d2 = new Date(new Date().toISOString());
-                var dateDiff = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
-                return (dateDiff === 1) ? tournamentMatch : null
+                console.log(d1 < d2);
+                // var dateDiff = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
+                // return (dateDiff === 1) ? tournamentMatch : null
             })
         }
         let tournament = []

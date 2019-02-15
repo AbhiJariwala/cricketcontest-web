@@ -7,7 +7,7 @@ import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, Fo
 import * as TeamAction from '../../../action/Team';
 import path from '../../../path';
 const deleteIcon = require('../../../Image/delete.jpg');
-// const Icon = require('../../../Image/defaultTeam.png');
+const Icon = require('../../../Image/defaultTeam.png');
 
 
 class AddTeam extends Component {
@@ -15,8 +15,7 @@ class AddTeam extends Component {
     teamName: "",
     id: 0,
     createdBy: 0,
-    updatedBy: 0,
-    teamLogo: [],
+    updatedBy: 0, teamLogo: [],
     imagebanner: false,
     fieldsErrors: { teamName: '' },
     fieldsValid: { teamName: false },
@@ -103,29 +102,16 @@ class AddTeam extends Component {
     this.setState({ submitted: true });
     this.AddDataData(true);
   }
-  //   
 
   AddDataData = (submitted) => {
     let formdata = new FormData();
-    // <img src={path + 'defaultTeam.png'} alt="" style={{ width: "130px", height: "100px" }}></img>
+    <img src={path + 'defaultTeam.png'} alt="" style={{ width: "130px", height: "100px" }}></img>
     if (submitted === true && this.state.teamName !== '') {
       formdata.append("teamName", this.state.teamName);
-      if (this.state.teamLogo.length === 0) {
-        //formdata.append("teamLogo", {Icon});
-        let defaultImage = path + "defaultTeam.png";
-        this.setState({
-          teamLogo: defaultImage
-        });
-        formdata.append("teamlogo", path + 'defaultTeam.png');
-      }
-      else {
+      if (this.state.teamLogo.length !== 0) {
         formdata.append("teamLogo", this.state.teamLogo[0]);
       }
       formdata.append("createdBy", parseInt(this.state.createdBy, 10));
-      for (var value of formdata.values()) {
-        console.log(value);
-      }
-
       const config = {
         headers: {
           'content-type': 'multipart/form-data'
@@ -171,11 +157,10 @@ class AddTeam extends Component {
                   <Label for="teamName">Team Name</Label>
                   <Input type="text" name="teamName" id="teamName" placeholder="Team Name" defaultValue={this.props.dataid ? this.props.dataid.teamName : ""} onChange={this.inputChangeHandler.bind(this)} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.teamName}</span>
-                  {(this.state.teamName === '' && this.state.submitted) ? <p style={{ color: "red" }}>Please enter a name for your team!</p> : null}
+                  {(this.state.teamName === '' && this.state.submitted) ? <p style={{ color: "red" }}>* Required Teamname</p> : null}
                 </FormGroup>
                 <FormGroup>
                   {image}
-                  {(this.state.teamLogo.length === 0 && this.state.submitted) ? <p style={{ color: "red" }}>Please upload a logo for your team!</p> : null}
                 </FormGroup>
               </Form>
             </ModalBody>
