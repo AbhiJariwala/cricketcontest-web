@@ -11,7 +11,7 @@ export function GetTeams() {
     return baseService.get('./api/team');
 }
 export function selectTeam(id) {
-    
+
     return baseService.get(`./api/team/${id}`)
 }
 export function UpdateTeamdata(id, data) {

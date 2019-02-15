@@ -24,7 +24,7 @@ export const AddTournamentAction = (data) => {
     return (dispatch) => {
         authService.TournamentAdd(data).then((response) => {
             if (response.status === 200) {
-    
+
                 dispatch({
                     type: Add_Tournament_Data,
                     TournamentAddData: response.data

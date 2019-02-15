@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withRouter } from "react-router";
 import { Checkbox, Col, Row, Button, Popconfirm, Icon, Modal } from 'antd';
-import {Button as ReactButton} from 'reactstrap'
+import { Button as ReactButton } from 'reactstrap'
 import './tournamentTeam.css'
 import 'antd/dist/antd.css';
 import AddTournamentTeam from '.././TournamentTeam/AddTournament/addTournamentTeam'
@@ -23,8 +23,8 @@ class ShowTeams extends Component {
       team: [],
       indeterminate: true,
       checkAll: false,
-      tournamentId:"",
-      callNotnext:0
+      tournamentId: "",
+      callNotnext: 0
     }
     this.toggle = this.toggle.bind(this);
   }
@@ -107,7 +107,7 @@ class ShowTeams extends Component {
 
     return (
       <div>
-      <AddTournamentTeam refresh={this.props.refresh} filteredteams ={this.props.filter} isOpen={this.state.addModal} toggle={this.toggle} tournament={this.props.tournament} teamsdata={this.props.teamsdata}/>
+        <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle} tournamentid={this.state.tournamentId} tournament={this.props.tournament} refresh={this.props.refresh} teamsdata={this.props.teamsdata} />
         <Modal title={tournament.tournamentName}
           visible={this.props.visible}
           onCancel={this.closeModal}
@@ -122,18 +122,18 @@ class ShowTeams extends Component {
                     <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
               </div> :
               <div>
-              <Checkbox indeterminate={this.state.indeterminate}
-                checked={this.state.checkAll}
-                onChange={this.onCheckAllChange}>
-                Check all
+                <Checkbox indeterminate={this.state.indeterminate}
+                  checked={this.state.checkAll}
+                  onChange={this.onCheckAllChange}>
+                  Check all
           </Checkbox>
-          <div style={{ float: "right" }}>
-                        <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
-                    </div>
-          </div>
+                <div style={{ float: "right" }}>
+                  <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
+                </div>
+              </div>
 
             }
-</div>
+          </div>
 
           <Checkbox.Group style={{ width: '100%' }} onChange={this.Change} value={this.state.team}>
             {teamNames}

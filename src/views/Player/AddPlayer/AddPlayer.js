@@ -26,14 +26,14 @@ class AddPlayer extends Component {
                 this.setState({
                     Player: Player,
                     formValid: true,
-                    fieldsValid: { firstName: true, lastName: true, dob: true },
+                    fieldsValid: { firstName: true, lastName: true, dob: true, description: true },
                 })
             }
             else {
                 this.setState({
                     Player: Player,
                     formValid: false,
-                    fieldsValid: { firstName: false, lastName: false, dob: false },
+                    fieldsValid: { firstName: false, lastName: false, dob: false, description: false },
                 })
             }
         }
@@ -66,8 +66,6 @@ class AddPlayer extends Component {
 
             })
         };
-
-        this.validateField("playerImage", "true");
     }
 
     inputChangedHandler(e) {
@@ -94,8 +92,6 @@ class AddPlayer extends Component {
                 showimage: false,
                 displayImage: ""
             },
-
-
         })
     }
 

@@ -118,7 +118,7 @@ class Player extends Component {
         playerImage: [],
         showimage: false
       },
-      Edit: false,     
+      Edit: false,
     })
     this.toggle();
   }
@@ -128,9 +128,9 @@ class Player extends Component {
       Player: {
         ...player,
         showimage: true,
-        displayImage:""
+        displayImage: ""
       },
-      Edit: true,     
+      Edit: true,
     })
     this.toggle();
   }
@@ -161,7 +161,7 @@ class Player extends Component {
       player = this.props.Player.PlayerData.map((player, key) => {
         return <tr key={key} style={{ textAlign: "center" }} >
           <td>{start++}</td>
-          <td><img src={path + 'thumbnail/' + player.playerImage}  alt="playerImage" /></td>
+          <td><img src={path + 'thumbnail/' + player.playerImage} alt="playerImage" /></td>
           <td>{player.firstName}&nbsp;{player.lastName}</td>
           <td>{this.calculateAge(player.dob).toString()}</td>
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
@@ -176,7 +176,7 @@ class Player extends Component {
     return (
       <div>
         <PanelHeader size="sm" />
-        <div style={{ marginLeft: "15px" }}>
+        <div className="content">
           <AddPlayer isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state}> </AddPlayer>
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "right" }}>
@@ -190,7 +190,7 @@ class Player extends Component {
               </Input>
             </div>
             <div style={{ float: "left" }}>
-            <Button color="info" onClick={this.toggle} >Add</Button>
+              <Button color="info" onClick={this.toggle} >Add</Button>
               {/* <img src={path + "thumbnail/" + "addData.png"} alt="plus" onClick={this.toggle} ></img> */}
             </div>
           </div>
@@ -208,7 +208,7 @@ class Player extends Component {
             </thead>
             <tbody>
               {player}
-              
+
             </tbody>
           </Table>
           <ButtonGroup>

@@ -27,10 +27,10 @@ class tournament extends Component {
       Editdataid: [],
       sortingValueName: "id",
       sortingValue: "desc",
-      tournament:{},
+      tournament: {},
       refresh: true,
-      filteredteams:[],
-      teamsdata:[]
+      filteredteams: [],
+      teamsdata: []
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -42,9 +42,9 @@ class tournament extends Component {
     this.setState({ updatedBy: userId });
   }
 
-  refresh=()=>{
+  refresh = () => {
 
-    this.setState( {refresh:!this.state.refresh});
+    this.setState({ refresh: !this.state.refresh });
   }
 
   sortingdata = (Event) => {
@@ -132,7 +132,7 @@ class tournament extends Component {
       this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId, teamId, updatedBy);
       return teamId;
     })
-    this.setState({visible:true});
+    this.setState({ visible: true });
   }
   Edittoggle = (data) => {
     if (!data) {
@@ -173,40 +173,40 @@ class tournament extends Component {
     let teamsdata=[];
     let notNext = 0;
     let data = ""
-    let start=0;
-    if(this.state.tournament.Teams !={}){
-    let teams = this.state.tournament.Teams;
-    
-    if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
-      let teamId
-      if (teams) {
-        if (teams.length > 0) {
-          teamId = teams.filter((team) => {
-            let teamStatus = team.TournamentTeam;
-            return (teamStatus.isDelete === 0)
-          })
+    let start = 0;
+    if (this.state.tournament.Teams != {}) {
+      let teams = this.state.tournament.Teams;
 
-          let team_id = teamId.map((team) => {
-            return team.id
-          })
+      if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
+        let teamId
+        if (teams) {
+          if (teams.length > 0) {
+            teamId = teams.filter((team) => {
+              let teamStatus = team.TournamentTeam;
+              return (teamStatus.isDelete === 0)
+            })
+
+            let team_id = teamId.map((team) => {
+              return team.id
+            })
 
             teamsdata = this.props.ShowTeamAll.filter((team) => {
-            return !team_id.includes(team.id);
-          })
-        }
+              return !team_id.includes(team.id);
+            })
+          }
 
-        else if (teams.length === 0) {
+          else if (teams.length === 0) {
+            teamsdata = this.props.ShowTeamAll
+          }
+        }
+        else if (teams === undefined) {
           teamsdata = this.props.ShowTeamAll
         }
       }
-      else if (teams === undefined) {
-        teamsdata = this.props.ShowTeamAll
-      }
     }
-  }
-  
-    if (this.props.ShowTornament.length!==0) {
-      start=this.state.pageno+1
+
+    if (this.props.ShowTornament.length !== 0) {
+      start = this.state.pageno + 1
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
         return <tr key={key} style={{ textAlign: "center" }}>
@@ -295,9 +295,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   action: {
-      Tournament: bindActionCreators(TournamentAction, dispatch),
-      Team: bindActionCreators(TeamAction, dispatch),
-      TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch)
+    Tournament: bindActionCreators(TournamentAction, dispatch),
+    Team: bindActionCreators(TeamAction, dispatch),
+    TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch)
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(tournament)

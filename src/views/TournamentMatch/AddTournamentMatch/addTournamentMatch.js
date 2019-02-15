@@ -37,8 +37,8 @@ class AddTournamentMatch extends Component {
 
   handleChange = (e) => {
     if (e.target.name === "tournamentId") {
-      this.setState({ [e.target.name]: e.target.value }); 
-      this.setState({date:'',time:'',isErrordate:'', teams:'',team1:'',team2:'',isError:''});
+      this.setState({ [e.target.name]: e.target.value });
+      this.setState({ date: '', time: '', isErrordate: '', teams: '', team1: '', team2: '', isError: '' });
       this.handleDatePickerChange();
     }
   }
@@ -61,15 +61,15 @@ class AddTournamentMatch extends Component {
   }
   handleDatePickerChange = (e) => {
     if (e)
-      this.setState({ date: e._d, time: '' ,teams:'', team1: '', team2: '' ,isError:'',isErrordate:''})
+      this.setState({ date: e._d, time: '', teams: '', team1: '', team2: '', isError: '', isErrordate: '' })
     else {
-      this.setState({ date: '', time: '', teams: '', team1: '', team2: '' ,isError:'',isErrordate:''})
+      this.setState({ date: '', time: '', teams: '', team1: '', team2: '', isError: '', isErrordate: '' })
 
     }
   }
   handleChangeTeam = (e) => {
-    let filterTeam = 0;
-    this.setState({ isErrordate: '',isError:'' });
+    let filterTeam = -1;
+    this.setState({ isErrordate: '', isError: '' });
     this.setState({ [e.target.name]: parseInt(e.target.value, 10) });
     if (e.target.name === 'team1') {
       this.props.ShowTornamentAll.map((tournament) => {
@@ -79,7 +79,7 @@ class AddTournamentMatch extends Component {
               if (parseInt(e.target.value, 10) === parseInt(match.Team1[0].id, 10)) {
                 filterTeam = match.Team2[0].id;
               }
-              else {
+              else if (parseInt(e.target.value, 10) === parseInt(match.Team2[0].id, 10)) {
                 filterTeam = match.Team1[0].id;
               }
             }
@@ -87,7 +87,7 @@ class AddTournamentMatch extends Component {
           })
         }
         return (tournament.id === parseInt(this.state.tournamentId, 10)) ? (
-          this.setState({ teams: tournament.Teams })
+          this.setState({ teams2: tournament.Teams })
         ) : null;
       })
       let newteams = this.state.teams.filter(team => {
@@ -98,7 +98,7 @@ class AddTournamentMatch extends Component {
   }
 
   handleTimeChange = (e) => {
-    this.setState({ team1: '', team2: '',isError:'' });
+    this.setState({ team1: '', team2: '', isError: '' });
     let { date } = this.state;
     let d = new Date(date);
     let dateTime = d.toDateString().concat(' ' + e + " GMT");
@@ -249,13 +249,13 @@ class AddTournamentMatch extends Component {
                       />
                       {
                         (this.state.date !== '' || this.state.time !== '') ? (
-                          <Select value={(this.state.time !== '')? this.state.time : 'select'} style={{ width: 120, paddingLeft: '10px' }} onSelect={this.handleTimeChange}>
+                          <Select value={(this.state.time !== '') ? this.state.time : 'select'} style={{ width: 120, paddingLeft: '10px' }} onSelect={this.handleTimeChange}>
                             <Option value="select" hidden>select</Option>
                             <Option value="02:30:00">Morning</Option>
                             <Option value="7:30:00">Afternoon</Option>
                             <Option value="14:00:00">Evening</Option>
                           </Select>
-                        ):null
+                        ) : null
                       }
 
                     </FormGroup>
@@ -289,7 +289,7 @@ class AddTournamentMatch extends Component {
                 }
                 {
                   (this.state.isError !== '') ?
-                    (<span  className='span-error'>{this.state.isError}</span>) : null
+                    (<span className='span-error'>{this.state.isError}</span>) : null
                 }
               </Form>
             </ModalBody>
