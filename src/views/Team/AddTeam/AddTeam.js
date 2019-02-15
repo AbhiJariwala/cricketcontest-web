@@ -49,7 +49,6 @@ class AddTeam extends Component {
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
-    debugger;
 
     switch (fieldName) {
 
@@ -120,7 +119,6 @@ class AddTeam extends Component {
       ...this.state,
       imagebanner: false
     })
-    debugger
     this.validateField("imageBanner", true);
 
   }
