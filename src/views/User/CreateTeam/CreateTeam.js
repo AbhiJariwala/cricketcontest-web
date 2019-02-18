@@ -72,7 +72,7 @@ class CreateTeam extends Component {
         if (this.props.SelectedTournament[0]) {
             tournamentPlayers = this.props.SelectedTournament[0].Teams.map(team => {
                 return (
-                    team.player.map(player => {
+                    team.player.map(player => {                        
                         return (
                             <Card key={player.id} body style={{ borderRadius: "10px" }}>
                                 <div className="row" style={{ textAlign: "center" }}>
@@ -185,13 +185,11 @@ class CreateTeam extends Component {
         );
     }
 }
-
 const mapStateToProps = (state) => {
     return {
         SelectedTournament: state.Tournament.FetchSingleTournamentData,
     }
 }
-
 const mapDispatchToProps = dispatch => ({
     action: {
         Tournament: bindActionCreators(TournamentAction, dispatch),
