@@ -1,95 +1,109 @@
 import React, { Component } from 'react';
+import { Row, Card, CardBody } from 'reactstrap';
+
 import UserPanel from '../../UserPanel/userPanel'
 import path from '../../../path';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as  showUserMatchesAction from '../../../action/user/Createteam'
-import * as  MatchPlayerScore from '../../../action/TournamentMatch'
-const banerhome = require('../../../Image/image1.jpg')
+
+import * as  showUserMatchesAction from '../../../action/user/Createteam';
+import * as TournamentAction from '../../../action/Tournament';
+
 class userDashBoard extends Component {
+
+    componentWillMount() {
+        this.props.action.Tournament.fetchTournamentAction(0, 100, "desc", "id");
+    }
     componentDidMount = () => {
         this.getTournamentMatch();
     }
     getTournamentMatch() {
         let userid = localStorage.getItem("userId")
         this.props.action.UserMatchesteams.Show_My_TeamData(userid);
-        this.props.action.MatchPlayerScore.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
     handletornamentteams = (id) => {
         this.props.history.push('/MyTeamPlayer/' + id);
     }
     render() {
-        let Tournamentmatchid = []
-        this.props.showUserMatches.map(data => {
-            if (!Tournamentmatchid.includes(data.tournamentMatchId)) {
-                Tournamentmatchid = Tournamentmatchid.concat(data.tournamentMatchId)
-            }
-            return ""
-        })
+        let tournaments = '';
+        let t = [];
+        if (this.props.Tournaments.length > 0) {            
+            tournaments = this.props.Tournaments.map((tournament, i) => {
 
-        let tournamentMatch = '';
-        if (this.props.ShowTornamentmatches.length !== 0) {
-            tournamentMatch = this.props.ShowTornamentmatches.map((tournamentmatch, key) => {
-                if (Tournamentmatchid.includes(parseInt(tournamentmatch.id, 10))) {
-                    return <div className="card" style={{ borderRadius: "25px", cursor: "pointer" }} key={key} onClick={() => this.handletornamentteams(tournamentmatch.id)} >
-                        <div className="card-body"  >
-                            <div style={{ float: "left" }}><img alt="logo" src={path + tournamentmatch.Team1[0].teamLogo} style={{ width: 100 }}   ></img></div>
-                            <div style={{ float: "center", margin: "auto", width: "45%", padding: "10px", textAlign: "center" }}>
-                                <div>{tournamentmatch.Team1[0].teamName + " Vs " + tournamentmatch.Team2[0].teamName}</div>
-                            </div>
-                            <div style={{ float: "right" }}><img alt="logo1" src={path + tournamentmatch.Team2[0].teamLogo} style={{ width: 100, marginTop: -55 }} ></img></div>
-
-                        </div>
-                    </div>
+                if (this.props.showUserMatches.length > 0) {                  
+                   return this.props.showUserMatches.map((usermatches, i) => {     
+                        if (tournament.id === usermatches.tournamentId) {
+                            if (!t.includes(usermatches.tournamentId)) {
+                                t.push(usermatches.tournamentId)
+                                return (
+                                    <Card key={tournament.id} body style={{ borderRadius: "25px", cursor: "pointer", margin: "10px 20px", background: "" }} onClick={() => this.handletornamentteams(tournament.id)}>
+                                        <div className="row" style={{ textAlign: "center" }}>
+                                            <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                                                <img alt="demo" src={path + "thumbnail/" + tournament.tournamentBanner} style={{ width: "150" }} ></img>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6" style={{ margin: "auto", float: "center" }}>
+                                                <p style={{ fontSize: "20px" }}> {tournament.tournamentName}</p>
+                                            </div>
+                                            <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                            </div>
+                                        </div>
+                                    </Card>
+                                )
+                            }
+                        }
+                        return null
+                    })
                 }
-                return "";
+                else {
+                    tournaments = "No Data found"
+                }
+                return null
             })
-
-        } else {
-            tournamentMatch = "No Data found"
         }
+        let urlImage = "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=" + window.innerWidth + "&q=80";
 
-        let count=0
-        for (let index = 0; index < tournamentMatch.length; index++) {
-            if(tournamentMatch[index].key){
-                if(tournamentMatch[index]){
-                    count=count+1
-                }
-            }    
-            
-        }
         return (
-            <div className="content" >
+            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", height:"100vh" ,backgroundSize: 'cover',paddingTop: '62px'}}>
                 <UserPanel></UserPanel>
-                <div className="row" style={{ backgroundRepeat: "none",marginTop:"-16px" }} >
-                    <div className="col-md-6" style={{ backgroundImage: `url(${banerhome})` }}>
-                    </div>
-                    <div className="col-md-6" style={{ height: "630px", overflow: "scroll" }}>
-                        <div className="card" style={{ borderRadius: "25px" }}>
-                            <div className="card-header" style={{ backgroundColor: "gainsboro", textAlign: "center" }} >
-                                <h2>My Teams</h2>
-                            </div>
-                            <div className="card-body" style={{ backgroundColor: "gainsboro" }} >
-                            {(count)!==0?tournamentMatch:<h3>No Teams Available</h3>}
-                            </div>
+                <div className="container" style={{overflow: 'auto',height: 'calc(100vh - 62px)'}}>
+                    <div className="row" style={{height:"100%"}}>
+                        <div className="col-md-6" >
+                            <Row>   </Row>
+                        </div>
+                        <div className="col-sm-6" >
+                            <Card style={{ background: "linear-gradient(104deg, #3c3c3c 47%, #323232" }}>
+                                <CardBody >
+                                    <div className="row" style={{ color: "white" }} >
+                                        <div className="headerFixed_38df7" style={{ height: "80px" }}>
+                                            <div className="container_aa549">
+                                                <div className="maxInfoText_13e5b" style={{ fontSize: "30px" }}>Tournaments</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row" style={{ background: "#e6e6e6" }}>
+                                        {tournaments}
+                                    </div>
+                                </CardBody>
+                            </Card>
                         </div>
                     </div>
-
                 </div>
             </div>
+        
         );
     }
 }
 const mapStateToProps = (state) => {
     return {
         showUserMatches: state.CreateteamReducer.TeamData,
-        ShowTornamentmatches: state.TournamentMatchs.allmatchs,
+        Tournaments: state.Tournament.Tournaments
     }
 };
 const mapDispatchToProps = dispatch => ({
     action: {
-        MatchPlayerScore: bindActionCreators(MatchPlayerScore, dispatch),
-        UserMatchesteams: bindActionCreators(showUserMatchesAction, dispatch)
+        UserMatchesteams: bindActionCreators(showUserMatchesAction, dispatch),
+        Tournament: bindActionCreators(TournamentAction, dispatch)
     }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(userDashBoard);
+

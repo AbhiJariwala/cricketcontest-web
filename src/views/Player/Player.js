@@ -177,7 +177,7 @@ class Player extends Component {
       <div>
         <PanelHeader size="sm" />
         <div className="content">
-          <AddPlayer isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state}> </AddPlayer>
+          <AddPlayer noOfRecords={this.state.noOfRecords} isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state}> </AddPlayer>
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "right" }}>
               Show entries

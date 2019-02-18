@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
     return (
       <div>
         <PanelHeader size="lg" content={<img alt="Cricket Contest" style={{ width: '100%', height: 'fit-content' }} src={path + "Cricket-DashBoard.jpg"}></img>} />
-        <Row>
+        <Row style={{ margin: "5px" }}>
           <Col xs={12} md={3}>
             <Card className="card-chart">
               <CardHeader>

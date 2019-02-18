@@ -1,4 +1,10 @@
-.playerScore td{
+.playerScore td {
     padding-right: 3px;
      padding-bottom: 3px
+}
+.red {
+color: red
+}
+.green {
+color: green
 }

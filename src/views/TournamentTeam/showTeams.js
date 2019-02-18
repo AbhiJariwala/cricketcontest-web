@@ -48,7 +48,7 @@ class ShowTeams extends Component {
   }
   toggle(id) {
 
-  
+
     this.setState({
       addModal: !this.state.addModal,
       Editdataid: null

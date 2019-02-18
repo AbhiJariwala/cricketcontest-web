@@ -30,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
         }
 
         case ADD_TEAM_PLAYER: {
-            return Object.assign({}, state)
+            return Object.assign({}, state,{players:action.data})
         }
 
         case GET_PLAYER_OF_TEAM: {

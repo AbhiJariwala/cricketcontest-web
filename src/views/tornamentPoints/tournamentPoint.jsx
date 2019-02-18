@@ -302,7 +302,9 @@ class tournamentPoint extends Component {
               </tr>
             </thead>
             <tbody>
-              {tournamentPoints}
+              {this.props.TournamentPoint.length === 0
+                ? <tr style={{ textAlign: "center" }}><td></td><td>No Data</td><td></td></tr>
+                : tournamentPoints}
             </tbody>
           </Table>
 

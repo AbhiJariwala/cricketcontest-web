@@ -53,9 +53,9 @@ class AddTournament extends Component {
         this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentIdd, teamId: id, createdBy: this.state.createdBy }, team);
         return true;
       });
-      
+
       this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
-      
+
       this.props.refresh();
       this.props.toggle("1");
     }
@@ -100,11 +100,11 @@ class AddTournament extends Component {
   render() {
     const Option = Select.Option;
     let teamNames = "";
-    if(this.props.teamsdata && this.props.teamsdata.length>0){
-    teamNames = this.props.teamsdata.map((team) => {
-      return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
-    })
-  }
+    if (this.props.teamsdata && this.props.teamsdata.length > 0) {
+      teamNames = this.props.teamsdata.map((team) => {
+        return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
+      })
+    }
 
     const {  teams } = this.state;
     // let data ;
@@ -147,7 +147,7 @@ class AddTournament extends Component {
                       </div> : null
                     }
                   </FormGroup> : null} */}
-            
+
                 <FormGroup>
                   <Label for="exampleSelect">Select Team Name</Label>
                   <Select

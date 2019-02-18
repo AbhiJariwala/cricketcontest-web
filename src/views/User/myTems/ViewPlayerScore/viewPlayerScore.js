@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-import {  Table } from "reactstrap";
+import { Table } from "reactstrap";
 import * as  matchPlayerScoreAction from '../../../../action/matchPlayerScore'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,13 +12,12 @@ class viewplayerscore extends React.Component {
     this.props.action.matchPlayerScore.getTournamentMatchPlayerScore(0, 100, "id", "desc");
   }
   render() {
+    debugger
     let data
 
     if (this.props.binddata.length !== 0) {
       data = this.props.matchPlayerScores.map((data, key) => {
-
-        if (data.playerId === this.props.binddata.playerId && this.props.binddata.tournamentMatchId === data.tournamentMatchId) {
-
+        if (data.playerId === this.props.binddata.playerId && this.props.binddata.tournamentId === data.tournamentId) {
           return <div key={key}>
             <Table >
               <tbody>
@@ -64,7 +63,7 @@ class viewplayerscore extends React.Component {
         return null;
       })
     }
-    
+
     let count = 0
     if (data) {
       for (let index = 0; index < data.length; index++) {
