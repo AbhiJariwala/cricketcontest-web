@@ -12,7 +12,7 @@ import path from '../../path';
 import ShowTeams from '../TournamentTeam/showTeams';
 import * as TournamentTeamAction from '../../action/TournamentTeam';
 import * as TeamAction from '../../action/Team';
-
+import './tournament.css'
 class tournament extends Component {
   constructor(props) {
     super(props);
@@ -160,7 +160,7 @@ class tournament extends Component {
       if (this.props.ShowTornament.length !== 0) {
         this.props.ShowTornament.map((data, key) => {
           if (data.id === id) {
-            if (data.TournamentMatches.length < 0 && data.Teams.length < 0) {
+            if (data.TournamentMatches.length <= 0 && data.Teams.length <= 0) {
               confirmAlert({
                 message: 'Are you sure you want to delete this Tournament?.',
                 buttons: [{
@@ -233,8 +233,9 @@ class tournament extends Component {
           </td>
         </tr>
       })
-    } else {
-      data = <tr><td>No Record</td></tr>;
+    } 
+    else {
+      data = <tr><td colSpan="5" className="tCenter">No Record</td></tr>;
     }
     return (
       <div>
@@ -252,7 +253,7 @@ class tournament extends Component {
             forRender={this.state.forRender}
           />):null}
         <div className="content"  >
-          <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournament>
+          <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTournament>
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "right" }}>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>

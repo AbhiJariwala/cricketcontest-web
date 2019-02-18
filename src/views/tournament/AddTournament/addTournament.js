@@ -146,7 +146,7 @@ class AddTournament extends Component {
           'content-type': 'multipart/form-data'
         }
       }
-      this.props.action.Tournament.AddTournamentAction(formdata, config)
+      this.props.action.Tournament.AddTournamentAction(this.props.nrecord,formdata, config)
       this.props.toggle(Event);
     }
   }

@@ -198,7 +198,7 @@ class AddPlayer extends Component {
             if (!this.props.data.Edit) {
                 formdata.append("playerImage", this.state.Player.playerImage[0]);
                 formdata.append("createdBy", loginUserId);
-                this.props.action.Player.addPlayer(formdata, config);
+                this.props.action.Player.addPlayer(this.props.nrecord,formdata, config);
             }
             else {
                 let playerId = this.state.Player.id;

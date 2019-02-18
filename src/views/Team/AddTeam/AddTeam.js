@@ -123,7 +123,7 @@ class AddTeam extends Component {
         }
 
       }
-      this.props.action.Team.AddTeamAction(formdata, config);
+      this.props.action.Team.AddTeamAction(this.props.nrecord,formdata, config);
       this.closeModal();
     }
   }

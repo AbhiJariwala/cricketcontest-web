@@ -20,14 +20,15 @@ export const SelectTournamentAction = (pageno, parpageRecord, sorting, filedName
             })
     }
 };
-export const AddTournamentAction = (data) => {
+export const AddTournamentAction = (nrecord,data) => {
     return (dispatch) => {
         authService.TournamentAdd(data).then((response) => {
             if (response.status === 200) {
 
                 dispatch({
                     type: Add_Tournament_Data,
-                    TournamentAddData: response.data
+                    TournamentAddData: response.data,
+                    nrecord
                 });
             }
         })
