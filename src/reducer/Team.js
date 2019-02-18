@@ -35,8 +35,14 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { TeamData: action.TeamData });
         }
         case Add_Team_Data: {
-            state.TeamData.splice(-1, 1)
-            state.TeamData.unshift(action.TeamAddData)
+            let {nrecord} = action;
+            if(state.TeamData.length >= nrecord){
+                state.TeamData.splice(-1, 1)
+                state.TeamData.unshift(action.TeamAddData)
+            }
+            else{
+                state.TeamData.unshift(action.TeamAddData);
+            }
             return Object.assign({}, state, {
                 TeamData: state.TeamData.splice(action.TeamAddData)
             });

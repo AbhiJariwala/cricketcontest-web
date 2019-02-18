@@ -228,7 +228,7 @@ class TournamentMatch extends Component {
               <WinnerModal isOpen={this.state.showWinner} data={this.state.data} toggleWinner={this.toggleWinner} />
             ) : null
           }
-          <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
+          <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle}  nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
           <div className="headerdiv" >
             {
               (this.state.tournamentid === 'selected') ? (

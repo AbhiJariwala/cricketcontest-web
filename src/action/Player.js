@@ -18,13 +18,14 @@ export const getPlayer = (start, end, sortFiled, sortType) => {
         })
     }
 };
-export const addPlayer = (player) => {
+export const addPlayer = (nrecord,player) => {
     return (dispatch) => {
         playerService.addPlayer(player).then((response) => {
             if (response.status === 200) {
                 dispatch({
                     type: ADD_PLAYER,
-                    PlayerAddData: response.data
+                    PlayerAddData: response.data,
+                    nrecord
                 });
             }
         }).catch((error) => {

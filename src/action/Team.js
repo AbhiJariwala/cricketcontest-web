@@ -47,7 +47,7 @@ export const selectTeamAction = (pageno, parpageRecord, sorting, filedName) => {
             })
     }
 };
-export const AddTeamAction = (data) => {
+export const AddTeamAction = (nrecord,data) => {
 
     return (dispatch) => {
         authService.TeamAdd(data).then((response) => {
@@ -55,7 +55,8 @@ export const AddTeamAction = (data) => {
                 dispatch(
                     {
                         type: Add_Team_Data,
-                        TeamAddData: response.data
+                        TeamAddData: response.data,
+                        nrecord
                     }
                 );
             }

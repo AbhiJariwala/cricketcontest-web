@@ -262,6 +262,10 @@ class AddTournamentMatch extends Component {
                   ) : null
                 }
                 {
+                  (this.state.time !== '' && this.state.isErrordate === '') ? 
+                    (<span className='span-display' >{ new Date(this.state.date).toString()}</span>) : null
+                }
+                {
                   (this.state.isErrordate !== '') ?
                     (<span className='span-error' >{this.state.isErrordate}</span>) : null
                 }

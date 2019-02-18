@@ -85,13 +85,19 @@ export default (state = INITIAL_STATE, action) => {
         case Add_Tournament_Data: {
             let myTournaments={};
             myTournaments=action.TournamentAddData;
+            let { nrecord }=action;
             let {Tournaments} = state;
             if(myTournaments.Teams===undefined){
                 let Teams=[];
                 myTournaments={...myTournaments,Teams};
             }
-            Tournaments.splice(-1, 1)
-            Tournaments.unshift(myTournaments)
+            if(Tournaments.length >= nrecord){
+                Tournaments.splice(-1,1);
+                Tournaments.unshift(myTournaments); 
+            }
+            else{
+                Tournaments.unshift(myTournaments);
+            }
             return Object.assign({}, state, { Tournaments: [...Tournaments]});
         }
 
