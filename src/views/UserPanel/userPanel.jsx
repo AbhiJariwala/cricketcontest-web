@@ -38,8 +38,8 @@ class NavbarPage extends Component {
   }
   render() {
     return (
-      <div>
-        <Navbar color="dark" light expand="md">
+      <div style={{ position: "fixed", width: "100%", zIndex: "100" ,top: '0' }}>
+        <Navbar color="dark" light expand="md" >
           <NavbarBrand href="/userDashBoard">Cricket Contest</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -67,9 +67,6 @@ class NavbarPage extends Component {
           </Collapse>
         </Navbar>
       </div>
-
-
-
     );
   }
 }

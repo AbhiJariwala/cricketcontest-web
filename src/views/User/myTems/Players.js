@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import UserPanel from '../../UserPanel/userPanel'
-import {  Button, Empty } from 'antd';
+import { Button, Empty } from 'antd';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import path from '../../../path';
@@ -18,20 +18,15 @@ class Players extends React.Component {
   }
   state = { visible: false, scoredata: [] }
   showModal = (data) => {
-    let bindScoreData={
-      playerId:data.playerId,
-      tournamentMatchId:data.tournamentMatchId
-      // playerId:10,
-      // tournamentMatchId:1
+    let bindScoreData = {
+      playerId: data.playerId,
+      tournamentId: data.tournamentId
     }
-
     this.setState({
       visible: true,
       scoredata: bindScoreData
     });
-
   }
-
   handleOk = (e) => {
     this.setState({
       visible: false,
@@ -46,10 +41,10 @@ class Players extends React.Component {
     let players, no = 1;
     if (this.props.showUserMatches.length !== 0) {
       players = this.props.showUserMatches.map((data, key) => {
-        if (data.tournamentMatchId === parseInt(this.props.match.params.id, 10)) {
+        if (data.tournamentId === parseInt(this.props.match.params.id, 10)) {
           return <tr key={key}>
             <th scope="row">{no++}</th>
-            <th><img alt="logo1" src={path + data.Players[0].playerImage} style={{ width: 100, height: 100 }} ></img></th>
+            <th><img alt="logo1" src={path+"/thumbnail/" + data.Players[0].playerImage} style={{ width: 100, height: 100 }} ></img></th>
             <td>{data.Players[0].firstName}{"  "}{data.Players[0].lastName}</td>
             <td>{data.Players[0].description}</td>
             <td><Button type="primary" onClick={() => this.showModal(data)}>show Score</Button></td>
@@ -65,8 +60,8 @@ class Players extends React.Component {
         handleOk={this.handleOk}
         onCancel={this.handleCancel}
         binddata={this.state.scoredata}></ViewPlayerScore>
-      <div className="container">
-        {players !== " " ?
+      <div className="container" style={{ paddingTop: "70px" }}>
+        {players !== "" ?
           <Table>
             <thead>
               <tr>

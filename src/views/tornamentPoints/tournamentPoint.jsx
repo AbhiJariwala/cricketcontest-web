@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Collapse, Button as AntButton, Modal as AntModal } from 'antd';
 import 'antd/dist/antd.css';
-import path from '../../path';
+
 import AddTournamentPoint from './AddTounamnetPoint/addTournamentPoint';
 import * as tournamentPointAction from '../../action/tournamentPoint';
 
@@ -302,7 +302,9 @@ class tournamentPoint extends Component {
               </tr>
             </thead>
             <tbody>
-              {tournamentPoints}
+              {this.props.TournamentPoint.length === 0
+                ? <tr style={{ textAlign: "center" }}><td></td><td>No Data</td><td></td></tr>
+                : tournamentPoints}
             </tbody>
           </Table>
 

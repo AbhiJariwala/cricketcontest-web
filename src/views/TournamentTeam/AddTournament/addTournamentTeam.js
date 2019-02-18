@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 
-import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label } from 'reactstrap';
 import { Select } from 'antd';
 import '../tournamentTeam.css';
 
@@ -41,7 +41,7 @@ class AddTournament extends Component {
   }
 
   AddData = (submitted) => {
-    const { tournamentId, teams } = this.state;
+    const {  teams } = this.state;
    let  tournamentIdd=this.props.tournament.id;
     if (submitted && teams.length > 0) {
       let newTeams = this.props.TeamsData.filter((team) => {
@@ -53,9 +53,9 @@ class AddTournament extends Component {
         this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentIdd, teamId: id, createdBy: this.state.createdBy }, team);
         return true;
       });
-      
+
       this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
-      
+
       this.props.refresh();
       this.props.toggle("1");
     }
@@ -100,24 +100,24 @@ class AddTournament extends Component {
   render() {
     const Option = Select.Option;
     let teamNames = "";
-    if(this.props.teamsdata && this.props.teamsdata.length>0){
-    teamNames = this.props.teamsdata.map((team) => {
-      return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
-    })
-  }
-
-    const { tournamentId, teams } = this.state;
-    let data = "";
-    if (this.props.ShowTornamentAll && this.props.ShowTornamentAll.length > 0) {
-      data = this.props.ShowTornamentAll.map((tournament) => {
-        return <option value={tournament.id}
-          id={tournament.id}
-          key={tournament.id}>
-          {tournament.tournamentName}
-
-        </option>
-      });
+    if (this.props.teamsdata && this.props.teamsdata.length > 0) {
+      teamNames = this.props.teamsdata.map((team) => {
+        return <Option value={team.id} id={team.id} key={team.id}>{team.teamName}</Option>
+      })
     }
+
+    const {  teams } = this.state;
+    // let data ;
+    // if (this.props.ShowTornamentAll && this.props.ShowTornamentAll.length > 0) {
+    //   data = this.props.ShowTornamentAll.map((tournament) => {
+    //     return <option value={tournament.id}
+    //       id={tournament.id}
+    //       key={tournament.id}>
+    //       {tournament.tournamentName}
+
+    //     </option>
+    //   });
+    // }
 
     return (
       <Container>
@@ -147,7 +147,7 @@ class AddTournament extends Component {
                       </div> : null
                     }
                   </FormGroup> : null} */}
-            
+
                 <FormGroup>
                   <Label for="exampleSelect">Select Team Name</Label>
                   <Select

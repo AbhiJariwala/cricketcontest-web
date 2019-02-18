@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 import { Table, Button, Badge } from 'reactstrap';
 import { Modal as AntModal, Collapse } from 'antd';
 import 'antd/dist/antd.css';
-import path from '../../path';
 import * as  MatchPlayerScore from '../../action/matchPlayerScore'
 import { PanelHeader } from "components";
 import * as TournamentMatch from '../../action/TournamentMatch'

@@ -7,7 +7,6 @@ import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, Fo
 import * as TeamAction from '../../../action/Team';
 import path from '../../../path';
 const deleteIcon = require('../../../Image/delete.jpg');
-const Icon = require('../../../Image/defaultTeam.png');
 
 
 class AddTeam extends Component {
@@ -44,11 +43,16 @@ class AddTeam extends Component {
     this.setState({ submitted: false });
   }
   imageChangedHandler(image) {
+    debugger;
+    // this.setState({
+    //   teamLogo: image
+    // })
+    // this.validateField("BannerImage", "true");
+    // this.setState({ submitted: false });
     this.setState({
-      teamLogo: image
+      teamLogo: image,
+      imagebanner: true
     })
-    this.validateField("BannerImage", "true");
-    this.setState({ submitted: false });
   }
 
   validateField(fieldName, value) {
@@ -69,12 +73,16 @@ class AddTeam extends Component {
   }
 
   UpdateDataData = (Event) => {
+    debugger;
+    let teamL;
     let formdata = new FormData();
     formdata.append("id", this.state.id);
     formdata.append("teamName", this.state.teamName);
-    if (this.props.dataid.teamLogo) {
+    if (this.state.teamLogo[0]===this.props.dataid.teamLogo) {
+      teamL=this.props.dataid.teamLogo;
       formdata.append("teamLogo", this.props.dataid.teamLogo);
-    } else {
+    } else if (this.props.dataid.teamLogo !== 'defaultTeamLogo.png') {
+      teamL=this.state.teamLogo[0];
       formdata.append("teamLogo", this.state.teamLogo[0]);
     }
     formdata.append("updatedBy", parseInt(this.state.updatedBy, 10));
@@ -83,14 +91,15 @@ class AddTeam extends Component {
         'content-type': 'multipart/form-data'
       }
     }
+    
     const data = {
       "teamName": this.state.teamName,
-      "teamLogo": this.state.teamLogo[0],
+      "teamLogo": teamL,
       "updatedBy": parseInt(this.state.updatedBy, 10),
       "id": this.state.id
     }
     Event.preventDefault();
-    this.props.action.Team.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
+    this.props.action.Team.UpdateTournamentAction(this.props.dataid.id, data, formdata, config);
     this.props.toggle(Event);
   }
   closeModal = () => {
@@ -105,7 +114,6 @@ class AddTeam extends Component {
 
   AddDataData = (submitted) => {
     let formdata = new FormData();
-    <img src={path + 'defaultTeam.png'} alt="" style={{ width: "130px", height: "100px" }}></img>
     if (submitted === true && this.state.teamName !== '') {
       formdata.append("teamName", this.state.teamName);
       if (this.state.teamLogo.length !== 0) {
@@ -123,17 +131,15 @@ class AddTeam extends Component {
     }
   }
   cancelImageClick = () => {
-    this.props.dataid.teamLogo = false
-    this.setState({
-      ...this.state,
-      imagebanner: false
-    })
-    this.validateField("imageBanner", true);
-
+    this.props.dataid.imagebanner = false
+    this.setState({ imagebanner: false })
   }
   render() {
     let image;
-    let imageuploader = <div><ImageUploader withIcon={true} buttonText="Select Images" imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']} withPreview={true}
+    let imageuploader = <div><ImageUploader withIcon={true}
+      buttonText="Select Images"
+      imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
+      withPreview={true}
       onChange={this.imageChangedHandler.bind(this)}
       maxFileSize={5242880}
       withLabel={false}
@@ -141,12 +147,15 @@ class AddTeam extends Component {
       accept={"image/*"} />
       <center><span style={{ color: "red" }}>{this.state.fieldsErrors.BannerImage}</span></center></div>
     if (this.props.dataid !== null) {
-      if (this.props.dataid.teamLogo) {
+      if (this.props.dataid.teamLogo === 'defaultTeamLogo.png') {
+        image = imageuploader
+      } else if (this.props.dataid.imagebanner) {
         image = <div align="center">
           <p></p><img src={path + this.props.dataid.teamLogo} height="100px" width="100px" alt="" />
           <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
         </div>
-      } else {
+      }
+      else {
         image = imageuploader
       }
     } else { image = imageuploader }
@@ -164,9 +173,7 @@ class AddTeam extends Component {
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.teamName}</span>
                   {(this.state.teamName === '' && this.state.submitted) ? <p style={{ color: "red" }}>* Required Teamname</p> : null}
                 </FormGroup>
-                <FormGroup>
-                  {image}
-                </FormGroup>
+                {image}
               </Form>
             </ModalBody>
             <ModalFooter>

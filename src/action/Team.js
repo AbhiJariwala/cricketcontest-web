@@ -109,7 +109,6 @@ export const getTeamAction = (id) => {
 }
 export const UpdateTournamentAction = (id, team, data) => {
     return (dispatch) => {
-
         authService.UpdateTeamdata(id, data).then((response) => {
             let teamLogo = "";
             (response.data.teamLogo) ? teamLogo = response.data.teamLogo
