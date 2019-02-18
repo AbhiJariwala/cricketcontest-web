@@ -387,7 +387,7 @@ class ModalExample extends React.Component {
                         ? <div>
                             <img onClick={() => this.addBox("Runs")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.runBox >= 2
-                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={Path + "minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}

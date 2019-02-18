@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Button } from 'reactstrap';
-import { Input, ButtonGroup } from 'reactstrap';
-import { message } from 'antd';
+import { Table, Button, Input, ButtonGroup } from 'reactstrap';
+import { message, Empty } from 'antd';
 import * as TournamentAction from '../../action/Tournament';
 import AddTournament from '../tournament/AddTournament/addTournament'
 import { PanelHeader } from "components";
@@ -114,15 +113,15 @@ class tournament extends Component {
   }
   ShowTeam = (tournament) => {
     this.props.action.Team.fetchTeamAction();
-    if(tournament.Teams===undefined){
-      let Teams=[];
-      tournament={... tournament,Teams};
-  }
-      this.setState(
-        {
-          tournament: tournament,
-          visible: true
-        })
+    if (tournament.Teams === undefined) {
+      let Teams = [];
+      tournament = { ...tournament, Teams };
+    }
+    this.setState(
+      {
+        tournament: tournament,
+        visible: true
+      })
   }
   handleDelete = (tournamnetId, team) => {
     message.success("successfully deleted");
@@ -155,22 +154,35 @@ class tournament extends Component {
     if (!id) {
       alert("no data");
     } else {
-      confirmAlert({
-        message: 'Are you sure you want to delete this Tournament?.',
-        buttons: [{
-          label: 'Yes',
-          onClick: () => { this.props.action.Tournament.DeleteTournamentAction(id, this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName) }
-        },
-        {
-          label: 'No',
-          onClick: () => { }
-        }
-        ]
-      })
+      if (this.props.ShowTornament.length !== 0) {
+        this.props.ShowTornament.map((data, key) => {
+          if (data.id === id) {
+            debugger;
+            if (data.TournamentMatches.length < 0 && data.Teams.length < 0) {
+              confirmAlert({
+                message: 'Are you sure you want to delete this Tournament?.',
+                buttons: [{
+                  label: 'Yes',
+                  onClick: () => { this.props.action.Tournament.DeleteTournamentAction(id, this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName) }
+                },
+                {
+                  label: 'No',
+                  onClick: () => { }
+                }
+                ]
+              })
+            }
+            else {
+                alert('Can\'t delete tournament ');
+            }
+          }
+          return Empty;
+        })
+      }
     }
   }
   render() {
-    let teamsdata=[];
+    let teamsdata = [];
     let notNext = 0;
     let data = ""
     let start = 0;
@@ -225,8 +237,8 @@ class tournament extends Component {
     return (
       <div>
         <PanelHeader size="sm" />
-        {(teamsdata)?(
-        <ShowTeams tournament={this.state.tournament}
+        {(teamsdata) ? (
+          <ShowTeams tournament={this.state.tournament}
             teamid={this.state.teamid}
             tournamentid={this.state.tournamentid}
             deleteClick={this.handleDelete}
@@ -235,7 +247,7 @@ class tournament extends Component {
             refresh={this.refresh}
             filter={this.state.filteredteams}
             teamsdata={teamsdata}
-          />):null}
+          />) : null}
         <div className="content"  >
           <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournament>
           <div style={{ marginTop: "50px" }}>
@@ -249,7 +261,7 @@ class tournament extends Component {
               </Input>
             </div>
             <div style={{ float: "left", borderRadius: "50%" }}>
-            <Button color="info" onClick={this.toggle} >Add</Button>
+              <Button color="info" onClick={this.toggle} >Add</Button>
               {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
             </div>
           </div>

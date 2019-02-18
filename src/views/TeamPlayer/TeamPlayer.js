@@ -123,7 +123,7 @@ class TeamPlayer extends Component {
             <tbody key={teamplayer.id}>
                 <tr style={{ textAlign: "center" }}  >
                     <td>{key + this.state.pageno + 1}</td>
-                    <td><img src={path + teamplayer.tournamentBanner} alt="Banner" style={{ width: "150px", height: "80px" }}></img></td>
+                    <td><img src={path + 'thumbnail/' + teamplayer.tournamentBanner} alt="Banner"></img></td>
                     <td>{teamplayer.tournamentName}</td>
                     <td><Button color="info" onClick={() => this.showTeamHandler(teamplayer.id)} >Show Teams</Button></td>
                 </tr>

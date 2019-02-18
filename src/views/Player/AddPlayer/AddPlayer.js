@@ -204,7 +204,10 @@ class AddPlayer extends Component {
                 let playerId = this.state.Player.id;
                 if (this.state.Player.displayImage) {
                     formdata.append("playerImage", this.state.Player.playerImage[0]);
-                }
+                }  
+                else if(!this.state.Player.showimage){
+                    formdata.append("playerImage","defaultPlayerImage.png");
+                }             
 
                 formdata.append("id", playerId);
                 formdata.append("updatedBy", loginUserId);

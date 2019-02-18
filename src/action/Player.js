@@ -38,6 +38,7 @@ export const addPlayer = (player) => {
 export const updatePlayer = (player, playerFormData) => {
     return (dispatch) => {
         playerService.updatePlayer(player.id, playerFormData).then((response) => {
+            console.log(response)
             let playerImage = "";
             (response.data.playerImage) ? playerImage = response.data.playerImage
                 : playerImage = player.playerImage
