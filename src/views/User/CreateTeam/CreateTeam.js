@@ -95,7 +95,6 @@ class CreateTeam extends Component {
                 )
             });
         }
-
         if (this.props.SelectedTournament[0]) {
             selectedPlayer = this.props.SelectedTournament[0].Teams.map(team => {
                 return (
@@ -113,6 +112,7 @@ class CreateTeam extends Component {
                                 </Col>
                             )
                         }
+                        return null
                     })
                 )
             });
@@ -140,7 +140,7 @@ class CreateTeam extends Component {
                                                         <div className="infoContent_0b612">
                                                             <div>
                                                                 <div style={{ display: "inline-block" }}>
-                                                                    <img className="card-img" src={path + "thumbnail/" + selectedTournamentBanner} alt="Card image cap" />
+                                                                    <img className="card-img" src={path + "thumbnail/" + selectedTournamentBanner} alt="true" />
                                                                 </div>
                                                             </div>
                                                             <div >

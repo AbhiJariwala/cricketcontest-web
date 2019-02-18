@@ -24,9 +24,18 @@ class userDashBoard extends Component {
         this.props.history.push('/CreateTeam/' + id);
     }
     render() {
+        let temp ,temp2=[];
+        this.props.showUserMatches.map((usermatches, i) => {     
+            if(temp!==usermatches.tournamentId){
+                    temp2.push(usermatches.tournamentId)
+            }
+            temp=usermatches.tournamentId
+            return null
+        })
         let tournaments = '';
         if (this.props.Tournaments.length) {
-            tournaments = this.props.Tournaments.map((tournament, i) => {
+            tournaments = this.props.Tournaments.map((tournament, i) => {  
+                if(!temp2.includes(tournament.id)){              
                 return (
                     <Card key={tournament.id} body style={{ borderRadius: "10px", cursor: "pointer", margin: "10px 20px", background: "" }} onClick={() => this.handletornamentteams(tournament.id)}>
                         <div className="row" style={{ textAlign: "center" }}>
@@ -41,18 +50,20 @@ class userDashBoard extends Component {
                         </div>
                     </Card>
                 )
+                }
+                return null
             })
         } else {
             tournaments = "No Data found"
         }
         let urlImage = "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=" + window.innerWidth + "&q=80";
         return (
-            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}>
+            <div style={{ backgroundImage: `url(${urlImage})`, backgroundAttachment: "fixed", height:"100vh" ,backgroundSize: 'cover',paddingTop: '62px' }}>
                 <UserPanel></UserPanel>
-                <div className="container" style={{ paddingTop: "70px" }}>
+                <div className="container" style={{overflow: 'auto',height: 'calc(100vh - 62px)'}}>
                     <div className="row">
                         <div className="col-md-6" style={{}}>
-                            <Row>   </Row>
+                            <Row></Row>
                         </div>
                         <div className="col-sm-6">
                             <Card style={{ background: "linear-gradient(104deg, #3c3c3c 47%, #323232" }}>

@@ -116,7 +116,7 @@ class tournament extends Component {
     this.props.action.Team.fetchTeamAction();
     if(tournament.Teams===undefined){
       let Teams=[];
-      tournament={... tournament,Teams};
+      tournament={...tournament,Teams};
   }
       this.setState(
         {

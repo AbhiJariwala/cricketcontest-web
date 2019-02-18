@@ -7,7 +7,6 @@ import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, Fo
 import * as TeamAction from '../../../action/Team';
 import path from '../../../path';
 const deleteIcon = require('../../../Image/delete.jpg');
-const Icon = require('../../../Image/defaultTeam.png');
 
 
 class AddTeam extends Component {
@@ -105,7 +104,6 @@ class AddTeam extends Component {
 
   AddDataData = (submitted) => {
     let formdata = new FormData();
-    <img src={path + 'defaultTeam.png'} alt="" style={{ width: "130px", height: "100px" }}></img>
     if (submitted === true && this.state.teamName !== '') {
       formdata.append("teamName", this.state.teamName);
       if (this.state.teamLogo.length !== 0) {

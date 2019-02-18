@@ -12,13 +12,12 @@ class viewplayerscore extends React.Component {
     this.props.action.matchPlayerScore.getTournamentMatchPlayerScore(0, 100, "id", "desc");
   }
   render() {
+    debugger
     let data
 
     if (this.props.binddata.length !== 0) {
       data = this.props.matchPlayerScores.map((data, key) => {
-
-        if (data.playerId === this.props.binddata.playerId && this.props.binddata.tournamentMatchId === data.tournamentMatchId) {
-
+        if (data.playerId === this.props.binddata.playerId && this.props.binddata.tournamentId === data.tournamentId) {
           return <div key={key}>
             <Table >
               <tbody>

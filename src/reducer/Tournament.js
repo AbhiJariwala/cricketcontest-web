@@ -135,9 +135,9 @@ export default (state = INITIAL_STATE, action) => {
             let i = tournaments.findIndex(tournament => {
                 return tournament.id === parseInt(b, 10);
             })
-            let j = tournamentssData.findIndex(tournament => {
-                return tournament.id === parseInt(b, 10);
-            })
+            // let j = tournamentssData.findIndex(tournament => {
+            //     return tournament.id === parseInt(b, 10);
+            // })
             let TournamentTeam = {id:action.tournamentTeamm.id,isDelete:action.tournamentTeamm.isDelete};
             let newTeamm = {...action.newTeam,TournamentTeam};
             // if(tournaments[i].Teams===undefined){
