@@ -96,8 +96,6 @@ class TournamenMatchPlayerScore extends Component {
                                             {tournamentmatch.Team2[0].teamName}
                                         </Button>
                                     </td>
-                                    {/* <td><Button color="info" style={{ width: "62px" }} >Edit</Button>&nbsp;
-                                      <Button color="danger" >Delete</Button></td> */}
                                 </tr>
                             }
                         }
@@ -172,20 +170,8 @@ class TournamenMatchPlayerScore extends Component {
                         }
                     </AntModal>
                     <div style={{ marginTop: "50px" }}>
-                        {/* <div style={{ float: "right" }}>
-                            Show entries
-                           <Input type="select" name="select" >
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </Input>
-                        </div> */}
                         <div style={{ float: "left" }}>
-                            {/* <Button color="info" style={{ width: "100%" }} onClick={this.btnAddClick.bind(this)} >Add</Button> */}
                             <Button color="info" onClick={this.btnAddClick.bind(this)} >Add</Button>
-                            {/* <img src={path + "add.png"} alt="plus" onClick={this.btnAddClick.bind(this)} style={{ width: 60, cursor: "pointer" }} ></img> */}
                             <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
                         </div>
                     </div>
@@ -195,18 +181,13 @@ class TournamenMatchPlayerScore extends Component {
                             <tr style={{ textAlign: "center" }}>
                                 <th>#</th>
                                 <th style={{ cursor: "pointer" }}>Tournament</th>
-                                <th style={{ cursor: "pointer" }} colSpan="3">Match</th>
-                                {/* <th>Action</th> */}
+                                <th style={{ cursor: "pointer" }} colSpan="3">Match</th>                                
                             </tr>
                         </thead>
                         <tbody>
                             {(tournamentMatch !== "") ? tournamentMatch : <tr><th>Tournament match is not available</th></tr>}
                         </tbody>
                     </Table>
-                    {/* <ButtonGroup>
-                        <Button color="info" name="Prev">Prev</Button> &nbsp;
-                        <Button color="info" name="Next">Next</Button>
-                    </ButtonGroup> */}
                 </div>
             </div>
         );

@@ -28,7 +28,7 @@ class CRoute extends Component {
         }
         else if (isUserLoggedIn && rest.path === "/" && userCurrentRole === 2) {
             redirectTo = "/userDashBoard"
-        }else if(!isUserLoggedIn && rest.path === "/viewTournamentteam"){
+        } else if (!isUserLoggedIn && rest.path === "/viewTournamentteam") {
             redirectTo = "/login"
         }
         else if (!isUserLoggedIn && rest.path === "/Myteam") {
@@ -40,7 +40,6 @@ class CRoute extends Component {
         else if (isUserLoggedIn && rest.path === "/login" && userCurrentRole === 1 && cprivate) {
             redirectTo = "/"
         }
-
         else if (isUserLoggedIn && rest.path === "/login")
             redirectTo = "/";
         else if (isUserLoggedIn && rest.path === "/registration")
@@ -52,7 +51,15 @@ class CRoute extends Component {
         else if (!isUserLoggedIn && rest.path === "*") {
             redirectTo = "/login";
         }
-
+        else if (!isUserLoggedIn && rest.path === "/CreateTeam/:id") {
+            redirectTo = "/login"
+        }
+        else if (!isUserLoggedIn && rest.path === "/userDashBoard") {
+            redirectTo = "/login"
+        }
+        else if (!isUserLoggedIn && rest.path === "/MyTeamPlayer/:id") {
+            redirectTo = "/login"
+        }
         return (
             <Route
                 {...rest}

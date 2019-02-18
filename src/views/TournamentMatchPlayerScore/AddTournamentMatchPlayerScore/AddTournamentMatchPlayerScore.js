@@ -9,7 +9,6 @@ import *  as TournamentPointAction from '../../../action/tournamentPoint'
 import './AddTournamentMatchPlayerScore.css'
 
 class AddMatchPlayerScore extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +18,8 @@ class AddMatchPlayerScore extends Component {
             tournamentId: 0,
             matchId: 0,
             teamScore: {},
-            teamId: 0
+            teamId: 0,
+            isError: ""
         };
     }
     componentDidMount() {
@@ -27,27 +27,34 @@ class AddMatchPlayerScore extends Component {
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(1, 100, "desc", "id");
         this.props.action.TournamentPoint.getTournamentPointScore(0, 100, "id", "desc");
     }
+    componentWillReceiveProps() {
+        this.setState({ isError: "" });
+    }
     tournamentNameChangedHandler(tournament, e) {
         let t = [];
+        // console.log(tournament)  
         document.getElementById("teamPlayer").hidden = true
         document.getElementById("tournamentMatch").hidden = false;
         let tournamentId = parseInt(e.target.value, 10);
+        // console.log(tournamentId)
         let tournamentMatchTeam = "";
-
         if (tournament) {
             tournamentMatchTeam = tournament.map(tournament => {
-                if (this.props.MatchPlayerScore.tournamentMatchPlayerScore.length > 0) {
-                    return this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(scoreMatches => {
-                        if (scoreMatches) {
-                            if (scoreMatches.tournamentMatchId !== parseInt(tournament.id, 10)) {
-                                if (!t.includes(tournament.id)) {
-                                    t.push(tournament.id)
-                                    return (<option value={tournament.id} key={tournament.id} >{tournament.Team1[0].teamName + '  VS  ' + tournament.Team2[0].teamName + " (" + tournament.matchDate.substr(0, 10) + ")"}</option>)
+                if (tournament.tournamentId !== tournamentId) {
+                    if (this.props.MatchPlayerScore.tournamentMatchPlayerScore.length > 0) {
+                        return this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(scoreMatches => {
+                            if (scoreMatches.tournamentMatchId && tournament) {
+                                if (scoreMatches.tournamentMatchId !== parseInt(tournament.id, 10)) {
+                                    if (!t.includes(tournament.id)) {
+                                        t.push(tournament.id)
+                                        return (<option value={tournament.id} key={tournament.id} >{tournament.Team1[0].teamName + '  VS  ' + tournament.Team2[0].teamName + " (" + tournament.matchDate.substr(0, 10) + ")"}</option>)
+                                    }
                                 }
                             }
-                        }
-                        return true;
-                    })
+                            return true;
+                        })
+                    }
+                    return true
                 }
                 else {
                     return (<option value={tournament.id} key={tournament.id} >{tournament.Team1[0].teamName + '  VS  ' + tournament.Team2[0].teamName + " (" + tournament.matchDate.substr(0, 10) + ")"}</option>)
@@ -57,7 +64,8 @@ class AddMatchPlayerScore extends Component {
 
         this.setState({
             tournamentMatchTeam: tournamentMatchTeam,
-            tournamentId: tournamentId
+            tournamentId: tournamentId,
+            isError: ""
         })
     }
     matchChangeHandler(tournament, e) {
@@ -74,13 +82,15 @@ class AddMatchPlayerScore extends Component {
         })
         this.setState({
             teams: teams,
-            matchId: matchId
+            matchId: matchId,
+            isError: ""
         })
     }
     teamChangeHandler(e) {
         document.getElementById("teamPlayer").hidden = false
         let teamId = e.target.value;
         this.setState({
+            isError: "",
             teamId: teamId,
             teamScore: {
                 ...this.state.teamScore,
@@ -92,9 +102,9 @@ class AddMatchPlayerScore extends Component {
         })
         this.props.action.MatchPlayerScore.getPlayers(this.state.tournamentId, teamId);
     }
-
     inputChangeHandler(playerId, e) {
         this.setState({
+            isError: "",
             playerScore: {
                 ...this.state.playerScore,
                 [playerId]:
@@ -107,118 +117,130 @@ class AddMatchPlayerScore extends Component {
             }
         })
     }
-
     addTournamentMatchPlayerScore() {
-        Object.entries(this.state.playerScore).map(([key, value]) => {
-            this.props.TournamentPoint.get_points.map(tournamentPoint => {
-                if (tournamentPoint.tournamentId === this.state.tournamentId) {
-                    Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
-                        let from, to;
-                        if (pointType === "Catch") {
-                            for (var Cpv in pointValue) {
-                                from = parseInt((pointValue[Cpv].from), 10);
-                                to = parseInt((pointValue[Cpv].to), 10);
-                                if (from <= value.catch && to >= value.catch) {
-                                    value.score += parseInt(pointValue[Cpv].point, 10)
-                                    break;
-                                }
-                            }
-                        }
-                        if (pointType === "Wicket") {
-                            for (var Wpv in pointValue) {
-                                from = parseInt((pointValue[Wpv].from), 10);
-                                to = parseInt((pointValue[Wpv].to), 10);
-                                if (from <= value.wicket && to >= value.wicket) {
-                                    value.score += parseInt(pointValue[Wpv].point, 10)
-                                    break;
-                                }
-                            }
-
-                        }
-                        if (pointType === "Runs") {
-                            for (var Rpv in pointValue) {
-                                from = parseInt((pointValue[Rpv].from), 10);
-                                to = parseInt((pointValue[Rpv].to), 10);
-                                Object.entries(this.state.teamScore).map(([key, score]) => {
-                                    if (key === value.teamId) {
-                                        score.Totalscore += value.runs;
+        let { tournamentId, matchId, playerScore } = this.state;
+        if (tournamentId === 0 || matchId === 0 || Object.keys(playerScore).length === 0) {
+            this.setState({ isError: 'All fields are required' });
+        }
+        else {
+            Object.entries(this.state.playerScore).map(([key, value]) => {
+                if (this.props.TournamentPoint.get_points.length > 0) {
+                    this.props.TournamentPoint.get_points.map(tournamentPoint => {
+                        if (tournamentPoint.tournamentId === this.state.tournamentId) {
+                            Object.entries(tournamentPoint.pointJson).map(([pointType, pointValue]) => {
+                                let from, to;
+                                if (pointType === "Catch") {
+                                    for (var Cpv in pointValue) {
+                                        from = parseInt((pointValue[Cpv].from), 10);
+                                        to = parseInt((pointValue[Cpv].to), 10);
+                                        if (from <= value.catch && to >= value.catch) {
+                                            value.score += parseInt(pointValue[Cpv].point, 10)
+                                            break;
+                                        }
                                     }
-                                    return true;
-                                })
-                                if (from <= value.runs && to >= value.runs) {
-                                    value.score += parseInt(pointValue[Rpv].point, 10)
-                                    break;
                                 }
-                            }
-                        }
-                        if (pointType === "Stumping") {
-                            for (var Spv in pointValue) {
-                                from = parseInt((pointValue[Spv].from), 10);
-                                to = parseInt((pointValue[Spv].to), 10);
-                                if (from <= value.stumping && to >= value.stumping) {
-                                    value.score += parseInt(pointValue[Spv].point, 10)
-                                    break;
-                                }
-                            }
-                        }
-                        if (pointType === "Four") {
-                            for (var Fpv in pointValue) {
-                                from = parseInt((pointValue[Fpv].from), 10);
-                                to = parseInt((pointValue[Fpv].to), 10);
-                                if (from <= value.four && to >= value.four) {
-                                    value.score += parseInt(pointValue[Fpv].point, 10)
-                                    break;
-                                }
-                            }
+                                if (pointType === "Wicket") {
+                                    for (var Wpv in pointValue) {
+                                        from = parseInt((pointValue[Wpv].from), 10);
+                                        to = parseInt((pointValue[Wpv].to), 10);
+                                        if (from <= value.wicket && to >= value.wicket) {
+                                            value.score += parseInt(pointValue[Wpv].point, 10)
+                                            break;
+                                        }
+                                    }
 
-                        }
-                        if (pointType === "Six") {
-                            for (var Sixpv in pointValue) {
-                                from = parseInt((pointValue[Sixpv].from), 10);
-                                to = parseInt((pointValue[Sixpv].to), 10);
-                                if (from <= value.six && to >= value.six) {
-                                    value.score += parseInt(pointValue[Sixpv].point, 10)
-                                    break;
                                 }
-                            }
+                                if (pointType === "Runs") {
+                                    for (var Rpv in pointValue) {
+                                        from = parseInt((pointValue[Rpv].from), 10);
+                                        to = parseInt((pointValue[Rpv].to), 10);
+                                        Object.entries(this.state.teamScore).map(([key, score]) => {
+                                            if (key === value.teamId) {
+                                                score.Totalscore += value.runs;
+                                            }
+                                            return true;
+                                        })
+                                        if (from <= value.runs && to >= value.runs) {
+                                            value.score += parseInt(pointValue[Rpv].point, 10)
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (pointType === "Stumping") {
+                                    for (var Spv in pointValue) {
+                                        from = parseInt((pointValue[Spv].from), 10);
+                                        to = parseInt((pointValue[Spv].to), 10);
+                                        if (from <= value.stumping && to >= value.stumping) {
+                                            value.score += parseInt(pointValue[Spv].point, 10)
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (pointType === "Four") {
+                                    for (var Fpv in pointValue) {
+                                        from = parseInt((pointValue[Fpv].from), 10);
+                                        to = parseInt((pointValue[Fpv].to), 10);
+                                        if (from <= value.four && to >= value.four) {
+                                            value.score += parseInt(pointValue[Fpv].point, 10)
+                                            break;
+                                        }
+                                    }
+
+                                }
+                                if (pointType === "Six") {
+                                    for (var Sixpv in pointValue) {
+                                        from = parseInt((pointValue[Sixpv].from), 10);
+                                        to = parseInt((pointValue[Sixpv].to), 10);
+                                        if (from <= value.six && to >= value.six) {
+                                            value.score += parseInt(pointValue[Sixpv].point, 10)
+                                            break;
+                                        }
+                                    }
+                                }
+                                return true;
+                            })
                         }
                         return true;
                     })
                 }
-                return true;
+                let finalScore = {
+                    tournamentId: this.state.tournamentId,
+                    tournamentMatchId: this.state.matchId,
+                    playerId: parseInt(key, 10),
+                    wicket: value.wicket,
+                    run: value.runs,
+                    catch: value.catch,
+                    six: value.six,
+                    four: value.four,
+                    stumping: value.stumping,
+                    score: value.score
+                }
+                this.props.action.MatchPlayerScore.addTournamentMatchPlayerScore(finalScore);
+                this.setState({
+                    playerScore: {}
+                })
+                return ""
             })
-            let finalScore = {
-                tournamentId: this.state.tournamentId,
-                tournamentMatchId: this.state.matchId,
-                playerId: parseInt(key, 10),
-                wicket: value.wicket,
-                run: value.runs,
-                catch: value.catch,
-                six: value.six,
-                four: value.four,
-                stumping: value.stumping,
-                score: value.score
+            let TeamValues = Object.values(this.state.teamScore);
+            let TeamKeys = Object.keys(this.state.teamScore);
+            let winId = 0;
+            if (TeamValues[0] && TeamValues[1]) {
+                if (TeamValues[0].Totalscore > TeamValues[1].Totalscore) {
+                    winId = TeamKeys[0];
+                }
+                else if (TeamValues[0].Totalscore === TeamValues[1].Totalscore) {
+                    winId = 0;
+                }
+                else {
+                    winId = TeamKeys[1];
+                }
+                this.props.toggleAdd();
+                this.props.action.MatchPlayerScore.updateWinning(this.state.matchId, parseInt(winId, 10));
             }
-
-            this.props.action.MatchPlayerScore.addTournamentMatchPlayerScore(finalScore);
-
-            this.props.toggleAdd();
-            return ""
-
-        })
-        let TeamValues = Object.values(this.state.teamScore);
-        let TeamKeys = Object.keys(this.state.teamScore);
-        let winId = 0;
-        if (TeamValues[0].Totalscore > TeamValues[1].Totalscore) {
-            winId = TeamKeys[0];
+            else {
+                this.setState({ isError: 'All fields are required' });
+            }
         }
-        else if (TeamValues[0].Totalscore === TeamValues[1].Totalscore) {
-            winId = 0;
-        }
-        else {
-            winId = TeamKeys[1];
-        }
-        this.props.action.MatchPlayerScore.updateWinning(this.state.matchId, parseInt(winId, 10));
     }
 
     render() {
@@ -250,22 +272,20 @@ class AddMatchPlayerScore extends Component {
                     return player = player.Players.map((p) => {
                         return <tr key={p.id} className="playerScore" >
                             <td><Badge color="secondary" style={{ fontSize: "12px" }}>{p.firstName + ' ' + p.lastName}</Badge></td>
-                            <td><Input type="text" name="runs" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                            <td><Input type="text" name="four" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                            <td><Input type="text" name="six" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                            <td><Input type="text" name="catch" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                            <td><Input type="text" name="stumping" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
-                            <td><Input type="text" name="wicket" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} /></td>
+                            <td><Input type="text" name="runs" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["runs"] : ""} /></td>
+                            <td><Input type="text" name="four" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["four"] : ""} /></td>
+                            <td><Input type="text" name="six" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["six"] : ""} /></td>
+                            <td><Input type="text" name="catch" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["catch"] : ""} /></td>
+                            <td><Input type="text" name="stumping" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["stumping"] : ""} /></td>
+                            <td><Input type="text" name="wicket" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["wicket"] : ""} /></td>
                         </tr>
                     })
                 }
                 return true;
             })
         }
-
         return (
-            // <Container>
-            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleAdd} >
+            <Modal isOpen={this.props.isOpen} >
                 <ModalHeader toggle={this.props.toggleAdd} >
                     MatchPlayerScore
                 </ModalHeader>
@@ -309,26 +329,20 @@ class AddMatchPlayerScore extends Component {
                                     <tbody>
                                         {player}
                                     </tbody>
-                                </table> : ""
-                            }
+                                </table> : ""}
                         </FormGroup>
+                        {(this.state.isError !== '') ?
+                            (<span className='span-error'>{this.state.isError}</span>) : null}
                     </Form>
-
                 </ModalBody>
-
                 <ModalFooter>
-                    {/* {this.props.data ? */}
-                    {/* <Button color="info" onClick={this.updateTournamentMatchPlayerScore}>Update</Button> : */}
                     <Button color="info" onClick={() => this.addTournamentMatchPlayerScore()}>Submit</Button>
                     <Button color="secondary" onClick={this.props.toggleAdd}>Cancel</Button>
                 </ModalFooter>
-
             </Modal>
-            // </Container>
         );
     }
 }
-
 const mapStateToProps = state => {
     return {
         MatchPlayerScore: state.MatchPlayerScore,
@@ -336,7 +350,6 @@ const mapStateToProps = state => {
         TournamentPoint: state.TournamentPoint
     }
 }
-
 const mapDispatchToProps = dispatch => ({
     action: {
         MatchPlayerScore: bindActionCreators(matchPlayerScoreAction, dispatch),
@@ -344,5 +357,4 @@ const mapDispatchToProps = dispatch => ({
         TournamentPoint: bindActionCreators(TournamentPointAction, dispatch)
     }
 })
-
 export default connect(mapStateToProps, mapDispatchToProps)(AddMatchPlayerScore);
