@@ -73,8 +73,7 @@ class AddTeam extends Component {
   }
 
   UpdateDataData = (Event) => {
-    debugger
-    let teamL;
+    
     let formdata = new FormData();
     formdata.append("id", this.state.id);
     formdata.append("teamName", this.state.teamName);

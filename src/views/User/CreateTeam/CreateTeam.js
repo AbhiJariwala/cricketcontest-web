@@ -185,13 +185,11 @@ class CreateTeam extends Component {
         );
     }
 }
-
 const mapStateToProps = (state) => {
     return {
         SelectedTournament: state.Tournament.FetchSingleTournamentData,
     }
 }
-
 const mapDispatchToProps = dispatch => ({
     action: {
         Tournament: bindActionCreators(TournamentAction, dispatch),

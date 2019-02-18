@@ -27,7 +27,6 @@ class AddTournament extends Component {
     this.setState({ createdBy: userId, updatedBy: userId });
   }
   componentWillReceiveProps = (nextProps) => {
-    debugger
     if (nextProps.dataid !== null && nextProps.dataid.length !== 0 && !this.state.notcallnext) {
       this.setState({
         tournamentName: nextProps.dataid.tournamentName,
@@ -65,7 +64,6 @@ class AddTournament extends Component {
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
   }
   UpdateDataData = (Event) => {
-    debugger
     if (this.state.tournamentDescription === "") {
       this.setState({
         fieldsErrors: {
@@ -83,7 +81,6 @@ class AddTournament extends Component {
       })
     }
     if (this.state.tournamentName && this.state.tournamentDescription) {
-      debugger
       Event.preventDefault();
       let formdata = new FormData();
       formdata.append("id", this.state.id);
@@ -173,7 +170,6 @@ class AddTournament extends Component {
     this.setState({ imagebanner: false,displayImage: "",tournamentBanner:"" })
   }
   render() {
-    console.log(this.state);
     let image;
     let imageuploader = <div><ImageUploader withIcon={true} buttonText="Select Images" imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']} 
       onChange={this.imageChangedHandler.bind(this)}
