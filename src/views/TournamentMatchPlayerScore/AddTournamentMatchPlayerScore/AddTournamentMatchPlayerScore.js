@@ -152,6 +152,7 @@ class AddMatchPlayerScore extends Component {
                 console.log(d1 < d2);
                 // var dateDiff = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
                 // return (dateDiff === 1) ? tournamentMatch : null
+                return null
             })
         }
         let tournament = []

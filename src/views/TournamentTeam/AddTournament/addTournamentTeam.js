@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from 'redux';
 
-import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label } from 'reactstrap';
 import { Select } from 'antd';
 import '../tournamentTeam.css';
 
@@ -41,7 +41,7 @@ class AddTournament extends Component {
   }
 
   AddData = (submitted) => {
-    const { tournamentId, teams } = this.state;
+    const {  teams } = this.state;
    let  tournamentIdd=this.props.tournament.id;
     if (submitted && teams.length > 0) {
       let newTeams = this.props.TeamsData.filter((team) => {
@@ -106,18 +106,18 @@ class AddTournament extends Component {
     })
   }
 
-    const { tournamentId, teams } = this.state;
-    let data = "";
-    if (this.props.ShowTornamentAll && this.props.ShowTornamentAll.length > 0) {
-      data = this.props.ShowTornamentAll.map((tournament) => {
-        return <option value={tournament.id}
-          id={tournament.id}
-          key={tournament.id}>
-          {tournament.tournamentName}
+    const {  teams } = this.state;
+    // let data ;
+    // if (this.props.ShowTornamentAll && this.props.ShowTornamentAll.length > 0) {
+    //   data = this.props.ShowTornamentAll.map((tournament) => {
+    //     return <option value={tournament.id}
+    //       id={tournament.id}
+    //       key={tournament.id}>
+    //       {tournament.tournamentName}
 
-        </option>
-      });
-    }
+    //     </option>
+    //   });
+    // }
 
     return (
       <Container>

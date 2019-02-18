@@ -32,9 +32,12 @@ class ShowTeams extends Component {
     if(this.props.tournament.id!==undefined && !this.state.callNotnext){    
         this.setState({tournamentId:this.props.tournament.id,callNotnext:1})    
     }
-
   }
 
+  componentWillReceiveProps= () =>{
+    const {forRender} =this.props;
+    console.log(forRender);
+  }
   deleteClick = (d, d2) => {
     this.setState({
       team: [],
@@ -83,6 +86,7 @@ class ShowTeams extends Component {
     this.props.toggleTeam();
   }
   render() {
+  
     let sTournament='';
       let { tournament } = this.props;
     
@@ -156,9 +160,9 @@ class ShowTeams extends Component {
   }
 }
 const mapStateToProps=(state)=>{
-  const {Tournaments}=state.Tournament;
+  const {Tournament}=state;
   return {
-    Tournaments
+    Tournaments:Tournament.Tournaments
   }
 }
 const mapDispatchToProps = dispatch => ({

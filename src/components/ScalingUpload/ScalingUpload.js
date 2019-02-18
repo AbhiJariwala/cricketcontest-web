@@ -15,7 +15,7 @@ class ScalingUpload extends Component {
             var image = new Image();
             image.src = dataUrl;
             image.onload = function () {
-                debugger
+               
                 var resizedDataUrl = this.resizeImage(image, maxWidth, maxHeight, 0.7);
                 fn(resizedDataUrl);
             };
@@ -23,7 +23,7 @@ class ScalingUpload extends Component {
     }
 
     resizeImage(image, maxWidth, maxHeight, quality) {
-        debugger
+    
         var canvas = document.createElement('canvas');
 
         var width = image.width;
@@ -50,7 +50,7 @@ class ScalingUpload extends Component {
     }
 
     _onChange(e) {
-        debugger
+        
         var files = e.target.files;
         var maxWidth = this.props.maxWidth;
         var maxHeight = this.props.maxHeight;
@@ -61,7 +61,7 @@ class ScalingUpload extends Component {
 
 
     render() {
-        debugger
+       
         var image;
         var dataUrl = this.state.dataUrl;
         if (dataUrl) {

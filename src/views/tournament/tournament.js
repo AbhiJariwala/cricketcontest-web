@@ -30,7 +30,8 @@ class tournament extends Component {
       tournament: {},
       refresh: true,
       filteredteams: [],
-      teamsdata: []
+      teamsdata: [],
+      forRender:true
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -116,7 +117,7 @@ class tournament extends Component {
     this.props.action.Team.fetchTeamAction();
     if(tournament.Teams===undefined){
       let Teams=[];
-      tournament={... tournament,Teams};
+      tournament={...tournament,Teams};
   }
       this.setState(
         {
@@ -125,14 +126,16 @@ class tournament extends Component {
         })
   }
   handleDelete = (tournamnetId, team) => {
+  
+    const { forRender }= this.state;
     message.success("successfully deleted");
-    this.toggleTeam();
+    this.toggleTeam(); this.toggleTeam();
     let updatedBy = parseInt(this.state.updatedBy, 10);
     team.map(teamId => {
       this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId, teamId, updatedBy);
       return teamId;
     })
-    this.setState({ visible: true });
+    this.setState({ visible: true, forRender:!forRender });
   }
   Edittoggle = (data) => {
     if (!data) {
@@ -174,7 +177,7 @@ class tournament extends Component {
     let notNext = 0;
     let data = ""
     let start = 0;
-    if (this.state.tournament.Teams != {}) {
+    if (this.state.tournament.Teams !== {}) {
       let teams = this.state.tournament.Teams;
 
       if (this.props.ShowTeamAll && this.props.ShowTeamAll.length > 0) {
@@ -235,6 +238,7 @@ class tournament extends Component {
             refresh={this.refresh}
             filter={this.state.filteredteams}
             teamsdata={teamsdata}
+            forRender={this.state.forRender}
           />):null}
         <div className="content"  >
           <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournament>

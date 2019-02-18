@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Collapse, Button as AntButton, Modal as AntModal } from 'antd';
 import 'antd/dist/antd.css';
-import path from '../../path';
+
 import AddTournamentPoint from './AddTounamnetPoint/addTournamentPoint';
 import * as tournamentPointAction from '../../action/tournamentPoint';
 
