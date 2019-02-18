@@ -26,7 +26,6 @@ class AddTournament extends Component {
     this.setState({ createdBy: userId, updatedBy: userId });
   }
   componentWillUpdate = () => {
-    debugger
     if (this.props.dataid !== null && this.props.dataid.length !== 0 && !this.state.notcallnext) {
       // if(this.state.tournamentBanner===""){
       //   this.setState({
@@ -66,8 +65,7 @@ class AddTournament extends Component {
     const value = e.target.value;
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
   }
-  UpdateDataData = (Event) => {
-    debugger
+  UpdateDataData = (Event) => {    
     if (this.state.tournamentDescription === "") {
       this.setState({
         fieldsErrors: {

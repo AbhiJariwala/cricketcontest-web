@@ -47,11 +47,11 @@ class CreateTeam extends Component {
     createteam = (E) => {
         E.preventDefault();
         const userId = localStorage.getItem("userId");
-        const tournamentMatchId = this.props.match.params.id;
+        const tournamentId = this.props.match.params.id;
         this.state.Myteam.map(data => {
             data = {
                 userId,
-                tournamentMatchId,
+                tournamentId,
                 playerId: data,
                 createdBy: parseInt(userId, 10)
             }

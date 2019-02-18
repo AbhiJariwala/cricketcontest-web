@@ -12,7 +12,6 @@ class viewplayerscore extends React.Component {
     this.props.action.matchPlayerScore.getTournamentMatchPlayerScore(0, 100, "id", "desc");
   }
   render() {
-    debugger
     let data
 
     if (this.props.binddata.length !== 0) {

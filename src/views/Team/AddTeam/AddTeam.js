@@ -42,8 +42,7 @@ class AddTeam extends Component {
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
     this.setState({ submitted: false });
   }
-  imageChangedHandler(image) {
-    debugger;
+  imageChangedHandler(image) {   
     // this.setState({
     //   teamLogo: image
     // })
@@ -72,8 +71,7 @@ class AddTeam extends Component {
     }, this.validateForm);
   }
 
-  UpdateDataData = (Event) => {
-    debugger;
+  UpdateDataData = (Event) => {    
     let teamL;
     let formdata = new FormData();
     formdata.append("id", this.state.id);
@@ -103,7 +101,6 @@ class AddTeam extends Component {
     this.props.toggle(Event);
   }
   closeModal = () => {
-    // debugger;
     this.setState({ submitted: false });
     this.props.toggle(Event);
   }

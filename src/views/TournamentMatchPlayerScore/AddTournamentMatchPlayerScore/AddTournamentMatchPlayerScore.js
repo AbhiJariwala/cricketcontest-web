@@ -46,6 +46,7 @@ class AddMatchPlayerScore extends Component {
                                 }
                             }
                         }
+                        return true;
                     })
                 }
                 else {
@@ -142,6 +143,7 @@ class AddMatchPlayerScore extends Component {
                                     if (key === value.teamId) {
                                         score.Totalscore += value.runs;
                                     }
+                                    return true;
                                 })
                                 if (from <= value.runs && to >= value.runs) {
                                     value.score += parseInt(pointValue[Rpv].point, 10)
@@ -216,7 +218,6 @@ class AddMatchPlayerScore extends Component {
         else {
             winId = TeamKeys[1];
         }
-        console.log(winId)
         this.props.action.MatchPlayerScore.updateWinning(this.state.matchId, parseInt(winId, 10));
     }
 
@@ -239,6 +240,7 @@ class AddMatchPlayerScore extends Component {
                         return <option value={tournament.Tournament.id} key={tournament.Tournament.id}>{tournament.Tournament.tournamentName}</option>
                     }
                 }
+                return true;
             })
         }
         let player = "";
@@ -257,6 +259,7 @@ class AddMatchPlayerScore extends Component {
                         </tr>
                     })
                 }
+                return true;
             })
         }
 

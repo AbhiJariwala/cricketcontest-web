@@ -164,9 +164,10 @@ class TournamenMatchPlayerScore extends Component {
                                                     }) : <p>Player score not available</p>}
                                                 </Panel>
                                             </Collapse>)
+                                        return true;
                                     }))
                                 }
-
+                                return true;
                             }) : null
                         }
                     </AntModal>

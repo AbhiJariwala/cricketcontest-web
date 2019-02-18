@@ -28,15 +28,14 @@ class ShowTeams extends Component {
     }
     this.toggle = this.toggle.bind(this);
   }
-  componentDidUpdate=()=>{    
-    if(this.props.tournament.id!==undefined && !this.state.callNotnext){    
-        this.setState({tournamentId:this.props.tournament.id,callNotnext:1})    
+  componentDidUpdate = () => {
+    if (this.props.tournament.id !== undefined && !this.state.callNotnext) {
+      this.setState({ tournamentId: this.props.tournament.id, callNotnext: 1 })
     }
   }
 
-  componentWillReceiveProps= () =>{
-    const {forRender} =this.props;
-    console.log(forRender);
+  componentWillReceiveProps = () => {
+    // const { forRender } = this.props;
   }
   deleteClick = (d, d2) => {
     this.setState({
@@ -52,15 +51,14 @@ class ShowTeams extends Component {
     this.setState({
       addModal: !this.state.addModal,
       Editdataid: null
-    }); 
-    if(id==="1")
-    {
-        this.props.history.push('/tournament');
-    }   
-    else{
-    this.props.toggleTeam();
+    });
+    if (id === "1") {
+      this.props.history.push('/tournament');
     }
-    this.props.toggleTeam();this.props.toggleTeam();
+    else {
+      this.props.toggleTeam();
+    }
+    this.props.toggleTeam(); this.props.toggleTeam();
   }
   Change = (e) => {
     this.setState({ team: e });
@@ -86,16 +84,16 @@ class ShowTeams extends Component {
     this.props.toggleTeam();
   }
   render() {
-  
-    let sTournament='';
-      let { tournament } = this.props;
-    
-    if(this.props.Tournaments && this.props.Tournaments.length>0 ){
-      sTournament = this.props.Tournaments.filter(t=>{
-        return t.id===tournament.id;
+
+    let sTournament = '';
+    let { tournament } = this.props;
+
+    if (this.props.Tournaments && this.props.Tournaments.length > 0) {
+      sTournament = this.props.Tournaments.filter(t => {
+        return t.id === tournament.id;
       })
     }
-    let teams = ((sTournament[0]?sTournament[0].Teams:null))
+    let teams = ((sTournament[0] ? sTournament[0].Teams : null))
     let teamNames = '';
     if (teams && teams.length > 0) {
       teamNames = teams.map((team, i) => {
@@ -116,14 +114,14 @@ class ShowTeams extends Component {
           visible={this.props.visible}
           onCancel={this.closeModal}
           footer={null} >
-          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>         
-          
+          <div style={{ marginBottom: '9px', marginLeft: '10px' }}>
+
             {!teams || teams.length === 0 ?
-              <div> 
-                    <div style={{ float: "right" }}>
-                        <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
-                    </div>
-                    <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
+              <div>
+                <div style={{ float: "right" }}>
+                  <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
+                </div>
+                <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
               </div> :
               <div>
                 <Checkbox indeterminate={this.state.indeterminate}
@@ -159,16 +157,16 @@ class ShowTeams extends Component {
     );
   }
 }
-const mapStateToProps=(state)=>{
-  const {Tournament}=state;
+const mapStateToProps = (state) => {
+  const { Tournament } = state;
   return {
-    Tournaments:Tournament.Tournaments
+    Tournaments: Tournament.Tournaments
   }
 }
 const mapDispatchToProps = dispatch => ({
   action: {
     TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch),
-    Tournament: bindActionCreators(TournamentAction,dispatch)
+    Tournament: bindActionCreators(TournamentAction, dispatch)
   }
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShowTeams))
