@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label } from 'reactstrap';
 import { Select } from 'antd';
 import '../tournamentTeam.css';
+import '../../view.css';
 
 import * as TournamentAction from '../../../action/Tournament';
 import * as TeamAction from '../../../action/Team';
@@ -42,7 +43,7 @@ class AddTournament extends Component {
 
   AddData = (submitted) => {
     const {  teams } = this.state;
-   let  tournamentIdd=this.props.tournament.id;
+    let  tournamentIdd=this.props.tournament.id;
     if (submitted && teams.length > 0) {
       let newTeams = this.props.TeamsData.filter((team) => {
         return teams.includes(team.id)
@@ -61,38 +62,12 @@ class AddTournament extends Component {
     }
   }
 
-  // handleChange = (tournamentId) => {
-
-  //   let { noCallNext } = this.state;
-
-  //   let id
-  //   if (tournamentId !== undefined) {
-  //     if (typeof (tournamentId) === 'number') {
-  //       id = tournamentId;
-  //     }
-  //     else if (tournamentId.target.name === "tournamentId" && tournamentId.target.name !== undefined) {
-  //       id = tournamentId.target.value;
-  //     }
-  //   }
-  //   if (tournamentId && !noCallNext) {
-  //     this.setState({ noCallNext: 1, teams: [], submitted: false });
-  //     this.props.action.Team.fetchTeamAction();
-  //   }
-  //   if (this.state.tournamentId === "") {
-  //     this.setState({ tournamentId: tournamentId });
-  //   }
-
-  //   if (this.props.filteredteams) {
-  //     if (this.props.filteredteams.length !== this.state.tournamentTeams.length) {
-  //       this.setState({ tournamentTeams: this.props.filteredteams });
-  //     }
-  //   }
-  // }
   handleSelect = (e) => {
     this.setState({ teams: e });
     let id = e[e.length - 1];
     this.props.action.Team.getTeamAction(id);
   }
+
   closeModal = () => {
     this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
     this.props.toggle(1);
@@ -107,18 +82,7 @@ class AddTournament extends Component {
     }
 
     const {  teams } = this.state;
-    // let data ;
-    // if (this.props.ShowTornamentAll && this.props.ShowTornamentAll.length > 0) {
-    //   data = this.props.ShowTornamentAll.map((tournament) => {
-    //     return <option value={tournament.id}
-    //       id={tournament.id}
-    //       key={tournament.id}>
-    //       {tournament.tournamentName}
-
-    //     </option>
-    //   });
-    // }
-
+    
     return (
       <Container>
         <div className="containerDiv">
@@ -126,28 +90,6 @@ class AddTournament extends Component {
             <ModalHeader toggle={this.closeModal} >Tournament</ModalHeader>
             <ModalBody>
               <Form>
-                {/* {(!this.props.tournament.id) ?
-                  <FormGroup>
-                    <Label for="exampleSelect">Select Tournament Name</Label>
-                    <Input
-                      onChange={this.handleChange}
-                      type="select"
-                      name="tournamentId"
-                      value={tournamentId}>
-                      <option hidden>Select Tournament</option>
-                      {data}
-                    </Input>
-
-                    {(this.state.submitted && this.state.tournamentId === '') ?
-                      <div>
-                        <br />
-                        <span style={{ color: "red" }}>
-                          Please select tournament
-                        </span>
-                      </div> : null
-                    }
-                  </FormGroup> : null} */}
-
                 <FormGroup>
                   <Label for="exampleSelect">Select Team Name</Label>
                   <Select
@@ -160,7 +102,6 @@ class AddTournament extends Component {
                   >{teamNames}
                   </Select>
 
-
                   {(this.state.submitted && this.state.teams.length === 0 && this.props.tournament.id !== '') ?
                     <div>
                       <br />
@@ -169,7 +110,6 @@ class AddTournament extends Component {
                         </span>
                     </div> : null}
                 </FormGroup>
-
               </Form>
             </ModalBody>
 

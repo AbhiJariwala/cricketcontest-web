@@ -9,8 +9,8 @@ import { PanelHeader } from "components";
 import path from '../../path';
 import Timer from './DisplayTimer/displaytimer';
 import WinnerModal from './winnerModal'
-import './tournamentmatch.css';
-
+//import './tournamentmatch.css';
+import '../view.css';
 class TournamentMatch extends Component {
   constructor(props) {
     super(props);
@@ -145,8 +145,8 @@ class TournamentMatch extends Component {
           var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           return <tr key={key}>
             <td className='header-center'>{start++}</td>
-            <td>{data.Tournament.tournamentName}</td>
-            <td><img src={path + data.Team1[0].teamLogo} className='float-image-right' height="70px" width="70px" alt="TeamImage" />
+            <td className='header-center'>{data.Tournament.tournamentName}</td>
+            <td><img src={path + data.Team1[0].teamLogo} className='float-right' height="70px" width="70px" alt="TeamImage" />
               {
                 (data.winningTeamId === data.Team1[0].id) ? <img className='team-1-badge' src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
               }
@@ -182,7 +182,7 @@ class TournamentMatch extends Component {
           remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           return <tr key={key}>
             <td className='header-center'>{key + 1}</td>
-            <td><img src={path + data.Team1[0].teamLogo} className='float-image-right' height="70px" width="70px" alt="TeamImage" />
+            <td><img src={path + data.Team1[0].teamLogo} className='float-right' height="70px" width="70px" alt="TeamImage" />
               {
                 (data.winningTeamId === data.Team1[0].id) ? <img className='team-one-badge' src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
               }
@@ -261,7 +261,7 @@ class TournamentMatch extends Component {
                   (this.state.tournamentid === 'selected') ? (
                     <tr onClick={this.sortingdata.bind(Event)}>
                       <th className='header-center header-pointer'>#</th>
-                      <th id={'tournamentId'} className='header-pointer'>Tournament</th>
+                      <th id={'tournamentId'} className='header-center header-pointer'>Tournament</th>
                       <th colSpan="3" className='header-pointer header-center' id={'tournamentId'} >Teams</th>
                       <th className='header-pointer header-center'>Date</th>
                       <th className='header-pointer header-center'>Remaining Time</th>

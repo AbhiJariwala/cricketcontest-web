@@ -22,10 +22,12 @@ class AddTournament extends Component {
     fieldsValid: { tournamentName: false, tournamentDescription: false, tournamentBanner: "false" },
     displayImage:""
   }
+
   componentWillMount = () => {
     const userId = localStorage.getItem("userId");
     this.setState({ createdBy: userId, updatedBy: userId });
   }
+
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.dataid !== null && nextProps.dataid.length !== 0 && !this.state.notcallnext) {
       this.setState({
@@ -38,6 +40,7 @@ class AddTournament extends Component {
       })
     }
   }
+
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
@@ -58,11 +61,13 @@ class AddTournament extends Component {
       fieldsValid: fieldValidation
     }, this.validateForm);
   }
+
   inputChangeHandler(e) {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
   }
+
   UpdateDataData = (Event) => {
     if (this.state.tournamentDescription === "") {
       this.setState({
@@ -118,6 +123,7 @@ class AddTournament extends Component {
       this.props.toggle(Event);
     }
   }
+  
   AddDataData = (Event) => {
     Event.preventDefault();
     if (this.state.tournamentDescription === "") {
@@ -149,8 +155,10 @@ class AddTournament extends Component {
       }
       this.props.action.Tournament.AddTournamentAction(formdata, config)
       this.props.toggle(Event);
+      this.setState({displayImage:""});
     }
   }
+
   imageChangedHandler(image) {
     var reader = new FileReader();
     reader.readAsDataURL(image[0]);
@@ -163,12 +171,14 @@ class AddTournament extends Component {
   }
     this.validateField("BannerImage", "true");
   }
+
   cancelImageClick = () => {
     if(this.props.dataid){
       this.props.dataid.imagebanner = false
     }
     this.setState({ imagebanner: false,displayImage: "",tournamentBanner:"" })
   }
+
   render() {
     let image;
     let imageuploader = <div><ImageUploader withIcon={true} buttonText="Select Images" imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']} 
@@ -243,11 +253,7 @@ class AddTournament extends Component {
     );
   }
 }
-// const mapStateToProps = (state) => {
-//   return {
-//     auth: state.auth
-//   }
-// };
+
 const mapDispatchToProps = dispatch => ({
   action: {
     Tournament: bindActionCreators(TournamentAction, dispatch)

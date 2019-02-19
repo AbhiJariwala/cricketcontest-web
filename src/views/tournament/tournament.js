@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
 import { Table, Button, Input, ButtonGroup } from 'reactstrap';
 import { message, Empty } from 'antd';
-import * as TournamentAction from '../../action/Tournament';
-import AddTournament from '../tournament/AddTournament/addTournament'
+
+import AddTournament from '../tournament/AddTournament/addTournament';
+import ShowTeams from '../TournamentTeam/showTeams';
 import { PanelHeader } from "components";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import path from '../../path';
-import ShowTeams from '../TournamentTeam/showTeams';
+
+
 import * as TournamentTeamAction from '../../action/TournamentTeam';
 import * as TeamAction from '../../action/Team';
+import * as TournamentAction from '../../action/Tournament';
+
+import '../view.css';
 
 class tournament extends Component {
   constructor(props) {
@@ -107,35 +113,38 @@ class tournament extends Component {
     });
   }
   toggleTeam = () => {
-    // this.props.action.Tournament.fetchTournamentAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
-    this.setState({
+      this.setState({
       visible: !this.state.visible
     });
   }
+
   ShowTeam = (tournament) => {
     this.props.action.Team.fetchTeamAction();
     if(tournament.Teams===undefined){
-      let Teams=[];
-      tournament={...tournament,Teams};
-  }
-      this.setState(
-        {
+        let Teams=[];
+        tournament={...tournament,Teams};
+    }
+    this.setState({
           tournament: tournament,
           visible: true
         })
   }
+
   handleDelete = (tournamnetId, team) => {
   
     const { forRender }= this.state;
     message.success("successfully deleted");
-    this.toggleTeam(); this.toggleTeam();
+    this.toggleTeam(); 
     let updatedBy = parseInt(this.state.updatedBy, 10);
+
     team.map(teamId => {
       this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId, teamId, updatedBy);
       return teamId;
     })
+
     this.setState({ visible: true, forRender:!forRender });
   }
+
   Edittoggle = (data) => {
     if (!data) {
       alert("no data");
@@ -153,6 +162,7 @@ class tournament extends Component {
       });
     }
   }
+
   btnDeleteClick = (id) => {
     if (!id) {
       alert("no data");
@@ -183,6 +193,7 @@ class tournament extends Component {
       }
     }
   }
+
   render() {
     let teamsdata = [];
     let notNext = 0;
@@ -223,19 +234,20 @@ class tournament extends Component {
       start = this.state.pageno + 1
       data = this.props.ShowTornament.map((data, key) => {
         notNext = key + 1
-        return <tr key={key} style={{ textAlign: "center" }}>
+        return <tr key={key} className='header-center'>
           <td>{start++}</td>
           <td><img src={path + 'thumbnail/' + data.tournamentBanner} alt="" ></img></td>
           <td>{data.tournamentName}</td>
           <th onClick={() => this.ShowTeam(data)}><Button color="info">Teams</Button></th>
-          <td><img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 25 }} ></img>
-            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 25 }} ></img>
+          <td><img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} className='width25'></img>
+              <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} className='width25'></img>
           </td>
         </tr>
       })
     } else {
       data = <tr><td>No Record</td></tr>;
     }
+
     return (
       <div>
         <PanelHeader size="sm" />
@@ -252,9 +264,9 @@ class tournament extends Component {
             forRender={this.state.forRender}
           />):null}
         <div className="content"  >
-          <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} >  </AddTournament>
-          <div style={{ marginTop: "50px" }}>
-            <div style={{ float: "right" }}>
+          <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid}/>
+          <div className='headerdiv'>
+            <div className='pagenumber'>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
                 <option>5</option>
                 <option>10</option>
@@ -263,18 +275,17 @@ class tournament extends Component {
                 <option>100</option>
               </Input>
             </div>
-            <div style={{ float: "left", borderRadius: "50%" }}>
+            <div className="addbtn">
               <Button color="info" onClick={this.toggle} >Add</Button>
-              {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
             </div>
           </div>
           {data ?
             <Table hover>
               <thead className="thead-dark">
-                <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
+                <tr onClick={this.sortingdata.bind(Event)} className='header-center'>
                   <th>#</th>
-                  <th style={{ cursor: "pointer" }}>Banner</th>
-                  <th style={{ cursor: "pointer" }}>Tournament</th>
+                  <th className='header-pointer'>Banner</th>
+                  <th className='header-pointer'>Tournament</th>
                   <th>Teams</th>
                   <th>Action</th>
                 </tr>
@@ -284,15 +295,15 @@ class tournament extends Component {
               </tbody>
             </Table>
             : ""}
-          <ButtonGroup>
-            {this.state.pageno !== 0 ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev"  >Prev</Button>
-              : ""}
-            &nbsp;
-            {notNext >= this.state.parpageRecord ?
-              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
-              ""}
-          </ButtonGroup>
+            <ButtonGroup>
+              {this.state.pageno !== 0 ?
+                <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button>
+                : ""}
+              &nbsp;
+              {notNext >= this.state.parpageRecord ?
+                <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
+                ""}
+            </ButtonGroup>
         </div>
       </div>
     );
