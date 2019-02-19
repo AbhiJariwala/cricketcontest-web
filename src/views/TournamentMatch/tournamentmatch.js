@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Table, Button, Input, ButtonGroup } from 'reactstrap';
+import { PanelHeader } from "components";
+
 import * as TournamentMatchAction from '../../action/TournamentMatch';
 import * as TournamentAction from '../../action/Tournament';
 import AddTournamentMatch from './AddTournamentMatch/addTournamentMatch'
-import { PanelHeader } from "components";
 import path from '../../path';
 import Timer from './DisplayTimer/displaytimer';
 import WinnerModal from './winnerModal'
@@ -35,26 +36,21 @@ class TournamentMatch extends Component {
     this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
   }
 
-  sortingdata = (Event) => {
-    const sortingValueName = 'matchDate';
-    if (sortingValueName !== "Action") {
-      let sortingValue = "asc";
-      if (!this.state.sortingValueName) {
-        this.setState({ sortingValueName: sortingValueName })
+  sortingdata = () => {
+    let sortingValueName = 'matchDate';
+    let sortingValue = "asc";
+    if (this.state.sortingValueName === sortingValueName) {
+      if (this.state.sortingValue === "asc") {
+        sortingValue = "desc"
+      } else {
+        sortingValue = "asc"
       }
-      else if (this.state.sortingValueName === sortingValueName) {
-        if (this.state.sortingValue === "asc") {
-          sortingValue = "desc"
-        } else {
-          sortingValue = "asc"
-        }
-        this.setState({ sortingValueName: sortingValueName, sortingValue: sortingValue })
-      }
-      else {
-        this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
-        this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
-      }
+      this.setState({ sortingValueName: sortingValueName, sortingValue: sortingValue })
     }
+    else {
+      this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
+    }
+    this.props.action.TournamentMatchAction.SelectTournamentMatchAction(this.state.pageno, this.state.parpageRecord, sortingValueName, sortingValue);
   }
 
   parpage = (Event) => {
@@ -93,7 +89,6 @@ class TournamentMatch extends Component {
       let { pageno } = this.state;
       this.setState({ pageno: 0 });
       this.props.action.TournamentMatchAction.SelectTournamentMatchAction(pageno, this.state.parpageRecord, this.state.sortingValueName, this.state.sortingValue);
-
     }
   }
 
@@ -145,7 +140,7 @@ class TournamentMatch extends Component {
           var remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           return <tr key={key}>
             <td className='header-center'>{start++}</td>
-            <td>{data.Tournament.tournamentName}</td>
+            <td className='header-center'>{data.Tournament.tournamentName}</td>
             <td><img src={path + data.Team1[0].teamLogo} className='float-image-right' height="70px" width="70px" alt="TeamImage" />
               {
                 (data.winningTeamId === data.Team1[0].id) ? <img className='team-1-badge' src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
@@ -168,7 +163,7 @@ class TournamentMatch extends Component {
         })
       }
       else {
-        data = <tr><td colSpan="6" className='header-center'>No Match Exists</td></tr>
+        data = <tr><td colSpan="7" className='header-center'>No Match Exists</td></tr>
       }
 
     }
@@ -206,10 +201,7 @@ class TournamentMatch extends Component {
       else {
         data = <tr><td colSpan="6" className='header-center'>No Match Exists</td></tr>
       }
-
-
     }
-
 
     let tournamentD = "";
     if (this.props.Tournament.length > 0 && this.props.Tournament) {
@@ -228,7 +220,7 @@ class TournamentMatch extends Component {
               <WinnerModal isOpen={this.state.showWinner} data={this.state.data} toggleWinner={this.toggleWinner} />
             ) : null
           }
-          <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle}  nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
+          <AddTournamentMatch tournamentid={this.state.tournamentid} isOpen={this.state.modal} toggle={this.toggle} nrecord={this.state.parpageRecord} >  </AddTournamentMatch>
           <div className="headerdiv" >
             {
               (this.state.tournamentid === 'selected') ? (
@@ -251,7 +243,6 @@ class TournamentMatch extends Component {
             </div>
             <div className="addbtn">
               <Button color="info" onClick={this.toggle} >Add</Button>
-              {/* <img src={path+"add.png"} alt="plus" onClick={this.toggle} className="addimg"/> */}
             </div>
           </div>
           {data ?
@@ -259,12 +250,12 @@ class TournamentMatch extends Component {
               <thead className="thead-dark">
                 {
                   (this.state.tournamentid === 'selected') ? (
-                    <tr onClick={this.sortingdata.bind(Event)}>
-                      <th className='header-center header-pointer'>#</th>
-                      <th id={'tournamentId'} className='header-pointer'>Tournament</th>
-                      <th colSpan="3" className='header-pointer header-center' id={'tournamentId'} >Teams</th>
-                      <th className='header-pointer header-center'>Date</th>
-                      <th className='header-pointer header-center'>Remaining Time</th>
+                    <tr>
+                      <th className='header-center'>#</th>
+                      <th className=' header-center'>Tournament</th>
+                      <th colSpan="3" className='header-center' id={'tournamentId'} >Teams</th>
+                      <th className='header-pointer header-center' onClick={this.sortingdata.bind(this)}>Date</th>
+                      <th className='header-center'>Remaining Time</th>
                     </tr>
                   ) : (
                       <tr>
@@ -280,8 +271,7 @@ class TournamentMatch extends Component {
               <tbody>
                 {data}
               </tbody>
-            </Table>
-            : ""}
+            </Table>: ""}
           {
             (this.state.tournamentid === 'selected') ? (
               <ButtonGroup>
