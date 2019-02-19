@@ -24,7 +24,8 @@ class TournamenMatchPlayerScore extends Component {
             playes: [],
             teamName: "",
             score: [],
-            tournamentId: 0
+            tournamentId: 0,
+            matchId:''
         };
         this.toggleMatchPlayerScore = this.toggleMatchPlayerScore.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -59,11 +60,12 @@ class TournamenMatchPlayerScore extends Component {
         this.toggleModal();
     }
 
-    getTournamentMatchPlayerScoreByMatch(tournamentId, teamId) {
+    getTournamentMatchPlayerScoreByMatch(tournamentId, teamId,tournamentMatchId) {
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
         this.setState({
             visible: true,
-            tournamentId: tournamentId
+            tournamentId: tournamentId,
+            matchId:tournamentMatchId
         })
     }
 
@@ -81,11 +83,7 @@ class TournamenMatchPlayerScore extends Component {
         let tournamentMatch = [];
         let start = 0;
         const { score } = this.state;
-        let runs = 0, six = 0, wicket = 0, stumping = 0, four = 0, Catch = 0, points = 0;
         let matchscore = [];
-        let playerscore = [], pscore = [];
-        let player = [], ps = ""
-
         if (this.props.MatchPlayerScore.tournamentMatchPlayerScore.length > 0) {
             tournamentMatch = this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(matchScore => {
                 if (this.props.TournamentMatches.allmatchs.length > 0) {
@@ -98,7 +96,7 @@ class TournamenMatchPlayerScore extends Component {
                                     <td>{start++}</td>
                                     <td>{tournamentmatch.Tournament.tournamentName}</td>
                                     <td>
-                                        <Button style={{ width: "150px", float: "right" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id)} name="team1">
+                                        <Button style={{ width: "150px", float: "right" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id,matchScore.tournamentMatchId)} name="team1">
                                             {tournamentmatch.Team1[0].teamName}
                                         </Button>
                                     </td>
@@ -106,7 +104,7 @@ class TournamenMatchPlayerScore extends Component {
                                         <b>VS</b>
                                     </td>
                                     <td>
-                                        <Button style={{ width: "150px", float: "left" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id)} name="team2">
+                                        <Button style={{ width: "150px", float: "left" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id,matchScore.tournamentMatchId)} name="team2">
                                             {tournamentmatch.Team2[0].teamName}
                                         </Button>
                                     </td>
@@ -123,85 +121,6 @@ class TournamenMatchPlayerScore extends Component {
         else {
             tournamentMatch = <tr><th>No data available</th></tr>;
         }
-        if (this.props.players && this.props.players.length > 0) {
-            player = this.props.players.map((player) => {
-                if (player.Players) {
-                    return (player.Players.map((p) => {
-                        runs = 0
-                        six = 0
-                        wicket = 0
-                        stumping = 0
-                        four = 0
-                        Catch = 0
-                        points = 0
-                        if (p) {
-                            return (<Collapse accordion key={p.id} onChange={this.CollapsePlayerHandler.bind(this, p.id)}>
-                                <Panel header={p.firstName + '  ' + p.lastName} key={p.id}>
-                                    {(score.length > 0) ? score.map((data, i) => {
-                                        if (data !== '') {
-                                            runs += data.run
-                                            six += data.six
-                                            four += data.four
-                                            wicket += data.wicket
-                                            stumping += data.stumping
-                                            Catch += data.catch
-                                            points += data.score
-                                            if (p.id === data.playerId && this.state.tournamentId === data.tournamentId) {
-                                                ps = <Table key={i}>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th style={{ textAlign: "center" }}>Runs</th>
-                                                            <td>{runs}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style={{ textAlign: "center" }}><b>Six  </b></th>
-                                                            <td>{six}</td>
-                                                        </tr>
-                                                        <tr >
-                                                            <th style={{ textAlign: "center" }}><b>Four  </b></th>
-                                                            <td>{four}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style={{ textAlign: "center" }}><b>Catch  </b></th>
-                                                            <td>{Catch}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style={{ textAlign: "center" }}><b>Stumping  </b></th>
-                                                            <td>{stumping}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style={{ textAlign: "center" }}><b>Wicket  </b></th>
-                                                            <td>{wicket}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th style={{ textAlign: "center" }}><b>Score </b></th>
-                                                            <td><Badge color="success"><h4 style={{ width: "40px" }}>{points}</h4></Badge></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </Table>
-                                                pscore[data.playerId] = ps
-                                                if (!playerscore.includes(data.playerId)) {
-                                                    playerscore.push(data.playerId)
-                                                    return pscore;
-                                                }
-                                                else {
-                                                    return true
-                                                }
-
-                                            }
-                                            return pscore;
-                                        }
-                                        return true;
-                                    }) : <p>Player score not available</p>}
-                                </Panel>
-                            </Collapse>)
-                        }
-                        return true;
-                    }))
-                }
-                return true;
-            })
-        }
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -210,7 +129,59 @@ class TournamenMatchPlayerScore extends Component {
                         visible={this.state.visible}
                         onCancel={this.toggleMatchPlayerScore}
                         footer={null}>
-                        {player}
+                        {(this.props.players && this.props.players.length > 0) ?
+                            this.props.players.map((player) => {
+                                if (player.Players) {
+                                    return (player.Players.map((p) => {
+                                        if (p)
+                                            return (<Collapse accordion key={p.id} onChange={this.CollapsePlayerHandler.bind(this, p.id)}>
+                                                <Panel header={p.firstName + '  ' + p.lastName} key={p.id}>
+                                                    {(score.length > 0) ? score.map((data, i) => {
+                                                        return (data !== '') ? (
+                                                            (p.id === data.playerId && this.state.tournamentId === data.tournamentId && this.state.matchId === data.tournamentMatchId) ?(
+                                                            <Table key={i}>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th style={{ textAlign: "center" }}>Runs</th>
+                                                                        <td>{data.run}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style={{ textAlign: "center" }}><b>Six  </b></th>
+                                                                        <td>{data.six}</td>
+                                                                    </tr>
+                                                                    <tr >
+                                                                        <th style={{ textAlign: "center" }}><b>Four  </b></th>
+                                                                        <td>{data.four}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style={{ textAlign: "center" }}><b>Catch  </b></th>
+                                                                        <td>{data.catch}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style={{ textAlign: "center" }}><b>Stumping  </b></th>
+                                                                        <td>{data.stumping}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style={{ textAlign: "center" }}><b>Wicket  </b></th>
+                                                                        <td>{data.wicket}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style={{ textAlign: "center" }}><b>Score </b></th>
+                                                                        <td><Badge color="success"><h4 style={{ width: "40px" }}>{data.score}</h4></Badge></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </Table>
+                                                            ):null
+                                                        ) : null
+                                                    }) : <p>Player score not available</p>}
+                                                </Panel>
+                                            </Collapse>)
+                                        return true;
+                                    }))
+                                }
+                                return true;
+                            }) : null
+                        }
                     </AntModal>
                     <div style={{ marginTop: "50px" }}>
                         <div style={{ float: "left" }}>
