@@ -141,13 +141,13 @@ class TournamentMatch extends Component {
           return <tr key={key}>
             <td className='header-center'>{start++}</td>
             <td className='header-center'>{data.Tournament.tournamentName}</td>
-            <td><img src={path + data.Team1[0].teamLogo} className='float-right' height="70px" width="70px" alt="TeamImage" />
+            <td><img src={path + "thumbnail/" + data.Team1[0].teamLogo} className='float-right' alt="TeamImage" />
               {
-                (data.winningTeamId === data.Team1[0].id) ? <img className='team-1-badge' src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
+                (data.winningTeamId === data.Team1[0].id) ? <img className='team-1-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
             </td>
             <td className='header-center'>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
-            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
+            <td><img src={path + "thumbnail/" + data.Team2[0].teamLogo} alt="TeamImage" />
               {
                 (data.winningTeamId === data.Team2[0].id) ? <img className='team-2-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
@@ -177,15 +177,15 @@ class TournamentMatch extends Component {
           remainday = Math.round((d - cdate) / (1000 * 60 * 60 * 24));
           return <tr key={key}>
             <td className='header-center'>{key + 1}</td>
-            <td><img src={path + data.Team1[0].teamLogo} className='float-right' height="70px" width="70px" alt="TeamImage" />
+            <td><img src={path + "thumbnail/" + data.Team1[0].teamLogo} className='float-right' alt="TeamImage" />
               {
-                (data.winningTeamId === data.Team1[0].id) ? <img className='team-one-badge' src={path + 'winbadge.png'} height="50px" width="30px" alt="" /> : null
+                (data.winningTeamId === data.Team1[0].id) ? <img className='team-1-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
             </td>
             <td className='header-center'>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
-            <td><img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />
+            <td><img src={path + "thumbnail/" + data.Team2[0].teamLogo} alt="TeamImage" />
               {
-                (data.winningTeamId === data.Team2[0].id) ? <img className='team-two-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
+                (data.winningTeamId === data.Team2[0].id) ? <img className='team-2-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
             </td>
             <td className='header-center'>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
@@ -271,7 +271,7 @@ class TournamentMatch extends Component {
               <tbody>
                 {data}
               </tbody>
-            </Table>: ""}
+            </Table> : ""}
           {
             (this.state.tournamentid === 'selected') ? (
               <ButtonGroup>

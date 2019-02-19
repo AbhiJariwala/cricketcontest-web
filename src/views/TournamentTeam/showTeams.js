@@ -28,7 +28,8 @@ class ShowTeams extends Component {
       indeterminate: true,
       checkAll: false,
       tournamentId: "",
-      callNotnext: 0
+      callNotnext: 0,
+      checked: false
     }
     this.toggle = this.toggle.bind(this);
   }
@@ -48,11 +49,21 @@ class ShowTeams extends Component {
     this.props.deleteClick(d, d2);
   }
 
-  toggle(id) {
+  toggle(id, checkAll) {
+    let { checked } = this.state
     this.setState({
       addModal: !this.state.addModal,
-      Editdataid: null
+      Editdataid: null,
     });
+    if (!checkAll === true) {
+      let teams = this.props.tournament.Teams.map(team => {
+        return team.id
+      });
+      this.setState({
+        team: checked ? teams : [], indeterminate: false,
+        checkAll: false
+      })
+    }
     if (id === "1") {
       this.props.history.push('/tournament');
     }
@@ -60,15 +71,19 @@ class ShowTeams extends Component {
       this.props.toggleTeam();
     }
     this.props.toggleTeam(); this.props.toggleTeam();
+
   }
 
   Change = (e) => {
+    debugger;
     this.setState({ team: e });
     e.length === this.props.tournament.Teams.length ? this.setState({ checkAll: true, indeterminate: false }) : this.setState({ checkAll: false, indeterminate: e.length === 0 ? false : true })
 
   }
 
   onCheckAllChange = (e) => {
+    debugger;
+    //let {checked} = this.state;
     let teams = this.props.tournament.Teams.map(team => {
       return team.id
     });
@@ -102,18 +117,27 @@ class ShowTeams extends Component {
     if (teams && teams.length > 0) {
       teamNames = teams.map((team, i) => {
         return <Row key={i} className="divTeam">
-                  <Col span={23}>
-                    <Checkbox value={team.id}>
-                      {team.teamName}
-                    </Checkbox>
-                  </Col>
-                </Row>
-            })
+          <Col span={23}>
+            <Checkbox value={team.id}>
+              {team.teamName}
+            </Checkbox>
+          </Col>
+        </Row>
+      })
     }
 
     return (
       <div>
-        <AddTournamentTeam isOpen={this.state.addModal} toggle={this.toggle} tournamentid={this.state.tournamentId} tournament={this.props.tournament} refresh={this.props.refresh} teamsdata={this.props.teamsdata} />
+        <AddTournamentTeam
+          isOpen={this.state.addModal}
+          toggle={this.toggle}
+          tournamentid={this.state.tournamentId}
+          tournament={this.props.tournament}
+          refresh={this.props.refresh}
+          teamsdata={this.props.teamsdata}
+          checkAll={this.state.checkAll}
+        />
+
         <Modal title={tournament.tournamentName}
           visible={this.props.visible}
           onCancel={this.closeModal}
@@ -122,9 +146,9 @@ class ShowTeams extends Component {
 
             {!teams || teams.length === 0 ?
               <div>
-                
+
                 <div>
-                <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
+                  <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
                 </div>
                 <div className='float-right'>
                   <div onClick={this.toggle}><ReactButton color="info" >Add Team</ReactButton></div>
@@ -153,7 +177,7 @@ class ShowTeams extends Component {
               type="danger">
               Delete
                 <span className='pl5'>
-                <Icon type='delete' style={{verticalAlign:"text-bottom"}}/>
+                <Icon type='delete' style={{ verticalAlign: "text-bottom" }} />
               </span>
             </Button>
           </Popconfirm>
