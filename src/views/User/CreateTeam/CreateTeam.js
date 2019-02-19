@@ -25,11 +25,6 @@ class CreateTeam extends Component {
     componentWillMount() {
         this.props.action.Tournament.FetchSingleTournamentAction(this.props.match.params.id);
     }
-
-    componentDidMount = () => {
-        this.getTournamentMatch();
-    }
-
     addplayerteam = (playerId) => {
         if (this.state.Myteam.length !== 11) {
             teamId.push(playerId);
