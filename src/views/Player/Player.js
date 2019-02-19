@@ -26,8 +26,8 @@ class Player extends Component {
       },
       pageRecord: 0,
       noOfRecords: 5,
-      sortFiled: 'id',
-      sortType: 'DESC'
+      sortFiled: 'firstName',
+      sortType: 'ASC'
     };
     this.toggle = this.toggle.bind(this);
   }

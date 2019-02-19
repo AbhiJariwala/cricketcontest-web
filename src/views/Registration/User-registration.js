@@ -92,7 +92,7 @@ class UserRegistration extends Component {
         this.setState({ [name]: value }, () => { this.validateField(name, value) })
     }
 
-    btnRegisterClick() {
+    btnRegisterClick() {        
         if (this.state.confirmPassword === "")
             this.setState({
                 fieldsErrors: {
@@ -107,6 +107,7 @@ class UserRegistration extends Component {
                     password: "* Password Required"
                 }
             })
+
         if (this.state.email === "")
             this.setState({
                 fieldsErrors: {
@@ -128,8 +129,19 @@ class UserRegistration extends Component {
                     firstName: "* First Name Required"
                 }
             })
-        if (this.state.formValid) {
-            this.props.action.register.RegisterUser(this.state);
+        let abc = true;
+        if (parseInt(this.state.password, 10) !== parseInt(this.state.confirmPassword, 10)) {
+            abc = false;
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    password: "* Passwords are not same"
+                }
+            })
+        }
+
+        if (this.state.formValid && abc) {          
+           this.props.action.register.RegisterUser(this.state);
         }
     }
 
