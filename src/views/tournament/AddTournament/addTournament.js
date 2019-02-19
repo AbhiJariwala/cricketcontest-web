@@ -236,7 +236,7 @@ class AddTournament extends Component {
                 </FormGroup>
                 <FormGroup>
                   <Label for="tournamentDescription">Tournament Description</Label>
-                  <Input type="textarea" name="tournamentDescription" id="tournamentDescription"
+                  <Input type="text" name="tournamentDescription" id="tournamentDescription"
                     placeholder="Description"
                     defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""}
                     onChange={this.inputChangeHandler.bind(this)}

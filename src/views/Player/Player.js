@@ -9,6 +9,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import * as PlayerAction from '../../action/Player';
 import AddPlayer from '../Player/AddPlayer/AddPlayer';
 import path from '../../path';
+import '../view.css';
 
 class Player extends Component {
   constructor(props) {
@@ -175,7 +176,7 @@ class Player extends Component {
         <div className="content">
           <AddPlayer noOfRecords={this.state.noOfRecords} isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state} nrecord={this.state.noOfRecords}> </AddPlayer>
           <div style={{ marginTop: "50px" }}>
-            <div style={{ float: "right" }}>
+            <div className='pagenumber'>
               Show entries
                 <Input type="select" name="select" onChange={this.showEntriesChanged.bind(this)}>
                 <option value="5">5</option>

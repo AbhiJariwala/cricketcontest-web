@@ -10,7 +10,7 @@ import path from '../../path';
 import './TeamPlayer.css'
 import * as teamPlayerAction from '../../action/teamPlayer';
 import AddTeamPlayer from './AddTeamPlayer/AddTeamPlayer';
-
+import '../view.css';
 const Panel = Collapse.Panel;
 let notNext = 0;
 
@@ -194,7 +194,7 @@ class TeamPlayer extends Component {
                 <div className="content">
                     {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null}
                     <div style={{ marginTop: "50px" }}>
-                        <div style={{ float: "right" }}>
+                        <div className='pagenumber'>
                             Show entries
                             <Input type="select" name="select" id="exampleSelect" onChange={this.perPage.bind(Event)}>
                                 <option>5</option>

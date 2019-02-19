@@ -8,6 +8,7 @@ import { PanelHeader } from "components";
 import path from '../../path';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import * as TeamAction from '../../action/Team';
+import '../view.css';
 
 class Team extends Component {
   constructor(props) {
@@ -146,7 +147,7 @@ class Team extends Component {
         <div className="content">
           <AddTeam isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTeam>
           <div style={{ marginTop: "50px" }}>
-            <div style={{ float: "right" }}>
+            <div className='pagenumber'>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
                 <option>5</option>
                 <option>10</option>

@@ -35,12 +35,6 @@ class Players extends React.Component {
     });
   }
 
-  handleOk = (e) => {
-    this.setState({
-      visible: false,
-    });
-  }
-
   handleCancel = (e) => {
     this.setState({
       visible: false,
@@ -67,7 +61,6 @@ class Players extends React.Component {
       <UserPanel></UserPanel>
       <ViewPlayerScore
         visible={this.state.visible}
-        handleOk={this.handleOk}
         onCancel={this.handleCancel}
         binddata={this.state.scoredata} />
       <div className="container" style={{ paddingTop: "70px" }}>
