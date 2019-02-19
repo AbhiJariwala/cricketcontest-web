@@ -3,15 +3,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Table, Button, Input, ButtonGroup } from 'reactstrap';
 import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css'
+import { PanelHeader } from "components";
+
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import * as PlayerAction from '../../action/Player';
 import AddPlayer from '../Player/AddPlayer/AddPlayer';
-import { PanelHeader } from "components";
 import path from '../../path';
 
-
 class Player extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +63,6 @@ class Player extends Component {
     this.getPlayerData(pageRecord, noOfRecords, this.state.sortFiled, this.state.sortType);
   }
 
-
   btnPageChangeClick(e) {
     let pageRecord = 0;
     let noOfRecords = parseInt(this.state.noOfRecords, 10);
@@ -83,7 +81,6 @@ class Player extends Component {
   sortingChangedHandler(e) {
     let sortingField = e.target.childNodes[0].data;
     let sortType = "ASC";
-
     if (sortingField !== "Avtar" && sortingField !== "Action" && sortingField !== "Description") {
       if (sortingField === "Age") sortingField = "dob"
       if (sortingField === "Name") sortingField = "firstName";
@@ -137,8 +134,7 @@ class Player extends Component {
 
   btnDeleteClick(id) {
     confirmAlert({
-      title: 'Delete player',
-      message: 'Are you sure you want to delete player?.',
+      message: 'Are you sure you want to delete this player?.',
       buttons: [{
         label: 'Yes',
         onClick: () => {
@@ -191,7 +187,6 @@ class Player extends Component {
             </div>
             <div style={{ float: "left" }}>
               <Button color="info" onClick={this.toggle} >Add</Button>
-              {/* <img src={path + "thumbnail/" + "addData.png"} alt="plus" onClick={this.toggle} ></img> */}
             </div>
           </div>
           <Table hover>
@@ -208,7 +203,6 @@ class Player extends Component {
             </thead>
             <tbody>
               {player}
-
             </tbody>
           </Table>
           <ButtonGroup>

@@ -32,36 +32,36 @@ class AddMatchPlayerScore extends Component {
     }
     tournamentNameChangedHandler(tournament, e) {
         let t = [];
-        // console.log(tournament)  
         document.getElementById("teamPlayer").hidden = true
         document.getElementById("tournamentMatch").hidden = false;
         let tournamentId = parseInt(e.target.value, 10);
-        // console.log(tournamentId)
         let tournamentMatchTeam = "";
         if (tournament) {
             tournamentMatchTeam = tournament.map(tournament => {
-                if (tournament.tournamentId !== tournamentId) {
-                    if (this.props.MatchPlayerScore.tournamentMatchPlayerScore.length > 0) {
-                        return this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(scoreMatches => {
-                            if (scoreMatches.tournamentMatchId && tournament) {
-                                if (scoreMatches.tournamentMatchId !== parseInt(tournament.id, 10)) {
-                                    if (!t.includes(tournament.id)) {
-                                        t.push(tournament.id)
-                                        return (<option value={tournament.id} key={tournament.id} >{tournament.Team1[0].teamName + '  VS  ' + tournament.Team2[0].teamName + " (" + tournament.matchDate.substr(0, 10) + ")"}</option>)
+                if (tournament) {
+                    if (tournament.tournamentId !== tournamentId) {
+                        if (this.props.MatchPlayerScore.tournamentMatchPlayerScore.length > 0) {
+                            return this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(scoreMatches => {
+                                if (scoreMatches.tournamentMatchId && tournament) {
+                                    if (scoreMatches.tournamentMatchId !== parseInt(tournament.id, 10)) {
+                                        if (!t.includes(tournament.id)) {
+                                            t.push(tournament.id)
+                                            return (<option value={tournament.id} key={tournament.id} >{tournament.Team1[0].teamName + '  VS  ' + tournament.Team2[0].teamName + " (" + tournament.matchDate.substr(0, 10) + ")"}</option>)
+                                        }
                                     }
                                 }
-                            }
-                            return true;
-                        })
+                                return true;
+                            })
+                        }
+                        return true
                     }
-                    return true
+                    else {
+                        return (<option value={tournament.id} key={tournament.id} >{tournament.Team1[0].teamName + '  VS  ' + tournament.Team2[0].teamName + " (" + tournament.matchDate.substr(0, 10) + ")"}</option>)
+                    }
                 }
-                else {
-                    return (<option value={tournament.id} key={tournament.id} >{tournament.Team1[0].teamName + '  VS  ' + tournament.Team2[0].teamName + " (" + tournament.matchDate.substr(0, 10) + ")"}</option>)
-                }
+                return true
             })
         }
-
         this.setState({
             tournamentMatchTeam: tournamentMatchTeam,
             tournamentId: tournamentId,
@@ -74,11 +74,14 @@ class AddMatchPlayerScore extends Component {
         let matchId = parseInt(e.target.value, 10);
         let teams = [];
         tournament.map(tournament => {
-            return (tournament.id === matchId) ?
-                (teams.push((<option value={tournament.Team1[0].id} key={tournament.Team1[0].id} >{tournament.Team1[0].teamName}</option>),
-                    teams.push(<option value={tournament.Team2[0].id} key={tournament.Team2[0].id}>{tournament.Team2[0].teamName}</option>))
-                )
-                : null
+            if (tournament) {
+                return (tournament.id === matchId) ?
+                    (teams.push((<option value={tournament.Team1[0].id} key={tournament.Team1[0].id} >{tournament.Team1[0].teamName}</option>),
+                        teams.push(<option value={tournament.Team2[0].id} key={tournament.Team2[0].id}>{tournament.Team2[0].teamName}</option>))
+                    )
+                    : null
+            }
+            return true
         })
         this.setState({
             teams: teams,
@@ -86,6 +89,7 @@ class AddMatchPlayerScore extends Component {
             isError: ""
         })
     }
+
     teamChangeHandler(e) {
         document.getElementById("teamPlayer").hidden = false
         let teamId = e.target.value;
@@ -102,6 +106,7 @@ class AddMatchPlayerScore extends Component {
         })
         this.props.action.MatchPlayerScore.getPlayers(this.state.tournamentId, teamId);
     }
+
     inputChangeHandler(playerId, e) {
         this.setState({
             isError: "",
@@ -117,6 +122,7 @@ class AddMatchPlayerScore extends Component {
             }
         })
     }
+
     addTournamentMatchPlayerScore() {
         let { tournamentId, matchId, playerScore } = this.state;
         if (tournamentId === 0 || matchId === 0 || Object.keys(playerScore).length === 0) {
@@ -262,7 +268,7 @@ class AddMatchPlayerScore extends Component {
                         return <option value={tournament.Tournament.id} key={tournament.Tournament.id}>{tournament.Tournament.tournamentName}</option>
                     }
                 }
-                return true;
+                return null;
             })
         }
         let player = "";

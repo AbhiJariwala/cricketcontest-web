@@ -4,10 +4,10 @@ import { bindActionCreators } from "redux";
 import ImageUploader from 'react-images-upload'
 import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 
-import * as TeamAction from '../../../action/Team';
 import path from '../../../path';
-const deleteIcon = require('../../../Image/delete.jpg');
+import * as TeamAction from '../../../action/Team';
 
+const deleteIcon = require('../../../Image/delete.jpg');
 
 class AddTeam extends Component {
   state = {
@@ -19,12 +19,15 @@ class AddTeam extends Component {
     fieldsErrors: { teamName: '' },
     fieldsValid: { teamName: false },
     submitted: false,
-    alert_msg: '', displayImage: ""
+    alert_msg: '',
+    displayImage: ""
   }
+
   componentWillMount = () => {
     const userId = localStorage.getItem("userId");
     this.setState({ createdBy: userId, updatedBy: userId });
   }
+
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.dataid.length !== 0 && nextProps.dataid !== null && !this.state.notcallnext) {
       this.setState({
@@ -36,12 +39,14 @@ class AddTeam extends Component {
       })
     }
   }
+
   inputChangeHandler(e) {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value }, () => { this.validateField(name, value) })
     this.setState({ submitted: false });
   }
+
   imageChangedHandler(image) {
     var reader = new FileReader();
     reader.readAsDataURL(image[0]);
@@ -52,9 +57,8 @@ class AddTeam extends Component {
         displayImage: reader.result
       })
     };
-
-
   }
+
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.fieldsErrors;
     let fieldValidation = this.state.fieldsValid;
@@ -73,13 +77,10 @@ class AddTeam extends Component {
   }
 
   UpdateDataData = (Event) => {
-    
     let formdata = new FormData();
     formdata.append("id", this.state.id);
     formdata.append("teamName", this.state.teamName);
-
     let image;
-
     if (this.props.dataid.teamLogo !== "defaultTeamLogo.png" && this.state.imagebanner === false) {
       image = this.props.dataid.teamLogo
       formdata.append("teamLogo", "defaultTeamLogo.png");
@@ -91,14 +92,12 @@ class AddTeam extends Component {
       image = this.props.dataid.teamLogo
       formdata.append("teamLogo", this.state.teamLogo);
     }
-
     formdata.append("updatedBy", parseInt(this.state.updatedBy, 10));
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-
     const data = {
       "teamName": this.state.teamName,
       "teamLogo": image,
@@ -110,10 +109,12 @@ class AddTeam extends Component {
     this.setState({ notcallnext: 0, teamLogo: [], teamName: "", id: "" })
     this.props.toggle(Event);
   }
+
   closeModal = () => {
     this.setState({ submitted: false });
     this.props.toggle(Event);
   }
+
   submitted = () => {
     this.setState({ submitted: true });
     this.AddDataData(true);
@@ -131,18 +132,20 @@ class AddTeam extends Component {
         headers: {
           'content-type': 'multipart/form-data'
         }
-
       }
-      this.props.action.Team.AddTeamAction(this.props.nrecord,formdata, config);
+      this.props.action.Team.AddTeamAction(this.props.nrecord, formdata, config);
       this.closeModal();
+      this.setState({ displayImage: "" })
     }
   }
+
   cancelImageClick = () => {
-    if(this.props.dataid){
+    if (this.props.dataid) {
       this.props.dataid.imagebanner = false
     }
-    this.setState({ imagebanner: false,displayImage:"",teamLogo:"" })
+    this.setState({ imagebanner: false, displayImage: "", teamLogo: "" })
   }
+
   render() {
     let image;
     let imageuploader = <div><ImageUploader withIcon={true}
@@ -154,7 +157,6 @@ class AddTeam extends Component {
       singleImage={false}
       accept={"image/*"} />
       <center><span style={{ color: "red" }}>{this.state.fieldsErrors.BannerImage}</span></center></div>
-
     if (this.props.dataid !== null) {
       if (this.props.dataid.teamLogo === 'defaultTeamLogo.png') {
         if (!this.state.displayImage) {
@@ -216,8 +218,8 @@ class AddTeam extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
 
+const mapStateToProps = (state) => {
   return {
     ShowTeam: state.Team.TeamData,
     auth: state.auth
@@ -229,4 +231,5 @@ const mapDispatchToProps = dispatch => ({
     Team: bindActionCreators(TeamAction, dispatch)
   }
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(AddTeam)

@@ -3,15 +3,17 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Table, Button, Badge } from 'reactstrap';
 import { Modal as AntModal, Collapse } from 'antd';
-import 'antd/dist/antd.css';
-import * as  MatchPlayerScore from '../../action/matchPlayerScore'
 import { PanelHeader } from "components";
-import * as TournamentMatch from '../../action/TournamentMatch'
-import AddMatchPlayerScore from './AddTournamentMatchPlayerScore/AddTournamentMatchPlayerScore'
 
-import './TournamentMatchPlayer.css'
+import * as TournamentMatch from '../../action/TournamentMatch';
+import * as  MatchPlayerScore from '../../action/matchPlayerScore';
+import AddMatchPlayerScore from './AddTournamentMatchPlayerScore/AddTournamentMatchPlayerScore';
+
+import 'antd/dist/antd.css';
+import './TournamentMatchPlayer.css';
 
 const Panel = Collapse.Panel;
+
 class TournamenMatchPlayerScore extends Component {
     constructor(props) {
         super(props);
@@ -26,35 +28,43 @@ class TournamenMatchPlayerScore extends Component {
         this.toggleMatchPlayerScore = this.toggleMatchPlayerScore.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
     }
+
     componentDidMount() {
         this.getTournamentMatch();
         this.getMatchPlayerScore(0, 100, "id", "desc");
     }
+
     getTournamentMatch() {
         this.props.action.TournamentMatches.SelectTournamentMatchAction(0, 100, "id", "desc");
     }
+
     getMatchPlayerScore(offset, perPageRecord, fieldName, order) {
         this.props.action.MatchPlayerScore.getTournamentMatchPlayerScore(offset, perPageRecord, fieldName, order);
     }
+
     toggleMatchPlayerScore() {
         this.setState({
             visible: !this.state.visible
         });
     }
+
     toggleModal() {
         this.setState({
             showModal: !this.state.showModal
         })
     }
+
     btnAddClick() {
         this.toggleModal();
     }
+
     getTournamentMatchPlayerScoreByMatch(tournamentId, teamId) {
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
         this.setState({
             visible: true
         })
     }
+
     CollapsePlayerHandler(playerId) {
         let Score = "";
         if (this.props.MatchPlayerScore.tournamentMatchPlayerScore) {
@@ -66,12 +76,10 @@ class TournamenMatchPlayerScore extends Component {
     }
 
     render() {
-        let tournamentMatch = '';
+        let tournamentMatch = [];
         let start = 0;
         const { score } = this.state;
         let matchscore = [];
-
-
         if (this.props.MatchPlayerScore.tournamentMatchPlayerScore.length > 0) {
             tournamentMatch = this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(matchScore => {
                 if (this.props.TournamentMatches.allmatchs.length > 0) {
@@ -107,7 +115,7 @@ class TournamenMatchPlayerScore extends Component {
 
         }
         else {
-            tournamentMatch = [];
+            tournamentMatch = <tr><th>No data available</th></tr>;
         }
         return (
             <div>
@@ -180,12 +188,12 @@ class TournamenMatchPlayerScore extends Component {
                         <thead className="thead-dark">
                             <tr style={{ textAlign: "center" }}>
                                 <th>#</th>
-                                <th style={{ cursor: "pointer" }}>Tournament</th>
-                                <th style={{ cursor: "pointer" }} colSpan="3">Match</th>                                
+                                <th>Tournament</th>
+                                <th colSpan="3">Match</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {(tournamentMatch !== "") ? tournamentMatch : <tr><th>Tournament match is not available</th></tr>}
+                            {tournamentMatch}
                         </tbody>
                     </Table>
                 </div>
@@ -193,6 +201,7 @@ class TournamenMatchPlayerScore extends Component {
         );
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         MatchPlayerScore: state.MatchPlayerScore,

@@ -9,7 +9,6 @@ import * as TotalTournament from '../../action/Tournament';
 import * as TotalTeam from '../../action/Team';
 import * as TotalPlayer from '../../action/Player';
 import * as TotalUser from '../../action/userAction';
-import * as MatchAction from '../../action/TournamentMatch';
 
 class Dashboard extends React.Component {
 
@@ -18,11 +17,9 @@ class Dashboard extends React.Component {
     this.props.action.getTotalTeam.selectTeamAction(0, 500, "desc", "id");
     this.props.action.getTotalPlayer.getPlayer(0, 500, "id", "desc");
     this.props.action.getTotalUser.getUser();
-    this.props.action.getMatch.SelectTournamentMatchAction(0, 500, "id", "asc");
   }
 
   render() {
-    // let tournaments = "", teams = "", players = "", users = "", matchTeam1 = "", matchTeam2 = "", team1Image = "", team2Image = "", matchTournamentName = "";
     let tournaments = "", teams = "", players = "", users = "";
     if (this.props.tournaments) {
       tournaments = this.props.tournaments.length;
@@ -36,7 +33,7 @@ class Dashboard extends React.Component {
     if (this.props.users) {
       users = this.props.users.length;
     }
-    
+
     return (
       <div>
         <PanelHeader size="lg" content={<img alt="Cricket Contest" style={{ width: '100%', height: 'fit-content' }} src={path + "Cricket-DashBoard.jpg"}></img>} />
@@ -56,12 +53,10 @@ class Dashboard extends React.Component {
               <CardFooter>
                 <hr />
                 <Stats>
-                  {[
-                    {
-                      i: "now-ui-icons sport_trophy",
-                      t: "Total Tournaments"
-                    }
-                  ]}
+                  {[{
+                    i: "now-ui-icons sport_trophy",
+                    t: "Total Tournaments"
+                  }]}
                 </Stats>
               </CardFooter>
             </Card>
@@ -81,12 +76,10 @@ class Dashboard extends React.Component {
               <CardFooter>
                 <hr />
                 <Stats>
-                  {[
-                    {
-                      i: "now-ui-icons users_circle-08",
-                      t: "Total Teams"
-                    }
-                  ]}
+                  {[{
+                    i: "now-ui-icons users_circle-08",
+                    t: "Total Teams"
+                  }]}
                 </Stats>
               </CardFooter>
             </Card>
@@ -106,12 +99,10 @@ class Dashboard extends React.Component {
               <CardFooter>
                 <hr />
                 <Stats>
-                  {[
-                    {
-                      i: "now-ui-icons sport_user-run ",
-                      t: "Total Players"
-                    }
-                  ]}
+                  {[{
+                    i: "now-ui-icons sport_user-run ",
+                    t: "Total Players"
+                  }]}
                 </Stats>
               </CardFooter>
             </Card>
@@ -131,12 +122,10 @@ class Dashboard extends React.Component {
               <CardFooter>
                 <hr />
                 <Stats>
-                  {[
-                    {
-                      i: "now-ui-icons users_single-02",
-                      t: "Total Users"
-                    }
-                  ]}
+                  {[{
+                    i: "now-ui-icons users_single-02",
+                    t: "Total Users"
+                  }]}
                 </Stats>
               </CardFooter>
             </Card>
@@ -147,14 +136,12 @@ class Dashboard extends React.Component {
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
     tournaments: state.Tournament.TournamentData,
     teams: state.Team.TeamData,
     players: state.Player.PlayerData,
-    users: state.User.users,
-    allmatchs: state.TournamentMatchs.allmatchs
+    users: state.User.users
   }
 }
 
@@ -163,9 +150,8 @@ const mapDispatchToProps = (dispatch) => ({
     getTotalTournament: bindActionCreators(TotalTournament, dispatch),
     getTotalTeam: bindActionCreators(TotalTeam, dispatch),
     getTotalPlayer: bindActionCreators(TotalPlayer, dispatch),
-    getTotalUser: bindActionCreators(TotalUser, dispatch),
-    getMatch: bindActionCreators(MatchAction, dispatch)
+    getTotalUser: bindActionCreators(TotalUser, dispatch)
   }
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

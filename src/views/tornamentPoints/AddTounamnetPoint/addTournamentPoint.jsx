@@ -387,7 +387,7 @@ class ModalExample extends React.Component {
                         ? <div>
                             <img onClick={() => this.addBox("Runs")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.runBox >= 2
-                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={Path + "minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -411,7 +411,7 @@ class ModalExample extends React.Component {
                         ? <div >
                             <img onClick={() => this.addBox("Six")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.sixBox >= 2
-                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -435,7 +435,7 @@ class ModalExample extends React.Component {
                         ? <div >
                             <img onClick={() => this.addBox("Four")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.fourBox >= 2
-                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -459,7 +459,7 @@ class ModalExample extends React.Component {
                         ? <div >
                             <img onClick={() => this.addBox("Wicket")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.wicketBox >= 2
-                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -483,7 +483,7 @@ class ModalExample extends React.Component {
                         ? <div >
                             <img onClick={() => this.addBox("Stumping")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.stumpingBox >= 2
-                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}
@@ -507,7 +507,7 @@ class ModalExample extends React.Component {
                         ? <div >
                             <img onClick={() => this.addBox("Catch")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
                             {this.state.catchBox >= 2
-                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src={Path + "/minusPoints.png"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
                                 : ""}
                         </div>
                         : ""}

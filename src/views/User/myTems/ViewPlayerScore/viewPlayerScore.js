@@ -1,19 +1,22 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { Table } from "reactstrap";
-import * as  matchPlayerScoreAction from '../../../../action/matchPlayerScore'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
+import * as  matchPlayerScoreAction from '../../../../action/matchPlayerScore';
+
 class viewplayerscore extends React.Component {
   componentWillMount = () => {
     this.getTournamentMatch();
   }
+
   getTournamentMatch() {
     this.props.action.matchPlayerScore.getTournamentMatchPlayerScore(0, 100, "id", "desc");
   }
-  render() {
-    let data
 
+  render() {
+    let data;
     if (this.props.binddata.length !== 0) {
       data = this.props.matchPlayerScores.map((data, key) => {
         if (data.playerId === this.props.binddata.playerId && this.props.binddata.tournamentId === data.tournamentId) {
@@ -24,17 +27,14 @@ class viewplayerscore extends React.Component {
                   <th style={{ textAlign: "center" }}>Runs</th>
                   <th>{data.run}</th>
                 </tr>
-
                 <tr textAlign="center">
                   <th style={{ textAlign: "center" }}>six</th>
                   <td>{data.six}</td>
                 </tr>
-
                 <tr>
                   <th style={{ textAlign: "center" }}  >Four</th>
                   <td>{data.four}</td>
                 </tr>
-
                 <tr>
                   <th style={{ textAlign: "center" }}>wicket</th>
                   <td>{data.wicket}</td>
@@ -55,14 +55,11 @@ class viewplayerscore extends React.Component {
                 </tr>
               </tfoot>
             </Table>
-
           </div>
         }
-
         return null;
       })
     }
-
     let count = 0
     if (data) {
       for (let index = 0; index < data.length; index++) {
@@ -76,14 +73,14 @@ class viewplayerscore extends React.Component {
         title="Show Points"
         visible={this.props.visible}
         onOk={this.props.handleOk}
-        onCancel={this.props.onCancel}
-      >
+        onCancel={this.props.onCancel}>
         {(data) ? count !== data.length ? data : <p style={{ fontSize: "20px", color: "grey", textAlign: "center" }}>Match Remaining</p> : ""}
       </Modal>
     </div >
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     matchPlayerScores: state.MatchPlayerScore.tournamentMatchPlayerScore,
@@ -94,4 +91,5 @@ const mapDispatchToProps = dispatch => ({
     matchPlayerScore: bindActionCreators(matchPlayerScoreAction, dispatch),
   }
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(viewplayerscore);

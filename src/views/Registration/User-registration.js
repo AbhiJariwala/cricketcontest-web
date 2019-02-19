@@ -23,15 +23,11 @@ class UserRegistration extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.err_msg === "") {
-            this.setState({
-                inValidEmail: ""
-            })
+            this.setState({ inValidEmail: "" })
             this.props.history.push('/login');
         }
         else {
-            this.setState({
-                inValidEmail: nextProps.err_msg
-            })
+            this.setState({ inValidEmail: nextProps.err_msg })
         }
     }
 
@@ -65,7 +61,6 @@ class UserRegistration extends Component {
                 fieldValidation.password = value.length >= 6;
                 fieldValidationErrors.password = fieldValidation.password ? '' : ' Password is too short';
                 break;
-
             case 'confirmPassword':
                 var confirmPassword = value;
                 var password = this.state.password;
@@ -133,7 +128,6 @@ class UserRegistration extends Component {
                     firstName: "* First Name Required"
                 }
             })
-
         if (this.state.formValid) {
             this.props.action.register.RegisterUser(this.state);
         }

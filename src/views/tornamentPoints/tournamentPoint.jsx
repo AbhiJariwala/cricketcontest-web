@@ -278,19 +278,7 @@ class tournamentPoint extends Component {
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "left" }}>
               <Button color="info" onClick={this.toggle} >Add</Button>
-              {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
-              {/* <Button color="info" onClick={this.toggle}>Add Points</Button> */}
             </div>
-            {/* <div style={{ float: "right", marginRight: "45px" }}>
-              Show entries
-              <Input type="select" name="entries" id="exampleSelect" onChange={this.perPage}>
-                <option>5</option>
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
-              </Input>
-            </div> */}
           </div>
 
           <Table hover>
@@ -307,16 +295,6 @@ class tournamentPoint extends Component {
                 : tournamentPoints}
             </tbody>
           </Table>
-
-          {/* <ButtonGroup>
-            {this.state.offset <= 0 ?
-              <Button color="info" onClick={this.changeRecord} value="prev" hidden>Prev</Button> :
-              <Button color="info" onClick={this.changeRecord} value="prev">Prev</Button>}
-            &nbsp;
-            {total >= this.state.perPageRecord ?
-              <Button color="info" onClick={this.changeRecord} value="next">Next</Button> :
-              <Button color="info" onClick={this.changeRecord} value="next" hidden>Next</Button>}
-          </ButtonGroup> */}
         </div>
       </div>
     );

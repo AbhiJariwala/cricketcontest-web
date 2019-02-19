@@ -1,37 +1,41 @@
 import React, { Component } from 'react';
 import { Row, Card, CardBody } from 'reactstrap';
-
-import UserPanel from '../../UserPanel/userPanel'
-import path from '../../../path';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import UserPanel from '../../UserPanel/userPanel';
+import path from '../../../path';
 import * as  showUserMatchesAction from '../../../action/user/Createteam';
 import * as TournamentAction from '../../../action/Tournament';
 
-class userDashBoard extends Component {
+let urlImage = path + "UserSideBackgroundImage.jpg";
 
+class userDashBoard extends Component {
     componentWillMount() {
         this.props.action.Tournament.fetchTournamentAction(0, 100, "desc", "id");
     }
+
     componentDidMount = () => {
         this.getTournamentMatch();
     }
+
     getTournamentMatch() {
         let userid = localStorage.getItem("userId")
         this.props.action.UserMatchesteams.Show_My_TeamData(userid);
     }
+
     handletornamentteams = (id) => {
         this.props.history.push('/MyTeamPlayer/' + id);
     }
+
     render() {
         let tournaments = '';
         let t = [];
-        if (this.props.Tournaments.length > 0) {            
+        if (this.props.Tournaments.length > 0) {
             tournaments = this.props.Tournaments.map((tournament, i) => {
 
-                if (this.props.showUserMatches.length > 0) {                  
-                   return this.props.showUserMatches.map((usermatches, i) => {     
+                if (this.props.showUserMatches.length > 0) {
+                    return this.props.showUserMatches.map((usermatches, i) => {
                         if (tournament.id === usermatches.tournamentId) {
                             if (!t.includes(usermatches.tournamentId)) {
                                 t.push(usermatches.tournamentId)
@@ -60,13 +64,13 @@ class userDashBoard extends Component {
                 return null
             })
         }
-        let urlImage = "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=" + window.innerWidth + "&q=80";
+
 
         return (
-            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", height:"100vh" ,backgroundSize: 'cover',paddingTop: '62px'}}>
+            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", height: "100vh", backgroundSize: 'cover', paddingTop: '62px' }}>
                 <UserPanel></UserPanel>
-                <div className="container" style={{overflow: 'auto',height: 'calc(100vh - 62px)'}}>
-                    <div className="row" style={{height:"100%"}}>
+                <div className="container" style={{ overflow: 'auto', height: 'calc(100vh - 62px)' }}>
+                    <div className="row" style={{ height: "100%" }}>
                         <div className="col-md-6" >
                             <Row>   </Row>
                         </div>
@@ -80,30 +84,32 @@ class userDashBoard extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row" style={{ background: "#e6e6e6" }}>
-                                        {tournaments}
-                                    </div>
+                                    {(tournaments.length > 0) ?
+                                        <div className="row" style={{ background: "#e6e6e6" }}>
+                                            {tournaments}
+                                        </div> : <div className="row" style={{ background: "#e6e6e6" }}>No Teams selected</div>}
                                 </CardBody>
                             </Card>
                         </div>
                     </div>
                 </div>
             </div>
-        
         );
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         showUserMatches: state.CreateteamReducer.TeamData,
         Tournaments: state.Tournament.Tournaments
     }
 };
+
 const mapDispatchToProps = dispatch => ({
     action: {
         UserMatchesteams: bindActionCreators(showUserMatchesAction, dispatch),
         Tournament: bindActionCreators(TournamentAction, dispatch)
     }
 });
-export default connect(mapStateToProps, mapDispatchToProps)(userDashBoard);
 
+export default connect(mapStateToProps, mapDispatchToProps)(userDashBoard);

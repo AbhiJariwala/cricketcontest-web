@@ -30,7 +30,7 @@ class tournament extends Component {
       refresh: true,
       filteredteams: [],
       teamsdata: [],
-      forRender:true
+      forRender: true
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -107,26 +107,25 @@ class tournament extends Component {
     });
   }
   toggleTeam = () => {
-    // this.props.action.Tournament.fetchTournamentAction(this.state.pageno, this.state.parpageRecord, this.state.sortingValue, this.state.sortingValueName);
     this.setState({
       visible: !this.state.visible
     });
   }
   ShowTeam = (tournament) => {
     this.props.action.Team.fetchTeamAction();
-    if(tournament.Teams===undefined){
-      let Teams=[];
-      tournament={...tournament,Teams};
-  }
-      this.setState(
-        {
-          tournament: tournament,
-          visible: true
-        })
+    if (tournament.Teams === undefined) {
+      let Teams = [];
+      tournament = { ...tournament, Teams };
+    }
+    this.setState(
+      {
+        tournament: tournament,
+        visible: true
+      })
   }
   handleDelete = (tournamnetId, team) => {
-  
-    const { forRender }= this.state;
+
+    const { forRender } = this.state;
     message.success("successfully deleted");
     this.toggleTeam(); this.toggleTeam();
     let updatedBy = parseInt(this.state.updatedBy, 10);
@@ -134,7 +133,7 @@ class tournament extends Component {
       this.props.action.TournamentTeam.DeleteTournamentTeamAction(tournamnetId, teamId, updatedBy);
       return teamId;
     })
-    this.setState({ visible: true, forRender:!forRender });
+    this.setState({ visible: true, forRender: !forRender });
   }
   Edittoggle = (data) => {
     if (!data) {
@@ -175,7 +174,7 @@ class tournament extends Component {
               })
             }
             else {
-                alert('Can\'t delete tournament ');
+              alert('Can\'t delete tournament ');
             }
           }
           return Empty;
@@ -233,7 +232,7 @@ class tournament extends Component {
           </td>
         </tr>
       })
-    } 
+    }
     else {
       data = <tr><td colSpan="5" className="tCenter">No Record</td></tr>;
     }
@@ -251,7 +250,7 @@ class tournament extends Component {
             filter={this.state.filteredteams}
             teamsdata={teamsdata}
             forRender={this.state.forRender}
-          />):null}
+          />) : null}
         <div className="content"  >
           <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTournament>
           <div style={{ marginTop: "50px" }}>
@@ -274,8 +273,8 @@ class tournament extends Component {
               <thead className="thead-dark">
                 <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
                   <th>#</th>
-                  <th style={{ cursor: "pointer" }}>Banner</th>
-                  <th style={{ cursor: "pointer" }}>Tournament</th>
+                  <th>Banner</th>
+                  <th style={{ cursor: "pointer" }}>Tournament </th>
                   <th>Teams</th>
                   <th>Action</th>
                 </tr>

@@ -57,7 +57,6 @@ class AddPlayer extends Component {
     imageChangedHandler(image) {
         var reader = new FileReader();
         reader.readAsDataURL(image[0]);
-
         reader.onloadend = (e) => {
             this.setState({
                 Player: {
@@ -66,7 +65,6 @@ class AddPlayer extends Component {
                     showimage: true,
                     displayImage: reader.result
                 }
-
             })
         };
     }
@@ -110,15 +108,7 @@ class AddPlayer extends Component {
         })
     }
 
-    // calculateAge(dobString) {
-    //     var dob = new Date(dobString);
-    //     var ageDifMs = Date.now() - dob.getTime();
-    //     var ageDate = new Date(ageDifMs); // miliseconds 
-    //     return Math.abs(ageDate.getUTCFullYear() - 1970);
-    // }
-
     validateField(fieldName, value) {
-
         var fieldValidationErrors = this.state.fieldsErrors;
         var fieldValidation = this.state.fieldsValid;
 
@@ -209,7 +199,7 @@ class AddPlayer extends Component {
             if (!this.props.data.Edit) {
                 formdata.append("playerImage", this.state.Player.playerImage[0]);
                 formdata.append("createdBy", loginUserId);
-                this.props.action.Player.addPlayer(this.props.nrecord,formdata, config);
+                this.props.action.Player.addPlayer(this.props.nrecord, formdata, config);
             }
             else {
                 let playerId = this.state.Player.id;
@@ -219,7 +209,6 @@ class AddPlayer extends Component {
                 else if (!this.state.Player.showimage) {
                     formdata.append("playerImage", "defaultPlayerImage.png");
                 }
-
                 formdata.append("id", playerId);
                 formdata.append("updatedBy", loginUserId);
                 this.props.action.Player.updatePlayer(this.state.Player, formdata, config)
@@ -227,6 +216,7 @@ class AddPlayer extends Component {
             this.props.toggle();
         }
     }
+
     render() {
         return (
             <div>
@@ -246,8 +236,7 @@ class AddPlayer extends Component {
                                     <span style={{ color: "red" }}>{this.state.fieldsErrors.lastName}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="dob">Date Of Birth</Label>
-                                    {' '}
+                                    <Label for="dob">Date Of Birth</Label> {' '}
                                     {(this.state.Player.dob) ? <DatePicker
                                         name="dob"
                                         id="dob"
@@ -278,7 +267,7 @@ class AddPlayer extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Description</Label>
-                                    <Input type="textarea" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} />
+                                    <Input type="textarea" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} maxLength="100" style={{ wordBreak: "normal" }} placeholder="description" />
                                     <span style={{ color: "red" }}>{this.state.fieldsErrors.description}</span>
                                 </FormGroup>
                                 <FormGroup>

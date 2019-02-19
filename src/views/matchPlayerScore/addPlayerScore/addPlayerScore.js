@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 
 import * as matchPlayerScoreAction from '../../../action/matchPlayerScore';
 
-
 class AddPlayerScore extends Component {
 
     constructor(props) {

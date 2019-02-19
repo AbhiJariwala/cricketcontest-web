@@ -20,7 +20,7 @@ class AddTournament extends Component {
     imagebanner: false,
     fieldsErrors: { tournamentName: '', tournamentDescription: '', tournamentBanner: '' },
     fieldsValid: { tournamentName: false, tournamentDescription: false, tournamentBanner: "false" },
-    displayImage:""
+    displayImage: ""
   }
   componentWillMount = () => {
     const userId = localStorage.getItem("userId");
@@ -87,19 +87,19 @@ class AddTournament extends Component {
       formdata.append("tournamentName", this.state.tournamentName);
       formdata.append("tournamentDescription", this.state.tournamentDescription);
       let image = ""
-      
-      if (this.props.dataid.tournamentBanner !== "defaultTournament.png" && this.state.imagebanner===false) {
+
+      if (this.props.dataid.tournamentBanner !== "defaultTournament.png" && this.state.imagebanner === false) {
         image = this.props.dataid.tournamentBanner
         formdata.append("tournamentBanner", "defaultTournament.png");
       }
-      else if (typeof(this.state.tournamentBanner)==="object") {
+      else if (typeof (this.state.tournamentBanner) === "object") {
         image = this.state.tournamentBanner[0]
         formdata.append("tournamentBanner", this.state.tournamentBanner[0]);
-      }else if (this.props.dataid.tournamentBanner !== "defaultTournament.png" ) {
+      } else if (this.props.dataid.tournamentBanner !== "defaultTournament.png") {
         image = this.props.dataid.tournamentBanner
-        formdata.append("tournamentBanner", this.state.tournamentBanner); 
+        formdata.append("tournamentBanner", this.state.tournamentBanner);
       }
-      
+
       formdata.append("updatedBy", parseInt(this.state.updatedBy, 10));
       const config = {
         headers: {
@@ -114,7 +114,7 @@ class AddTournament extends Component {
         "updatedBy": parseInt(this.state.updatedBy, 10)
       }
       this.props.action.Tournament.UpdateTournamentAction(this.props.dataid.id, data, formdata, config)
-      this.setState({ notcallnext: 0, tournamentBanner: [],tournamentDescription:"",tournamentName:"",id:""})
+      this.setState({ notcallnext: 0, tournamentBanner: [], tournamentDescription: "", tournamentName: "", id: "" })
       this.props.toggle(Event);
     }
   }
@@ -147,7 +147,7 @@ class AddTournament extends Component {
           'content-type': 'multipart/form-data'
         }
       }
-      this.props.action.Tournament.AddTournamentAction(this.props.nrecord,formdata, config)
+      this.props.action.Tournament.AddTournamentAction(this.props.nrecord, formdata, config)
       this.props.toggle(Event);
     }
   }
@@ -155,29 +155,28 @@ class AddTournament extends Component {
     var reader = new FileReader();
     reader.readAsDataURL(image[0]);
     reader.onloadend = (e) => {
-    this.setState({
-      tournamentBanner: image,
-      imagebanner: true,
-      displayImage: reader.result
-    })
-  }
-    this.validateField("BannerImage", "true");
+      this.setState({
+        tournamentBanner: image,
+        imagebanner: true,
+        displayImage: reader.result
+      })
+    }
   }
   cancelImageClick = () => {
-    if(this.props.dataid){
+    if (this.props.dataid) {
       this.props.dataid.imagebanner = false
     }
-    this.setState({ imagebanner: false,displayImage: "",tournamentBanner:"" })
+    this.setState({ imagebanner: false, displayImage: "", tournamentBanner: "" })
   }
   render() {
     let image;
-    let imageuploader = <div><ImageUploader withIcon={true} buttonText="Select Images" imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']} 
+    let imageuploader = <ImageUploader withIcon={true} buttonText="Select Images" imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
       onChange={this.imageChangedHandler.bind(this)}
       maxFileSize={5242880}
       withLabel={false}
       singleImage={true}
       accept={"image/*"} />
-      <center><span style={{ color: "red" }}>{this.state.fieldsErrors.BannerImage}</span></center></div>
+
     if (this.props.dataid !== null) {
       if (this.props.dataid.tournamentBanner === "defaultTournament.png") {
         if (!this.state.displayImage) {
@@ -200,12 +199,14 @@ class AddTournament extends Component {
             <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
         }
       }
-    } else { if (!this.state.displayImage) {
-          image = imageuploader
-        } else {
-          image = <div align="center">  <img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
-        } }
+    } else {
+      if (!this.state.displayImage) {
+        image = imageuploader
+      } else {
+        image = <div align="center">  <img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
+          <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
+      }
+    }
     return (
       <Container>
         <div style={{ float: "right", margin: "15px" }}>
@@ -219,13 +220,17 @@ class AddTournament extends Component {
                     name="tournamentName"
                     id="tournamentName"
                     defaultValue={this.props.dataid ? this.props.dataid.tournamentName : ""}
-                    placeholder="tournamentName"
+                    placeholder="Tournament Name"
                     onChange={this.inputChangeHandler.bind(this)} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentName}</span>
                 </FormGroup>
                 <FormGroup>
                   <Label for="tournamentDescription">Tournament Description</Label>
-                  <Input type="textarea" name="tournamentDescription" id="tournamentDescription" placeholder="tournamentDescription" defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""} onChange={this.inputChangeHandler.bind(this)} />
+                  <Input type="textarea" name="tournamentDescription" id="tournamentDescription"
+                    placeholder="Description"
+                    defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""}
+                    onChange={this.inputChangeHandler.bind(this)}
+                    maxLength="275" style={{ wordBreak: "normal" }} />
                   <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentDescription}</span>
                 </FormGroup>
                 {image}
@@ -243,11 +248,7 @@ class AddTournament extends Component {
     );
   }
 }
-// const mapStateToProps = (state) => {
-//   return {
-//     auth: state.auth
-//   }
-// };
+
 const mapDispatchToProps = dispatch => ({
   action: {
     Tournament: bindActionCreators(TournamentAction, dispatch)

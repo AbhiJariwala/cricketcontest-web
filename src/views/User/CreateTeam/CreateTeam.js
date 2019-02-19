@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import UserPanel from '../../UserPanel/userPanel'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, Button, Card, CardBody } from 'reactstrap';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { confirmAlert } from 'react-confirm-alert';
 
 import * as TournamentAction from '../../../action/Tournament';
-import * as  CreateTeamAction from '../../../action/user/Createteam'
+import * as  CreateTeamAction from '../../../action/user/Createteam';
+import UserPanel from '../../UserPanel/userPanel';
 import path from '../../../path';
 import './createTeam.css';
 
 let teamId = [];
+let urlImage = path + "UserSideBackgroundImage.jpg";
+
 class CreateTeam extends Component {
     constructor(props) {
         super(props);
@@ -19,15 +21,15 @@ class CreateTeam extends Component {
             width: window.innerWidth
         };
     }
+
     componentWillMount() {
         this.props.action.Tournament.FetchSingleTournamentAction(this.props.match.params.id);
     }
+
     componentDidMount = () => {
         this.getTournamentMatch();
     }
-    getTournamentMatch() {
 
-    }
     addplayerteam = (playerId) => {
         if (this.state.Myteam.length !== 11) {
             teamId.push(playerId);
@@ -35,15 +37,17 @@ class CreateTeam extends Component {
         }
         else {
             confirmAlert({
-                message: 'You Had already select 11 players.',
-                buttons: [{ label: 'ok' }]
+                message: 'You have already selected 11 players.',
+                buttons: [{ label: 'Ok' }]
             })
         }
     }
+
     minusplayerteam = (playerId) => {
         teamId.splice(teamId.indexOf(parseInt(teamId.filter(teamid => playerId === teamid), 10)), 1);
         this.setState({ Myteam: teamId });
     }
+
     createteam = (E) => {
         E.preventDefault();
         const userId = localStorage.getItem("userId");
@@ -60,6 +64,7 @@ class CreateTeam extends Component {
         })
         this.props.history.push('/Myteam');
     }
+
     render() {
         let selectedTournamentBanner = "";
         if (this.props.SelectedTournament[0]) {
@@ -72,7 +77,7 @@ class CreateTeam extends Component {
         if (this.props.SelectedTournament[0]) {
             tournamentPlayers = this.props.SelectedTournament[0].Teams.map(team => {
                 return (
-                    team.player.map(player => {                        
+                    team.player.map(player => {
                         return (
                             <Card key={player.id} body style={{ borderRadius: "10px" }}>
                                 <div className="row" style={{ textAlign: "center" }}>
@@ -117,11 +122,11 @@ class CreateTeam extends Component {
                 )
             });
         }
-        let urlImage = "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=" + window.innerWidth + "&q=80";
+
         return (
-            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", height:"100vh" ,backgroundSize: 'cover',paddingTop: '62px' }}>
+            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", height: "100vh", backgroundSize: 'cover', paddingTop: '62px' }}>
                 <UserPanel></UserPanel>
-                <div className="container" style={{overflow: 'auto',height: 'calc(100vh - 62px)'}}>
+                <div className="container" style={{ overflow: 'auto', height: 'calc(100vh - 62px)' }}>
                     <div className="row">
                         <div className="col-md-6" style={{}}>
                             <Row>
@@ -185,11 +190,13 @@ class CreateTeam extends Component {
         );
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         SelectedTournament: state.Tournament.FetchSingleTournamentData,
     }
 }
+
 const mapDispatchToProps = dispatch => ({
     action: {
         Tournament: bindActionCreators(TournamentAction, dispatch),

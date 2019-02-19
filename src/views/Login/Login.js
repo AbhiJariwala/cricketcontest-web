@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-
 import { Card, CardHeader, CardBody, Row, Col, Label, CardFooter, Button, Form, FormGroup, Input } from "reactstrap";
-
 import { Link } from 'react-router-dom';
 import { PanelHeader } from "components";
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
 import * as loginAction from '../../action/loginAction';
 
 class Login extends Component {
-
     state = {
         email: "",
         password: "",
@@ -50,7 +46,6 @@ class Login extends Component {
         });
     }
 
-
     inputChangeHandler(e) {
         this.setState({ fieldsErrors: { email: '', password: '' } })
         const name = e.target.name;
@@ -63,21 +58,20 @@ class Login extends Component {
             this.props.action.auth.loginUser(this.state);
         }
     }
+
     btnLoginClick(e) {
-        // this.setState({ fieldsErrors: { email: '', password: '' } })
         const emailname = document.getElementById("email").name;
         const emailvalue = document.getElementById("email").value;
         const passwordname = document.getElementById("password").name;
         const passwordvalue = document.getElementById("password").value;
         this.validateField(emailname, emailvalue);
         this.validateField(passwordname, passwordvalue);
-
         e.preventDefault();
         if (this.state.formValid) {
             this.props.action.auth.loginUser(this.state);
         }
-
     }
+
     render() {
         return (
             <div>
@@ -92,9 +86,6 @@ class Login extends Component {
                                 </CardHeader>
                                 <CardBody>
                                     <Form onKeyPress={this.enterPress.bind(this)}>
-                                        <FormGroup>
-
-                                        </FormGroup>
                                         <FormGroup>
                                             <Label for="email"><b>Email</b></Label>
                                             <Input type="email" name="email" id="email" placeholder="example@example.com" onChange={this.inputChangeHandler.bind(this)} value={this.state.email} />
@@ -137,4 +128,5 @@ const mapDispatchToProps = (dispatch) => ({
         auth: bindActionCreators(loginAction, dispatch)
     }
 })
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

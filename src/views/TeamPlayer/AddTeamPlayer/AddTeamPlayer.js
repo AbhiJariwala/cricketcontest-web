@@ -36,6 +36,7 @@ class AddTeamPlayer extends Component {
             tournamentId: e.target.value
         })
         this.setState({ submitted: false });
+        document.getElementById("ddteam").hidden = false;
     }
 
     teamNameChangeHandler(e) {
@@ -43,15 +44,18 @@ class AddTeamPlayer extends Component {
             teamId: e.target.value
         })
         this.setState({ submitted: false });
+        document.getElementById("ddplayer").hidden = false;
     }
 
     handleChange = (selectedItems) => {
         this.setState({ selectedItems: selectedItems });
     };
+
     submitted = () => {
         this.setState({ submitted: true });
         this.addteamplayer(true);
     }
+
     addteamplayer(submitted) {
         const { selectedItems } = this.state;
         if (submitted && selectedItems.length > 0) {
@@ -69,6 +73,7 @@ class AddTeamPlayer extends Component {
             this.props.toggle();
         }
     }
+
     render() {
         let playerData = "";
         let selectedPlayers = [];
@@ -81,7 +86,6 @@ class AddTeamPlayer extends Component {
                 return (<option key={tournament.id} value={tournament.id}>{tournament.tournamentName}</option>)
             })
         }
-
         if (this.props.teams.Teams) {
             tournamentTeamOption = this.props.teams.Teams.map((team) => {
                 if (team.TournamentTeam) {
@@ -92,12 +96,10 @@ class AddTeamPlayer extends Component {
                 return "";
             })
         }
-
         if (this.props.players) {
             playerData = this.props.tournaments.filter((tournamentplayer) => {
                 return (tournamentplayer.id === parseInt(playertournamentId, 10));
             })
-
             if (playerData[0]) {
                 selectedPlayers = playerData[0].Players.map(player => {
                     if (player.TeamPlayer) {
@@ -108,7 +110,6 @@ class AddTeamPlayer extends Component {
                     return "";
                 });
             }
-
             teamPlayersOption = this.props.players.map((player) => {
                 if (selectedPlayers.includes(parseInt(player.id, 10))) {
                     return "";
@@ -132,33 +133,33 @@ class AddTeamPlayer extends Component {
                                         <option key="tournament" value="" disabled="" style={{ display: "none" }} >Select Tournament</option>
                                         {tournamentOption}
                                     </Input>
-
                                     {(this.state.submitted && this.state.tournamentId === 0) ?
                                         <div>
                                             <br />
                                             <span style={{ color: "red" }}>
                                                 Please select a tournament
                                             </span>
-                                        </div> : null
-                                    }
+                                        </div> : ""}
                                 </FormGroup>
-                                <FormGroup>
+                                <FormGroup id="ddteam" hidden>
                                     <Label for="teamName">Team Name</Label>
                                     <Input type="select" name="teamName" id="teamName" onChange={this.teamNameChangeHandler} disabled={this.state.tournamentId === 0 ? true : false}>
                                         <option key="team" value="" disabled="" style={{ display: "none" }}>Select Team</option>
                                         {tournamentTeamOption}
                                     </Input>
-
+                                    <br />
+                                    {(tournamentTeamOption.length < 1) ? (<span style={{ color: "red" }}>
+                                        No team added yet!!!
+                                    </span>) : ""}
                                     {(this.state.submitted && this.state.teamId === 0 && this.state.tournamentId !== 0) ?
                                         <div>
-                                            <br />
                                             <span style={{ color: "red" }}>
                                                 Please select a team
                                             </span>
                                         </div> : null
                                     }
                                 </FormGroup>
-                                <FormGroup>
+                                <FormGroup id="ddplayer" hidden>
                                     <Label for="Players">Players</Label>
                                     <Select
                                         mode="multiple"
@@ -166,9 +167,9 @@ class AddTeamPlayer extends Component {
                                         placeholder="Select Players "
                                         value={this.state.selectedItems}
                                         onChange={this.handleChange}
-                                        disabled={(this.state.teamId === 0) ? true : false}
-                                    >{teamPlayersOption}</Select>
-
+                                        disabled={(this.state.teamId === 0) ? true : false}>
+                                        {teamPlayersOption}
+                                    </Select>
                                     {(this.state.submitted && this.state.selectedItems.length === 0 && this.state.tournamentId !== 0 && this.state.teamId !== 0) ?
                                         <div>
                                             <br />

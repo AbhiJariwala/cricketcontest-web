@@ -1,44 +1,40 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavLink, NavItem, DropdownToggle, DropdownItem, UncontrolledDropdown, DropdownMenu } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
 import * as loginAction from '../../action/loginAction';
 import './UserPanel.css'
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavLink,
-  NavItem, DropdownToggle, DropdownItem, UncontrolledDropdown, DropdownMenu
-} from 'reactstrap';
-import { Link } from 'react-router-dom';
+
 class NavbarPage extends Component {
+
   constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
     };
+
+    this.toggle = this.toggle.bind(this);
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-  state = {
-    isOpen: false
-  };
+
   logoutClick() {
     this.props.action.logout.logoutUser();
   }
+
   toggleCollapse = () => {
     this.setState({ isOpen: !this.state.isOpen });
   }
+
   render() {
     return (
-      <div style={{ position: "fixed", width: "100%", zIndex: "100" ,top: '0' }}>
+      <div style={{ position: "fixed", width: "100%", zIndex: "100", top: '0' }}>
         <Navbar color="dark" light expand="md" >
           <NavbarBrand href="/userDashBoard">Cricket Contest</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
@@ -48,7 +44,7 @@ class NavbarPage extends Component {
                 <NavLink tag={Link} to="/userDashBoard">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} to="/Myteam">My tEAMS</NavLink>
+                <NavLink tag={Link} to="/Myteam">My Teams</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink tag={Link} to="/viewTournamentteam">Tournament</NavLink>

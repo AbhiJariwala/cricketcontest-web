@@ -5,9 +5,9 @@ import { bindActionCreators } from "redux";
 import { PanelHeader } from "components";
 import { Collapse, Button as AntButton, Modal as AntModal, Popconfirm } from 'antd';
 import 'antd/dist/antd.css';
+
 import path from '../../path';
 import './TeamPlayer.css'
-
 import * as teamPlayerAction from '../../action/teamPlayer';
 import AddTeamPlayer from './AddTeamPlayer/AddTeamPlayer';
 
@@ -15,7 +15,6 @@ const Panel = Collapse.Panel;
 let notNext = 0;
 
 class TeamPlayer extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +22,6 @@ class TeamPlayer extends Component {
             visible: false,
             tournamentId: 0,
             teamId: 0,
-
             sort: false,
             pageno: 0,
             recordPerPage: 5,
@@ -81,7 +79,6 @@ class TeamPlayer extends Component {
             else {
                 this.setState({ sortingValueName: sortingValueName, sortingValue: "asc" })
             }
-
             this.props.action.getTeamPlayerData.getTournaments(this.state.pageno, this.state.recordPerPage, sortingValue, sortingValueName);
         }
     }
@@ -92,6 +89,7 @@ class TeamPlayer extends Component {
         this.setState({ pageno: 0 });
         this.props.action.getTeamPlayerData.getTournaments(0, perPage, this.state.sortingValue, this.state.sortingValueName);
     }
+
     changeRecord = (Event) => {
         let datachangeprevNext = Event.target.value;
         let pageno = 0;
@@ -145,11 +143,12 @@ class TeamPlayer extends Component {
         if (this.props.playerofteam) {
             this.props.playerofteam.map(playerdata => {
                 return player.push(playerdata.Players.map(p => {
-                    return <ul key={p.id}><li>{p.firstName}{' '}{p.lastName}
-                        <Popconfirm title="Are you sure remove this player from this team?" okText="Yes" cancelText="No" onConfirm={this.DeleteHandler.bind(this, playerdata.id)}>
-                            <AntButton style={{ left: "90%", position: "sticky" }} type="danger" icon="delete" />
-                        </Popconfirm>
-                    </li>
+                    return <ul key={p.id}>
+                        <li>{p.firstName}{' '}{p.lastName}
+                            <Popconfirm title="Are you sure remove this player from this team?" okText="Yes" cancelText="No" onConfirm={this.DeleteHandler.bind(this, playerdata.id)}>
+                                <AntButton style={{ left: "90%", position: "sticky" }} type="danger" icon="delete" />
+                            </Popconfirm>
+                        </li>
                     </ul>
                 }))
             });
@@ -160,8 +159,7 @@ class TeamPlayer extends Component {
                 visible={this.state.visible}
                 onCancel={this.handleCancel}
                 footer={
-                    <AntButton type="primary" onClick={this.handleCancel}>Ok</AntButton>
-                }>
+                    <AntButton type="primary" onClick={this.handleCancel}>Ok</AntButton>}>
                 {(this.props.teams.Teams) ?
                     this.props.teams.Teams.map((data) => {
                         if (data.TournamentTeam) {
@@ -176,7 +174,6 @@ class TeamPlayer extends Component {
                             }
                         }
                         return "";
-
                     }) : <p>No Teams</p>
                 }
             </AntModal>
@@ -189,9 +186,8 @@ class TeamPlayer extends Component {
             teamplayerdetails = this.props.tournaments.map((teamplayer, key) => this.renderTable(teamplayer, key))
         }
         else {
-            teamplayerdetails =  <tbody><tr><td colSpan="4" className="tCenter">No Record</td></tr></tbody>;
-          }
-       
+            teamplayerdetails = <tbody><tr><td colSpan="4" className="tCenter">No Record</td></tr></tbody>;
+        }
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -208,10 +204,8 @@ class TeamPlayer extends Component {
                                 <option>100</option>
                             </Input>
                         </div>
-
                         <div style={{ float: "left" }}>
-                            <Button color="info" onClick={this.toggle} >Add</Button>
-                            {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
+                            <Button color="info" onClick={this.toggle} >Add</Button>                           
                         </div>
                     </div>
                     <Table hover>
@@ -234,17 +228,8 @@ class TeamPlayer extends Component {
                             <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
                             <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" hidden>Next</Button >}
                     </ButtonGroup>
-
-                    {/* <ButtonGroup>
-                        {this.state.pageno !== 0 ?
-                            <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : null}
-                        &nbsp;
-                        {notNext >= this.state.recordPerPage ?
-                            <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : null}
-                    </ButtonGroup> */}
                 </div>
                 {this.rendershowTeamsModal()}
-
             </div>
         );
     }
