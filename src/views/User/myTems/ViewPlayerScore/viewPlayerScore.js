@@ -16,46 +16,60 @@ class viewplayerscore extends React.Component {
   }
 
   render() {
-    let data;
+    let data = [], playerscore = [];
     if (this.props.binddata.length !== 0) {
-      data = this.props.matchPlayerScores.map((data, key) => {
-        if (data.playerId === this.props.binddata.playerId && this.props.binddata.tournamentId === data.tournamentId) {
-          return <div key={key}>
+      let run = 0, six = 0, wicket = 0, stumping = 0, four = 0, Catch = 0, points = 0;
+      this.props.matchPlayerScores.map((d, key) => {
+        if (d.playerId === this.props.binddata.playerId && this.props.binddata.tournamentId === d.tournamentId) {
+          run += d.run;
+          six += d.six;
+          four += d.four;
+          wicket += d.wicket;
+          stumping += d.stumping;
+          Catch += d.catch;
+          points += d.score;
+          var dd = <div key={key}>
             <Table >
               <tbody>
                 <tr>
                   <th style={{ textAlign: "center" }}>Runs</th>
-                  <th>{data.run}</th>
+                  <th>{run}</th>
                 </tr>
-                <tr textAlign="center">
+                <tr>
                   <th style={{ textAlign: "center" }}>six</th>
-                  <td>{data.six}</td>
+                  <td>{six}</td>
                 </tr>
                 <tr>
                   <th style={{ textAlign: "center" }}  >Four</th>
-                  <td>{data.four}</td>
+                  <td>{four}</td>
                 </tr>
                 <tr>
                   <th style={{ textAlign: "center" }}>wicket</th>
-                  <td>{data.wicket}</td>
+                  <td>{wicket}</td>
                 </tr>
                 <tr>
                   <th style={{ textAlign: "center" }}>Stumping</th>
-                  <td>{data.stumping}</td>
+                  <td>{stumping}</td>
                 </tr>
                 <tr>
                   <th style={{ textAlign: "center" }}>catch</th>
-                  <td>{data.catch}</td>
+                  <td>{Catch}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th style={{ textAlign: "center" }}>Point</th>
-                  <td>{data.score}</td>
+                  <td>{points}</td>
                 </tr>
               </tfoot>
             </Table>
           </div>
+          if (!playerscore.includes(d.playerId)) {
+            playerscore.push(d.playerId);
+          }
+
+          data[d.playerId] = dd;
+
         }
         return null;
       })
@@ -72,7 +86,6 @@ class viewplayerscore extends React.Component {
       <Modal
         title="Show Points"
         visible={this.props.visible}
-        onOk={this.props.handleOk}
         onCancel={this.props.onCancel}>
         {(data) ? count !== data.length ? data : <p style={{ fontSize: "20px", color: "grey", textAlign: "center" }}>Match Remaining</p> : ""}
       </Modal>

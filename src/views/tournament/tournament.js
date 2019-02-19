@@ -185,7 +185,10 @@ class tournament extends Component {
               })
             }
             else {
-              alert('Can\'t delete tournament ');
+              confirmAlert({
+                message: 'You cannot delete this tournament as it is being processed! ',
+                buttons: [{ label: 'Ok' }]
+                })
             }
           }
           return Empty;
