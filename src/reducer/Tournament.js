@@ -113,17 +113,8 @@ export default (state = INITIAL_STATE, action) => {
                 return team.id !== teamId;
             })
 
-            let tournament_Data = state.Tournamentss;
             tournamentss[k].Teams = newTournament;
-            let x = tournament_Data.findIndex(tournament => {
-                return tournament.id === parseInt(tournamentId, 10);
-            })
-            let newTournamentData = tournament_Data[x].Teams.filter((team, i) => {
-                return team.id !== teamId;
-            })
-
-            tournament_Data[x].Teams = newTournamentData;
-            return Object.assign({}, state, { Tournaments: [...tournamentss], Tournamentss: [...tournament_Data] });
+            return Object.assign({}, state, { Tournaments: [...tournamentss]});
         }
 
         case INVALID_DATA: {
