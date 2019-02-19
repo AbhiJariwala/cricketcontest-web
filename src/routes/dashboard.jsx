@@ -16,43 +16,43 @@ var dashRoutes = [
   },
   {
     path: "/tournament",
-    name: "Tournament",
+    name: "Tournaments",
     icon: "sport_trophy",
     component: Tournament
   },
   {
     path: "/Team",
-    name: "Team",
+    name: "Teams",
     icon: "sport_trophy",
     component: Team
   },
   {
     path: "/Player",
-    name: "Player",
+    name: "Players",
     icon: "sport_user-run",
     component: Player
   },
   {
     path: "/teamplayer",
-    name: "Tournament Team Player",
+    name: "Tournament Team Players",
     icon: "sport_user-run",
     component: TeamPlayer
   },
   {
     path: "/TournamentMatchs",
-    name: "Tournament Match",
+    name: "Tournament Matches",
     icon: "sport_user-run",
     component: TournamentMatch
   },
   {
     path: "/TournamentPoint",
-    name: "Tournament Point",
+    name: "Tournament Points",
     icon: "sport_trophy",
     component: TournamentPoint
   },
   {
     path: "/TournamentMatchPlayerScore",
-    name: "Match Player Score",
+    name: "Match Player Scores",
     icon: "sport_trophy",
     component: TournamentMatchPlayerScore
   },
