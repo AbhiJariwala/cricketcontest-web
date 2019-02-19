@@ -92,7 +92,6 @@ class TeamPlayer extends Component {
         this.setState({ pageno: 0 });
         this.props.action.getTeamPlayerData.getTournaments(0, perPage, this.state.sortingValue, this.state.sortingValueName);
     }
-
     changeRecord = (Event) => {
         let datachangeprevNext = Event.target.value;
         let pageno = 0;
@@ -186,9 +185,13 @@ class TeamPlayer extends Component {
 
     render() {
         let teamplayerdetails = "";
-        if (this.props.tournaments) {
+        if (this.props.tournaments.length !== 0) {
             teamplayerdetails = this.props.tournaments.map((teamplayer, key) => this.renderTable(teamplayer, key))
         }
+        else {
+            teamplayerdetails =  <tbody><tr><td colSpan="4" className="tCenter">No Record</td></tr></tbody>;
+          }
+       
         return (
             <div>
                 <PanelHeader size="sm" />
@@ -224,11 +227,21 @@ class TeamPlayer extends Component {
                     </Table>
                     <ButtonGroup>
                         {this.state.pageno !== 0 ?
+                            <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button>
+                            : <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev" hidden>Prev</Button>}
+                        &nbsp;
+                        {notNext >= this.state.recordPerPage ?
+                            <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
+                            <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next" hidden>Next</Button >}
+                    </ButtonGroup>
+
+                    {/* <ButtonGroup>
+                        {this.state.pageno !== 0 ?
                             <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button> : null}
                         &nbsp;
                         {notNext >= this.state.recordPerPage ?
                             <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> : null}
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                 </div>
                 {this.rendershowTeamsModal()}
 

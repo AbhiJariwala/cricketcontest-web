@@ -119,9 +119,9 @@ class CreateTeam extends Component {
         }
         let urlImage = "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=" + window.innerWidth + "&q=80";
         return (
-            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}>
+            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", height:"100vh" ,backgroundSize: 'cover',paddingTop: '62px' }}>
                 <UserPanel></UserPanel>
-                <div className="container" style={{ paddingTop: "70px" }}>
+                <div className="container" style={{overflow: 'auto',height: 'calc(100vh - 62px)'}}>
                     <div className="row">
                         <div className="col-md-6" style={{}}>
                             <Row>

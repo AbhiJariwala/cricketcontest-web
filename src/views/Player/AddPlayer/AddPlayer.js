@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 import ImageUploader from 'react-images-upload'
-
+import { DatePicker } from 'antd';
+import moment from 'moment';
 import * as PlayerAction from '../../../action/Player';
 import path from '../../../path';
 
@@ -14,8 +15,8 @@ class AddPlayer extends Component {
         super(props);
         this.state = {
             Player: { id: "", firstName: "", lastName: "", dob: "", gender: 1, description: "", playerImage: [], showimage: true, displayImage: "" },
-            fieldsErrors: { firstName: '', lastName: '', dob: '', description: '' },
-            fieldsValid: { firstName: false, lastName: false, dob: false, description: false },
+            fieldsErrors: { firstName: '', lastName: '', description: '' },
+            fieldsValid: { firstName: false, lastName: false, description: false },
             formValid: false,
         }
     }
@@ -26,15 +27,16 @@ class AddPlayer extends Component {
                 this.setState({
                     Player: Player,
                     formValid: true,
-                    fieldsValid: { firstName: true, lastName: true, dob: true, description: true },
-                    fieldsErrors: { firstName: '', lastName: '', dob: '', description: '' }
+                    fieldsValid: { firstName: true, lastName: true, description: true },
+                    fieldsErrors: { firstName: '', lastName: '', description: '' }
                 })
             }
             else {
                 this.setState({
                     Player: Player,
                     formValid: false,
-                    fieldsValid: { firstName: false, lastName: false, dob: false, description: false },
+                    fieldsValid: { firstName: false, lastName: false, description: false },
+                    fieldsErrors: { firstName: '', lastName: '', description: '' }
                 })
             }
         }
@@ -85,6 +87,18 @@ class AddPlayer extends Component {
         }
     }
 
+    handleDatePickerChange = (e) => {
+        if (e) {
+            let date = new Date(e._d).toISOString().substr(0, 10);
+            this.setState({
+                Player: {
+                    ...this.state.Player,
+                    dob: date
+                }
+            })
+        }
+    }
+
     cancelImageClick(e) {
         e.preventDefault();
         this.setState({
@@ -96,12 +110,12 @@ class AddPlayer extends Component {
         })
     }
 
-    calculateAge(dobString) {
-        var dob = new Date(dobString);
-        var ageDifMs = Date.now() - dob.getTime();
-        var ageDate = new Date(ageDifMs); // miliseconds 
-        return Math.abs(ageDate.getUTCFullYear() - 1970);
-    }
+    // calculateAge(dobString) {
+    //     var dob = new Date(dobString);
+    //     var ageDifMs = Date.now() - dob.getTime();
+    //     var ageDate = new Date(ageDifMs); // miliseconds 
+    //     return Math.abs(ageDate.getUTCFullYear() - 1970);
+    // }
 
     validateField(fieldName, value) {
 
@@ -119,12 +133,6 @@ class AddPlayer extends Component {
                 fieldValidationErrors.lastName = fieldValidation.lastName ? '' : ' Only Alphabets Allow'
                 break;
 
-            case 'dob':
-                let date = value.split(0, 4);
-                fieldValidation.dob = ((this.calculateAge(value) > 5) && (/(?:(?:19|20)[0-9]{2})/.test(date)));
-                fieldValidationErrors.dob = fieldValidation.dob ? '' : "Invalid date of birth"
-                break;
-
             case 'description':
                 fieldValidation.description = true;
                 break;
@@ -137,11 +145,14 @@ class AddPlayer extends Component {
         }, this.validateForm);
     }
 
+    disabledDate(current) {
+        return current && current >= moment().subtract(365 * 5, 'days');
+    }
+
     validateForm() {
         this.setState({
             formValid: this.state.fieldsValid.firstName &&
                 this.state.fieldsValid.lastName &&
-                this.state.fieldsValid.dob &&
                 this.state.fieldsValid.description
         });
     }
@@ -198,16 +209,16 @@ class AddPlayer extends Component {
             if (!this.props.data.Edit) {
                 formdata.append("playerImage", this.state.Player.playerImage[0]);
                 formdata.append("createdBy", loginUserId);
-                this.props.action.Player.addPlayer(formdata, config);
+                this.props.action.Player.addPlayer(this.props.nrecord,formdata, config);
             }
             else {
                 let playerId = this.state.Player.id;
                 if (this.state.Player.displayImage) {
                     formdata.append("playerImage", this.state.Player.playerImage[0]);
-                }  
-                else if(!this.state.Player.showimage){
-                    formdata.append("playerImage","defaultPlayerImage.png");
-                }             
+                }
+                else if (!this.state.Player.showimage) {
+                    formdata.append("playerImage", "defaultPlayerImage.png");
+                }
 
                 formdata.append("id", playerId);
                 formdata.append("updatedBy", loginUserId);
@@ -220,8 +231,8 @@ class AddPlayer extends Component {
         return (
             <div>
                 <div style={{ float: "right", margin: "15px" }}>
-                    <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} >
-                        <ModalHeader toggle={this.props.toggle} >Player</ModalHeader>
+                    <Modal isOpen={this.props.isOpen}  >
+                        <ModalHeader toggle={this.props.toggle}>Player</ModalHeader>
                         <ModalBody>
                             <Form>
                                 <FormGroup>
@@ -236,7 +247,22 @@ class AddPlayer extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="dob">Date Of Birth</Label>
-                                    <Input type="date" name="dob" id="dob" placeholder="Date Of Birth" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.dob} />
+                                    {' '}
+                                    {(this.state.Player.dob) ? <DatePicker
+                                        name="dob"
+                                        id="dob"
+                                        placeholder='Select Date'
+                                        disabledDate={this.disabledDate}
+                                        onChange={this.handleDatePickerChange.bind(this)}
+                                        defaultValue={moment(this.state.Player.dob, 'YYYY-MM-DD')}
+                                    /> : <DatePicker
+                                            name="dob"
+                                            id="dob"
+                                            placeholder='Select Date'
+                                            disabledDate={this.disabledDate}
+                                            onChange={this.handleDatePickerChange.bind(this)}
+                                        />}
+                                    <br />
                                     <span style={{ color: "red" }}>{this.state.fieldsErrors.dob}</span>
                                 </FormGroup>
                                 <FormGroup tag="fieldset">
@@ -255,28 +281,31 @@ class AddPlayer extends Component {
                                     <Input type="textarea" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} />
                                     <span style={{ color: "red" }}>{this.state.fieldsErrors.description}</span>
                                 </FormGroup>
-                                {(this.state.Player.showimage && this.state.Player.playerImage !== "defaultPlayerImage.png") ?
-                                    (this.state.Player.length > 0 || this.state.Player.displayImage === "") ?
-                                        <div align="center">
-                                            <img src={path + this.state.Player.playerImage} alt="" style={{ height: "100px", width: "100px" }} />
-                                            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
-                                        </div> :
-                                        <div align="center">
-                                            <img src={this.state.Player.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-                                            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
-                                        </div>
-                                    : (<div><ImageUploader
-                                        withIcon={true}
-                                        ref="file"
-                                        buttonText="Select Images"
-                                        imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
-                                        onChange={this.imageChangedHandler.bind(this)}
-                                        maxFileSize={5242880}
-                                        withLabel={false}
-                                        singleImage={true}
-                                        accept={"image/*"} />
-                                        <center><span style={{ color: "red" }}>{this.state.fieldsErrors.playerImage}</span></center></div>)
-                                }
+                                <FormGroup>
+                                    <Label for="image">Player Image</Label>
+                                    {(this.state.Player.showimage && this.state.Player.playerImage !== "defaultPlayerImage.png") ?
+                                        (this.state.Player.length > 0 || this.state.Player.displayImage === "") ?
+                                            <div align="center">
+                                                <img src={path + this.state.Player.playerImage} alt="" style={{ height: "100px", width: "100px" }} />
+                                                <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
+                                            </div> :
+                                            <div align="center">
+                                                <img src={this.state.Player.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
+                                                <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
+                                            </div>
+                                        : (<div><ImageUploader
+                                            withIcon={true}
+                                            ref="file"
+                                            buttonText="Select Images"
+                                            imgExtension={['.jpg', '.gif', '.png', '.gif', '.jpeg']}
+                                            onChange={this.imageChangedHandler.bind(this)}
+                                            maxFileSize={5242880}
+                                            withLabel={false}
+                                            singleImage={true}
+                                            accept={"image/*"} />
+                                            <center><span style={{ color: "red" }}>{this.state.fieldsErrors.playerImage}</span></center></div>)
+                                    }
+                                </FormGroup>
                             </Form>
                         </ModalBody>
                         <ModalFooter>

@@ -522,7 +522,7 @@ class ModalExample extends React.Component {
 
         return (
             <Container>
-                <Modal isOpen={this.props.isOpen} toggle={this.toggleModal}>
+                <Modal isOpen={this.props.isOpen}>
                     <ModalHeader toggle={this.toggleModal}>Add Points</ModalHeader>
                     <ModalBody>
                         <Form>

@@ -24,8 +24,8 @@ export default (state = INITIAL_STATE, action) => {
             let {data, tournament, team1, team2, tournamentid,nrecord} = action;
             let { id, tournamentName } = tournament[0];
             let Tournament = {id,tournamentName};
-            let Team1 = team1;
-            let Team2 = team2;
+            let Team1 = team1[0];
+            let Team2 = team2[0];
             let {tournamentMatches}=state;
             data={...data,Tournament, Team1, Team2};
             if (parseInt(tournamentid,10)===Tournament.id){

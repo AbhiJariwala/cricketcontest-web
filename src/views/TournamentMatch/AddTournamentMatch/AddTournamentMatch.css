@@ -51,3 +51,8 @@
     display: block;
     color: red;
 }
+.span-display{
+    text-align: center;
+    display: block;
+    color: green;
+}

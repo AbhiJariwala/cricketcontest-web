@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, ButtonGroup, Container, Button, Input } from 'reactstrap';
+import { Table, Container, Button } from 'reactstrap';
 import { PanelHeader } from "components";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -281,7 +281,7 @@ class tournamentPoint extends Component {
               {/* <img src={path + "add.png"} alt="plus" onClick={this.toggle} style={{ width: 60, cursor: "pointer" }} ></img> */}
               {/* <Button color="info" onClick={this.toggle}>Add Points</Button> */}
             </div>
-            <div style={{ float: "right", marginRight: "45px" }}>
+            {/* <div style={{ float: "right", marginRight: "45px" }}>
               Show entries
               <Input type="select" name="entries" id="exampleSelect" onChange={this.perPage}>
                 <option>5</option>
@@ -290,7 +290,7 @@ class tournamentPoint extends Component {
                 <option>50</option>
                 <option>100</option>
               </Input>
-            </div>
+            </div> */}
           </div>
 
           <Table hover>
@@ -308,7 +308,7 @@ class tournamentPoint extends Component {
             </tbody>
           </Table>
 
-          <ButtonGroup>
+          {/* <ButtonGroup>
             {this.state.offset <= 0 ?
               <Button color="info" onClick={this.changeRecord} value="prev" hidden>Prev</Button> :
               <Button color="info" onClick={this.changeRecord} value="prev">Prev</Button>}
@@ -316,7 +316,7 @@ class tournamentPoint extends Component {
             {total >= this.state.perPageRecord ?
               <Button color="info" onClick={this.changeRecord} value="next">Next</Button> :
               <Button color="info" onClick={this.changeRecord} value="next" hidden>Next</Button>}
-          </ButtonGroup>
+          </ButtonGroup> */}
         </div>
       </div>
     );

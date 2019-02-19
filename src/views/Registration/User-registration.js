@@ -4,7 +4,7 @@ import { PanelHeader } from "components";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { Link } from 'react-router-dom';
-import * as registerAction from '../../action/registrationAction';
+import * as registerAction from '../../action/loginAction';
 
 class UserRegistration extends Component {
 

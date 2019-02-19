@@ -170,7 +170,7 @@ class tournament extends Component {
       if (this.props.ShowTornament.length !== 0) {
         this.props.ShowTornament.map((data, key) => {
           if (data.id === id) {
-            if (data.TournamentMatches.length < 0 && data.Teams.length < 0) {
+            if (data.TournamentMatches.length <= 0 && data.Teams.length <= 0) {
               confirmAlert({
                 message: 'Are you sure you want to delete this Tournament?.',
                 buttons: [{
@@ -244,8 +244,9 @@ class tournament extends Component {
           </td>
         </tr>
       })
-    } else {
-      data = <tr><td>No Record</td></tr>;
+    } 
+    else {
+      data = <tr><td colSpan="5" className="tCenter">No Record</td></tr>;
     }
 
     return (

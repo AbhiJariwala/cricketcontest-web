@@ -26,7 +26,9 @@ class AddTournamentMatch extends Component {
       isErrordate: '',
       isError: '',
       isteams: [],
-      time: ''
+      time: '',
+      noteam1:'',
+      noteam2:''
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -38,7 +40,7 @@ class AddTournamentMatch extends Component {
   handleChange = (e) => {
     if (e.target.name === "tournamentId") {
       this.setState({ [e.target.name]: e.target.value });
-      this.setState({ date: '', time: '', isErrordate: '', teams: '', team1: '', team2: '', isError: '' });
+      this.setState({ date: '', time: '', isErrordate: '', teams: '', team1: '', team2: '', isError: '',noteam1:'',noteam2:'' });
       this.handleDatePickerChange();
     }
   }
@@ -61,15 +63,15 @@ class AddTournamentMatch extends Component {
   }
   handleDatePickerChange = (e) => {
     if (e)
-      this.setState({ date: e._d, time: '', teams: '', team1: '', team2: '', isError: '', isErrordate: '' })
+      this.setState({ date: e._d})
     else {
-      this.setState({ date: '', time: '', teams: '', team1: '', team2: '', isError: '', isErrordate: '' })
-
-    }
+      this.setState({ date: ''})
+        }
+    this.setState({time: '', teams: '', team1: '', team2: '', isError: '', isErrordate: '',noteam1:'',noteam2:''})
   }
   handleChangeTeam = (e) => {
     let filterTeam = -1;
-    this.setState({ isErrordate: '', isError: '' });
+    this.setState({ isErrordate: '', isError: '',noteam2:'' });
     this.setState({ [e.target.name]: parseInt(e.target.value, 10) });
     if (e.target.name === 'team1') {
       this.props.ShowTornamentAll.map((tournament) => {
@@ -87,18 +89,26 @@ class AddTournamentMatch extends Component {
           })
         }
         return (tournament.id === parseInt(this.state.tournamentId, 10)) ? (
-          this.setState({ teams2: tournament.Teams })
+          (tournament.Teams.length >0)?(
+            this.setState({ teams2: tournament.Teams })
+          ):(this.setState({noteam2:'* Match Already Scheduled'}))
+          
         ) : null;
       })
       let newteams = this.state.teams.filter(team => {
-        return team.id !== filterTeam;
+        return team.id !== filterTeam && team.id!==parseInt(e.target.value, 10);
       })
-      this.setState({ teams2: newteams });
+      if(newteams.length > 0){
+        this.setState({ teams2: newteams });
+      }
+       else{
+         this.setState({noteam2:'* Match Already Scheduled'})
+       }
     }
   }
 
   handleTimeChange = (e) => {
-    this.setState({ team1: '', team2: '', isError: '' });
+    this.setState({ team1: '', team2: '', isError: '' ,noteam1:''});
     let { date } = this.state;
     let d = new Date(date);
     let dateTime = d.toDateString().concat(' ' + e + " GMT");
@@ -106,7 +116,7 @@ class AddTournamentMatch extends Component {
     let current = new Date();
     let mydate = new Date(dateTime);
     if ((mydate - current) <= 900000) {
-      this.setState({ isErrordate: 'Too late to set a match on selected time ' });
+      this.setState({ isErrordate: '* Too late to set a match on selected time ' });
     }
     else {
       this.setState({ date: dateTime });
@@ -118,7 +128,7 @@ class AddTournamentMatch extends Component {
         if (tournament.TournamentMatches.length > 0) {
           tournament.TournamentMatches.map((match) => {
             if ((new Date(match.matchDate) - new Date(dateTime)) === 0) {
-              this.setState({ isErrordate: 'A match is already fixed on this date,select another' });
+              this.setState({ isErrordate: '* A match is already fixed on this date,select another' });
               this.setState({ isteams: '' });
               return '';
             }
@@ -126,7 +136,9 @@ class AddTournamentMatch extends Component {
           })
         }
         return (tournament.id === parseInt(this.state.tournamentId, 10)) ? (
-          this.setState({ teams: tournament.Teams })
+            (tournament.Teams.length > 0)?(
+              this.setState({ teams: tournament.Teams })
+            ):(this.setState({noteam1:'* No team Added yet'}))
         ) : null;
       })
       this.setState({ isteams: teams });
@@ -175,7 +187,9 @@ class AddTournamentMatch extends Component {
       isErrordate: '',
       isError: '',
       isteams: [],
-      time: ''
+      time: '',
+      noteam1:'',
+      noteam2:''
     })
     this.props.toggle();
   }
@@ -246,6 +260,7 @@ class AddTournamentMatch extends Component {
                         placeholder='Select Date'
                         disabledDate={this.disabledDate}
                         onChange={this.handleDatePickerChange}
+                        allowClear={true}
                       />
                       {
                         (this.state.date !== '' || this.state.time !== '') ? (
@@ -262,11 +277,19 @@ class AddTournamentMatch extends Component {
                   ) : null
                 }
                 {
+                  (this.state.time !== '' && this.state.isErrordate === '') ? 
+                    (<span className='span-display' >{ new Date(this.state.date).toString()}</span>) : null
+                }
+                {
                   (this.state.isErrordate !== '') ?
                     (<span className='span-error' >{this.state.isErrordate}</span>) : null
                 }
                 {
-                  (this.state.time !== '' && this.state.isErrordate === '') ? (
+                  (this.state.noteam1 !== '') ?
+                    (<span className='span-error'>{this.state.noteam1}</span>) : null
+                }
+                {
+                  (this.state.time !== '' && this.state.isErrordate === '' && this.state.noteam1 === '') ? (
                     <FormGroup>
                       <Label for="exampleSelect">Select Team 1</Label>
                       <Input required={true} onChange={this.handleChangeTeam} type="select" name="team1" value={team1}>
@@ -277,7 +300,11 @@ class AddTournamentMatch extends Component {
                   ) : null
                 }
                 {
-                  (this.state.team1 !== '') ? (
+                  (this.state.noteam2 !== '') ?
+                    (<span className='span-error'>{this.state.noteam2}</span>) : null
+                }
+                {
+                  (this.state.team1 !== '' && this.state.noteam2 === '') ? (
                     <FormGroup>
                       <Label for="exampleSelect">Select Team 2</Label>
                       <Input required={true} onChange={this.handleChangeTeam} type="select" name="team2" value={team2}>

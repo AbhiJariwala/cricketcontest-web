@@ -142,7 +142,7 @@ class Team extends Component {
       <div>
         <PanelHeader size="sm" />
         <div className="content">
-          <AddTeam isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid}>  </AddTeam>
+          <AddTeam isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTeam>
           <div style={{ marginTop: "50px" }}>
             <div style={{ float: "right" }}>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>

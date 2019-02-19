@@ -36,23 +36,7 @@ class Dashboard extends React.Component {
     if (this.props.users) {
       users = this.props.users.length;
     }
-    // if (this.props.allmatchs) {
-    //   this.props.allmatchs.map(data => {
-    //     var d1 = data.matchDate.substr(0, 10);
-    //     var d2 = new Date().toISOString().substr(0, 10);
-    //     if (d1 === d2) {
-    //       if (data.Team1 && data.Team2) {
-    //         matchTournamentName = data.Tournament.tournamentName;
-    //         matchTeam1 = data.Team1[0].teamName;
-    //         team1Image = data.Team1[0].teamLogo;
-    //         matchTeam2 = data.Team2[0].teamName;
-    //         team2Image = data.Team2[0].teamLogo;
-    //       }
-    //     }
-    //     return "";
-    //   })
-    // }
-
+    
     return (
       <div>
         <PanelHeader size="lg" content={<img alt="Cricket Contest" style={{ width: '100%', height: 'fit-content' }} src={path + "Cricket-DashBoard.jpg"}></img>} />
