@@ -10,7 +10,6 @@ import AddTournamentMatch from './AddTournamentMatch/addTournamentMatch'
 import path from '../../path';
 import Timer from './DisplayTimer/displaytimer';
 import WinnerModal from './winnerModal'
-//import './tournamentmatch.css';
 import '../view.css';
 class TournamentMatch extends Component {
   constructor(props) {
@@ -179,13 +178,13 @@ class TournamentMatch extends Component {
             <td className='header-center'>{key + 1}</td>
             <td><img src={path + "thumbnail/" + data.Team1[0].teamLogo} className='float-right' alt="TeamImage" />
               {
-                (data.winningTeamId === data.Team1[0].id) ? <img className='team-1-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
+                (data.winningTeamId === data.Team1[0].id) ? <img className='team-one-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
             </td>
             <td className='header-center'>{data.Team1[0].teamName}  <b> VS</b>   {data.Team2[0].teamName}</td>
             <td><img src={path + "thumbnail/" + data.Team2[0].teamLogo} alt="TeamImage" />
               {
-                (data.winningTeamId === data.Team2[0].id) ? <img className='team-2-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
+                (data.winningTeamId === data.Team2[0].id) ? <img className='team-two-badge' src={path + 'winbadge.png'} height="35px" width="30px" alt="" /> : null
               }
             </td>
             <td className='header-center'>{d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}</td>
