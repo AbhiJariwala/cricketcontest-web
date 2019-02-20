@@ -277,7 +277,7 @@ class AddMatchPlayerScore extends Component {
                 if (player.Players) {
                     return player = player.Players.map((p) => {
                         return <tr key={p.id} className="playerScore" >
-                            <td><Badge color="secondary" style={{ fontSize: "12px" }}>{p.firstName + ' ' + p.lastName}</Badge></td>
+                            <td><Badge color="secondary" className="BadgeScore">{p.firstName + ' ' + p.lastName}</Badge></td>
                             <td><Input type="text" name="runs" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["runs"] : ""} /></td>
                             <td><Input type="text" name="four" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["four"] : ""} /></td>
                             <td><Input type="text" name="six" placeholder="0" onChange={this.inputChangeHandler.bind(this, p.id)} defaultValue={(this.state.playerScore[p.id]) ? this.state.playerScore[p.id]["six"] : ""} /></td>
@@ -320,8 +320,8 @@ class AddMatchPlayerScore extends Component {
                         </FormGroup>
                         <FormGroup hidden id="teamPlayer">
                             {(player) ?
-                                <table style={{ textAlign: "center" }}>
-                                    <thead >
+                                <table className="header-center">
+                                    <thead>
                                         <tr>
                                             <th>Player</th>
                                             <th className="green">Runs</th>

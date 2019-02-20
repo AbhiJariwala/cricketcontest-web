@@ -27,12 +27,7 @@
 .inputDiv{
     float: right;
 }
-.addbtn{
-    width: 62px;
-    float: left;
-    margin-top: 15px;
-    height: 40px;
-}
+
 .colapseDiv{
     margin-top: 100px;
     width: 96%;

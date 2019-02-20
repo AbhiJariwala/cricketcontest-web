@@ -91,11 +91,11 @@ class TournamenMatchPlayerScore extends Component {
                         if (tournamentmatch.tournamentId === matchScore.tournamentId && tournamentmatch.id === matchScore.tournamentMatchId) {
                             if (!matchscore.includes(tournamentmatch.id)) {
                                 matchscore.push(tournamentmatch.id);
-                                return <tr key={key} style={{ textAlign: "center" }}>
+                                return <tr key={key} className="header-center">
                                     <td>{start++}</td>
                                     <td>{tournamentmatch.Tournament.tournamentName}</td>
                                     <td>
-                                        <Button style={{ width: "150px", float: "right" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id,matchScore.tournamentMatchId)} name="team1">
+                                        <Button className="team1Btn" color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id,matchScore.tournamentMatchId)} name="team1">
                                             {tournamentmatch.Team1[0].teamName}
                                         </Button>
                                     </td>
@@ -103,7 +103,7 @@ class TournamenMatchPlayerScore extends Component {
                                         <b>VS</b>
                                     </td>
                                     <td>
-                                        <Button style={{ width: "150px", float: "left" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id,matchScore.tournamentMatchId)} name="team2">
+                                        <Button className="team2Btn"  color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id,matchScore.tournamentMatchId)} name="team2">
                                             {tournamentmatch.Team2[0].teamName}
                                         </Button>
                                     </td>
@@ -141,32 +141,32 @@ class TournamenMatchPlayerScore extends Component {
                                                             <Table key={i}>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th style={{ textAlign: "center" }}>Runs</th>
+                                                                        <th className="header-center">Runs</th>
                                                                         <td>{data.run}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th style={{ textAlign: "center" }}><b>Six  </b></th>
+                                                                        <th className="header-center"><b>Six  </b></th>
                                                                         <td>{data.six}</td>
                                                                     </tr>
                                                                     <tr >
-                                                                        <th style={{ textAlign: "center" }}><b>Four  </b></th>
+                                                                        <th className="header-center"><b>Four  </b></th>
                                                                         <td>{data.four}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th style={{ textAlign: "center" }}><b>Catch  </b></th>
+                                                                        <th className="header-center"><b>Catch  </b></th>
                                                                         <td>{data.catch}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th style={{ textAlign: "center" }}><b>Stumping  </b></th>
+                                                                        <th className="header-center"><b>Stumping  </b></th>
                                                                         <td>{data.stumping}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th style={{ textAlign: "center" }}><b>Wicket  </b></th>
+                                                                        <th className="header-center"><b>Wicket  </b></th>
                                                                         <td>{data.wicket}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th style={{ textAlign: "center" }}><b>Score </b></th>
-                                                                        <td><Badge color="success"><h4 style={{ width: "40px" }}>{data.score}</h4></Badge></td>
+                                                                        <th className="header-center"><b>Score </b></th>
+                                                                        <td><Badge color="success"><h4 className="badgeH1">{data.score}</h4></Badge></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </Table>
@@ -182,16 +182,14 @@ class TournamenMatchPlayerScore extends Component {
                             }) : null
                         }
                     </AntModal>
-                    <div style={{ marginTop: "50px" }}>
-                        <div style={{ float: "left" }}>
-                            <Button color="info" onClick={this.btnAddClick.bind(this)} >Add</Button>
-                            <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
-                        </div>
+                    <div className="addbtn">                      
+                            <Button color="info" onClick={this.btnAddClick.bind(this)} >Add</Button>                                                  
                     </div>
+                    <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
 
                     <Table hover>
                         <thead className="thead-dark">
-                            <tr style={{ textAlign: "center" }}>
+                            <tr className="header-center">
                                 <th>#</th>
                                 <th>Tournament</th>
                                 <th colSpan="3">Match</th>

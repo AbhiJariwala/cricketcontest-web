@@ -33,33 +33,33 @@ class viewplayerscore extends React.Component {
               <tbody>
                 <tr>
                   <th className="textAlian">Runs</th>
-                  <th>{data.run}</th>
+                  <th>{run}</th>
                 </tr>
                 <tr textAlign="center">
                   <th className="textAlian">six</th>
-                  <td>{data.six}</td>
+                  <td>{six}</td>
                 </tr>
                 <tr>
                   <th className="textAlian"  >Four</th>
-                  <td>{data.four}</td>
+                  <td>{four}</td>
                 </tr>
                 <tr>
                   <th className="textAlian">wicket</th>
-                  <td>{data.wicket}</td>
+                  <td>{wicket}</td>
                 </tr>
                 <tr>
                   <th className="textAlian">Stumping</th>
-                  <td>{data.stumping}</td>
+                  <td>{stumping}</td>
                 </tr>
                 <tr>
                   <th className="textAlian">catch</th>
-                  <td>{data.catch}</td>
+                  <td>{Catch}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th className="textAlian">Point</th>
-                  <td>{data.score}</td>
+                  <td>{points}</td>
                 </tr>
               </tfoot>
             </Table>
