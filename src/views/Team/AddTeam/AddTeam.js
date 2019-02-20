@@ -7,6 +7,8 @@ import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, Fo
 import path from '../../../path';
 import * as TeamAction from '../../../action/Team';
 
+import '../../view.css'
+
 const deleteIcon = require('../../../Image/delete.jpg');
 
 class AddTeam extends Component {
@@ -156,41 +158,47 @@ class AddTeam extends Component {
       withLabel={false}
       singleImage={false}
       accept={"image/*"} />
-      <center><span style={{ color: "red" }}>{this.state.fieldsErrors.BannerImage}</span></center></div>
+      <center><span className='alert'>{this.state.fieldsErrors.BannerImage}</span></center></div>
     if (this.props.dataid !== null) {
       if (this.props.dataid.teamLogo === 'defaultTeamLogo.png') {
         if (!this.state.displayImage) {
           image = imageuploader
         } else {
-          image = <div align="center">  <img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
+          image = <div className='aCenter'>  
+                    <img src={this.state.displayImage} alt="" className='wh100px'/>
+                    <img src={deleteIcon} className='width25 height25 cancelIcon' onClick={this.cancelImageClick.bind(this)} alt="" />
+                  </div>
         }
       } else if (this.props.dataid.imagebanner) {
-        image = <div align="center">
-          <p></p><img src={path + this.props.dataid.teamLogo} height="100px" width="100px" alt="" />
-          <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
-        </div>
+        image = <div className='aCenter'>
+                  <img src={path + this.props.dataid.teamLogo} className='wh100px' alt="" />
+                  <img src={deleteIcon} className='width25 height25 cancelIcon' onClick={this.cancelImageClick.bind(this)} alt="" />
+                </div>
       }
       else {
         if (!this.state.displayImage) {
           image = imageuploader
         } else {
-          image = <div align="center"><img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
+          image = <div className='aCenter'>
+                    <img src={this.state.displayImage} alt="" className='wh100px' />
+                    <img src={deleteIcon} className='width25 height25 cancelIcon' onClick={this.cancelImageClick.bind(this)} alt="" />
+                  </div>
         }
       }
     } else {
-      if (!this.state.displayImage) {
-        image = imageuploader
-      } else {
-        image = <div><img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-          <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
-      }
+        if (!this.state.displayImage) {
+          image = imageuploader
+        } else {
+          image = <div>
+                    <img src={this.state.displayImage} alt="" className='wh100px' />
+                    <img src={deleteIcon} className='width25 height25 cancelIcon' onClick={this.cancelImageClick.bind(this)} alt="" />
+                  </div>
+        }
     }
 
     return (
       <Container>
-        <div style={{ float: "right", margin: "15px" }}>
+        <div className='float-right margin15'>
           <Modal isOpen={this.props.isOpen}  >
             <ModalHeader toggle={this.closeModal} >Team</ModalHeader>
             <ModalBody>
@@ -198,12 +206,10 @@ class AddTeam extends Component {
                 <FormGroup>
                   <Label for="teamName">Team Name</Label>
                   <Input type="text" name="teamName" id="teamName" placeholder="Team Name" defaultValue={this.props.dataid ? this.props.dataid.teamName : ""} onChange={this.inputChangeHandler.bind(this)} />
-                  <span style={{ color: "red" }}>{this.state.fieldsErrors.teamName}</span>
-                  {(this.state.teamName === '' && this.state.submitted) ? <p style={{ color: "red" }}>* Required Teamname</p> : null}
+                  <span className='alert'>{this.state.fieldsErrors.teamName}</span>
+                  {(this.state.teamName === '' && this.state.submitted) ? <p className='alert'>* Required Teamname</p> : null}
                 </FormGroup>
                 {image}
-                <div align="center">
-                </div>
               </Form>
             </ModalBody>
             <ModalFooter>

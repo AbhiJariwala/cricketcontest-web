@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as  matchPlayerScoreAction from '../../../../action/matchPlayerScore';
-
+import '../../style.css';
 class viewplayerscore extends React.Component {
   componentWillMount = () => {
     this.getTournamentMatch();
@@ -24,33 +24,33 @@ class viewplayerscore extends React.Component {
             <Table >
               <tbody>
                 <tr>
-                  <th style={{ textAlign: "center" }}>Runs</th>
+                  <th className="textAlian">Runs</th>
                   <th>{data.run}</th>
                 </tr>
                 <tr textAlign="center">
-                  <th style={{ textAlign: "center" }}>six</th>
+                  <th className="textAlian">six</th>
                   <td>{data.six}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}  >Four</th>
+                  <th className="textAlian"  >Four</th>
                   <td>{data.four}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}>wicket</th>
+                  <th className="textAlian">wicket</th>
                   <td>{data.wicket}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}>Stumping</th>
+                  <th className="textAlian">Stumping</th>
                   <td>{data.stumping}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}>catch</th>
+                  <th className="textAlian">catch</th>
                   <td>{data.catch}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <th style={{ textAlign: "center" }}>Point</th>
+                  <th className="textAlian">Point</th>
                   <td>{data.score}</td>
                 </tr>
               </tfoot>
@@ -74,7 +74,7 @@ class viewplayerscore extends React.Component {
         visible={this.props.visible}
         onOk={this.props.handleOk}
         onCancel={this.props.onCancel}>
-        {(data) ? count !== data.length ? data : <p style={{ fontSize: "20px", color: "grey", textAlign: "center" }}>Match Remaining</p> : ""}
+        {(data) ? count !== data.length ? data : <p className="noscorefound">Match Remaining</p> : ""}
       </Modal>
     </div >
     );

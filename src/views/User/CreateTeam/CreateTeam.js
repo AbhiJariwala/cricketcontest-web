@@ -9,6 +9,7 @@ import * as  CreateTeamAction from '../../../action/user/Createteam';
 import UserPanel from '../../UserPanel/userPanel';
 import path from '../../../path';
 import './createTeam.css';
+import '../style.css';
 
 let teamId = [];
 let urlImage = path + "UserSideBackgroundImage.jpg";
@@ -37,12 +38,10 @@ class CreateTeam extends Component {
             })
         }
     }
-
     minusplayerteam = (playerId) => {
         teamId.splice(teamId.indexOf(parseInt(teamId.filter(teamid => playerId === teamid), 10)), 1);
         this.setState({ Myteam: teamId });
     }
-
     createteam = (E) => {
         E.preventDefault();
         const userId = localStorage.getItem("userId");
@@ -59,7 +58,6 @@ class CreateTeam extends Component {
         })
         this.props.history.push('/Myteam');
     }
-
     render() {
         let selectedTournamentBanner = "";
         if (this.props.SelectedTournament[0]) {
@@ -74,18 +72,18 @@ class CreateTeam extends Component {
                 return (
                     team.player.map(player => {
                         return (
-                            <Card key={player.id} body style={{ borderRadius: "10px" }}>
-                                <div className="row" style={{ textAlign: "center" }}>
+                            <Card key={player.id} body className="cardRadius">
+                                <div className="row textAlian" >
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 ">
-                                        <img alt="demo" src={path + "thumbnail/" + player.playerImage} style={{ width: "150px" }} ></img>
+                                        <img alt="demo" src={path + "thumbnail/" + player.playerImage} className="imagewidth" ></img>
                                     </div>
-                                    <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7" style={{ margin: "auto", float: "center" }}>
+                                    <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 FullNameDiv" >
                                         <p>{player.firstName + " " + player.lastName}</p>
                                     </div>
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                         {(this.state.Myteam.length > 0 && this.state.Myteam.includes(player.id)) ?
-                                            <img alt="" onClick={() => this.minusplayerteam(player.id)} style={{ width: 45, cursor: "pointer" }} src={path + "minus.png"}></img>
-                                            : <img alt="" onClick={() => this.addplayerteam(player.id)} style={{ width: 45, cursor: "pointer" }} src={path + "plus.png"}></img>
+                                            <img alt="" onClick={() => this.minusplayerteam(player.id)} className="minusplusimg" src={path + "minus.png"}></img>
+                                            : <img alt="" onClick={() => this.addplayerteam(player.id)} className="minusplusimg" src={path + "plus.png"}></img>
                                         }
                                     </div>
                                 </div>
@@ -102,11 +100,11 @@ class CreateTeam extends Component {
                         if (this.state.Myteam.length > 0 && this.state.Myteam.includes(player.id)) {
                             return (
                                 <Col md={4} key={player.id}>
-                                    <Card style={{ height: "180px", textAlign: "center" }}>
+                                    <Card className="seletedplayer">
                                         <CardBody>
-                                            <img alt="Cricket Contest" src={path + "thumbnail/" + player.playerImage} height="100px" width="100px" ></img>
+                                            <img alt="Cricket Contest" src={path + "thumbnail/" + player.playerImage}  ></img>
                                             <p>{player.firstName + " " + player.lastName}</p>
-                                            <p style={{ marginTop: "-15px" }}>{player.description}</p>
+                                            <p className="playerdiscription">{player.description}</p>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -119,9 +117,9 @@ class CreateTeam extends Component {
         }
 
         return (
-            <div style={{ backgroundImage: `url(${urlImage})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", height: "100vh", backgroundSize: 'cover', paddingTop: '62px' }}>
+            <div  style={{ backgroundImage: `url(${urlImage})`}} className="containdiv" >
                 <UserPanel></UserPanel>
-                <div className="container" style={{ overflow: 'auto', height: 'calc(100vh - 62px)' }}>
+                <div className="container containdiv2" >
                     <div className="row">
                         <div className="col-md-6" style={{}}>
                             <Row>
@@ -129,23 +127,23 @@ class CreateTeam extends Component {
                             </Row>
                         </div>
                         <div className="col-sm-6" >
-                            <Card style={{ background: "linear-gradient(104deg, #3c3c3c 47%, #323232" }}>
+                            <Card className="headercard">
                                 <CardBody >
-                                    <div className="row" style={{ color: "white" }} >
+                                    <div className="row headerCardTextColur"  >
                                         <div className="headerContainer_1725f headerFixed_38df7">
                                             <div>
                                                 <div>
                                                     <div className="container_aa549">
-                                                        <div className="maxInfoText_13e5b" style={{ fontSize: "20px" }}>You can Select Maximum 11 players from below List</div>
+                                                        <div className="maxInfoText_13e5b heraderheading" >You can Select Maximum 11 players from below List</div>
                                                         <div className="infoContent_0b612">
                                                             <div>
-                                                                <div style={{ display: "inline-block" }}>
+                                                                <div className="headerimage">
                                                                     <img className="card-img" src={path + "thumbnail/" + selectedTournamentBanner} alt="true" />
                                                                 </div>
                                                             </div>
                                                             <div >
-                                                                <div style={{ fontSize: "20px" }}>Players</div>
-                                                                <div style={{ fontSize: "20px", marginLeft: "14px" }}>{this.state.Myteam.length + "/11"}</div>
+                                                                <div className="heraderheading">Players</div>
+                                                                <div className="heraderheading headerplayercounting" >{this.state.Myteam.length + "/11"}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -153,7 +151,7 @@ class CreateTeam extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row" style={{ background: "#e6e6e6" }}>
+                                    <div className="row playershowdiv" >
                                         <Nav tabs>
                                             <NavItem>
                                                 <NavLink>Players</NavLink>
@@ -171,7 +169,7 @@ class CreateTeam extends Component {
                                             </TabPane>
                                         </TabContent>
                                     </div>
-                                    <div style={{ float: "right" }}>
+                                    <div className="craeteTeamButton">
                                         {this.state.Myteam.length === 11 ?
                                             <Button onClick={this.createteam.bind(Event)} >Create Team</Button>
                                             : <Button disabled>Create Team</Button>}

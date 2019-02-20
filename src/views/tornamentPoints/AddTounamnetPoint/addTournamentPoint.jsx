@@ -385,16 +385,16 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div>
-                            <img onClick={() => this.addBox("Runs")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Runs")} alt="plus" src={Path + "/plusPoints.png"} className='width20px height20 mr5'></img>
                             {this.state.runBox >= 2
-                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Runs")} alt="minus" src={Path + "/minusPoints.jpeg"} className='width20px height20'></img>
                                 : ""}
                         </div>
                         : ""}
-                    <div style={{ marginTop: "5px" }}>
-                        <input type="number" name={"from"} style={{ width: "20%" }} onChange={(e) => this.runChangeHandler(e, value)} />
-                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} style={{ width: "20%" }} onChange={(e) => this.runChangeHandler(e, value)} />
-                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} style={{ width: "20%" }} onChange={(e) => this.runChangeHandler(e, value)} />
+                    <div className='mt5'>
+                        <input type="number" name={"from"} className='width20' onChange={(e) => this.runChangeHandler(e, value)} />
+                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} className='width20' onChange={(e) => this.runChangeHandler(e, value)} />
+                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} className='width20' onChange={(e) => this.runChangeHandler(e, value)} />
                     </div>
                 </div>
             );
@@ -409,16 +409,16 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Six")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Six")} alt="plus" src={Path + "/plusPoints.png"} className='width20px height20 mr5'></img>
                             {this.state.sixBox >= 2
-                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Six")} alt="minus" src={Path + "/minusPoints.jpeg"} className='width20px height20'></img>
                                 : ""}
                         </div>
                         : ""}
-                    <div style={{ marginTop: "5px" }}>
-                        <input type="number" name={"from"} style={{ width: "20%" }} onChange={(e) => this.sixChangeHandler(e, value)} />
-                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} style={{ width: "20%" }} onChange={(e) => this.sixChangeHandler(e, value)} />
-                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} style={{ width: "20%" }} onChange={(e) => this.sixChangeHandler(e, value)} />
+                    <div className='mt5'>
+                        <input type="number" name={"from"} className='width20' onChange={(e) => this.sixChangeHandler(e, value)} />
+                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} className='width20' onChange={(e) => this.sixChangeHandler(e, value)} />
+                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} className='width20' onChange={(e) => this.sixChangeHandler(e, value)} />
                     </div>
                 </div>
             );
@@ -433,16 +433,16 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Four")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Four")} alt="plus" src={Path + "/plusPoints.png"} className='width20px height20 mr5'></img>
                             {this.state.fourBox >= 2
-                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Four")} alt="minus" src={Path + "/minusPoints.jpeg"} className='width20px height20'></img>
                                 : ""}
                         </div>
                         : ""}
-                    <div style={{ marginTop: "5px" }}>
-                        <input type="number" name={"from"} style={{ width: "20%" }} onChange={(e) => this.fourChangeHandler(e, value)} />
-                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} style={{ width: "20%" }} onChange={(e) => this.fourChangeHandler(e, value)} />
-                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} style={{ width: "20%" }} onChange={(e) => this.fourChangeHandler(e, value)} />
+                    <div className='mt5'>
+                        <input type="number" name={"from"} className='width20'  onChange={(e) => this.fourChangeHandler(e, value)} />
+                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} className='width20' onChange={(e) => this.fourChangeHandler(e, value)} />
+                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} className='width20' onChange={(e) => this.fourChangeHandler(e, value)} />
                     </div>
                 </div>
             );
@@ -457,16 +457,16 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Wicket")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Wicket")} alt="plus" src={Path + "/plusPoints.png"} className='width20px height20 mr5'></img>
                             {this.state.wicketBox >= 2
-                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Wicket")} alt="minus" src={Path + "/minusPoints.jpeg"} className='width20px height20'></img>
                                 : ""}
                         </div>
                         : ""}
-                    <div style={{ marginTop: "5px" }}>
-                        <input type="number" name={"from"} style={{ width: "20%" }} onChange={(e) => this.wicketChangeHandler(e, value)} />
-                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} style={{ width: "20%" }} onChange={(e) => this.wicketChangeHandler(e, value)} />
-                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} style={{ width: "20%" }} onChange={(e) => this.wicketChangeHandler(e, value)} />
+                    <div className='mt5'>
+                        <input type="number" name={"from"} className='width20' onChange={(e) => this.wicketChangeHandler(e, value)} />
+                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} className='width20' onChange={(e) => this.wicketChangeHandler(e, value)} />
+                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} className='width20' onChange={(e) => this.wicketChangeHandler(e, value)} />
                     </div>
                 </div>
             );
@@ -481,16 +481,16 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Stumping")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Stumping")} alt="plus" src={Path + "/plusPoints.png"} className='width20px height20 mr5'></img>
                             {this.state.stumpingBox >= 2
-                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Stumping")} alt="minus" src={Path + "/minusPoints.jpeg"} className='width20px height20'></img>
                                 : ""}
                         </div>
                         : ""}
-                    <div style={{ marginTop: "5px" }}>
-                        <input type="number" name={"from"} style={{ width: "20%" }} onChange={(e) => this.stumpingChangeHandler(e, value)} />
-                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} style={{ width: "20%" }} onChange={(e) => this.stumpingChangeHandler(e, value)} />
-                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} style={{ width: "20%" }} onChange={(e) => this.stumpingChangeHandler(e, value)} />
+                    <div className='mt5'>
+                        <input type="number" name={"from"} className='width20' onChange={(e) => this.stumpingChangeHandler(e, value)} />
+                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} className='width20' onChange={(e) => this.stumpingChangeHandler(e, value)} />
+                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} className='width20' onChange={(e) => this.stumpingChangeHandler(e, value)} />
                     </div>
                 </div>
             );
@@ -505,16 +505,16 @@ class ModalExample extends React.Component {
                 <div key={value}>
                     {value === 0
                         ? <div >
-                            <img onClick={() => this.addBox("Catch")} alt="plus" src={Path + "/plusPoints.png"} style={{ width: "20px", height: "20px", marginRight: "5px" }}></img>
+                            <img onClick={() => this.addBox("Catch")} alt="plus" src={Path + "/plusPoints.png"} className='width20px height20 mr5'></img>
                             {this.state.catchBox >= 2
-                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src={Path + "/minusPoints.jpeg"} style={{ width: "20px", height: "20px" }}></img>
+                                ? <img onClick={() => this.removeBox("Catch")} alt="minus" src={Path + "/minusPoints.jpeg"} className='width20px height20'></img>
                                 : ""}
                         </div>
                         : ""}
-                    <div style={{ marginTop: "5px" }}>
-                        <input type="number" name={"from"} style={{ width: "20%" }} onChange={(e) => this.catchChangeHandler(e, value)} />
-                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} style={{ width: "20%" }} onChange={(e) => this.catchChangeHandler(e, value)} />
-                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} style={{ width: "20%" }} onChange={(e) => this.catchChangeHandler(e, value)} />
+                    <div className='mt5'>
+                        <input type="number" name={"from"} className='width20' onChange={(e) => this.catchChangeHandler(e, value)} />
+                        &nbsp;<b>to</b>&nbsp;<input type="number" name={"to"} className='width20' onChange={(e) => this.catchChangeHandler(e, value)} />
+                        &nbsp;<b>=</b>&nbsp;<input type="number" name={"point"} className='width20' onChange={(e) => this.catchChangeHandler(e, value)} />
                     </div>
                 </div>
             );
@@ -531,38 +531,38 @@ class ModalExample extends React.Component {
                                 <Input
                                     type="select" name="tournamentId" id="tournamentName"
                                     onChange={this.tournamentNameChangedHandler}>
-                                    <option value="" disabled="" style={{ display: "none" }}>Select Tournament</option>
+                                    <option value="" disabled="" className='dNone'>Select Tournament</option>
                                     {tournamentNameOption}
                                 </Input>
-                                <center><span style={{ color: "red" }}>{this.state.tournamentError}</span></center>
+                                <center><span className='alert'>{this.state.tournamentError}</span></center>
                             </FormGroup>
                         </Form>
-                        <center><span style={{ color: "red" }}>{this.state.fieldsError}</span></center>
+                        <center><span className='alert'>{this.state.fieldsError}</span></center>
                         {this.state.runBox
-                            ? <div style={{ textAlign: "center", marginTop: "10px" }}>
+                            ? <div className='header-center mt10'>
                                 <h6>Runs</h6>{renderRunBox}
                             </div> : ""}
                         {this.state.sixBox
-                            ? <div style={{ textAlign: "center", marginTop: "10px" }}>
+                            ? <div className='header-center mt10'>
                                 <h6>Six</h6>{renderSixBox}
                             </div> : ""}
                         {this.state.fourBox
-                            ? <div style={{ textAlign: "center", marginTop: "10px" }}>
+                            ? <div className='header-center mt10'>
                                 <h6>Four</h6>{renderFourBox}
                             </div> : ""}
                         {this.state.wicketBox
-                            ? <div style={{ textAlign: "center", marginTop: "10px" }}>
+                            ? <div className='header-center mt10'>
                                 <h6>Wicket</h6>{renderWicketBox}
                             </div> : ""}
                         {this.state.stumpingBox
-                            ? <div style={{ textAlign: "center", marginTop: "10px" }}>
+                            ? <div className='header-center mt10'>
                                 <h6>Stumping</h6>{renderStumpingBox}
                             </div> : ""}
                         {this.state.catchBox
-                            ? <div style={{ textAlign: "center", marginTop: "10px" }}>
+                            ? <div className='header-center mt10'>
                                 <h6>Catch</h6>{renderCatchBox}
                             </div> : ""}
-                        <div style={{ textAlign: "center" }}>
+                        <div className='header-center'>
                             {this.state.runBox === 0
                                 ? <Button color="info" onClick={() => this.addBox("Runs")}>Add Runs</Button> : ""}
                             {this.state.sixBox === 0
@@ -570,7 +570,7 @@ class ModalExample extends React.Component {
                             {this.state.fourBox === 0
                                 ? <Button color="info" onClick={() => this.addBox("Four")}>Add Four</Button> : ""}
                         </div>
-                        <div style={{ textAlign: "center" }}>
+                        <div className='header-center'>
                             {this.state.wicketBox === 0
                                 ? <Button color="info" onClick={() => this.addBox("Wicket")}>Add Wicket</Button> : ""}
                             {this.state.stumpingBox === 0
@@ -586,6 +586,8 @@ class ModalExample extends React.Component {
                     </ModalFooter>
                 </Modal>
             </Container>
+
+            
         );
     }
 }

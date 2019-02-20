@@ -6,7 +6,11 @@ import { Container, Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, Fo
 
 import * as TournamentAction from '../../../action/Tournament';
 import path from '../../../path';
+
+import '../../view.css';
+
 const deleteIcon = require('../../../Image/delete.jpg');
+
 
 class AddTournament extends Component {
   state = {
@@ -180,68 +184,80 @@ class AddTournament extends Component {
 
   render() {
     let image;
-    let imageuploader = <ImageUploader withIcon={true} buttonText="Select Images" imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
-      onChange={this.imageChangedHandler.bind(this)}
-      maxFileSize={5242880}
-      withLabel={false}
-      singleImage={true}
-      accept={"image/*"} />
+    let imageuploader = <ImageUploader  
+                              withIcon={true} 
+                              buttonText="Select Images" 
+                              imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
+                              onChange={this.imageChangedHandler.bind(this)}
+                              maxFileSize={5242880}
+                              withLabel={false}
+                              singleImage={true}
+                              accept={"image/*"} />
 
     if (this.props.dataid !== null) {
       if (this.props.dataid.tournamentBanner === "defaultTournament.png") {
         if (!this.state.displayImage) {
           image = imageuploader
         } else {
-          image = <div align="center">  <img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
+          image = <div className='aCenter'>  
+                    <img src={this.state.displayImage} alt="" className='wh100px' />
+                    <img src={deleteIcon} className='width25 height25 cancelIcon' onClick={this.cancelImageClick.bind(this)} alt="" />
+                  </div>
         }
       }
       else if (this.props.dataid.imagebanner) {
-        image = <div align="center">
-          <p></p><img src={path + this.props.dataid.tournamentBanner} height="100px" width="100px" alt="" />
-          <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
-        </div>
+        image = <div className='aCenter'>
+                  <img src={path + this.props.dataid.tournamentBanner} className='wh100px' alt="" />
+                  <img src={deleteIcon} className='width25 height25 cancelIcon' onClick={this.cancelImageClick.bind(this)} alt="" />
+                </div>
       } else {
         if (!this.state.displayImage) {
           image = imageuploader
         } else {
-          image = <div align="center">  <img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-            <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
+          image = <div className='aCenter'>  
+                    <img src={this.state.displayImage} alt="" className='wh100px' />
+                    <img src={deleteIcon} className='width25 height25 cancelIcon' onClick={this.cancelImageClick.bind(this)} alt="" />
+                  </div>
         }
       }
     } else {
       if (!this.state.displayImage) {
         image = imageuploader
       } else {
-        image = <div align="center">  <img src={this.state.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-          <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" /></div>
+        image = <div className='aCenter'>  
+                  <img src={this.state.displayImage} alt=""  className='wh100px' />
+                  <img src={deleteIcon} className='width25 height25 cancelIcon'  onClick={this.cancelImageClick.bind(this)} alt="" />
+                </div>
       }
     }
     return (
       <Container>
-        <div style={{ float: "right", margin: "15px" }}>
+        <div className='float-right margin15'>
           <Modal isOpen={this.props.isOpen}  >
             <ModalHeader toggle={this.props.toggle} >{this.props.dataid ? " Update Tournament" : "Tournament"} </ModalHeader>
             <ModalBody>
               <Form >
                 <FormGroup>
                   <Label for="tournamentName">Tournament Name</Label>
-                  <Input type="text"
-                    name="tournamentName"
-                    id="tournamentName"
-                    defaultValue={this.props.dataid ? this.props.dataid.tournamentName : ""}
-                    placeholder="Tournament Name"
-                    onChange={this.inputChangeHandler.bind(this)} />
-                  <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentName}</span>
+                  <Input  type="text"
+                          name="tournamentName"
+                          id="tournamentName"
+                          defaultValue={this.props.dataid ? this.props.dataid.tournamentName : ""}
+                          placeholder="Tournament Name"
+                          onChange={this.inputChangeHandler.bind(this)} />
+                  <span className='alert'>{this.state.fieldsErrors.tournamentName}</span>
                 </FormGroup>
                 <FormGroup>
                   <Label for="tournamentDescription">Tournament Description</Label>
-                  <Input type="textarea" name="tournamentDescription" id="tournamentDescription"
-                    placeholder="Description"
-                    defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""}
-                    onChange={this.inputChangeHandler.bind(this)}
-                    maxLength="275" style={{ wordBreak: "normal" }} />
-                  <span style={{ color: "red" }}>{this.state.fieldsErrors.tournamentDescription}</span>
+                  <Input  type="textarea" 
+                          name="tournamentDescription" 
+                          id="tournamentDescription"
+                          placeholder="Description"
+                          defaultValue={this.props.dataid ? this.props.dataid.tournamentDescription : ""}
+                          onChange={this.inputChangeHandler.bind(this)}
+                          maxLength="275" 
+                          className='wordBreak' />
+                  <span className='alert'>{this.state.fieldsErrors.tournamentDescription}</span>
                 </FormGroup>
                 {image}
               </Form>
