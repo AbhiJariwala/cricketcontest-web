@@ -8,6 +8,7 @@ import { PanelHeader } from "components";
 import path from '../../path';
 import AddTeam from '../Team/AddTeam/AddTeam';
 import * as TeamAction from '../../action/Team';
+import '../view.css';
 
 import '../view.css';
 

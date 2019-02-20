@@ -267,7 +267,7 @@ class AddPlayer extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Description</Label>
-                                    <Input type="textarea" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} maxLength="100" style={{ wordBreak: "normal" }} placeholder="description" />
+                                    <Input type="text" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} maxLength="100" style={{ wordBreak: "normal" }} placeholder="description" />
                                     <span style={{ color: "red" }}>{this.state.fieldsErrors.description}</span>
                                 </FormGroup>
                                 <FormGroup>

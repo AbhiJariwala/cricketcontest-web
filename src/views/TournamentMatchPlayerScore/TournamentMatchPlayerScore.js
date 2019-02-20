@@ -23,7 +23,9 @@ class TournamenMatchPlayerScore extends Component {
             matchPlayerScore: [],
             playes: [],
             teamName: "",
-            score: []
+            score: [],
+            tournamentId: 0,
+            matchId:''
         };
         this.toggleMatchPlayerScore = this.toggleMatchPlayerScore.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -58,10 +60,12 @@ class TournamenMatchPlayerScore extends Component {
         this.toggleModal();
     }
 
-    getTournamentMatchPlayerScoreByMatch(tournamentId, teamId) {
+    getTournamentMatchPlayerScoreByMatch(tournamentId, teamId,tournamentMatchId) {
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
         this.setState({
-            visible: true
+            visible: true,
+            tournamentId: tournamentId,
+            matchId:tournamentMatchId
         })
     }
 
@@ -92,7 +96,7 @@ class TournamenMatchPlayerScore extends Component {
                                     <td>{start++}</td>
                                     <td>{tournamentmatch.Tournament.tournamentName}</td>
                                     <td>
-                                        <Button style={{ width: "150px", float: "right" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id)} name="team1">
+                                        <Button style={{ width: "150px", float: "right" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id,matchScore.tournamentMatchId)} name="team1">
                                             {tournamentmatch.Team1[0].teamName}
                                         </Button>
                                     </td>
@@ -100,7 +104,7 @@ class TournamenMatchPlayerScore extends Component {
                                         <b>VS</b>
                                     </td>
                                     <td>
-                                        <Button style={{ width: "150px", float: "left" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id)} name="team2">
+                                        <Button style={{ width: "150px", float: "left" }} color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id,matchScore.tournamentMatchId)} name="team2">
                                             {tournamentmatch.Team2[0].teamName}
                                         </Button>
                                     </td>
@@ -134,6 +138,7 @@ class TournamenMatchPlayerScore extends Component {
                                                 <Panel header={p.firstName + '  ' + p.lastName} key={p.id}>
                                                     {(score.length > 0) ? score.map((data, i) => {
                                                         return (data !== '') ? (
+                                                            (p.id === data.playerId && this.state.tournamentId === data.tournamentId && this.state.matchId === data.tournamentMatchId) ?(
                                                             <Table key={i}>
                                                                 <tbody>
                                                                     <tr>
@@ -166,6 +171,7 @@ class TournamenMatchPlayerScore extends Component {
                                                                     </tr>
                                                                 </tbody>
                                                             </Table>
+                                                            ):null
                                                         ) : null
                                                     }) : <p>Player score not available</p>}
                                                 </Panel>

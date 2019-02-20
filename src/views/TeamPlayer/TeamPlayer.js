@@ -11,7 +11,6 @@ import './TeamPlayer.css'
 import * as teamPlayerAction from '../../action/teamPlayer';
 import AddTeamPlayer from './AddTeamPlayer/AddTeamPlayer';
 import '../view.css';
-
 const Panel = Collapse.Panel;
 let notNext = 0;
 
@@ -146,7 +145,7 @@ class TeamPlayer extends Component {
                 return player.push(playerdata.Players.map(p => {
                     return <ul key={p.id}>
                         <li>{p.firstName}{' '}{p.lastName}
-                            <Popconfirm title="Are you sure remove this player from this team?" okText="Yes" cancelText="No" onConfirm={this.DeleteHandler.bind(this, playerdata.id)}>
+                            <Popconfirm title="Are you sure you want to remove this player from this team?" okText="Yes" cancelText="No" onConfirm={this.DeleteHandler.bind(this, playerdata.id)}>
                                 <AntButton style={{ left: "90%", position: "sticky" }} type="danger" icon="delete" />
                             </Popconfirm>
                         </li>

@@ -113,28 +113,28 @@ class tournament extends Component {
     });
   }
   toggleTeam = () => {
-      this.setState({
+    this.setState({
       visible: !this.state.visible
     });
   }
 
   ShowTeam = (tournament) => {
     this.props.action.Team.fetchTeamAction();
-    if(tournament.Teams===undefined){
-        let Teams=[];
-        tournament={...tournament,Teams};
+    if (tournament.Teams === undefined) {
+      let Teams = [];
+      tournament = { ...tournament, Teams };
     }
     this.setState({
-          tournament: tournament,
-          visible: true
-        })
+      tournament: tournament,
+      visible: true
+    })
   }
 
   handleDelete = (tournamnetId, team) => {
 
     const { forRender } = this.state;
     message.success("successfully deleted");
-    this.toggleTeam(); 
+    this.toggleTeam();
     let updatedBy = parseInt(this.state.updatedBy, 10);
 
     team.map(teamId => {
@@ -142,13 +142,11 @@ class tournament extends Component {
       return teamId;
     })
 
-    this.setState({ visible: true, forRender:!forRender });
+    this.setState({ visible: true, forRender: !forRender });
   }
 
   Edittoggle = (data) => {
-    if (!data) {
-      alert("no data");
-    } else {
+    if (data) {
       const tObject = {
         id: data.id,
         tournamentName: data.tournamentName,
@@ -185,7 +183,10 @@ class tournament extends Component {
               })
             }
             else {
-              alert('Can\'t delete tournament ');
+              confirmAlert({
+                message: 'You cannot delete this tournament as it is being processed! ',
+                buttons: [{ label: 'Ok' }]
+                })
             }
           }
           return Empty;
@@ -240,7 +241,7 @@ class tournament extends Component {
           <td>{data.tournamentName}</td>
           <th onClick={() => this.ShowTeam(data)}><Button color="info">Teams</Button></th>
           <td><img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} className='width25'></img>
-              <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} className='width25'></img>
+            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} className='width25'></img>
           </td>
         </tr>
       })
@@ -265,7 +266,7 @@ class tournament extends Component {
             forRender={this.state.forRender}
           />) : null}
         <div className="content"  >
-          <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid}/>
+          <AddTournament isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} />
           <div className='headerdiv'>
             <div className='pagenumber'>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
@@ -296,15 +297,15 @@ class tournament extends Component {
               </tbody>
             </Table>
             : ""}
-            <ButtonGroup>
-              {this.state.pageno !== 0 ?
-                <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button>
-                : ""}
-              &nbsp;
+          <ButtonGroup>
+            {this.state.pageno !== 0 ?
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Prev">Prev</Button>
+              : ""}
+            &nbsp;
               {notNext >= this.state.parpageRecord ?
-                <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
-                ""}
-            </ButtonGroup>
+              <Button color="info" onClick={this.changeRecord.bind(Event)} value="Next">Next</Button> :
+              ""}
+          </ButtonGroup>
         </div>
       </div>
     );

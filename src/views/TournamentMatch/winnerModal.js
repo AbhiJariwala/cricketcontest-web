@@ -10,7 +10,7 @@ class winnerModal extends Component {
                 {
                     (data.winningTeamId === 0) ? (
                         <div style={{ textAlign: 'center' }}>
-                            <h5>winning Team is not found</h5>
+                            <h5>Winning Team is not decided</h5>
                             <br />
                         </div>
                     ) : (

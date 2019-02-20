@@ -22,13 +22,16 @@ class AddTournament extends Component {
       tournamentTeams: [],
       createdBy: 0,
       submitted: false,
-      noCallNext: 0
+      noCallNext: 0,
+      checkAll: false
     }
   }
 
   componentWillMount = () => {
     const userId = localStorage.getItem("userId");
     this.setState({ createdBy: userId });
+    let { checkAll } = this.props;
+    this.setState({ checkAll: !checkAll });
   }
 
   componentDidMount = () => {
@@ -42,23 +45,21 @@ class AddTournament extends Component {
   }
 
   AddData = (submitted) => {
-    const {  teams } = this.state;
-    let  tournamentIdd=this.props.tournament.id;
+    const { teams } = this.state;
+    let tournamentIdd = this.props.tournament.id;
     if (submitted && teams.length > 0) {
       let newTeams = this.props.TeamsData.filter((team) => {
         return teams.includes(team.id)
       })
-
       newTeams.map((team) => {
         let id = team.id;
         this.props.action.TournamentTeam.AddTournamentTeamAction({ tournamentId: tournamentIdd, teamId: id, createdBy: this.state.createdBy }, team);
         return true;
       });
-
       this.setState({ tournamentId: '', teams: [], submitted: false, noCallNext: 0 });
-
       this.props.refresh();
-      this.props.toggle("1");
+      this.props.toggle("1", this.state.checkAll);
+
     }
   }
 
@@ -81,8 +82,8 @@ class AddTournament extends Component {
       })
     }
 
-    const {  teams } = this.state;
-    
+    const { teams } = this.state;
+
     return (
       <Container>
         <div className="containerDiv">
