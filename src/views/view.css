@@ -113,3 +113,24 @@
     margin-top: 100px;
     width: 96%;
 }
+
+.spanError{
+    color: red;
+}
+
+.wordBreak{
+    word-break: normal;
+}
+
+.deleteImage{
+    margin-bottom: 80px;
+    margin-left: -20px;
+    opacity: 0.7;
+    height: 25px;
+    width: 25px;
+}
+
+.selectImage{
+    height: 100px;
+    width: 100px;
+}

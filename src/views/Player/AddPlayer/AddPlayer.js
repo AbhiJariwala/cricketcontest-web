@@ -5,9 +5,9 @@ import { Button, ModalFooter, Modal, ModalHeader, ModalBody, Form, FormGroup, La
 import ImageUploader from 'react-images-upload'
 import { DatePicker } from 'antd';
 import moment from 'moment';
+
 import * as PlayerAction from '../../../action/Player';
 import path from '../../../path';
-
 const deleteIcon = require('../../../Image/delete.jpg');
 
 class AddPlayer extends Component {
@@ -220,7 +220,7 @@ class AddPlayer extends Component {
     render() {
         return (
             <div>
-                <div style={{ float: "right", margin: "15px" }}>
+                <div>
                     <Modal isOpen={this.props.isOpen}  >
                         <ModalHeader toggle={this.props.toggle}>Player</ModalHeader>
                         <ModalBody>
@@ -228,12 +228,12 @@ class AddPlayer extends Component {
                                 <FormGroup>
                                     <Label for="firstName">First Name</Label>
                                     <Input type="text" name="firstName" id="firstName" placeholder="First Name" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.firstName} />
-                                    <span style={{ color: "red" }}>{this.state.fieldsErrors.firstName}</span>
+                                    <span className="spanError">{this.state.fieldsErrors.firstName}</span>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="lastName">Last Name</Label>
                                     <Input type="text" name="lastName" id="lastName" placeholder="Last Name" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.lastName} />
-                                    <span style={{ color: "red" }}>{this.state.fieldsErrors.lastName}</span>
+                                    <span className="spanError">{this.state.fieldsErrors.lastName}</span>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="dob">Date Of Birth</Label> {' '}
@@ -252,7 +252,7 @@ class AddPlayer extends Component {
                                             onChange={this.handleDatePickerChange.bind(this)}
                                         />}
                                     <br />
-                                    <span style={{ color: "red" }}>{this.state.fieldsErrors.dob}</span>
+                                    <span className="spanError">{this.state.fieldsErrors.dob}</span>
                                 </FormGroup>
                                 <FormGroup tag="fieldset">
                                     <Label>Gender</Label>
@@ -267,20 +267,20 @@ class AddPlayer extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Description</Label>
-                                    <Input type="text" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} maxLength="100" style={{ wordBreak: "normal" }} placeholder="description" />
-                                    <span style={{ color: "red" }}>{this.state.fieldsErrors.description}</span>
+                                    <Input type="text" name="description" id="playerDescription" onChange={this.inputChangedHandler.bind(this)} defaultValue={this.state.Player.description} maxLength="100" className="wordBreak" placeholder="description" />
+                                    <span className="spanError">{this.state.fieldsErrors.description}</span>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="image">Player Image</Label>
                                     {(this.state.Player.showimage && this.state.Player.playerImage !== "defaultPlayerImage.png") ?
                                         (this.state.Player.length > 0 || this.state.Player.displayImage === "") ?
                                             <div align="center">
-                                                <img src={path + this.state.Player.playerImage} alt="" style={{ height: "100px", width: "100px" }} />
-                                                <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
+                                                <img src={path + this.state.Player.playerImage} alt="" className="selectImage" />
+                                                <img src={deleteIcon} onClick={this.cancelImageClick.bind(this)} className="deleteImage" alt="" />
                                             </div> :
                                             <div align="center">
-                                                <img src={this.state.Player.displayImage} alt="" style={{ height: "100px", width: "100px" }} />
-                                                <img src={deleteIcon} height="25px" width="25px" onClick={this.cancelImageClick.bind(this)} style={{ marginBottom: "80px", marginLeft: "-20px", opacity: "0.7" }} alt="" />
+                                                <img src={this.state.Player.displayImage} alt="" className="selectImage" />
+                                                <img src={deleteIcon} onClick={this.cancelImageClick.bind(this)} className="deleteImage" alt="" />
                                             </div>
                                         : (<div><ImageUploader
                                             withIcon={true}
@@ -292,7 +292,7 @@ class AddPlayer extends Component {
                                             withLabel={false}
                                             singleImage={true}
                                             accept={"image/*"} />
-                                            <center><span style={{ color: "red" }}>{this.state.fieldsErrors.playerImage}</span></center></div>)
+                                            <center><span className="spanError">{this.state.fieldsErrors.playerImage}</span></center></div>)
                                     }
                                 </FormGroup>
                             </Form>

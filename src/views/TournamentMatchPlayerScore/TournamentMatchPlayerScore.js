@@ -79,17 +79,15 @@ class TournamenMatchPlayerScore extends Component {
 
     render() {
         let tournamentMatch = [];
-        let start = 0;
+        let start = 1;
         const { score } = this.state;
         let runs = 0, six = 0, wicket = 0, stumping = 0, four = 0, Catch = 0, points = 0;
         let matchscore = [];
         let playerscore = [], pscore = [];
         let player = [], ps = ""
-
         if (this.props.MatchPlayerScore.tournamentMatchPlayerScore.length > 0) {
             tournamentMatch = this.props.MatchPlayerScore.tournamentMatchPlayerScore.map(matchScore => {
                 if (this.props.TournamentMatches.allmatchs.length > 0) {
-                    start = 1;
                     return this.props.TournamentMatches.allmatchs.map((tournamentmatch, key) => {
                         if (tournamentmatch.tournamentId === matchScore.tournamentId && tournamentmatch.id === matchScore.tournamentMatchId) {
                             if (!matchscore.includes(tournamentmatch.id)) {
