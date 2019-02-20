@@ -130,7 +130,7 @@
 }
 
 .aCenter{
-    align: center
+    text-align: center
 }
 
 .wh100px{
@@ -186,4 +186,36 @@
 
 .mt10{
     margin-top: 10px;
+}
+.team1Btn{
+    width: 150px;
+    float: right
+}
+.team2Btn{
+    width: 150px;
+    float: left
+}
+.team-one-badge{
+    position:relative;
+    left: 96px;
+    top: -1px;
+}
+    
+.team-two-badge{
+    position:relative;
+    left: -80px;
+    top:-20px;
+}
+.span-error{
+    text-align: center;
+    display: block;
+    color: red;
+}
+.span-display{
+    text-align: center;
+    display: block;
+    color: green;
+}
+.badgeH1{
+    width: 40px
 }
