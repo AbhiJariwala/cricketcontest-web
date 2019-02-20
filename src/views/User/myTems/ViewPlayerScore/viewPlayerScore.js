@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as  matchPlayerScoreAction from '../../../../action/matchPlayerScore';
-
+import '../../style.css';
 class viewplayerscore extends React.Component {
   componentWillMount = () => {
     this.getTournamentMatch();
@@ -32,34 +32,34 @@ class viewplayerscore extends React.Component {
             <Table >
               <tbody>
                 <tr>
-                  <th style={{ textAlign: "center" }}>Runs</th>
-                  <th>{run}</th>
+                  <th className="textAlian">Runs</th>
+                  <th>{data.run}</th>
+                </tr>
+                <tr textAlign="center">
+                  <th className="textAlian">six</th>
+                  <td>{data.six}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}>six</th>
-                  <td>{six}</td>
+                  <th className="textAlian"  >Four</th>
+                  <td>{data.four}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}  >Four</th>
-                  <td>{four}</td>
+                  <th className="textAlian">wicket</th>
+                  <td>{data.wicket}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}>wicket</th>
-                  <td>{wicket}</td>
+                  <th className="textAlian">Stumping</th>
+                  <td>{data.stumping}</td>
                 </tr>
                 <tr>
-                  <th style={{ textAlign: "center" }}>Stumping</th>
-                  <td>{stumping}</td>
-                </tr>
-                <tr>
-                  <th style={{ textAlign: "center" }}>catch</th>
-                  <td>{Catch}</td>
+                  <th className="textAlian">catch</th>
+                  <td>{data.catch}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <th style={{ textAlign: "center" }}>Point</th>
-                  <td>{points}</td>
+                  <th className="textAlian">Point</th>
+                  <td>{data.score}</td>
                 </tr>
               </tfoot>
             </Table>
@@ -87,7 +87,7 @@ class viewplayerscore extends React.Component {
         title="Show Points"
         visible={this.props.visible}
         onCancel={this.props.onCancel}>
-        {(data) ? count !== data.length ? data : <p style={{ fontSize: "20px", color: "grey", textAlign: "center" }}>Match Remaining</p> : ""}
+        {(data) ? count !== data.length ? data : <p className="noscorefound">Match Remaining</p> : ""}
       </Modal>
     </div >
     );

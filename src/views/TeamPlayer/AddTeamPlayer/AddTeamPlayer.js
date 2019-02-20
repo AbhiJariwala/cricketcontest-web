@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { Select } from 'antd';
 import 'antd/dist/antd.css';
-
+import '../../view.css';
 import * as teamPlayerAction from '../../../action/teamPlayer';
 
 const Option = Select.Option;
@@ -122,7 +122,7 @@ class AddTeamPlayer extends Component {
 
         return (
             <Container>
-                <div style={{ float: "right", margin: "15px" }}>
+                <div className='float-right margin15'>
                     <Modal isOpen={this.props.isOpen}>
                         <ModalHeader toggle={this.props.toggle}>Team Player</ModalHeader>
                         <ModalBody>
@@ -130,13 +130,13 @@ class AddTeamPlayer extends Component {
                                 <FormGroup>
                                     <Label for="tournamentName">Tournament Name:</Label>
                                     <Input type="select" name="select" onChange={this.tournamentNameChangeHandler} id="tournamentName">
-                                        <option key="tournament" value="" disabled="" style={{ display: "none" }} >Select Tournament</option>
+                                        <option key="tournament" value="" disabled="" className='dNone'>Select Tournament</option>
                                         {tournamentOption}
                                     </Input>
                                     {(this.state.submitted && this.state.tournamentId === 0) ?
                                         <div>
                                             <br />
-                                            <span style={{ color: "red" }}>
+                                            <span className='alert'>
                                                 Please select a tournament
                                             </span>
                                         </div> : ""}
@@ -144,16 +144,16 @@ class AddTeamPlayer extends Component {
                                 <FormGroup id="ddteam" hidden>
                                     <Label for="teamName">Team Name</Label>
                                     <Input type="select" name="teamName" id="teamName" onChange={this.teamNameChangeHandler} disabled={this.state.tournamentId === 0 ? true : false}>
-                                        <option key="team" value="" disabled="" style={{ display: "none" }}>Select Team</option>
+                                        <option key="team" value="" disabled="" className='dNone'>Select Team</option>
                                         {tournamentTeamOption}
                                     </Input>
                                     <br />
-                                    {(tournamentTeamOption.length < 1) ? (<span style={{ color: "red" }}>
+                                    {(tournamentTeamOption.length < 1) ? (<span className='alert'>
                                         No team added yet!!!
                                     </span>) : ""}
                                     {(this.state.submitted && this.state.teamId === 0 && this.state.tournamentId !== 0) ?
                                         <div>
-                                            <span style={{ color: "red" }}>
+                                            <span className='alert'>
                                                 Please select a team
                                             </span>
                                         </div> : null
@@ -163,7 +163,7 @@ class AddTeamPlayer extends Component {
                                     <Label for="Players">Players</Label>
                                     <Select
                                         mode="multiple"
-                                        style={{ width: '100%' }}
+                                        className='width100'
                                         placeholder="Select Players "
                                         value={this.state.selectedItems}
                                         onChange={this.handleChange}
@@ -173,7 +173,7 @@ class AddTeamPlayer extends Component {
                                     {(this.state.submitted && this.state.selectedItems.length === 0 && this.state.tournamentId !== 0 && this.state.teamId !== 0) ?
                                         <div>
                                             <br />
-                                            <span style={{ color: "red" }}>
+                                            <span className='alert'>
                                                 Please select at least one player
                                             </span>
                                         </div> : null

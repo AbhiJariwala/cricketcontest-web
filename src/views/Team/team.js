@@ -10,6 +10,8 @@ import AddTeam from '../Team/AddTeam/AddTeam';
 import * as TeamAction from '../../action/Team';
 import '../view.css';
 
+import '../view.css';
+
 class Team extends Component {
   constructor(props) {
     super(props);
@@ -130,13 +132,13 @@ class Team extends Component {
       start = this.state.pageno + 1;
       data = this.props.ShowTeam.map((data, key) => {
         notNext = key + 1
-        return <tr key={key} style={{ textAlign: "center" }} >
+        return <tr key={key} className='header-center'>
           <td>{start++}</td>
-          <td><img src={path + "thumbnail/" + data.teamLogo} alt="" ></img></td>
+          <td><img src={path + "thumbnail/" + data.teamLogo} alt="" className='teamLogo'></img></td>
           <td>{data.teamName}</td>
           <td>
-            <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} style={{ width: 25 }} ></img>
-            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} style={{ width: 25 }} ></img>
+            <img src={path + "edit.png"} alt="Edit" onClick={() => this.Edittoggle(data)} value={data.id} className='width25'></img>
+            <img src={path + "delete1.jpg"} alt="Edit" onClick={() => this.btnDeleteClick(data.id)} className='width25'></img>
           </td>
         </tr>
       })
@@ -145,8 +147,8 @@ class Team extends Component {
       <div>
         <PanelHeader size="sm" />
         <div className="content">
-          <AddTeam isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord} >  </AddTeam>
-          <div style={{ marginTop: "50px" }}>
+          <AddTeam isOpen={this.state.modal} toggle={this.toggle} dataid={this.state.Editdataid} nrecord={this.state.parpageRecord}/>
+          <div className='headerdiv'>
             <div className='pagenumber'>
               Show entries<Input type="select" name="select" id="exampleSelect" onChange={this.parpage.bind(Event)}>
                 <option>5</option>
@@ -155,17 +157,17 @@ class Team extends Component {
                 <option>50</option>
                 <option>100</option>
               </Input></div>
-            <div style={{ float: "left" }}>
+            <div className='addbtn'>
               <Button color="info" onClick={this.toggle} >Add</Button>
             </div>
           </div>
           {data ?
             <Table hover>
               <thead className="thead-dark">
-                <tr onClick={this.sortingdata.bind(Event)} style={{ textAlign: "center" }}>
+                <tr onClick={this.sortingdata.bind(Event)} className='header-center'>
                   <th>#</th>
                   <th>Logo</th>
-                  <th style={{ cursor: "pointer" }}>Team</th>
+                  <th className='header-pointer'>Team</th>
                   <th>Action</th>
                 </tr>
               </thead>

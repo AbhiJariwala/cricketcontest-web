@@ -9,7 +9,7 @@ import moment from 'moment';
 import * as TournamentAction from '../../../action/Tournament';
 import * as TeamAction from '../../../action/Team';
 import * as TournamentMatchAction from '../../../action/TournamentMatch';
-import './AddTournamentMatch.css';
+import '../../view.css';
 
 
 class AddTournamentMatch extends Component {
@@ -147,7 +147,7 @@ class AddTournamentMatch extends Component {
   addrecord = (e) => {
     let { tournamentId, team1, team2, date } = this.state;
     if (team1 === '' || team2 === '') {
-      this.setState({ isError: 'All fields are required. Please complete the form.' });
+      this.setState({ isError: '* All fields are required. Please complete the form.' });
 
     }
     else {

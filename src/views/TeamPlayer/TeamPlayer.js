@@ -118,7 +118,7 @@ class TeamPlayer extends Component {
         notNext = key + 1
         return (
             <tbody key={teamplayer.id}>
-                <tr style={{ textAlign: "center" }}  >
+                <tr className='header-center'>
                     <td>{key + this.state.pageno + 1}</td>
                     <td><img src={path + 'thumbnail/' + teamplayer.tournamentBanner} alt="Banner"></img></td>
                     <td>{teamplayer.tournamentName}</td>
@@ -167,7 +167,7 @@ class TeamPlayer extends Component {
                                 return (
                                     <Collapse key={data.TournamentTeam.id} onChange={this.CollapseChangeHandler.bind(this, data.id)} accordion>
                                         <Panel header={data.teamName}>
-                                            {(player.length > 0) ? player : <p className="noPlayers">No Players found</p>}
+                                            {(player.length > 0) ? player : <p className="noTeams">No Players found</p>}
                                         </Panel>
                                     </Collapse>
                                 );
@@ -186,14 +186,14 @@ class TeamPlayer extends Component {
             teamplayerdetails = this.props.tournaments.map((teamplayer, key) => this.renderTable(teamplayer, key))
         }
         else {
-            teamplayerdetails = <tbody><tr><td colSpan="4" className="tCenter">No Record</td></tr></tbody>;
+            teamplayerdetails = <tbody><tr><td colSpan="4" className="header-center">No Record</td></tr></tbody>;
         }
         return (
             <div>
                 <PanelHeader size="sm" />
                 <div className="content">
                     {this.state.modal ? <AddTeamPlayer isOpen={this.state.modal} toggle={this.toggle} /> : null}
-                    <div style={{ marginTop: "50px" }}>
+                    <div className='headerdiv'>
                         <div className='pagenumber'>
                             Show entries
                             <Input type="select" name="select" id="exampleSelect" onChange={this.perPage.bind(Event)}>
@@ -204,16 +204,16 @@ class TeamPlayer extends Component {
                                 <option>100</option>
                             </Input>
                         </div>
-                        <div style={{ float: "left" }}>
+                        <div className='addbtn'>
                             <Button color="info" onClick={this.toggle} >Add</Button>                           
                         </div>
                     </div>
                     <Table hover>
                         <thead className="thead-dark">
-                            <tr style={{ textAlign: "center" }} onClick={this.sortingdata.bind(Event)}>
+                            <tr className='headerdiv' onClick={this.sortingdata.bind(Event)}>
                                 <th>#</th>
                                 <th>Banner</th>
-                                <th style={{ cursor: "pointer" }}>Tournament</th>
+                                <th className='header-pointer'>Tournament</th>
                                 <th>Team</th>
                             </tr>
                         </thead>

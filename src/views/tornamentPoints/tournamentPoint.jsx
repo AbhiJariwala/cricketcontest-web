@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Collapse, Button as AntButton, Modal as AntModal } from 'antd';
 import 'antd/dist/antd.css';
-
+import '../view.css';
 import AddTournamentPoint from './AddTounamnetPoint/addTournamentPoint';
 import * as tournamentPointAction from '../../action/tournamentPoint';
 
@@ -87,7 +87,7 @@ class tournamentPoint extends Component {
       runsArr.push(Object.values(pointJson.Runs));
       runsPoints = runsArr[0].map((run, i) => {
         return (
-          <tr key={i} style={{ textAlign: "center" }}>
+          <tr key={i} className='header-center'>
             <td>{run.from + " - " + run.to}</td>
             <td>{run.point}</td>
           </tr>
@@ -100,7 +100,7 @@ class tournamentPoint extends Component {
       sixArr.push(Object.values(pointJson.Six));
       sixPoints = sixArr[0].map((six, i) => {
         return (
-          <tr key={i} style={{ textAlign: "center" }}>
+          <tr key={i} className='header-center'>
             <td>{six.from + " - " + six.to}</td>
             <td>{six.point}</td>
           </tr>
@@ -113,7 +113,7 @@ class tournamentPoint extends Component {
       fourArr.push(Object.values(pointJson.Four));
       fourPoints = fourArr[0].map((four, i) => {
         return (
-          <tr key={i} style={{ textAlign: "center" }}>
+          <tr key={i} className='header-center'>
             <td>{four.from + " - " + four.to}</td>
             <td>{four.point}</td>
           </tr>
@@ -126,7 +126,7 @@ class tournamentPoint extends Component {
       wicketArr.push(Object.values(pointJson.Wicket));
       wicketPoints = wicketArr[0].map((wicket, i) => {
         return (
-          <tr key={i} style={{ textAlign: "center" }}>
+          <tr key={i} className='header-center'>
             <td>{wicket.from + " - " + wicket.to}</td>
             <td>{wicket.point}</td>
           </tr>
@@ -139,7 +139,7 @@ class tournamentPoint extends Component {
       stumpingArr.push(Object.values(pointJson.Stumping));
       stumpingPoints = stumpingArr[0].map((stumping, i) => {
         return (
-          <tr key={i} style={{ textAlign: "center" }}>
+          <tr key={i} className='header-center'>
             <td>{stumping.from + " - " + stumping.to}</td>
             <td>{stumping.point}</td>
           </tr>
@@ -152,7 +152,7 @@ class tournamentPoint extends Component {
       catchArr.push(Object.values(pointJson.Catch));
       catchPoints = catchArr[0].map((catches, i) => {
         return (
-          <tr key={i} style={{ textAlign: "center" }}>
+          <tr key={i} className='header-center'>
             <td>{catches.from + " - " + catches.to}</td>
             <td>{catches.point}</td>
           </tr>
@@ -175,7 +175,7 @@ class tournamentPoint extends Component {
                 <Collapse.Panel header="Runs" key="Runs">
                   <Table hover>
                     <thead>
-                      <tr style={{ textAlign: "center" }}>
+                      <tr className='header-center'>
                         <th>Range</th>
                         <th>Point</th>
                       </tr>
@@ -187,7 +187,7 @@ class tournamentPoint extends Component {
                 <Collapse.Panel header="Six" key="Six">
                   <Table hover>
                     <thead>
-                      <tr style={{ textAlign: "center" }}>
+                      <tr className='header-center'>
                         <th>Range</th>
                         <th>Point</th>
                       </tr>
@@ -199,7 +199,7 @@ class tournamentPoint extends Component {
                 <Collapse.Panel header="Four" key="Four">
                   <Table hover>
                     <thead>
-                      <tr style={{ textAlign: "center" }}>
+                      <tr className='header-center'>
                         <th>Range</th>
                         <th>Point</th>
                       </tr>
@@ -211,7 +211,7 @@ class tournamentPoint extends Component {
                 <Collapse.Panel header="Wicket" key="Wicket">
                   <Table hover>
                     <thead>
-                      <tr style={{ textAlign: "center" }}>
+                      <tr className='header-center'>
                         <th>Range</th>
                         <th>Point</th>
                       </tr>
@@ -223,7 +223,7 @@ class tournamentPoint extends Component {
                 <Collapse.Panel header="Stumping" key="Stumping">
                   <Table hover>
                     <thead>
-                      <tr style={{ textAlign: "center" }}>
+                      <tr className='header-center'>
                         <th>Range</th>
                         <th>Point</th>
                       </tr>
@@ -235,7 +235,7 @@ class tournamentPoint extends Component {
                 <Collapse.Panel header="Catch" key="Catch">
                   <Table hover>
                     <thead>
-                      <tr style={{ textAlign: "center" }}>
+                      <tr className='header-center'>
                         <th>Range</th>
                         <th>Point</th>
                       </tr>
@@ -259,7 +259,7 @@ class tournamentPoint extends Component {
       tournamentPoints = this.props.TournamentPoint.map((tournamentPoint, i) => {
         total = i + 1;
         return (
-          <tr key={tournamentPoint.id} style={{ textAlign: "center" }}>
+          <tr key={tournamentPoint.id} className='header-center'>
             <td>{total}</td>
             <td>{tournamentPoint.Tournament.tournamentName}</td>
             <td><Button color="info" onClick={() => this.getPoints(tournamentPoint)}>Points</Button></td>
@@ -275,15 +275,15 @@ class tournamentPoint extends Component {
 
           <AddTournamentPoint isOpen={this.state.modal} toggle={this.toggle}></AddTournamentPoint>
           {this.renderPointModal()}
-          <div style={{ marginTop: "50px" }}>
-            <div style={{ float: "left" }}>
-              <Button color="info" onClick={this.toggle} >Add</Button>
-            </div>
+          <div className='headerdiv'>
+              <div className='addbtn mb15'>
+                    <Button color="info" onClick={this.toggle} >Add</Button>                           
+              </div>
           </div>
 
           <Table hover>
             <thead className="thead-dark">
-              <tr style={{ textAlign: "center" }}>
+              <tr className='header-center'>
                 <th>#</th>
                 <th>Tournament Name</th>
                 <th>Tournament Point</th>
@@ -291,7 +291,7 @@ class tournamentPoint extends Component {
             </thead>
             <tbody>
               {this.props.TournamentPoint.length === 0
-                ? <tr style={{ textAlign: "center" }}><td></td><td>No Data</td><td></td></tr>
+                ? <tr className='header-center'><td></td><td>No Data</td><td></td></tr>
                 : tournamentPoints}
             </tbody>
           </Table>
