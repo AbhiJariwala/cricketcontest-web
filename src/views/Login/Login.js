@@ -7,6 +7,8 @@ import { bindActionCreators } from "redux";
 
 import * as loginAction from '../../action/loginAction';
 
+import '../view.css'
+
 class Login extends Component {
     state = {
         email: "",
@@ -75,12 +77,14 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <hr />
-                <PanelHeader size="sm"> <h1 style={{ color: "white", marginTop: "-35px", textAlign: "center" }}>Cricket Contest</h1></PanelHeader>
+                <hr/>
+                <PanelHeader size="sm"> 
+                    <h1 className='header-center whiteC mtminus35'>Cricket Contest</h1>
+                </PanelHeader>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: "15px" }}>
                     <Row  >
                         <Col sm={12}>
-                            <Card style={{ width: "500px" }}>
+                            <Card className='width500'>
                                 <CardHeader>
                                     <h5 className="title">Login</h5>
                                 </CardHeader>
@@ -89,17 +93,22 @@ class Login extends Component {
                                         <FormGroup>
                                             <Label for="email"><b>Email</b></Label>
                                             <Input type="email" name="email" id="email" placeholder="example@example.com" onChange={this.inputChangeHandler.bind(this)} value={this.state.email} />
-                                            <span style={{ color: "red" }}>{this.state.fieldsErrors.email}</span>
+                                            <span className='alert'>{this.state.fieldsErrors.email}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="password"><b>Password</b></Label>
-                                            <Input type="password" name="password" id="password" placeholder="Password" onChange={this.inputChangeHandler.bind(this)} value={this.state.password} />
-                                            {(this.props.err_msg !== "" && this.props.err_msg !== undefined) ? <span style={{ color: "red" }}>{this.props.err_msg}</span> : <span style={{ color: "red" }}>{this.state.fieldsErrors.password}</span>}
+                                            <Input  type="password" 
+                                                    name="password" 
+                                                    id="password" 
+                                                    placeholder="Password" 
+                                                    onChange={this.inputChangeHandler.bind(this)} 
+                                                    value={this.state.password} />
+                                            {(this.props.err_msg !== "" && this.props.err_msg !== undefined) ? <span className='alert'>{this.props.err_msg}</span> : <span className='alert'>{this.state.fieldsErrors.password}</span>}
                                         </FormGroup>
                                     </Form>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button style={{ "float": "right", "marginBottom": "10px", "width": "100%" }} color="info" onClick={this.btnLoginClick.bind(this)}>Login</Button>
+                                    <Button className='pagenumber width100' color="info" onClick={this.btnLoginClick.bind(this)}>Login</Button>
                                 </CardFooter>
                                 <br />
                                 <hr />
