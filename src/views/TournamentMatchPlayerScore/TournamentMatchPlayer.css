@@ -27,12 +27,7 @@
 .inputDiv{
     float: right;
 }
-.addbtn{
-    width: 62px;
-    float: left;
-    margin-top: 15px;
-    height: 40px;
-}
+
 .colapseDiv{
     margin-top: 100px;
     width: 96%;
@@ -48,6 +43,10 @@
 .score{
     width: 20%;      
     background-color: lightgray;
-    box-shadow: 3px 3px 1px #888888;
-    
+    box-shadow: 3px 3px 1px #888888;   
+}
+.divAdd{
+    margin-top: 65px;
+    margin-bottom: -5px;
+    float: left ;
 }

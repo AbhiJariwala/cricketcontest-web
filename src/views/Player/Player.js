@@ -9,7 +9,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import * as PlayerAction from '../../action/Player';
 import AddPlayer from '../Player/AddPlayer/AddPlayer';
 import path from '../../path';
-import '../view.css';
 
 class Player extends Component {
   constructor(props) {
@@ -156,7 +155,7 @@ class Player extends Component {
       start = 0;
       start = this.state.pageRecord + 1;
       player = this.props.Player.PlayerData.map((player, key) => {
-        return <tr key={key} style={{ textAlign: "center" }} >
+        return <tr key={key} className="header-center" >
           <td>{start++}</td>
           <td><img src={path + 'thumbnail/' + player.playerImage} alt="playerImage" /></td>
           <td>{player.firstName}&nbsp;{player.lastName}</td>
@@ -164,8 +163,8 @@ class Player extends Component {
           <td>{(player.gender === 1) ? "Male" : "Female"}</td>
           <td>{player.description}</td>
           <td>
-            <img src={path + "edit.png"} alt="edit" onClick={() => this.btnEditClick(player)} style={{ width: 25 }} ></img>
-            <img src={path + "delete1.jpg"} alt="delete" onClick={() => this.btnDeleteClick(player.id)} style={{ width: 25 }} ></img>
+            <img src={path + "edit.png"} className="width25" alt="edit" onClick={() => this.btnEditClick(player)} ></img>
+            <img src={path + "delete1.jpg"} className="width25" alt="delete" onClick={() => this.btnDeleteClick(player.id)} ></img>
           </td>
         </tr>
       })
@@ -175,7 +174,7 @@ class Player extends Component {
         <PanelHeader size="sm" />
         <div className="content">
           <AddPlayer noOfRecords={this.state.noOfRecords} isOpen={this.state.modal} toggle={this.btnAddClick.bind(this)} data={this.state} nrecord={this.state.noOfRecords}> </AddPlayer>
-          <div style={{ marginTop: "50px" }}>
+          <div className="headerdiv">
             <div className='pagenumber'>
               Show entries
                 <Input type="select" name="select" onChange={this.showEntriesChanged.bind(this)}>
@@ -186,18 +185,18 @@ class Player extends Component {
                 <option value="100">100</option>
               </Input>
             </div>
-            <div style={{ float: "left" }}>
+            <div className="addbtn">
               <Button color="info" onClick={this.toggle} >Add</Button>
             </div>
           </div>
           <Table hover>
             <thead className="thead-dark">
-              <tr style={{ textAlign: "center" }} onClick={this.sortingChangedHandler.bind(this)}>
+              <tr className="header-center" onClick={this.sortingChangedHandler.bind(this)}>
                 <th>#</th>
                 <th>Avtar</th>
-                <th style={{ cursor: "pointer" }}>Name</th>
-                <th style={{ cursor: "pointer" }}>Age</th>
-                <th style={{ cursor: "pointer" }}>Gender</th>
+                <th className="header-pointer">Name</th>
+                <th className="header-pointer">Age</th>
+                <th className="header-pointer">Gender</th>
                 <th>Description</th>
                 <th>Action</th>
               </tr>

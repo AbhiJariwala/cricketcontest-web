@@ -120,6 +120,26 @@
     width: 96%;
 }
 
+.spanError{
+    color: red;
+}
+
+.wordBreak{
+    word-break: normal;
+}
+
+.deleteImage{
+    margin-bottom: 80px;
+    margin-left: -20px;
+    opacity: 0.7;
+    height: 25px;
+    width: 25px;
+}
+
+.selectImage{
+    height: 100px;
+    width: 100px;
+}
 .teamLogo{
     width: 50px;
     height:50px;
@@ -130,7 +150,7 @@
 }
 
 .aCenter{
-    align: center
+    text-align: center
 }
 
 .wh100px{
@@ -211,4 +231,36 @@
 
 .width500{
     width: 500px;
+}
+.team1Btn{
+    width: 150px;
+    float: right
+}
+.team2Btn{
+    width: 150px;
+    float: left
+}
+.team-one-badge{
+    position:relative;
+    left: 96px;
+    top: -1px;
+}
+    
+.team-two-badge{
+    position:relative;
+    left: -80px;
+    top:-20px;
+}
+.span-error{
+    text-align: center;
+    display: block;
+    color: red;
+}
+.span-display{
+    text-align: center;
+    display: block;
+    color: green;
+}
+.badgeH1{
+    width: 40px
 }
