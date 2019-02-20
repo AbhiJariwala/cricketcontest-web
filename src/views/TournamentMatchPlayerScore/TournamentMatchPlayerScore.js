@@ -25,7 +25,7 @@ class TournamenMatchPlayerScore extends Component {
             teamName: "",
             score: [],
             tournamentId: 0,
-            matchId:''
+            matchId: ''
         };
         this.toggleMatchPlayerScore = this.toggleMatchPlayerScore.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -60,12 +60,12 @@ class TournamenMatchPlayerScore extends Component {
         this.toggleModal();
     }
 
-    getTournamentMatchPlayerScoreByMatch(tournamentId, teamId,tournamentMatchId) {
+    getTournamentMatchPlayerScoreByMatch(tournamentId, teamId, tournamentMatchId) {
         this.props.action.MatchPlayerScore.getPlayers(tournamentId, teamId);
         this.setState({
             visible: true,
             tournamentId: tournamentId,
-            matchId:tournamentMatchId
+            matchId: tournamentMatchId
         })
     }
 
@@ -95,7 +95,7 @@ class TournamenMatchPlayerScore extends Component {
                                     <td>{start++}</td>
                                     <td>{tournamentmatch.Tournament.tournamentName}</td>
                                     <td>
-                                        <Button className="team1Btn" color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id,matchScore.tournamentMatchId)} name="team1">
+                                        <Button className="team1Btn" color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team1[0].id, matchScore.tournamentMatchId)} name="team1">
                                             {tournamentmatch.Team1[0].teamName}
                                         </Button>
                                     </td>
@@ -103,7 +103,7 @@ class TournamenMatchPlayerScore extends Component {
                                         <b>VS</b>
                                     </td>
                                     <td>
-                                        <Button className="team2Btn"  color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id,matchScore.tournamentMatchId)} name="team2">
+                                        <Button className="team2Btn" color="info" onClick={() => this.getTournamentMatchPlayerScoreByMatch(tournamentmatch.tournamentId, tournamentmatch.Team2[0].id, matchScore.tournamentMatchId)} name="team2">
                                             {tournamentmatch.Team2[0].teamName}
                                         </Button>
                                     </td>
@@ -137,40 +137,40 @@ class TournamenMatchPlayerScore extends Component {
                                                 <Panel header={p.firstName + '  ' + p.lastName} key={p.id}>
                                                     {(score.length > 0) ? score.map((data, i) => {
                                                         return (data !== '') ? (
-                                                            (p.id === data.playerId && this.state.tournamentId === data.tournamentId && this.state.matchId === data.tournamentMatchId) ?(
-                                                            <Table key={i}>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th className="header-center">Runs</th>
-                                                                        <td>{data.run}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th className="header-center"><b>Six  </b></th>
-                                                                        <td>{data.six}</td>
-                                                                    </tr>
-                                                                    <tr >
-                                                                        <th className="header-center"><b>Four  </b></th>
-                                                                        <td>{data.four}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th className="header-center"><b>Catch  </b></th>
-                                                                        <td>{data.catch}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th className="header-center"><b>Stumping  </b></th>
-                                                                        <td>{data.stumping}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th className="header-center"><b>Wicket  </b></th>
-                                                                        <td>{data.wicket}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th className="header-center"><b>Score </b></th>
-                                                                        <td><Badge color="success"><h4 className="badgeH1">{data.score}</h4></Badge></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </Table>
-                                                            ):null
+                                                            (p.id === data.playerId && this.state.tournamentId === data.tournamentId && this.state.matchId === data.tournamentMatchId) ? (
+                                                                <Table key={i}>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th className="header-center">Runs</th>
+                                                                            <td>{data.run}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th className="header-center"><b>Six  </b></th>
+                                                                            <td>{data.six}</td>
+                                                                        </tr>
+                                                                        <tr >
+                                                                            <th className="header-center"><b>Four  </b></th>
+                                                                            <td>{data.four}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th className="header-center"><b>Catch  </b></th>
+                                                                            <td>{data.catch}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th className="header-center"><b>Stumping  </b></th>
+                                                                            <td>{data.stumping}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th className="header-center"><b>Wicket  </b></th>
+                                                                            <td>{data.wicket}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th className="header-center"><b>Score </b></th>
+                                                                            <td><Badge color="success"><h4 className="badgeH1">{data.score}</h4></Badge></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </Table>
+                                                            ) : null
                                                         ) : null
                                                     }) : <p>Player score not available</p>}
                                                 </Panel>
@@ -182,8 +182,8 @@ class TournamenMatchPlayerScore extends Component {
                             }) : null
                         }
                     </AntModal>
-                    <div className="addbtn">                      
-                            <Button color="info" onClick={this.btnAddClick.bind(this)} >Add</Button>                                                  
+                    <div className="divAdd">
+                        <Button color="info" onClick={this.btnAddClick.bind(this)} >Add</Button>
                     </div>
                     <AddMatchPlayerScore isOpen={this.state.showModal} toggleAdd={this.btnAddClick.bind(this)} />
 

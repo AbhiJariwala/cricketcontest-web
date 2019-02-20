@@ -43,6 +43,10 @@
 .score{
     width: 20%;      
     background-color: lightgray;
-    box-shadow: 3px 3px 1px #888888;
-    
+    box-shadow: 3px 3px 1px #888888;   
+}
+.divAdd{
+    margin-top: 65px;
+    margin-bottom: -5px;
+    float: left ;
 }
