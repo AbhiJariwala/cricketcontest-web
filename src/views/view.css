@@ -207,6 +207,31 @@
 .mt10{
     margin-top: 10px;
 }
+
+.whiteC{
+    color: white;
+}
+
+.mtminus35{
+    margin-top: -35px;
+}
+
+.mt15px{
+    margin-top: 15px;
+}
+
+.dflex{
+    display: 'flex';
+ 
+}
+
+.justifycc{
+    justify-content:'center'
+}
+
+.width500{
+    width: 500px;
+}
 .team1Btn{
     width: 150px;
     float: right

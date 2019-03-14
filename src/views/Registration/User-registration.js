@@ -6,6 +6,8 @@ import { bindActionCreators } from "redux";
 import { Link } from 'react-router-dom';
 import * as registerAction from '../../action/loginAction';
 
+import '../view.css';
+
 class UserRegistration extends Component {
 
     state = {
@@ -149,11 +151,13 @@ class UserRegistration extends Component {
         return (
             <div>
                 <hr />
-                <PanelHeader size="sm" ><h1 style={{ color: "white", marginTop: "-35px", textAlign: "center" }}>Cricket Contest</h1></PanelHeader>
+                <PanelHeader size="sm" >
+                    <h1 className='header-center whiteC mtminus35'>Cricket Contest</h1>
+                </PanelHeader>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: "15px" }}>
                     <Row  >
                         <Col sm={12}>
-                            <Card style={{ width: "500px" }}>
+                            <Card className='width500'>
                                 <CardHeader>
                                     <h5 className="title">User Registration</h5>
                                 </CardHeader>
@@ -162,28 +166,28 @@ class UserRegistration extends Component {
                                         <FormGroup>
                                             <Label for="firstName"><b>First Name</b></Label>
                                             <Input type="text" name="firstName" id="firstName" placeholder="First Name" onChange={this.inputChangeHandler.bind(this)} required />
-                                            <span style={{ color: "red" }}>{this.state.fieldsErrors.firstName}</span>
+                                            <span className='alert'>{this.state.fieldsErrors.firstName}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="lastName"><b>Last Name</b></Label>
                                             <Input type="text" name="lastName" id="lastName" placeholder="Last Name" onChange={this.inputChangeHandler.bind(this)} />
-                                            <span style={{ color: "red" }}>{this.state.fieldsErrors.lastName}</span>
+                                            <span className='alert'>{this.state.fieldsErrors.lastName}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="email"><b>Email</b></Label>
                                             <Input type="email" name="email" id="email" placeholder="example@example.com" onChange={this.inputChangeHandler.bind(this)} />
-                                            <span style={{ color: "red" }}>{this.state.fieldsErrors.email}</span>
-                                            <span style={{ color: "red" }}>{this.state.inValidEmail}</span>
+                                            <span className='alert'>{this.state.fieldsErrors.email}</span>
+                                            <span className='alert'>{this.state.inValidEmail}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="password"><b>Password</b></Label>
                                             <Input type="password" name="password" id="password" placeholder="Password" onChange={this.inputChangeHandler.bind(this)} />
-                                            <span style={{ color: "red" }}>{this.state.fieldsErrors.password}</span>
+                                            <span className='alert'>{this.state.fieldsErrors.password}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="confirmPassword"><b>Confirm Password</b></Label>
                                             <Input type="password" name="confirmPassword" id="confirmPassword" onChange={this.inputChangeHandler.bind(this)} placeholder="Confirm Password" />
-                                            <span style={{ color: "red" }}>{this.state.fieldsErrors.confirmPassword}</span>
+                                            <span className='alert'>{this.state.fieldsErrors.confirmPassword}</span>
                                         </FormGroup>
                                         <FormGroup tag="fieldset">
                                             <Label for="password"><b>Gender</b></Label>
@@ -200,7 +204,7 @@ class UserRegistration extends Component {
                                     </Form>
                                 </CardBody>
                                 <CardFooter>
-                                    <Button style={{ "float": "right", "marginBottom": "10px", width: "100%" }} color="info" onClick={this.btnRegisterClick.bind(this)} >Register</Button>
+                                    <Button className='pagenumber width100' color="info" onClick={this.btnRegisterClick.bind(this)} >Register</Button>
                                 </CardFooter>
                                 <br />
                                 <hr />
