@@ -18,13 +18,13 @@ class winnerModal extends Component {
                                 <div style={{ textAlign: 'center' }}>
                                     <h5>The winning team is {data.Team1[0].teamName}</h5>
                                     <br />
-                                    <img src={path + data.Team1[0].teamLogo} height="70px" width="70px" alt="TeamImage" />{" "}
+                                    <img src={path + "thumbnail/" + data.Team1[0].teamLogo} height="70px" width="70px" alt="TeamImage" />{" "}
                                 </div>
                             ) : (
                                     <div style={{ textAlign: 'center' }}>
                                         <h5>The winning team is {data.Team2[0].teamName} </h5>
                                         <br />
-                                        <img src={path + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />{" "}
+                                        <img src={path + "thumbnail/" + data.Team2[0].teamLogo} height="70px" width="70px" alt="TeamImage" />{" "}
                                     </div>
                                 )
                         )

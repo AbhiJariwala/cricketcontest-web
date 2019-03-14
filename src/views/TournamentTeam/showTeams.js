@@ -143,10 +143,8 @@ class ShowTeams extends Component {
           onCancel={this.closeModal}
           footer={null} >
           <div className='mbml'>
-
             {!teams || teams.length === 0 ?
               <div>
-
                 <div>
                   <p className='noTeams'> No Teams found in {tournament.tournamentName}</p>
                 </div>
@@ -166,11 +164,9 @@ class ShowTeams extends Component {
               </div>
             }
           </div>
-
           <Checkbox.Group className='width100' onChange={this.Change} value={this.state.team}>
             {teamNames}
           </Checkbox.Group>
-
           <Popconfirm title="Do you want to delete these teams?"
             onConfirm={() => this.deleteClick(tournament.id, this.state.team)} okText="Yes" cancelText="No">
             <Button className='plInherit' hidden={this.state.team.length > 0 ? false : true}
@@ -186,24 +182,16 @@ class ShowTeams extends Component {
     );
   }
 }
-
 const mapStateToProps = (state) => {
   const { Tournament } = state;
   return {
     Tournaments: Tournament.Tournaments
   }
 }
-
 const mapDispatchToProps = dispatch => ({
   action: {
     TournamentTeam: bindActionCreators(TournamentTeamAction, dispatch),
     Tournament: bindActionCreators(TournamentAction, dispatch)
   }
 });
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShowTeams))
-
-
-
-
-

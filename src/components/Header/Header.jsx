@@ -171,7 +171,7 @@ class Header extends React.Component {
                 toggle={e => this.dropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
-                  <i className="now-ui-icons users_single-02" />
+                  <i className="now-ui-icons loader_gear" />
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={this.logoutClick.bind(this)}>Logout</DropdownItem>

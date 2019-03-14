@@ -23,7 +23,7 @@ var dashRoutes = [
   {
     path: "/Team",
     name: "Teams",
-    icon: "sport_trophy",
+    icon: "text_caps-small",
     component: Team
   },
   {
@@ -35,25 +35,25 @@ var dashRoutes = [
   {
     path: "/teamplayer",
     name: "Tournament Team Players",
-    icon: "sport_user-run",
+    icon: "design_bullet-list-67",
     component: TeamPlayer
   },
   {
     path: "/TournamentMatchs",
     name: "Tournament Matches",
-    icon: "sport_user-run",
+    icon: "location_map-big",
     component: TournamentMatch
   },
   {
     path: "/TournamentPoint",
     name: "Tournament Points",
-    icon: "sport_trophy",
+    icon: "business_money-coins",
     component: TournamentPoint
   },
   {
     path: "/TournamentMatchPlayerScore",
     name: "Match Player Scores",
-    icon: "sport_trophy",
+    icon: "education_paper",
     component: TournamentMatchPlayerScore
   },
 
